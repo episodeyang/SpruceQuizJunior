@@ -29,13 +29,13 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                             a(href='/login') Log in
                         li(data-access-level='{{ accessLevels.anon }}', active-nav)
                             a(href='/register') Register
-                        li(data-access-level='{{ accessLevels.user }}', active-nav)
+                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/') Home
-                        li(data-access-level='{{ accessLevels.user }}', active-nav)
+                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/private') Private
-                        li(data-access-level='{{ accessLevels.admin }}', active-nav)
+                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') Admin
-                        li(data-access-level='{{ accessLevels.user }}')
+                        li(data-access-level='{{ accessLevels.loggedin }}')
                             a(href="", data-ng-click="logout()")
                                 | Log out
                     div#userInfo.pull-right(data-access-level='{{ accessLevels.user }}')

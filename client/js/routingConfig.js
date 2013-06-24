@@ -21,7 +21,7 @@
         accessLevels : {
             'public' : "*",
             'anon': ['public'],
-            'loggedin' : ['student','parents','admin'],
+            'loggedin' : ['student','parents','teacher','admin'],
             'superuser':['parents','teacher','admin'],
             'admin': ['admin']
         }
