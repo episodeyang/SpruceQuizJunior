@@ -8,8 +8,11 @@
         */
         roles :[
             'public',
-            'user',
-            'admin'],
+            'student',
+            'teacher',
+            'parents',
+            'admin'
+            ],
 
         /*
         Build out all the access levels you want referencing the roles listed above
@@ -18,7 +21,8 @@
         accessLevels : {
             'public' : "*",
             'anon': ['public'],
-            'user' : ['user', 'admin'],
+            'loggedin' : ['student','parents','admin'],
+            'superuser':['parents','teacher','admin'],
             'admin': ['admin']
         }
 

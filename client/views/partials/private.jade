@@ -1,2 +1,8 @@
 h1 Private view
 p This view is visible to logged in users
+
+div
+    button.btn(ng-click='isCollapsed = !isCollapsed') Toggle collapse
+    hr
+    div(collapse='false')
+        .well.well-large Some content

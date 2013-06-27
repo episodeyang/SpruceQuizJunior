@@ -10,7 +10,7 @@ angular.module('angular-client-side-auth', ['ngCookies'])
         {
             templateUrl:    '/partials/home',
             controller:     'HomeCtrl',
-            access:         access.user
+            access:         access.loggedin
         });
     $routeProvider.when('/login',
         {
@@ -34,7 +34,7 @@ angular.module('angular-client-side-auth', ['ngCookies'])
         {
             templateUrl:    '/partials/private',
             controller:     'PrivateCtrl',
-            access:         access.user
+            access:         access.loggedin
         });
     $routeProvider.when('/admin',
         {

@@ -1,42 +1,43 @@
 .row(style='margin-top: 80px;')
-    .span4.offset1
-        img(style='margin: 0px 0px 20px 60px;', width="320", src='/img/firstpic.png', alt='first picture')
-    .span4.text-center
+    .span6
+        img(style='margin: 0px 0px 20px 60px;float:right;', width="320", src='/img/firstpic.png', alt='first picture')
+    .span6.text-center
         h1(style='font-size: 36px; padding-bottom: 20px;') 欢迎来到云杉习题
         p.lead.text-center(style='padding-bottom: 60px;')
           | 省时省力的
           br
           | 新一代的学习管理平台
-        a.btn.btn-success.small(href='#register', data-toggle='modal') 现在注册！
-        p(style='margin-top: 20px;')
-            a(href='#login')用户登入
+        .row
+            .span2.offset2
+                a.btn.btn-success.small(href='#register', data-ng-click='isCollapsed') 现在注册！
+                div(collapse='isCollapsed')
+                    .well.well-large Some content
 
-
-
-
+                p(style='margin-top: 20px;')
+                    a(href='#login')用户登入
 
 hr
 .row-fluid.marketing
-    .span5
-    .span5.text-center
+    .span5.offset1.text-center
         h3 成绩报告自动生成
         p 成绩云端自动统计，实时记录.
         p 具体到知识点的能力提高曲线，定量分析，提供完整学法报告。
+    .span6
 hr
 .row-fluid.marketing
-    .span5
-    .span5.text-center
+    .span6
+    .span5.offset1.text-center
         h3 分层推题，因材施教
         p 提供基于贝叶斯模型的学习和预测体系，精准预测每名学生标准化考试成绩
         p 面对不同学生，分类推送阅读和题目。
         p 个性化的学习体验，整体提高全班每个学生
 hr
 .row-fluid.marketing
-    .span5
-    .span5.text-center
+    .span5.offset1.text-center
         h3 减负增效，抓住课后时间
         p 完整的报告工具，让老师更好的掌握学生情况
         p 抓住课后时间，提前预读，及时复习，让学习更加高效！
+    .span6
 
 //-ul
     li admin/123
@@ -72,5 +73,5 @@ hr
         |  Google
     a.btn(href="", data-ng-click="loginOauth('linkedin')")
         i.icon-linkedin
-        |  LinkedIn 
+        |  LinkedIn
 

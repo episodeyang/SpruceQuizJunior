@@ -12,12 +12,24 @@ var User
 var users = [
     {
         id:         1,
-        username:   "user",
+        username:   "student",
         password:   "123",
-        role:   userRoles.user
+        role:   userRoles.student
     },
     {
         id:         2,
+        username:   "parent",
+        password:   "123",
+        role:   userRoles.parents
+    },
+    {
+        id:         3,
+        username:   "teacher",
+        password:   "123",
+        role:   userRoles.teacher
+    },
+    {
+        id:         4,
         username:   "admin",
         password:   "123",
         role:   userRoles.admin
@@ -158,7 +170,7 @@ module.exports = {
           },
            function(token, tokenSecret, profile, done) {
             var user = module.exports.findOrCreateOauthUser('linkedin', profile.id);
-            done(null,user); 
+            done(null,user);
           }
         );
     },

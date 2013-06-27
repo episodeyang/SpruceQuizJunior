@@ -1,5 +1,5 @@
 {
-    "name": "angular-client-side-auth",
+    "name": "SpruceQuiz",
     "version": "0.0.1",
     "dependencies": {
         "express": "*",
@@ -13,7 +13,7 @@
         "passport-google": "~0.3.0",
         "passport-linkedin": "~0.1.3"
     },
-    "subdomain": "angular-client-side-auth",
+    "subdomain": "SpruceQuiz",
     "scripts": {
         "start": "server.js"
     },

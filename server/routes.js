@@ -107,7 +107,7 @@ var routes = [
         path: '/users',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.superuser
     },
 
     // All other get requests should be handled by AngularJS's client-side routing system
