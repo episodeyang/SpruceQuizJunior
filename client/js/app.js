@@ -40,12 +40,12 @@ angular.module('angular-client-side-auth', ['ngCookies'])
         {
             templateUrl:    '/partials/admin',
             controller:     'AdminCtrl',
-            access:         access.admin
+            access:         access.superuser
         });
     $routeProvider.when('/404',
         {
             templateUrl:    '/partials/404',
-            access:         access.public
+            access:         access.all
         });
     $routeProvider.otherwise({redirectTo:'/404'});
 

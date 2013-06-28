@@ -9,8 +9,8 @@
         roles :[
             'public',
             'student',
-            'teacher',
             'parents',
+            'teacher',
             'admin'
             ],
 
@@ -19,7 +19,7 @@
         You can use the "*" symbol to represent access to all roles
          */
         accessLevels : {
-            'public' : "*",
+            'all' : "*",
             'anon': ['public'],
             'loggedin' : ['student','parents','teacher','admin'],
             'superuser':['parents','teacher','admin'],
