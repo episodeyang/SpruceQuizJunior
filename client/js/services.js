@@ -21,7 +21,7 @@ angular.module('angular-client-side-auth')
         isLoggedIn: function(user) {
             if(user === undefined)
                 user = $rootScope.user;
-            return user.role === userRoles.user || user.role === userRoles.admin;
+            return user.role === userRoles.student || user.role === userRoles.parent || user.role === userRoles.teacher || user.role === userRoles.admin;
         },
         register: function(user, success, error) {
             $http.post('/register', user).success(success).error(error);
