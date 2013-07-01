@@ -91,3 +91,18 @@ angular.module('angular-client-side-auth')
 
 }]);
 
+angular.module('angular-client-side-auth')
+.controller('userAdminCtrl',
+['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
+    $scope.loading = true;
+
+    Users.getAll(function(res) {
+        $scope.users = res;
+        $scope.loading = false;
+    }, function(err) {
+        $rootScope.error = "Failed to fetch users.";
+        $scope.loading = false;
+    });
+
+}]);
+
