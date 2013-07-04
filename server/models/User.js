@@ -11,7 +11,8 @@ var User
 
 var UserM = require('./SchemaModels').User;
 
-// For initilizing Spruce database in MongoDB. Will be taken out later.
+// For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
+// Begin of temporary initilization
 var tempuser = new UserM({
         id:         1,
         username:   "student",
@@ -40,6 +41,8 @@ tempuser = new UserM({
         role:   userRoles.admin
     });
 tempuser.save();
+// End of temporary initilization
+
 
 // //For testing objects-creation
 // var users;
