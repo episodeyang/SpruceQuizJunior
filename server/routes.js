@@ -110,6 +110,9 @@ var routes = [
         accessLevel: accessLevels.superuser
     },
 
+    //APIs needed by client
+    //to be added
+    
     // All other get requests should be handled by AngularJS's client-side routing system
     {
         path: '/*',

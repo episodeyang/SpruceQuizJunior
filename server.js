@@ -1,10 +1,18 @@
 var express =       require('express')
     , http =        require('http')
+    , mongoose =    require('mongoose')
     , passport =    require('passport')
     , path =        require('path')
     , User =        require('./server/models/User.js');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost/sprucedb');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log('Connected to Spruce database');
+});
 
 app.set('views', __dirname + '/client/views');
 app.set('view engine', 'jade');
