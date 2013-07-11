@@ -8,7 +8,7 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
 
         // This is needed because Facebook login redirects add #_=_ at the end of the URL
-        script(type="text/javascript")
+        script(type="text/javascript").
             if (window.location.href.indexOf('#_=_') > 0) {
                 window.location = window.location.href.replace(/#.*/, '');
             }
@@ -32,6 +32,8 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                             a(href='/admin') Admin
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/user_admin') 学生管理
+                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                            a(href='/problems') 问题输入
                         li(data-access-level='{{ accessLevels.loggedin }}')
                             a(href="", data-ng-click="logout()")
                                 | Log out
@@ -42,7 +44,7 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                         strong {{ user.username }}&nbsp;
                         span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
 
-        .container
+        .container-fluid
             div(data-ng-view='ng-view')
             .alert.alert-error(data-ng-bind="error", data-ng-show="error")
         .footer(style="width=100%;background-color:#F2F2F2;")
@@ -51,12 +53,15 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                     a(href="www.sprucelearning.com") 杉景教育科技
                     | 2013
         script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js')
+        script(src='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured&dummy=.js')
+        //script(src='/js/MathJax/MathJax.js')
         script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js')
         script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-cookies.js')
         script(src='/js/routingConfig.js')
         script(src='/js/app.js')
         script(src='/js/services.js')
         script(src='/js/controllers.js')
+        script(src='/js/controllers/problems.js')
         script(src='/js/filters.js')
         script(src='/js/directives.js')
-        script(src='/js/widgets.js')
+//        script(src='/js/widgets.js')

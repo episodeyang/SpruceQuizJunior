@@ -14,7 +14,7 @@ var problem: {
         multimedia,
         subproblems: []
         solution: ['Washinton','Mrs. Adams'], //security!
-        explanation:['']
+        explanations:['']
         hints: [],
         hintRules: ['0','1',''],
    }

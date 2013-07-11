@@ -10,7 +10,7 @@ var _ =           require('underscore')
 var routes = [
 
     // Views
-    {
+     {
         path: '/partials/*',
         httpMethod: 'GET',
         middleware: [function (req, res) {
@@ -18,6 +18,26 @@ var routes = [
             res.render(requestedView);
         }],
         accessLevel: accessLevels.public
+    },
+    {   //Need to give more fine-grained control to the client side scripts,
+        //so that not all client side scripts are exposed to anonymous users.
+        path: '/js/mathJax/*',
+        httpMethod: 'GET',
+        middleware: [function (req, res) {
+            var requestedView = path.join('./', req.url);
+            res.render(requestedView);
+        }],
+        accessLevel: accessLevels.public
+    },
+    {   //Need to give more fine-grained control to the client side scripts,
+        //so that not all client side scripts are exposed to anonymous users.
+        path: '/js/*',
+        httpMethod: 'GET',
+        middleware: [function (req, res) {
+            var requestedView = path.join('./', req.url);
+            res.render(requestedView);
+        }],
+        accessLevel: accessLevels.loggedin
     },
 
     // OAUTH

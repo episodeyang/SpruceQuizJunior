@@ -1,5 +1,5 @@
 *.swp
-
+.idea
 #node specific files
 ######################
 lib-cov

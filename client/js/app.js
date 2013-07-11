@@ -42,11 +42,17 @@ angular.module('angular-client-side-auth', ['ngCookies'])
             controller:     'AdminCtrl',
             access:         access.superuser
         });
-    $routeProvider.when('/user_admin',
+     $routeProvider.when('/user_admin',
         {
             templateUrl:    '/partials/user_admin',
             controller:     'UserAdminCtrl',
             access:         access.superuser
+        });
+    $routeProvider.when('/problems',
+        {
+            templateUrl:    '/partials/problems',
+            controller:     'ProblemCtrl',
+            access:         access.loggedin
         });
     $routeProvider.when('/404',
         {
