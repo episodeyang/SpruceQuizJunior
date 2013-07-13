@@ -61,3 +61,23 @@ angular.module('angular-client-side-auth')
         }
     };
 });
+
+angular.module('spruceDBServices', ['ngResource'])
+.factory('Problems', function($resource){
+    return $resource('/api/problems/:uuid', {}, {
+        list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+    });
+});
+
+// angular.module('angular-client-side-auth')
+// .factory('Problems', function($http) {
+//     return {
+//         getAll: function(success, error) {
+//             $http.get('/problems').success(success).error(error);
+//         },
+//         getbyId: function(success, error) {
+//             $http.get('/api/problems/', {params:{uuid: "d0001"}}).success(success).error(error);
+//             //$http.get('/api/problems/id').success(success).error(error);
+//         }
+//     };
+// });
