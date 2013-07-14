@@ -2,7 +2,10 @@ var mongoose = require("mongoose");
 
 //User schema
 var UserSchema = new mongoose.Schema({ 
-    id: Number,
+    id: {
+      type: Number,
+      unique: true
+    },
     username: {
     	type: String,
     	unique: true
@@ -21,12 +24,31 @@ UserSchema.methods.validPassword = function (password) {
 
 var User = mongoose.model('User', UserSchema);
 
-//Problems schema
-//to be added soon based on notes
+//Problem schema
+var ProblemSchema = new mongoose.Schema({
+    problemUUID: {
+      type: String,
+      unique: true
+    },
+    topLevel: Boolean,
+    problemType: String,
+    question: Array,
+    choices: Array,
+    multimedia: Array,
+    subproblems: Array,
+    solutions: Array,
+    explanations: Array,
+    hints: Array,
+    hintRules: Array,
+    lastUpdated: Date
+}, { collection : 'problem' });
+
+var Problem = mongoose.model('Problem', ProblemSchema);
 
 //other schemas here
 
 //exports
 module.exports = {
-  User: User
+  User: User,
+  Problem: Problem
 }

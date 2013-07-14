@@ -3,6 +3,7 @@ var _ =           require('underscore')
     , passport =  require('passport')
     , AuthCtrl =  require('./controllers/auth')
     , UserCtrl =  require('./controllers/user')
+    , ProblemCtrl =  require('./controllers/problem')
     , User =      require('./models/User.js')
     , userRoles = require('../client/js/routingConfig').userRoles
     , accessLevels = require('../client/js/routingConfig').accessLevels;
@@ -131,7 +132,13 @@ var routes = [
     },
 
     //APIs needed by client
-    //to be added
+    //Problem resource
+    {
+        path: '/api/problems/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.getbyId],
+        accessLevel: accessLevels.loggedin
+    },
     
     // All other get requests should be handled by AngularJS's client-side routing system
     {
