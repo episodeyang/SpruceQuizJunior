@@ -4,7 +4,7 @@ var _ =           require('underscore')
 
 module.exports = {
     getbyId: function(req, res) {
-    	if(req.params.uuid === 'all') {
+    	if(req.params.uuid === "all") {
 	        ProblemM.find(function (err, results) {
 	        	//console.log(results);
 	            res.json(results);

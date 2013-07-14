@@ -17,7 +17,7 @@ angular.module('angular-client-side-auth')
     //$scope.problems.push(Problems.get({uuid: "d0001"}));
 
     //Use the next line to get all problems
-    $scope.problems = Problems.list({uuid: "all"});
+    $scope.problems = Problems.list();
 
     //old way using $http
     // Problems.getAll(function(res) {

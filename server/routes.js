@@ -133,12 +133,6 @@ var routes = [
 
     //APIs needed by client
     //Problem resource
-    // {
-    //     path: '/api/problems/',
-    //     httpMethod: 'GET',
-    //     middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.getAll],
-    //     accessLevel: accessLevels.loggedin
-    // },
     {
         path: '/api/problems/:uuid',
         httpMethod: 'GET',

@@ -64,8 +64,8 @@ angular.module('angular-client-side-auth')
 
 angular.module('spruceDBServices', ['ngResource'])
 .factory('Problems', function($resource){
-    return $resource('/api/problems/:uuid', {}, {
-        list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+    return $resource('/api/problems/:uuid', {uuid:'@problemUUID'}, {
+        list: {method:'GET', params:{uuid: 'all'}, isArray:true},
     });
 });
 
