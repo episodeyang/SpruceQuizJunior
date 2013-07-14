@@ -3,7 +3,9 @@ var express =       require('express')
     , mongoose =    require('mongoose')
     , passport =    require('passport')
     , path =        require('path')
-    , User =        require('./server/models/User.js');
+    , User =        require('./server/models/User.js')
+    , Problem =     require('./server/models/Problem.js')
+
 
 var app = express();
 

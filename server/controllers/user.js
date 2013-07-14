@@ -7,7 +7,7 @@ module.exports = {
     index: function(req, res) {
         var users;
         UserM.find(function (err, results) {
-            var users = results;
+            users = results;
             _.each(users, function(user) {
                 delete user.password;
                 delete user.twitter;
