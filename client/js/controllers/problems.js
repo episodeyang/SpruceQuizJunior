@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('ProblemCtrl',
 ['$rootScope', '$scope', 'Problems', function($rootScope, $scope, Problems) {
 //function ProblemCtrl($scope, Problems) 
@@ -10,7 +10,7 @@ angular.module('angular-client-side-auth')
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
     $scope.highlightField = "question";
 
-    $scope.problemTypes = ['multipleChoice','fillIn(multiple blanks)','OpenEnded'];
+    $scope.problemTypes = ['multipleChoice','fillIn','OpenEnded'];
 
     //Use the next two lines if accessing a specific problem with a uuid
     //$scope.problems = [];

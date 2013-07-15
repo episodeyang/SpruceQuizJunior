@@ -1,7 +1,9 @@
 'use strict';
+var sqApp = angular.module('SpruceQuizApp');
+//sqApp.$inject = ['ui.bootstrap','Auth','User',"$element", "$attrs"];
 
-angular.module('angular-client-side-auth')
-.factory('Auth', function($http, $rootScope, $cookieStore){
+//angular.module('SpruceQuizApp')
+sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
 
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles;
@@ -53,7 +55,7 @@ angular.module('angular-client-side-auth')
     };
 });
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .factory('Users', function($http) {
     return {
         getAll: function(success, error) {
@@ -69,7 +71,7 @@ angular.module('spruceDBServices', ['ngResource'])
     });
 });
 
-// angular.module('angular-client-side-auth')
+// angular.module('SpruceQuizApp')
 // .factory('Problems', function($http) {
 //     return {
 //         getAll: function(success, error) {

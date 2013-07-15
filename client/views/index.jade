@@ -1,61 +1,17 @@
 !!! 5
-html(lang='en', data-ng-app='angular-client-side-auth')
+html(lang='en', data-ng-app='SpruceQuizApp')
     head
         meta(charset='utf-8')
         title 云杉习题-新一代学习管理平台
         link(rel='stylesheet', href='css/app.css')
-        link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", rel="stylesheet")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js")
+        //script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js")
+        script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
+        link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css",
+            rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
-
-        // This is needed because Facebook login redirects add #_=_ at the end of the URL
-        script(type="text/javascript").
-            if (window.location.href.indexOf('#_=_') > 0) {
-                window.location = window.location.href.replace(/#.*/, '');
-            }
-    body(data-ng-controller="AppCtrl", data-ng-cloak)
-
-        #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-
-        .navbar
-            .navbar-inner
-                .container-fluid
-                    ul.nav
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/login') Log in
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/register') Register
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                            a(href='/') Home
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                            a(href='/private') Private
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/admin') Admin
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/user_admin') 学生管理
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/problems') 问题输入
-                        li(data-access-level='{{ accessLevels.loggedin }}')
-                            a(href="", data-ng-click="logout()")
-                                | Log out
-                    div
-                        p
-                    div#userInfo.pull-right(data-access-level='{{ accessLevels.loggedin }}')
-                        | Welcome&nbsp;
-                        strong {{ user.username }}&nbsp;
-                        span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
-
-        .container-fluid
-            div(data-ng-view='ng-view')
-            .alert.alert-error(data-ng-bind="error", data-ng-show="error")
-        .footer(style="width=100%;background-color:#F2F2F2;")
-            .container.text-center(style="padding: 30px")
-                p &copy;
-                    a(href="www.sprucelearning.com") 杉景教育科技
-                    | 2013
         script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js')
         script(src='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured&dummy=.js')
-        //script(src='/js/MathJax/MathJax.js')
-        script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js')
         script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-cookies.js')
         script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-resource.js")
         script(src='/js/routingConfig.js')
@@ -65,4 +21,48 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         script(src='/js/controllers/problems.js')
         script(src='/js/filters.js')
         script(src='/js/directives.js')
-//        script(src='/js/widgets.js')
+        // This is needed because Facebook login redirects add #_=_ at the end of the URL
+        script(type="text/javascript").
+            if (window.location.href.indexOf('#_=_') > 0) {
+                window.location = window.location.href.replace(/#.*/, '');
+            }
+        body(data-ng-controller="AppCtrl", data-ng-cloak)
+
+            #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+
+            .navbar
+                .navbar-inner
+                    .container-fluid
+                        ul.nav
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/login') Log in
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/register') Register
+                            li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                                a(href='/') Home
+                            li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                                a(href='/private') Private
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                                a(href='/admin') Admin
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                                a(href='/user_admin') 学生管理
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                                a(href='/problems') 问题输入
+                            li(data-access-level='{{ accessLevels.loggedin }}')
+                                a(href="", data-ng-click="logout()")
+                                    | Log out
+                        div
+                            p
+                        div.pull-right(data-access-level='{{ accessLevels.loggedin }}')
+                            | Welcome &nbsp;
+                            strong {{ user.username }}&nbsp;
+                            span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
+
+            .container-fluid
+                div(data-ng-view='ng-view')
+            .footer(style="width=100%;background-color:#F2F2F2;")
+                .container.text-center(style="padding: 30px")
+                    p &copy;
+                        a(href="www.sprucelearning.com") 杉景教育科技
+                        | 2013
+            //script(src='/js/widgets.js')

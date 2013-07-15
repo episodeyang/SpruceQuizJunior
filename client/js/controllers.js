@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('AppCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
 
@@ -19,7 +19,7 @@ angular.module('angular-client-side-auth')
     };
 }]);
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('LoginCtrl',
 ['$rootScope', '$scope', '$location', '$window', 'Auth', function($rootScope, $scope, $location, $window, Auth) {
 
@@ -43,13 +43,13 @@ angular.module('angular-client-side-auth')
     };
 }]);
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('HomeCtrl',
 ['$rootScope', function($rootScope) {
 
 }]);
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('RegisterCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
     $scope.role = routingConfig.userRoles.user;
@@ -70,13 +70,13 @@ angular.module('angular-client-side-auth')
     };
 }]);
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('PrivateCtrl',
 ['$rootScope', function($rootScope) {
 }]);
 
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('AdminCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
     $scope.loading = true;
@@ -91,7 +91,7 @@ angular.module('angular-client-side-auth')
 
 }]);
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .controller('userAdminCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
     $scope.loading = true;
@@ -105,4 +105,5 @@ angular.module('angular-client-side-auth')
     });
 
 }]);
+
 

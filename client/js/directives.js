@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .directive('accessLevel', ['$rootScope', 'Auth', function($rootScope, Auth) {
     return {
         restrict: 'A',
@@ -16,7 +16,7 @@ angular.module('angular-client-side-auth')
     };
 }]);
 
-angular.module('angular-client-side-auth').directive('activeNav', ['$location', function(location) {
+angular.module('SpruceQuizApp').directive('activeNav', ['$location', function(location) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -42,7 +42,7 @@ angular.module('angular-client-side-auth').directive('activeNav', ['$location', 
 MathJax.Hub.Config({skipStartupTypeset: true});
 MathJax.Hub.Configured();
 
-angular.module('angular-client-side-auth')
+angular.module('SpruceQuizApp')
 .directive("mathjaxBind", function() {
     return {
         restrict: "A",
@@ -55,5 +55,5 @@ angular.module('angular-client-side-auth')
     };
 });
 
-
+//UI Directive
 

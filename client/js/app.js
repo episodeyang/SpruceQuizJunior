@@ -1,92 +1,91 @@
 'use strict';
-
-angular.module('angular-client-side-auth', ['ngCookies', 'spruceDBServices', 'ngResource'])
+angular.module('SpruceQuizApp', ['ui.bootstrap','ngCookies', 'spruceDBServices', 'ngResource'])
 
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
-    var access = routingConfig.accessLevels;
+        var access = routingConfig.accessLevels;
 
-    $routeProvider.when('/',
-        {
-            templateUrl:    '/partials/home',
-            controller:     'HomeCtrl',
-            access:         access.loggedin
-        });
-    $routeProvider.when('/login',
-        {
-            templateUrl:    '/partials/login',
-            controller:     'LoginCtrl',
-            access:         access.anon
-        });
-    $routeProvider.when('/register',
-        {
-            templateUrl:    '/partials/register',
-            controller:     'RegisterCtrl',
-            access:         access.anon
-        });
-    $routeProvider.when('/auth/twitter',
-        {
-            templateUrl:    '/partials/register',
-            controller:     'RegisterCtrl',
-            access:         access.anon
-        });
-    $routeProvider.when('/private',
-        {
-            templateUrl:    '/partials/private',
-            controller:     'PrivateCtrl',
-            access:         access.loggedin
-        });
-    $routeProvider.when('/admin',
-        {
-            templateUrl:    '/partials/admin',
-            controller:     'AdminCtrl',
-            access:         access.superuser
-        });
-     $routeProvider.when('/user_admin',
-        {
-            templateUrl:    '/partials/user_admin',
-            controller:     'UserAdminCtrl',
-            access:         access.superuser
-        });
-    $routeProvider.when('/problems',
-        {
-            templateUrl:    '/partials/problems',
-            controller:     'ProblemCtrl',
-            access:         access.loggedin
-        });
-    $routeProvider.when('/404',
-        {
-            templateUrl:    '/partials/404',
-            access:         access.all
-        });
-    $routeProvider.otherwise({redirectTo:'/404'});
+        $routeProvider.when('/',
+            {
+                templateUrl:    '/partials/home',
+                controller:     'HomeCtrl',
+                access:         access.loggedin
+            });
+        $routeProvider.when('/login',
+            {
+                templateUrl:    '/partials/login',
+                controller:     'LoginCtrl',
+                access:         access.anon
+            });
+        $routeProvider.when('/register',
+            {
+                templateUrl:    '/partials/register',
+                controller:     'RegisterCtrl',
+                access:         access.anon
+            });
+        $routeProvider.when('/auth/twitter',
+            {
+                templateUrl:    '/partials/register',
+                controller:     'RegisterCtrl',
+                access:         access.anon
+            });
+        $routeProvider.when('/private',
+            {
+                templateUrl:    '/partials/private',
+                controller:     'PrivateCtrl',
+                access:         access.loggedin
+            });
+        $routeProvider.when('/admin',
+            {
+                templateUrl:    '/partials/admin',
+                controller:     'AdminCtrl',
+                access:         access.superuser
+            });
+         $routeProvider.when('/user_admin',
+            {
+                templateUrl:    '/partials/user_admin',
+                controller:     'UserAdminCtrl',
+                access:         access.superuser
+            });
+        $routeProvider.when('/problems',
+            {
+                templateUrl:    '/partials/problems',
+                controller:     'ProblemCtrl',
+                access:         access.loggedin
+            });
+        $routeProvider.when('/404',
+            {
+                templateUrl:    '/partials/404',
+                access:         access.all
+            });
+        $routeProvider.otherwise({redirectTo:'/404'});
 
-    $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
 
-    var interceptor = ['$location', '$q', function($location, $q) {
-        function success(response) {
-            return response;
-        }
-
-        function error(response) {
-
-            if(response.status === 401) {
-                $location.path('/login');
-                return $q.reject(response);
+        var interceptor = ['$location', '$q', function($location, $q) {
+            function success(response) {
+                return response;
             }
-            else {
-                return $q.reject(response);
+
+            function error(response) {
+
+                if(response.status === 401) {
+                    $location.path('/login');
+                    return $q.reject(response);
+                }
+                else {
+                    return $q.reject(response);
+                }
             }
-        }
 
-        return function(promise) {
-            return promise.then(success, error);
-        }
-    }];
+            return function(promise) {
+                return promise.then(success, error);
+            }
+        }];
 
-    $httpProvider.responseInterceptors.push(interceptor);
+        $httpProvider.responseInterceptors.push(interceptor);
 
-}])
+    }])
 
     .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
 

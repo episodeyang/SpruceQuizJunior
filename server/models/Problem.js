@@ -43,7 +43,7 @@ tempproblem.save();
 tempproblem = new ProblemM({
         problemUUID: "d0003",
         topLevel: "true",
-        problemType: 'multipleChoice',
+        problemType: 'fillIn',
         question: ["The first president of the US is:","and the second first lady is:","."],
         choices : ["Lincoln","David Cooperfield","Bush Junior","G.W. Bush"],
         multimedia: ['image1.png'],

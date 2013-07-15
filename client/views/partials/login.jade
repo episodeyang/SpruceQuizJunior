@@ -1,4 +1,4 @@
-.row(style='margin-top: 80px;')
+.row-fluid(style='margin-top: 80px;')
     .span6
         img(style='margin: 0px 0px 20px 60px;float:right;', width="320", src='/img/firstpic.png', alt='first picture')
     .span6.text-center
@@ -8,13 +8,32 @@
           br
           | 新一代的学习管理平台
         .row
-            .span2.offset2
-                a.btn.btn-success.small(href='#register', data-ng-click='isCollapsed') 现在注册！
-                div(collapse='isCollapsed')
-                    .well.well-large Some content
+            div.span8.offset2
+                a.btn.btn-success(data-ng-click='isCollapsed = !isCollapsed') 点击这里登录
+                div(collapse='!isCollapsed')
+                    hr
+                    .well.well-large
+                        form.form-horizontal(ng-submit="login()", name="loginForm")
+                            .control-group
+                                label.control-label(for="username") Username
+                                .controls
+                                    input(type="text", data-ng-model="username", placeholder="Username", name="username", required)
+                            .control-group
+                                label.control-label(for="password") Password
+                                .controls
+                                    input(type="password", data-ng-model="password", placeholder="Password", name="password", required)
+                            .control-group
+                                .controls
+                                    label(for="rememberme").checkbox
+                                        input(type="checkbox", data-ng-model="rememberme", name="rememberme")
+                                        | Remember me
+                            .control-group
+                                .controls
+                                    button.btn(type="submit") Log in
 
+                        .alert.alert-error(data-ng-bind="error", data-ng-show="error")
                 p(style='margin-top: 20px;')
-                    a(href='#login')用户登入
+                    a(href='/register')现在注册！
 
 hr
 .row-fluid.marketing
@@ -38,40 +57,3 @@ hr
         p 完整的报告工具，让老师更好的掌握学生情况
         p 抓住课后时间，提前预读，及时复习，让学习更加高效！
     .span6
-
-//-ul
-    li admin/123
-    li user/123
-hr
-.row.span6.offset3
-    form.form-horizontal(ng-submit="login()", name="loginForm")
-        .control-group
-            label.control-label(for="username") Username
-            .controls
-                input(type="text", data-ng-model="username", placeholder="Username", name="username", required)
-        .control-group
-            label.control-label(for="password") Password
-            .controls
-                input(type="password", data-ng-model="password", placeholder="Password", name="password", required)
-        .control-group
-            .controls
-                label(for="rememberme").checkbox
-                    input(type="checkbox", data-ng-model="rememberme", name="rememberme")
-                    | Remember me
-        .control-group
-            .controls
-                button.btn(type="submit") Log in
-//-.btn-group
-    a.btn(href="", data-ng-click="loginOauth('facebook')")
-        i.icon-facebook-sign
-        |  Facebook
-    a.btn(href="", data-ng-click="loginOauth('twitter')")
-        i.icon-twitter
-        |  Twitter
-    a.btn(href="", data-ng-click="loginOauth('google')")
-        i.icon-google-plus-sign
-        |  Google
-    a.btn(href="", data-ng-click="loginOauth('linkedin')")
-        i.icon-linkedin
-        |  LinkedIn
-
