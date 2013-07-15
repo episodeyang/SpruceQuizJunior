@@ -1,0 +1,49 @@
+h1 成绩报告
+hr
+.row-fluid
+    .span3
+        .row.span12
+            input(type="text", ng-model="expression")
+        .row.span12
+            div(mathjax-bind="expression")
+    .span6
+        .row-fluid(data-ng-repeat="problem in problems",style="padding: 20px; margin-bottom: 30px; border-style:solid;border-width:1px; border-color:#dadada;border-radius: 5px; background-color:#f5f5f5;")
+            .span12
+                .row-fliud
+                    .span3
+                        .btn 编辑题目
+                    .span9
+                        .row-fluid
+                            span(ng-repeat = "segment in problem.question")
+                                span(mathjax-bind = "segment")
+                                span(ng-hide = "$position=='last'") {{'&nbsp;'}}
+                                    input(ng-Hide = "(problem.problemType =='multipleChoice')",type="text",style="width:100px;")
+                        .row-fluid
+                            .span9.offset1
+                                div(ng-repeat = "choice in problem.choices")
+                                    div(style = "padding: 5px; margin-bottom: 5px; border-style:solid;border-width:1px; border-color:#dadada;border-radius: 5px; background-color:#ffffff;")
+                                        span(mathjax-bind = "choice")
+                        .row-fluid
+                            .span9 答案是:
+                                span(mathjax-bind = "problem.solutions.join(', ')+ '.'")
+                        .row-fluid
+                            .span9
+                                div(ng-repeat = "explanation in problem.explanations")
+                                    p(mathjax-bind = "explanation")
+    .span3
+
+table.table.table-striped(data-ng-hide="loading")
+    thead
+        tr
+            th #
+            th 题干
+            th 选择
+    tbody
+        tr(data-ng-repeat="problem in problems")
+            td 
+                {{ problem.id }}
+            td 
+                {{ problem.question }}
+            td
+                {{ problem.choices}}
+
