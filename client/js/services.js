@@ -72,7 +72,7 @@ angular.module('spruceDBServices', ['ngResource'])
 });
 
 angular.module('spruceDBServices', ['ngResource'])
-    .factory('Reports', function($resource){
+    .factory('StudentProperties', function($resource){
         //TODO: I want an API that looks like:
         //      /api/student/:id/grades/:key
         return $resource('/api/problems/:uuid', {uuid:'@problemUUID'}, {
