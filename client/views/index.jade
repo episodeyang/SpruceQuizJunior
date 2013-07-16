@@ -5,9 +5,11 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         title 云杉习题-新一代学习管理平台
         link(rel='stylesheet', href='css/app.css')
         script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js")
-        //script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js")
+        //-script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js")
         script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
-        link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css",
+        //-link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css",
+            rel="stylesheet")
+        link(href='/css/bootstrap-combined.no-icons.min.SpruceLearning.css',
             rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
         script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js')
@@ -36,9 +38,9 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                     .container-fluid
                         ul.nav
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                                a(href='/login') Log in
+                                a(href='/login') 云山习题
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                                a(href='/register') Register
+                                a(href='/register') 用户注册
                             li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                                 a(href='/') Home
                             li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
@@ -68,4 +70,4 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                     p &copy;
                         a(href="www.sprucelearning.com") 杉景教育科技
                         | 2013
-            //script(src='/js/widgets.js')
+            //-script(src='/js/widgets.js')
