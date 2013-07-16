@@ -71,6 +71,15 @@ angular.module('spruceDBServices', ['ngResource'])
     });
 });
 
+angular.module('spruceDBServices', ['ngResource'])
+    .factory('Reports', function($resource){
+        //TODO: I want an API that looks like:
+        //      /api/student/:id/grades/:key
+        return $resource('/api/problems/:uuid', {uuid:'@problemUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+        });
+    });
+
 // angular.module('SpruceQuizApp')
 // .factory('Problems', function($http) {
 //     return {
