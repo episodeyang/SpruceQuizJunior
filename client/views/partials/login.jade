@@ -1,38 +1,48 @@
 .row-fluid(style='margin-top: 80px;')
     .span6
         img(style='margin: 0px 0px 20px 60px;float:right;', width="320", src='/img/firstpic.png', alt='first picture')
-    .span6.text-center
-        h1(style='font-size: 36px; padding-bottom: 20px;') 欢迎来到云杉习题
+    .span6
+        h1.text-center(style='font-size: 36px; padding-bottom: 20px;') 欢迎来到云杉习题
         p.lead.text-center(style='padding-bottom: 60px;')
           | 省时省力的
           br
           | 新一代的学习管理平台
-        .row
+        .row-fluid
             div.span8.offset2
-                a.btn.btn-success(data-ng-click='isCollapsed = !isCollapsed') 点击这里登录
+                .text-center
+                    a.btn.btn-success(data-ng-click='isCollapsed = !isCollapsed') 点击这里登录
                 div(collapse='!isCollapsed')
-                    .well.well-large
-                        form.form-horizontal(ng-submit="login()", name="loginForm")
-                            .control-group
-                                label.control-label(for="username") Username
-                                .controls
-                                    input(type="text", data-ng-model="username", placeholder="Username", name="username", required)
-                            .control-group
-                                label.control-label(for="password") Password
-                                .controls
-                                    input(type="password", data-ng-model="password", placeholder="Password", name="password", required)
-                            .control-group
-                                .controls
+                    hr
+                    div.well.well-large
+                        form(ng-submit="login()", name="loginForm")
+                            .row-fluid
+                                .span3
+                                    .form-inline.text-right
+                                        p(style="margin:6px 5px 10px;") 用户名
+                                .span9
+                                    input.span12(type="text", data-ng-model="username", placeholder="在这里输入用户名",
+                                        name="username", required)
+                            .row-fluid
+                                .span3
+                                    .form-inline.text-right
+                                        p(style="margin:6px 5px 10px;") 密码
+                                .span9
+                                    input.span12(type="password", data-ng-model="password", placeholder="在这里输入密码",
+                                name="password",
+                                    required)
+                            .row-fluid
+                                .span9.offset3
                                     label(for="rememberme").checkbox
                                         input(type="checkbox", data-ng-model="rememberme", name="rememberme")
-                                        | Remember me
-                            .control-group
-                                .controls
+                                        | 记住我
+                            .row-fluid
+                                .span4.offset8
                                     button.btn(type="submit") Log in
 
                         .alert.alert-error(data-ng-bind="error", data-ng-show="error")
                 p(style='margin-top: 20px;')
-                    a(href='/register')现在注册！
+                    .text-center
+                        a(href='/register')现在注册！
 
 hr
 .row-fluid.marketing

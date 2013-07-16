@@ -1,15 +1,17 @@
 row-fluid
     .span6.offset3
-        h1 Register
+        h1 用户注册
         form.form-horizontal(ng-submit="register()", name="registerForm")
             .control-group
-                label.control-label(for="username") Username
+                label.control-label(for="username") 用户名
                 .controls
-                    input(type="text", data-ng-model="username", placeholder="Username", name="username", required, data-ng-minlength="1", data-ng-maxlength="20")
+                    input(type="text", data-ng-model="username", placeholder="用户名", name="username", required,
+                    data-ng-minlength="1", data-ng-maxlength="20")
             .control-group
-                label.control-label(for="password") Password
+                label.control-label(for="password") 密码
                 .controls
-                    input(type="password", data-ng-model="password", placeholder="Password", name="password", required, data-ng-minlength="5", data-ng-maxlength="60")
+                    input(type="password", data-ng-model="password", placeholder="密码", name="password", required,
+                    data-ng-minlength="5", data-ng-maxlength="60")
             .control-group
                 label.radio.inline
                     input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.admin }}")
@@ -28,7 +30,7 @@ row-fluid
                     button.btn(type="submit", data-ng-disabled="registerForm.$invalid") Submit
 
             .alert.alert-error(ng-show="registerForm.$invalid")
-                strong Please correct the following errors:
+                //-strong Please correct the following errors:
                 ul
                     li(ng-show="registerForm.username.$error.required") Username is required
                     li(ng-show="registerForm.username.$error.minlength") Username has to be at least 1 character long
