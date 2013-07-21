@@ -14,28 +14,48 @@ var UserM = require('./SchemaModels').User;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempuser = new UserM({
-        id:         1,
-        username:   "student",
+        id:         "u0001",
+        username:   "student1",
         password:   "123",
         role:   userRoles.student
     });
 tempuser.save();
 tempuser = new UserM({
-        id:         2,
+        id:         "u0002",
+        username:   "student2",
+        password:   "123",
+        role:   userRoles.student
+    });
+tempuser.save();
+tempuser = new UserM({
+        id:         "u0003",
+        username:   "student3",
+        password:   "123",
+        role:   userRoles.student
+    });
+tempuser.save();
+tempuser = new UserM({
+        id:         "u0004",
         username:   "parent",
         password:   "123",
         role:   userRoles.parents
     });
 tempuser.save();
 tempuser = new UserM({
-        id:         3,
-        username:   "teacher",
+        id:         "u0005",
+        username:   "teacher1",
+        password:   "123",
+        role:   userRoles.teacher
+    });
+tempuser = new UserM({
+        id:         "u0006",
+        username:   "teacher2",
         password:   "123",
         role:   userRoles.teacher
     });
 tempuser.save();
 tempuser = new UserM({
-        id:         4,
+        id:         "u0007",
         username:   "admin",
         password:   "123",
         role:   userRoles.admin

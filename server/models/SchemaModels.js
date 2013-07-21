@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 //User schema
 var UserSchema = new mongoose.Schema({ 
     id: {
-      type: Number,
+      type: String,
       unique: true
     },
     username: {
@@ -45,10 +45,37 @@ var ProblemSchema = new mongoose.Schema({
 
 var Problem = mongoose.model('Problem', ProblemSchema);
 
+//Student schema
+var StudentSchema = new mongoose.Schema({ 
+    userUUID: {
+      type: String,
+      unique: true
+    },
+    studentName: String,
+    schoolGroup: Array,
+    exams: Array
+}, { collection : 'student' });
+
+var Student = mongoose.model('Student', StudentSchema);
+
+//Teacher schema
+var TeacherSchema = new mongoose.Schema({ 
+    userUUID: {
+      type: String,
+      unique: true
+    },
+    teacherName: String,
+    schoolGroup: Array,
+}, { collection : 'teacher' });
+
+var Teacher = mongoose.model('Teacher', TeacherSchema);
+
 //other schemas here
 
 //exports
 module.exports = {
   User: User,
-  Problem: Problem
+  Problem: Problem,
+  Student: Student,
+  Teacher: Teacher
 }

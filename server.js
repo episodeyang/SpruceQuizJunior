@@ -5,6 +5,8 @@ var express =       require('express')
     , path =        require('path')
     , User =        require('./server/models/User.js')
     , Problem =     require('./server/models/Problem.js')
+    , Student =     require('./server/models/Student.js')
+    , Teacher =     require('./server/models/Teacher.js');
 
 
 var app = express();
