@@ -92,7 +92,7 @@ angular.module('SpruceQuizApp')
 }]);
 
 angular.module('SpruceQuizApp')
-.controller('userAdminCtrl',
+.controller('UserAdminCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
     $scope.loading = true;
 
