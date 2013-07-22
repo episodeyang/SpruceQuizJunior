@@ -23,25 +23,32 @@ h1 学生管理
             //with angular-ui 5.0 (next release), should be able to
             //do: .tabbable.tabs-below left right.
             tab(heading="学生名单")
-                .row-fluid
-                    div.pull-left
-                        h4 新增用户
-                    div.pull-right
+                div
+                    //-You do you data binding here, so that when this list is cleaned up, you can
+                    //-hide this entire division.
+                    h4.pull-left 新增学生 &nbsp;
+                    span.pull-left(style="padding-top:3px;")
                         button.btn.btn-small.btn-danger 清空通知
-                table.table.table-striped(data-ng-hide="loading")
-                    thead
-                        tr
-                            th dsfa1
-                            th as2
-                            th sdfa3
-                    tbody
-                        tr
-                            td adfasfa1
-                            td asdfasdf1
-                            td asfdas1
+                    div.pull-right(style="padding-top:3px;")
+                        form.form-search
+                            input.span12.search-query(placeholder="搜索用户")
+                    table.table.table-striped(data-ng-hide="loading")
+                        thead
+                            tr
+                                th dsfa1
+                                th as2
+                                th sdfa3
+                        tbody
+                            tr
+                                td adfasfa1
+                                td asdfasdf1
+                                td asfdas1
 
-                hr
-                h4 其他用户
+                    hr
+                h4.pull-left 学生列表
+                div.pull-right(style="padding-top:3px;")
+                    form.form-search
+                        input.span12.search-query(placeholder="搜索用户")
                 table.table.table-striped(data-ng-hide="loading")
                     thead
                         tr
