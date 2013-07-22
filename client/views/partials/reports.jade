@@ -1,25 +1,46 @@
-h1 成绩报告
 .row-fluid
-    .span2
-        br
-        br
-        br
-        .row-fluid.span12
-            input(type="text", ng-model="expression", style="width:100%;")
-        .row-fluid.span12
-            div(mathjax-bind="expression")
-    .span8
-        div.row-fluid.pull-right
-            .span2.offset10
+    .span8.offset2
+        .row-fluid.pull-right
+            .span6
+                h1 成绩报告
+            .span2.offset4
                 img(src="/img/2_large.png")
+.row-fluid
+    .span8.offset2
         div
             tabset
                 tab(heading="成绩概况")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
+                                li
+                                    a(href="#Preface") Preface
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") Analytics
                     div(style="height:100%;")
+                        h1 Decoding Learning:
+                        h3.text-right The Proof, Promise and Potential of Digital Education
                         br
-                        br
-                        br
-                        p hahahaha
+                        h2(id="Preface") Preface
+                        p This report, published by Pearson and written by the Economist Intelligence Unit, is part of a wide-ranging programme of quantitative and qualitative analysis, entitled The Learning Curve. It seeks to further our understanding of what leads to successful educational outcomes – both economic and social. The design and execution of the programme has benefited from the ongoing advice of some of the world’s leading educational scholars.
+                        img(src="/img/Quarterly.jpg")
+                        p This report itself outlines the main findings from analysis of a large body of internationally comparable education data – The Learning Curve Data Bank.  It also draws on extensive desk research, as well as in-depth interviews conducted with 16 experts in education. The research was conducted entirely by the Economist Intelligence Unit, and the views expressed in the report do not necessarily reflect those of Pearson. The report was written by Dr Paul Kielstra, and edited by Denis McCauley of the Economist Intelligence Unit.
+                        p Sincere thanks go to the interviewees for sharing their insights on this topic. These include the following individuals:
+                        h2(id="Chapter1") Chapter 1: Learning with Technology
+                        p in this chapter we provide an overview of promising innovations in learning with technology
+                            | . The chapter is organised around the eight learning themes discussed in chapter 1. We
+                            | consider the type of learning that takes place within each theme; we then present examples of
+                            | how technology can support those types of learning. We include a set of case studies that
+                            | provide a snapshot of learning in action.
+                        p We highlight those innovations we believe offer the greatest potential,
+                            | drawn from the 124 research and 86 teacher–led examples reviewed.
+                        p all the examples quoted are referenced in footnotes. a full list of the innovations ranked
+                            | in the comparative judgement exercise along with additional resources from the report
+                            | can be
+                        found online at &nbsp;
+                            a(href="http://www.nesta.org.uk/assets/features/decoding_learning") http://www.nesta.org.uk/assets/features/decoding_learning
+                        span .
                 tab(heading="成绩走势") hahaha
                     .row-fluid(data-ng-repeat="problem in problems",style="padding: 20px; margin-bottom: 30px; border-style:solid;border-width:1px; border-color:#dadada;border-radius: 5px; background-color:#f5f5f5;")
                         .span12
@@ -46,6 +67,7 @@ h1 成绩报告
                                                 p(mathjax-bind = "explanation")
                 tab(heading="知识点")
                 tab(heading="时间安排")
+                tab(heading="排名")
     .span2
         div
             strong

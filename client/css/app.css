@@ -48,3 +48,25 @@ body {
 .fade-show-setup.fade-show-start {
     opacity:1;
 }
+
+
+.sp-reports-sidebar {
+    line-height: 1em;
+    padding:0px;
+}
+.sp-reports-sidebar.affix {
+    left:20px;
+}
+.sp-reports-sidnav {
+    width:100%;
+    line-height: 1em;
+    background-color: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding:0px;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    box-shadow: 0 1px 4px rgba(0,0,0,.065);
+
+}
