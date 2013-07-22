@@ -2,18 +2,26 @@ h1 学生管理
 .row-fluid
     .span3
         h4 选择学校
-        input(type="text", placeholder="学校名称／ID", ngmodel="schoolname", style="width:100%;")
-        div.alert.alert-info TODO: 在这里显示学校tag，
-            button.close(type="button", data-dismiss="alert") &times;
+        input.span12(type="text", placeholder="学校名称／ID", ngmodel="schoolname")
+        //- the demo javascript please refer to:
+        //- http://angular-ui.github.io/bootstrap/#/alert
+        alert.alert-info(type="info", close="closeAlert()")
+            | TODO: 在这里显示学校tag，
         hr
         h4 选择班级或课程
-        input(type="text", placeholder="班级或课程", ngmodel="schoolname", style="width:100%;")
+        input.span12(type="text", placeholder="班级或课程", ngmodel="schoolname")
+        alert.alert-success(type="success", close="closealert()")
+            | todo: 在这里显示班级或者课程tag，
         hr
-        h4 选择学生
-        input(type="text", placeholder="学生姓名或ID", ngmodel="schoolname", style="width:100%;")
+        h4 选择教师
+        input.span12(type="text", placeholder="教师姓名或ID", ngmodel="schoolname")
+        alert(close="closeAlert()")
+            | TODO: 在这里显示教师头像，
         hr
     .span9
         tabset
+            //with angular-ui 5.0 (next release), should be able to
+            //do: .tabbable.tabs-below left right.
             tab(heading="学生名单")
                 .row-fluid
                     div.pull-left
@@ -53,3 +61,10 @@ h1 学生管理
                                 span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
             tab(heading="教师名单")
             tab(heading="新增用户")
+                h4 学生
+                h4 教师
+                p "{{accessLevels.loggedin}}"
+            //Only superuser(admin, teacher) can see the tab below.
+            //The tab directive currently does not support this functionality.
+            tab(heading="学校", class='{{"hide"}}')
+            //tab(heading="学校", data-ng-hide='{{false}}')
