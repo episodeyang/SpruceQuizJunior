@@ -191,19 +191,44 @@ var routes = [
         path: '/api/students/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getbyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.superuser
     },
     {
         path: '/api/students/:uuid/schools',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSchools],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/students/:uuid/teachers',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getTeachers],
+        accessLevel: accessLevels.loggedin
+    },
+    //Section resourse
+    {
+        path: '/api/sections/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getbyId],
         accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/sections/:uuid/students',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getStudents],
+        accessLevel: accessLevels.superuser
+    },
+    {
+        path: '/api/sections/:uuid/teachers',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getTeachers],
+        accessLevel: accessLevels.superuser
+    },
+    {
+        path: '/api/sections/:uuid/schools',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getSchools],
+        accessLevel: accessLevels.superuser
     },
     //Problem resource
     {
@@ -212,16 +237,7 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.getbyId],
         accessLevel: accessLevels.loggedin
     },
-    
 
-    //Section resourse
-    {
-        path: '/api/sections/:uuid/students',
-        httpMethod: 'GET',
-        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getStudents],
-        accessLevel: accessLevels.loggedin
-    },
-    
     // All other get requests should be handled by AngularJS's client-side routing system
     {
         path: '/*',
