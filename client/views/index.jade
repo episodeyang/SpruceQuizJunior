@@ -31,49 +31,49 @@ html(lang='en', data-ng-app='SpruceQuizApp')
             }
     body(data-ng-controller="AppCtrl", data-ng-cloak)
         #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-        .navbar
-            .navbar-inner
-                .container-fluid
-                    ul.nav
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/login') 云杉习题
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/register') 用户注册
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                            a(href='/') Home
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                            a(href='/private') Private
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/admin') Admin
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/user_admin') 学生管理
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav).dropdown
-                            a.dropdown-toggle 问题
-                                span.caret
-                            ul.dropdown-menu
-                                li
-                                    a(href='/problems') 编辑问题
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/reports') 成绩和报告
-                        li(data-access-level='{{ accessLevels.loggedin }}')
-                            a(href="", data-ng-click="logout()")
-                                | Log out
-                    div
-                        p
-                    div.pull-right(data-access-level='{{ accessLevels.loggedin }}')
-                        strong {{ user.username }}&nbsp;
+        div.sp-container
+            .navbar
+                .navbar-inner
+                    .container-fluid
+                        ul.nav
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/login') 云杉习题
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/register') 用户注册
+                            li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                                a(href='/') Home
+                            li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                                a(href='/private') Private
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                                a(href='/admin') Admin
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                                a(href='/user_admin') 学生管理
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav).dropdown
+                                a.dropdown-toggle 问题
+                                    span.caret
+                                ul.dropdown-menu
+                                    li
+                                        a(href='/problems') 编辑问题
+                            li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                                a(href='/reports') 成绩和报告
+                            li(data-access-level='{{ accessLevels.loggedin }}')
+                                a(href="", data-ng-click="logout()")
+                                    | Log out
+                        div
+                            p
+                        div.pull-right(data-access-level='{{ accessLevels.loggedin }}')
+                            strong {{ user.username }}&nbsp;
                         //-span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin,"label-success": user.role == userRoles.superuser}')
                             | {{ getUserRoleText(user.role) }}
-                        span(data-access-level='{{ accessLevels.loggedin}}')
-                            span &nbsp;
-                            a(href="",data-ng-click="logout()")
-                                small 登出
-        div.sp-container
+                            span(data-access-level='{{ accessLevels.loggedin}}')
+                                span &nbsp;
+                                a(href="",data-ng-click="logout()")
+                                    small 登出
             div.sp-body
                 .container-fluid
                     div(data-ng-view='ng-view')
-            footer
-                .container.text-center(style="padding: 30px")
+            div.footer
+                .container.text-center(style="padding-top: 30px")
                     p &copy;
                         a(href="http://www.sprucelearning.com") 杉景教育科技
                         | &nbsp; 2013
