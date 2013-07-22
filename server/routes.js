@@ -4,6 +4,8 @@ var _ =           require('underscore')
     , AuthCtrl =  require('./controllers/auth')
     , UserCtrl =  require('./controllers/user')
     , ProblemCtrl =  require('./controllers/problem')
+    , StudentCtrl =  require('./controllers/student')
+    , TeacherCtrl =  require('./controllers/teacher')
     , User =      require('./models/User.js')
     , userRoles = require('../client/js/routingConfig').userRoles
     , accessLevels = require('../client/js/routingConfig').accessLevels;
@@ -137,6 +139,21 @@ var routes = [
         path: '/api/problems/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.getbyId],
+        accessLevel: accessLevels.loggedin
+    },
+    //Student resourse
+    {
+        path: '/api/students/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getbyId],
+        accessLevel: accessLevels.loggedin
+    },
+    
+    //Teacher resourse
+    {
+        path: '/api/teachers/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getbyId],
         accessLevel: accessLevels.loggedin
     },
     
