@@ -1,1 +1,20 @@
-//APIs for teacher
+//Implementation of the APIs of Teacher
+var _ =           require('underscore')
+    , TeacherM = require('../models/SchemaModels').Teacher
+
+module.exports = {
+    getbyId: function(req, res) {
+    	if(req.params.uuid === "all") {
+	        TeacherM.find(function (err, results) {
+	        	//console.log(results);
+	            res.json(results);
+	        });
+	    }
+	    else {
+	        TeacherM.findOne({ userUUID: req.params.uuid }, function (err, results) {
+	            //console.log(results);
+	            res.json(results);
+	    	});
+	    };
+	}
+}

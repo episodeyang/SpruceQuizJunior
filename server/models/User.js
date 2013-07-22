@@ -47,6 +47,7 @@ tempuser = new UserM({
         password:   "123",
         role:   userRoles.teacher
     });
+tempuser.save();
 tempuser = new UserM({
         id:         "u0006",
         username:   "teacher2",
