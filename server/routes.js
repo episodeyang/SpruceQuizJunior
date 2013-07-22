@@ -6,6 +6,8 @@ var _ =           require('underscore')
     , ProblemCtrl =  require('./controllers/problem')
     , StudentCtrl =  require('./controllers/student')
     , TeacherCtrl =  require('./controllers/teacher')
+    , SectionCtrl =  require('./controllers/section')
+    , SchoolCtrl =  require('./controllers/school')
     , User =      require('./models/User.js')
     , userRoles = require('../client/js/routingConfig').userRoles
     , accessLevels = require('../client/js/routingConfig').accessLevels;
@@ -134,6 +136,75 @@ var routes = [
     },
 
     //APIs needed by client
+    //School resource
+    {
+        path: '/api/schools/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getbyId],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/schools/:uuid/teachers',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getTeachers],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/schools/:uuid/students',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getStudents],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/schools/:uuid/sections',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getSections],
+        accessLevel: accessLevels.admin
+    },
+    //Teacher resourse
+    {
+        path: '/api/teachers/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getbyId],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/teachers/:uuid/sections',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getSections],
+        accessLevel: accessLevels.superuser
+    },
+    {
+        path: '/api/teachers/:uuid/schools',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getSchools],
+        accessLevel: accessLevels.superuser
+    },
+    {
+        path: '/api/teachers/:uuid/students',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getStudents],
+        accessLevel: accessLevels.superuser
+    },
+    //Student resourse
+    {
+        path: '/api/students/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getbyId],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/students/:uuid/schools',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSchools],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/students/:uuid/teachers',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getTeachers],
+        accessLevel: accessLevels.admin
+    },
     //Problem resource
     {
         path: '/api/problems/:uuid',
@@ -141,19 +212,13 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.getbyId],
         accessLevel: accessLevels.loggedin
     },
-    //Student resourse
-    {
-        path: '/api/students/:uuid',
-        httpMethod: 'GET',
-        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getbyId],
-        accessLevel: accessLevels.loggedin
-    },
     
-    //Teacher resourse
+
+    //Section resourse
     {
-        path: '/api/teachers/:uuid',
+        path: '/api/sections/:uuid/students',
         httpMethod: 'GET',
-        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getbyId],
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getStudents],
         accessLevel: accessLevels.loggedin
     },
     
