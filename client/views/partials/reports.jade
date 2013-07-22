@@ -4,7 +4,7 @@
             .span6
                 h1 成绩报告
             .span2.offset4
-                img(src="/img/2_large.png")
+                img(src="/img/3_large.png")
 .row-fluid
     .span8.offset2
         div
@@ -41,33 +41,138 @@
                         found online at &nbsp;
                             a(href="http://www.nesta.org.uk/assets/features/decoding_learning") http://www.nesta.org.uk/assets/features/decoding_learning
                         span .
-                tab(heading="成绩走势") hahaha
-                    .row-fluid(data-ng-repeat="problem in problems",style="padding: 20px; margin-bottom: 30px; border-style:solid;border-width:1px; border-color:#dadada;border-radius: 5px; background-color:#f5f5f5;")
-                        .span12
-                            .row-fliud
-                                .span3
-                                    .btn 编辑题目
-                                .span9
-                                    .row-fluid
-                                        span(ng-repeat = "segment in problem.question")
-                                            span(mathjax-bind = "segment")
-                                            span(ng-hide = "$position=='last'") {{'&nbsp;'}}
-                                                input(ng-Hide = "(problem.problemType =='multipleChoice')",type="text",style="width:100px;")
-                                    .row-fluid
-                                        .span9.offset1
-                                            div(ng-repeat = "choice in problem.choices")
-                                                div(style = "padding: 5px; margin-bottom: 5px; border-style:solid;border-width:1px; border-color:#dadada;border-radius: 5px; background-color:#ffffff;")
-                                                    span(mathjax-bind = "choice")
-                                    .row-fluid
-                                        .span9 答案是:
-                                            span(mathjax-bind = "problem.solutions.join(', ')+ '.'")
-                                    .row-fluid
-                                        .span9
-                                            div(ng-repeat = "explanation in problem.explanations")
-                                                p(mathjax-bind = "explanation")
+                tap(heading="常用图表")
+                tab(heading="成绩走势")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
+                                li
+                                    a(href="#Preface") 折线图
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 排名变化
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 考点得分折线图
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 个人能力变化
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 排名变化
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+
+                    div(style="height:100%;")
+                        h1 Decoding Learning:
+                        h3.text-right The Proof, Promise and Potential of Digital Education
+                        br
+                        h2(id="Preface") Preface
+                        p This report, published by Pearson and written by the Economist Intelligence Unit, is part of a wide-ranging programme of quantitative and qualitative analysis, entitled The Learning Curve. It seeks to further our understanding of what leads to successful educational outcomes – both economic and social. The design and execution of the programme has benefited from the ongoing advice of some of the world’s leading educational scholars.
+                        img(src="/img/Quarterly.jpg")
+                        p This report itself outlines the main findings from analysis of a large body of internationally comparable education data – The Learning Curve Data Bank.  It also draws on extensive desk research, as well as in-depth interviews conducted with 16 experts in education. The research was conducted entirely by the Economist Intelligence Unit, and the views expressed in the report do not necessarily reflect those of Pearson. The report was written by Dr Paul Kielstra, and edited by Denis McCauley of the Economist Intelligence Unit.
+                        p Sincere thanks go to the interviewees for sharing their insights on this topic. These include the following individuals:
+                        h2(id="Chapter1") Chapter 1: Learning with Technology
+                        p in this chapter we provide an overview of promising innovations in learning with technology
+                            | . The chapter is organised around the eight learning themes discussed in chapter 1. We
+                            | consider the type of learning that takes place within each theme; we then present examples of
+                            | how technology can support those types of learning. We include a set of case studies that
+                            | provide a snapshot of learning in action.
+                        p We highlight those innovations we believe offer the greatest potential,
+                            | drawn from the 124 research and 86 teacher–led examples reviewed.
+                        p all the examples quoted are referenced in footnotes. a full list of the innovations ranked
+                            | in the comparative judgement exercise along with additional resources from the report
+                            | can be
+                        found online at &nbsp;
+                            a(href="http://www.nesta.org.uk/assets/features/decoding_learning") http://www.nesta.org.uk/assets/features/decoding_learning
+                        span .
                 tab(heading="知识点")
-                tab(heading="时间安排")
-                tab(heading="排名")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
+                                li
+                                    a(href="#1") 知识点强弱表
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#1") 潜力点
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 时间安排
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 时间安排
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 时间安排
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 时间安排
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                    div
+                        h2(id="1") 知识点
+                        p 显示各知识点的预习，做题，复习，查错时间等
+                        p 显示班级平均时间
+                tab(heading="方法和时间")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
+                                li
+                                    a(href="#1") 知识点
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") 时间安排
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                    div
+                        h2(id="1") 知识点
+                        p 显示各知识点的预习，做题，复习，查错时间等
+                        p 显示班级平均时间
+                tab(heading="班级排名")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
+                                li
+                                    a(href="#Preface") 班级成绩分布
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Preface") 知识掌握情况
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Preface") 知识点
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Preface") 知识点
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                    div(style="height:100%;")
+                tab(heading="学区分布")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
+                                li
+                                    a(href="#Preface") 学区学习情况统计
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Preface") 复习时间
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Preface") 本周进度
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Preface") 学生排名
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                    div
+                        div.pull-right
+                            iframe(width='425', height='350', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src='https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=%E6%AD%A6%E5%A8%81&aq=&sll=41.833733,-87.731964&sspn=0.856423,1.174164&t=m&ie=UTF8&hq=&hnear=Wuwei,+Gansu,+China&ll=37.974515,102.566299&spn=0.094723,0.145912&z=12&output=embed')
+                                br
+                                    small
+                                        a(href='https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=%E6%AD%A6%E5%A8%81&aq=&sll=41.833733,-87.731964&sspn=0.856423,1.174164&t=m&ie=UTF8&hq=&hnear=Wuwei,+Gansu,+China&ll=37.974515,102.566299&spn=0.094723,0.145912&z=12', style='color: #0000FF; text-align: left;') View Larger Map
+                        div
+                            h2 学区卫星校情况统计
+                            p 武威地区第一中学
+                        div.pull-right
+                            img(src="")
+                        div
+                            h2 复习时间
+
+
     .span2
         div
             strong
