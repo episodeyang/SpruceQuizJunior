@@ -52,7 +52,8 @@ var StudentSchema = new mongoose.Schema({
       unique: true
     },
     studentName: String,
-    schoolGroup: Array,
+    sections: Array,
+    schools: Array,
     exams: Array
 }, { collection : 'student' });
 
@@ -65,10 +66,23 @@ var TeacherSchema = new mongoose.Schema({
       unique: true
     },
     teacherName: String,
-    schoolGroup: Array,
+    sections: Array,
+    schools: Array
 }, { collection : 'teacher' });
 
 var Teacher = mongoose.model('Teacher', TeacherSchema);
+
+//School schema
+var SchoolSchema = new mongoose.Schema({ 
+    schoolUUID: {
+      type: String,
+      unique: true
+    },
+    schoolName: String,
+    sections: Array
+}, { collection : 'school' });
+
+var School = mongoose.model('School', SchoolSchema);
 
 //other schemas here
 
@@ -77,5 +91,6 @@ module.exports = {
   User: User,
   Problem: Problem,
   Student: Student,
-  Teacher: Teacher
+  Teacher: Teacher,
+  School: School
 }

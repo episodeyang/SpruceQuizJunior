@@ -11,14 +11,16 @@ var TeacherM = require('./SchemaModels').Teacher;
 var tempteacher = new TeacherM({
         userUUID: "u0005",
         teacherName: "TeacherA",
-        schoolGroup: ["g0001"],
+        sections: ["g0001"],
+        schools: ["s0001"]
     });
 tempteacher.save();
 
 tempteacher = new TeacherM({
         userUUID: "u0006",
         teacherName: "TeacherB",
-        schoolGroup: ["g0001", "g0002"],
+        sections: ["g0001", "g0002"],
+        schools: ["s0001"]
     });
 tempteacher.save();
 

@@ -11,7 +11,8 @@ var StudentM = require('./SchemaModels').Student;
 var tempstudent = new StudentM({
         userUUID: "u0001",
         studentName: "Alice",
-        schoolGroup: ["g0001", "g0002"],
+        sections: ["g0001", "g0002"],
+        schools: ["s0001"],
         exams: ["e0001", "e0002"]
     });
 tempstudent.save();
@@ -19,7 +20,8 @@ tempstudent.save();
 tempstudent = new StudentM({
         userUUID: "u0002",
         studentName: "Bob",
-        schoolGroup: ["g0001", "g0003"],
+        sections: ["g0001", "g0003"],
+        schools: ["s0001"],
         exams: ["e0003", "e0004"]
     });
 tempstudent.save();
@@ -27,7 +29,8 @@ tempstudent.save();
 tempstudent = new StudentM({
         userUUID: "u0003",
         studentName: "Charlie",
-        schoolGroup: ["g0002", "g0003"],
+        sections: ["g0004", "g0005"],
+        schools: ["s0002"],
         exams: ["e0005", "e0006"]
     });
 tempstudent.save();
