@@ -7,7 +7,9 @@ var express =       require('express')
     , Problem =     require('./server/models/Problem.js')
     , Student =     require('./server/models/Student.js')
     , Teacher =     require('./server/models/Teacher.js')
-    , School =     require('./server/models/School.js');
+    , School =     require('./server/models/School.js')
+    , Section =     require('./server/models/Section.js')
+    , Exam  =     require('./server/models/Exam.js');
 
 
 var app = express();

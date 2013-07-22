@@ -45,6 +45,35 @@ var ProblemSchema = new mongoose.Schema({
 
 var Problem = mongoose.model('Problem', ProblemSchema);
 
+//Exam and sub-problem-object schema
+var ExamProblemSchema = new mongoose.Schema({ 
+    problemUUID: {
+      type: String,
+      unique: true
+    },
+    problemType: String,
+    weight: Number,
+    receivedScore: Number,
+    studentAnswer: Array
+});
+
+var ExamSchema = new mongoose.Schema({ 
+    examUUID: {
+      type: String,
+      unique: true
+    },
+    examTitle: String,
+    examDate: Date,
+    section: String,
+    attendence: Boolean,
+    totalScore: Number,
+    totalReceivedScore: Number,
+    rank: Number,
+    examProblems: [ExamProblemSchema]
+}, { collection : 'exam' });
+
+var Exam = mongoose.model('Exam', ExamSchema);
+
 //Student schema
 var StudentSchema = new mongoose.Schema({ 
     userUUID: {
@@ -84,6 +113,17 @@ var SchoolSchema = new mongoose.Schema({
 
 var School = mongoose.model('School', SchoolSchema);
 
+//Section schema
+var SectionSchema = new mongoose.Schema({ 
+    sectionUUID: {
+      type: String,
+      unique: true
+    },
+    sectionName: String
+}, { collection : 'section' });
+
+var Section = mongoose.model('Section', SectionSchema);
+
 //other schemas here
 
 //exports
@@ -92,5 +132,7 @@ module.exports = {
   Problem: Problem,
   Student: Student,
   Teacher: Teacher,
-  School: School
+  School: School,
+  Section: Section,
+  Exam: Exam
 }

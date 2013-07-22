@@ -1,5 +1,6 @@
 //Implementation of the APIs of Student
 var _ =           require('underscore')
+    , SchoolM = require('../models/SchemaModels').School
     , StudentM = require('../models/SchemaModels').Student
     , TeacherM = require('../models/SchemaModels').Teacher
 
@@ -20,8 +21,10 @@ module.exports = {
 	},
 	getSchools: function(req, res) {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
-            //console.log(results);
-            res.json(results.schools);
+    		SchoolM.find({ schoolUUID: { $in: results.schools } }, function (err, sresults) {
+	            //console.log(sresults);
+	            res.json(sresults);
+	        });
     	});
 	},
 	getTeachers: function(req, res) {
