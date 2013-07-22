@@ -3,6 +3,8 @@ h1 学生管理
     .span3
         h4 选择学校
         input(type="text", placeholder="学校名称／ID", ngmodel="schoolname", style="width:100%;")
+        div.alert.alert-info TODO: 在这里显示学校tag，
+            button.close(type="button", data-dismiss="alert") &times;
         hr
         h4 选择班级或课程
         input(type="text", placeholder="班级或课程", ngmodel="schoolname", style="width:100%;")
@@ -11,20 +13,43 @@ h1 学生管理
         input(type="text", placeholder="学生姓名或ID", ngmodel="schoolname", style="width:100%;")
         hr
     .span9
-        table.table.table-striped(data-ng-hide="loading")
-            thead
-                tr
-                    th
-                    th 姓名
-                    th 属性
-            tbody
-                tr(data-ng-repeat="user in users")
-                    td {{ user.id }}
-                    td
-                       i.icon-twitter(data-ng-show="user.provider === 'twitter'")
-                       i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
-                       i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
-                       i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
-                       |  {{ user.username }}
-                    td
-                        span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
+        tabset
+            tab(heading="学生名单")
+                .row-fluid
+                    div.pull-left
+                        h4 新增用户
+                    div.pull-right
+                        button.btn.btn-small.btn-danger 清空通知
+                table.table.table-striped(data-ng-hide="loading")
+                    thead
+                        tr
+                            th dsfa1
+                            th as2
+                            th sdfa3
+                    tbody
+                        tr
+                            td adfasfa1
+                            td asdfasdf1
+                            td asfdas1
+
+                hr
+                h4 其他用户
+                table.table.table-striped(data-ng-hide="loading")
+                    thead
+                        tr
+                            th
+                            th 姓名
+                            th 属性
+                    tbody
+                        tr(data-ng-repeat="user in users")
+                            td {{ user.id }}
+                            td
+                               i.icon-twitter(data-ng-show="user.provider === 'twitter'")
+                               i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
+                               i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
+                               i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
+                               |  {{ user.username }}
+                            td
+                                span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
+            tab(heading="教师名单")
+            tab(heading="新增用户")
