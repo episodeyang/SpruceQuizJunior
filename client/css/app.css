@@ -87,7 +87,7 @@ html,body {
 .sp-reports-sidebar.affix {
     left:20px;
 }
-.sp-reports-sidnav {
+.sp-reports-sidenav {
     width:100%;
     line-height: 1em;
     background-color: #fff;
@@ -99,4 +99,7 @@ html,body {
     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
     box-shadow: 0 1px 4px rgba(0,0,0,.065);
 
+}
+.bold {
+    font-weight: bold;
 }
