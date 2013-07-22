@@ -2,8 +2,24 @@
     display: none;
 }
 
-body {
+html,body {
     font-size: 1em;
+}
+.sp-container{
+    min-height:100%;
+    position:relative;
+}
+.sp-body{
+    background:white;
+    padding-bottom:100px;
+}
+footer {
+    height:100px;
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #f2f2f2;
 }
 #cover {
     position:absolute;
@@ -11,11 +27,12 @@ body {
     width:100%;
     background:white;
 }
-
 #userInfo {
     float:right;padding:8px;
 }
-
+#navbar{
+    margin-bottom: 0px;
+}
 .icon-twitter {
     color:#00A7E7;
 }
