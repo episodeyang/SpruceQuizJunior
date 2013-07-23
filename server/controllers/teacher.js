@@ -18,6 +18,13 @@ module.exports = {
 	    	});
 	    };
 	},
+	removebyId: function(req, res) {
+        TeacherM.remove({ userUUID: req.params.uuid }, function (err) {
+        	if(err) {
+        		res.send(404, "Remove teacher failed.");
+        	}
+    	});
+	},
 	getSections: function(req, res) {
         TeacherM.findOne({ userUUID: req.params.uuid }, function (err, results) {
             //console.log(results);

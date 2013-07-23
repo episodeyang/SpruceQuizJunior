@@ -169,6 +169,12 @@ var routes = [
         accessLevel: accessLevels.admin
     },
     {
+        path: '/api/teachers/:uuid',
+        httpMethod: 'DELETE',
+        middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.removebyId],
+        accessLevel: accessLevels.admin
+    },
+    {
         path: '/api/teachers/:uuid/sections',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getSections],
@@ -194,6 +200,18 @@ var routes = [
         accessLevel: accessLevels.superuser
     },
     {
+        path: '/api/students/:uuid',
+        httpMethod: 'DELETE',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.removebyId],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/students/:uuid',
+        httpMethod: 'POST',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.savebyId],
+        accessLevel: accessLevels.superuser
+    },
+    {
         path: '/api/students/:uuid/schools',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSchools],
@@ -204,6 +222,13 @@ var routes = [
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getTeachers],
         accessLevel: accessLevels.loggedin
+    },
+    //AuthUser resources
+    {
+        path: '/api/users/:uuid',
+        httpMethod: 'DELETE',
+        middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.removebyId],
+        accessLevel: accessLevels.admin
     },
     //Section resourse
     {
