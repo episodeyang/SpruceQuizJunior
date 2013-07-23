@@ -39,11 +39,11 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                             a(href='/login') 云杉习题
                         li(data-access-level='{{ accessLevels.anon }}', active-nav)
                             a(href='/register') 用户注册
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                        //-li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/') Home
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                        //-li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/private') Private
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                        //-li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') Admin
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/user_admin') 学生管理
