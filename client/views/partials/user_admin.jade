@@ -1,20 +1,25 @@
 h1 学生管理
 p 学生情况管理
-
-table.table.table-striped(data-ng-hide="loading")
-    thead
-        tr
-            th #
-            th Username
-            th Role
-    tbody
-        tr(data-ng-repeat="user in users")
-            td {{ user.id }}
-            td
-               i.icon-twitter(data-ng-show="user.provider === 'twitter'")
-               i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
-               i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
-               i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
-               |  {{ user.username }}
-            td
-                span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
+.row-fluid
+    .span3
+        h2 选择学校
+        input(type="text", placeholder="学校名称／ID", ngmodel="schoolname", style="width:100%;")
+        hr
+    .span9
+        table.table.table-striped(data-ng-hide="loading")
+            thead
+                tr
+                    th #
+                    th Username
+                    th Role
+            tbody
+                tr(data-ng-repeat="user in users")
+                    td {{ user.id }}
+                    td
+                       i.icon-twitter(data-ng-show="user.provider === 'twitter'")
+                       i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
+                       i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
+                       i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
+                       |  {{ user.username }}
+                    td
+                        span.label(data-ng-class='{"label-info": user.role == userRoles.loggedin, "label-success": user.role == userRoles.superuser}') {{ getUserRoleText(user.role) }}
