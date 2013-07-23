@@ -19,6 +19,22 @@ module.exports = {
 	    	});
 	    };
 	},
+	removebyId: function(req, res) {
+        StudentM.remove({ userUUID: req.params.uuid }, function (err) {
+        	if(err) {
+        		res.send(404, "Remove student failed.");
+        	}
+    	});
+	},
+	savebyId: function(req, res) {
+		var student = new StudentM(req.body);
+		console.log(student);
+		student.save(function (err) {
+			if (err) {
+				res.send(404, "Save student failed.");
+			}
+		});
+	},
 	getSchools: function(req, res) {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
     		SchoolM.find({ schoolUUID: { $in: results.schools } }, function (err, sresults) {
