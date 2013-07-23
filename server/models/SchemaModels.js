@@ -80,10 +80,18 @@ var StudentSchema = new mongoose.Schema({
       type: String,
       unique: true
     },
-    studentName: String,
+    firstName: String,
+    lastName: String,
+    dateOfBirth: Date,
+    sex: String,
+    email: String,
+    phone: Array,
+    address: String,
+    profilePic: String,
     sections: Array,
     schools: Array,
-    exams: Array
+    exams: Array,
+    comments: String
 }, { collection : 'student' });
 
 var Student = mongoose.model('Student', StudentSchema);

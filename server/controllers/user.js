@@ -17,5 +17,12 @@ module.exports = {
             });
             res.json(users);
         })
-    }
+    },
+    removebyId: function(req, res) {
+        UserM.remove({ id: req.params.uuid }, function (err) {
+            if(err) {
+                res.send(404, "Remove user failed.");
+            }
+        });
+    },
 };

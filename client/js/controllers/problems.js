@@ -14,7 +14,7 @@ angular.module('SpruceQuizApp')
 
     //Use the next two lines if accessing a specific problem with a uuid
     //$scope.problems = [];
-    //$scope.problems.push(Problems.get({uuid: "d0001"}));
+    //$scope.problems.push(Problems.get({uuid: "p0001"}));
 
     //Use the next line to get all problems
     $scope.problems = Problems.list();
