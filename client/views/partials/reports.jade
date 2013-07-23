@@ -47,13 +47,13 @@
                         .span2.sp-reports-sidebar.affix
                             ul.nav.nav-tabs.nav-stacked.sp-reports-sidnav
                                 li
-                                    a(href="#Preface") 折线图
+                                    a(href="#Preface2") 折线图
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
-                                    a(href="#Chapter1") 排名变化
+                                    a(href="#Chapter2") 排名变化
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
-                                    a(href="#Chapter1") 考点得分折线图
+                                    a(href="#Chapter2") 考点得分折线图
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
                                     a(href="#Chapter1") 个人能力变化
@@ -66,12 +66,12 @@
                         h1 Decoding Learning:
                         h3.text-right The Proof, Promise and Potential of Digital Education
                         br
-                        h2(id="Preface") Preface
+                        h2(id="Preface2") Preface
                         p This report, published by Pearson and written by the Economist Intelligence Unit, is part of a wide-ranging programme of quantitative and qualitative analysis, entitled The Learning Curve. It seeks to further our understanding of what leads to successful educational outcomes – both economic and social. The design and execution of the programme has benefited from the ongoing advice of some of the world’s leading educational scholars.
                         img(src="/img/Quarterly.jpg")
                         p This report itself outlines the main findings from analysis of a large body of internationally comparable education data – The Learning Curve Data Bank.  It also draws on extensive desk research, as well as in-depth interviews conducted with 16 experts in education. The research was conducted entirely by the Economist Intelligence Unit, and the views expressed in the report do not necessarily reflect those of Pearson. The report was written by Dr Paul Kielstra, and edited by Denis McCauley of the Economist Intelligence Unit.
                         p Sincere thanks go to the interviewees for sharing their insights on this topic. These include the following individuals:
-                        h2(id="Chapter1") Chapter 1: Learning with Technology
+                        h2(id="Chapter2") Chapter 1: Learning with Technology
                         p in this chapter we provide an overview of promising innovations in learning with technology
                             | . The chapter is organised around the eight learning themes discussed in chapter 1. We
                             | consider the type of learning that takes place within each theme; we then present examples of
@@ -175,8 +175,7 @@
 
     .span2
         div
-            strong
-                p  学生
+            h4 学生
             input(type="text", placeholder="学生姓名或ID", ng-model="sessionsSearchInput", style="width:100%;")
             div(mathjax-bing="sessionsSearchInput")
             img(src="/img/1.png", style="margin:5px;")
@@ -185,14 +184,12 @@
             img(src="/img/4.png", style="margin:5px;")
         hr
         div
-            strong
-                p 班级
+            h4 班级
             input(type="text", placeholder="班级或数字", ng-model="sessionsSearchInput", style="width:100%;")
             div(mathjax-bing="sessionsSearchInput")
         hr
         div
-            strong
-                p 学校
+            h4 学校
             input(type="text", placeholder="学校名称", ng-model="sessionsSearchInput", style="width:100%;")
             div(mathjax-bing="sessionsSearchInput")
 

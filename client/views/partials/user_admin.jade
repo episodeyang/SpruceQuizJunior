@@ -1,17 +1,19 @@
 h1 学生管理
-p 学生情况管理
 .row-fluid
     .span3
-        h2 选择学校
+        h4 选择学校
         input(type="text", placeholder="学校名称／ID", ngmodel="schoolname", style="width:100%;")
+        hr
+        h4 选择班级或课程
+        input(type="text", placeholder="班级或课程", ngmodel="schoolname", style="width:100%;")
         hr
     .span9
         table.table.table-striped(data-ng-hide="loading")
             thead
                 tr
-                    th #
-                    th Username
-                    th Role
+                    th
+                    th 姓名
+                    th 属性
             tbody
                 tr(data-ng-repeat="user in users")
                     td {{ user.id }}
