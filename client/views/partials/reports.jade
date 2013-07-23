@@ -176,8 +176,7 @@
     .span2
         div
             h4 学生
-            input(type="text", placeholder="学生姓名或ID", ng-model="sessionsSearchInput", style="width:100%;")
-            div(mathjax-bing="sessionsSearchInput")
+            input.span12(type="text", placeholder="学生姓名或ID", ng-model="sessionsSearchInput")
             img(src="/img/1.png", style="margin:5px;")
             img(src="/img/2.png", style="margin:5px;")
             img(src="/img/3.png", style="margin:5px;")
@@ -185,13 +184,15 @@
         hr
         div
             h4 班级
-            input(type="text", placeholder="班级或数字", ng-model="sessionsSearchInput", style="width:100%;")
-            div(mathjax-bing="sessionsSearchInput")
+            input.span12(type="text", placeholder="班级或数字", ng-model="sessionsSearchInput")
+            alert.alert-success(type="success", close="closeAlert()")
+                | TODO: 在这里显示班级或者课程tag，
         hr
         div
             h4 学校
-            input(type="text", placeholder="学校名称", ng-model="sessionsSearchInput", style="width:100%;")
-            div(mathjax-bing="sessionsSearchInput")
+            input.span12(type="text", placeholder="学校名称", ng-model="sessionsSearchInput")
+            alert.alert-info(type="info", close="closeAlert()")
+                | TODO: 在这里显示学校tag，
 
     table.table.table-striped(data-ng-hide="loading")
     thead
