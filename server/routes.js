@@ -212,6 +212,12 @@ var routes = [
         accessLevel: accessLevels.superuser
     },
     {
+        path: '/api/students/:uuid',
+        httpMethod: 'PUT',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.updatebyId],
+        accessLevel: accessLevels.superuser
+    },
+    {
         path: '/api/students/:uuid/schools',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSchools],
