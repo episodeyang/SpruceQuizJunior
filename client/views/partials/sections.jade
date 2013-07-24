@@ -1,0 +1,60 @@
+.container(style="width:900px;")
+    .row-fluid
+        .span12
+    .row-fluid
+        .span9
+            tabset
+                tab(heading="数学")
+                    div.row-fluid
+                        .span1
+                            img(src="/img/3_large.png").img-polaroid
+                        .span11
+                            alert(close="closeClicked=!closeClicked")
+                                p 吴轶凡 推送了今日测试（一）
+                    div.row-fluid
+                        .span5
+                            ul.nav.nav-tabs.nav-stacked
+                                li
+                                    a
+                                        strong 目录
+                                li
+                                    a 第一章：二元一次方程
+                                li
+                                    a 第二章：没有了。。。
+                                li
+                                    a Directories?
+                        .span7
+                            tabset
+                                tab(heading="测试")
+                                    .well
+                                        p 第一单元当天训练
+                                    .well
+                                        p 第一单元双周复习
+                                tab(heading="已存档",disabled="true")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+                tab(heading="数学")
+        .span3
+            .well
+                .row-fluid
+                    .span12
+                        img(src="/img/1_large.png", style="margin-bottom:20px;")
+                .row-fluid
+                    div.span12.text-center
+                        p.bottom.bold 杨歌
+                        p.bottom(style="margin-bottom:0;") @{{user.username}}
+            .row-fluid
+                .span12.sp-reports-sidebar
+                    ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
+                        li
+                            a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
+                        li
+                            a 年级情况
+

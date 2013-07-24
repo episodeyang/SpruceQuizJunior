@@ -41,6 +41,12 @@ angular.module('SpruceQuizApp', ['ui.bootstrap','ngCookies', 'spruceDBServices',
                 controller:     'AdminCtrl',
                 access:         access.superuser
             });
+        $routeProvider.when('/sections',
+            {
+                templateUrl:    '/partials/sections',
+                controller:     'SectionCtrl',
+                access:         access.loggedin
+            });
          $routeProvider.when('/user_admin',
             {
                 templateUrl:    '/partials/user_admin',
