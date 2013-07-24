@@ -15,6 +15,7 @@ html,body {
 } */
 .sp-container{
     min-height:100%;
+    min-width: 1070px;
     position:relative;
 }
 .sp-body{
@@ -83,6 +84,7 @@ html,body {
 .sp-reports-sidebar {
     line-height: 1em;
     padding:0px;
+    min-width:160px;
 }
 .sp-reports-sidebar.affix {
     left:20px;

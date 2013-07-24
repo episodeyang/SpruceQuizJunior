@@ -4,7 +4,7 @@
             .span6
                 h1 成绩报告
             .span2.offset4
-                img(src="/img/3_large.png")
+                img(src="/img/3_large.png").img-rounded.img-polaroid
 .row-fluid
     .span8.offset2
         div
@@ -202,9 +202,9 @@
             th 选择
     tbody
         tr(data-ng-repeat="problem in problems")
-            td 
+            td
                 {{ problem.id }}
-            td 
+            td
                 {{ problem.question }}
             td
                 {{ problem.choices}}
