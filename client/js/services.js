@@ -67,12 +67,12 @@ angular.module('SpruceQuizApp')
 angular.module('spruceDBServices', ['ngResource'])
 .factory('Problems', function($resource){
     return $resource('/api/problems/:uuid', {uuid:'@problemUUID'}, {
-        list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+        list: {method:'GET', params:{uuid: 'all'}, isArray:true}
     });
 })
 .factory('AuthUsers', function($resource){
     return {
-        onUsers: $resource('/api/users/:uuid', {}, {
+        onUsers: $resource('/api/users/:uuid', {uuid:'@id'}, {
             //list: {method:'GET', params:{uuid: 'all'}, isArray:true},
         })
     };
@@ -80,10 +80,51 @@ angular.module('spruceDBServices', ['ngResource'])
 .factory('Students', function($resource){
     return {
         onStudents: $resource('/api/students/:uuid', {uuid:'@userUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+            update: {method:'PUT', params:{uuid: '@uuid'}}
+        }),
+        onTeachers: $resource('/api/students/:uuid/teachers', {uuid:'@userUUID'}, {
+        }),
+        onSchools: $resource('/api/students/:uuid/schools', {uuid:'@userUUID'}, {
+        })
+    };
+})
+.factory('Teachers', function($resource){
+    return {
+        onTeachers: $resource('/api/teachers/:uuid', {uuid:'@userUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true}
         }),
-        onTeachers: $resource('/api/students/:uuid/teachers', {}, {
-            //list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+        onSchools: $resource('/api/teachers/:uuid/schools', {uuid:'@userUUID'}, {
+        }),
+        onStudents: $resource('/api/teachers/:uuid/students', {uuid:'@userUUID'}, {
+        }),
+        onSections: $resource('/api/teachers/:uuid/sections', {uuid:'@userUUID'}, {
+        })
+    };
+})
+.factory('Schools', function($resource){
+    return {
+        onSchools: $resource('/api/schools/:uuid', {uuid:'@schoolUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+        }),
+        onTeachers: $resource('/api/schools/:uuid/teachers', {uuid:'@schoolUUID'}, {
+        }),
+        onStudents: $resource('/api/schools/:uuid/students', {uuid:'@schoolUUID'}, {
+        }),
+        onSections: $resource('/api/schools/:uuid/sections', {uuid:'@schoolUUID'}, {
+        })
+    };
+})
+.factory('Sections', function($resource){
+    return {
+        onSections: $resource('/api/sections/:uuid', {uuid:'@sectionUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+        }),
+        onStudents: $resource('/api/sections/:uuid/students', {uuid:'@sectionUUID'}, {
+        }),
+        onTeachers: $resource('/api/sections/:uuid/teachers', {uuid:'@sectionUUID'}, {
+        }),
+        onSchools: $resource('/api/sections/:uuid/schools', {uuid:'@sectionUUID'}, {
         })
     };
 });

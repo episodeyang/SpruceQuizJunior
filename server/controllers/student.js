@@ -35,6 +35,15 @@ module.exports = {
 			}
 		});
 	},
+	updatebyId: function(req, res) {
+		//console.log(req.body);
+		//console.log(req.params.uuid);
+        StudentM.update({ userUUID: req.params.uuid }, req.body, function (err) {
+        	if(err) {
+        		res.send(404, "Update student failed.");
+        	}
+    	});
+	},
 	getSchools: function(req, res) {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
     		SchoolM.find({ schoolUUID: { $in: results.schools } }, function (err, sresults) {

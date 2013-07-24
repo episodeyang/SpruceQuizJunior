@@ -11,35 +11,35 @@ angular.module('SpruceQuizApp')
 
 //Begin of "Don't delete" for testing $resource:
             //API usage examples:
-            //get single & all
+
+            //Get example: single & all
             //$scope.students.push(Students.onStudents.get({uuid: "u0003"}));
             //$scope.students = Students.onstudents.list();
 
-            //remove
-            //Students.onStudents.remove({uuid: "u0003"});
-            //AuthUsers.onUsers.remove({uuid: "u0003"});
-
-            //update - need fix
-            // var stu = Students.onStudents.get({uuid: "u0003"}, function() {
-            //     stu.address = "newaddr";
-            //     stu.$save();
-            // });
+            //Create example:
             // var stu = {
-            //         userUUID: "u0003",
-            //         firstName: "Charlie",
-            //         lastName: "Thompson",
+            //         userUUID: "u0004",
+            //         firstName: "David",
+            //         lastName: "Williams",
             //         dateOfBirth: "",
             //         sex: "Male",
-            //         email: "cthompson@spruceaca.edu",
+            //         email: "dwilliams@spruceaca.edu",
             //         phone: ["12345678", "87654321"],
-            //         address: "ddd",
+            //         address: "addr",
             //         profilePic: "",
             //         sections: ["g0004", "g0005"],
             //         schools: ["s0002"],
-            //         exams: ["e0005", "e0006"],
+            //         exams: ["e0007", "e0008"],
             //         comments: ""
             //     };
-            // Students.onStudents.$save(stu);
+            // Students.onStudents.save(stu);
+
+            //Remove example: [note: use keyword 'remove' instead of 'delete']
+            //Students.onStudents.remove({uuid: "u0003"});
+            //AuthUsers.onUsers.remove({uuid: "u0003"});
+
+            //Update example: 
+            //Students.onStudents.update({uuid: "u0003", address: "newaddr", email: "newemail@spruceaca.edu"});
 //End of don't delete
 
             $scope.rankFakeData = ['a data point'];
