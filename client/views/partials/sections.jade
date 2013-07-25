@@ -31,6 +31,11 @@
                                     .well
                                         p 第一单元双周复习
                                 tab(heading="已存档",disabled="true")
+                            tabset
+                                tab(heading="阅读")
+                                    .well
+                                        p 欧拉的故事
+
                 tab(heading="数学")
                 tab(heading="数学")
                 tab(heading="数学")
@@ -50,6 +55,10 @@
                     ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
                         li
                             a(ng-click="createSectionModal = true") 创建新课程
+                        li
+                            a(ng-click="createSectionModal = true") 创建新单元
+                        li
+                            a(ng-click="createSectionModal = true") 创建新测试
                         li
                             a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
                         li
@@ -81,7 +90,7 @@
                                 input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班")
         .modal-footer
             button.btn.btn-success(ng-click="createNewSection()") 提交课程
-            p {{newSection.sectionName}}
-            p {{haha}}
-            p {{list}}
-            p formData is {{newSection}}
+            //-p {{newSection.sectionName}}
+            //-p {{haha}}
+            //-p {{list}}
+            //-p formData is {{newSection}}
