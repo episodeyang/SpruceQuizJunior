@@ -2,19 +2,19 @@ h1 学生管理
 .row-fluid
     .span3
         h4 选择学校
-        input.span12(type="text", placeholder="学校名称／ID", ng-model="search.schools")
+        input.span12(type="text", placeholder="学校名称／ID", ng-model="studentQuery.schools")
         //- the demo javascript please refer to:
         //- http://angular-ui.github.io/bootstrap/#/alert
         alert.alert-info(type="info", close="closeAlert()")
             div
         hr
         h4 选择班级或课程
-        input.span12(type="text", placeholder="班级或课程", ng-model="search.sections")
+        input.span12(type="text", placeholder="班级或课程", ng-model="studentQuery.sections")
         alert.alert-success(type="success", close="closeAlert()")
 
         hr
         h4 选择教师
-        input.span12(type="text", placeholder="教师姓名或ID", ng-model="search.teacher")
+        input.span12(type="text", placeholder="教师姓名或ID", ng-model="studentQuery.teacher")
         alert(close="closeAlert()")
             | TODO: 在这里显示教师头像，
         hr
@@ -59,7 +59,7 @@ h1 学生管理
                 h4.pull-left 学生列表
                 div.pull-right(style="padding-top:3px;")
                     form.form-search
-                        input.span12.search-query(placeholder="搜索用户",ng-model="search.$")
+                        input.span12.search-query(placeholder="搜索用户",ng-model="studentQuery.$")
                 table.table.table-striped(data-ng-hide="loading")
                     thead
                         tr
@@ -73,7 +73,7 @@ h1 学生管理
                             th 住址
 
                     tbody
-                        tr(data-ng-repeat="student in students|filter:search")
+                        tr(data-ng-repeat="student in students|filter:studentQuery")
                             td {{ student.userUUID }}
                                 button.icon-pencil(ng-click="modalShow=!modalShow")
                                 div(modal="modalShow", close="modalShow=false").well
