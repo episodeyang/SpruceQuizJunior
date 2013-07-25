@@ -10,7 +10,7 @@ h1 学生管理
         hr
         h4 选择班级或课程
         input.span12(type="text", placeholder="班级或课程", ng-model="search.sections")
-        alert.alert-success(type="success", close="closealert()")
+        alert.alert-success(type="success", close="closeAlert()")
 
         hr
         h4 选择教师
@@ -23,28 +23,28 @@ h1 学生管理
             //with angular-ui 5.0 (next release), should be able to
             //do: .tabbable.tabs-below left right.
             tab(heading="学生名单")
-                div
+                div(collapse="isCollapsed")
                     //-You do you data binding here, so that when this list is cleaned up, you can
                     //-hide this entire division.
                     h4.pull-left 新增学生 &nbsp;
                     span.pull-left(style="padding-top:3px;")
-                        button.btn.btn-small.btn-danger 清空通知
+                        button.btn.btn-small.btn-danger(ng-click="isCollapsed=!isCollapsed") 清空通知
                     div.pull-right(style="padding-top:3px;")
                         form.form-search
                             input.span12.search-query(placeholder="搜索用户",ng-model="searchnew")
                     table.table.table-striped(data-ng-hide="loading")
                         thead
                             tr
-                               th 编号
-                               th 姓名
-                               th 性别
-                               th 班级
-                               th 学校
-                               th 邮箱
+                                th 编号
+                                th 姓名
+                                th 性别
+                                th 班级
+                                th 学校
+                                th 邮箱
                                 th 电话
                                 th 住址
 
-                        tbody
+                        tbody   //TODO for now only select 'u0001'
                             tr(data-ng-repeat="student in students|filter:'u0001'|filter:searchnew")
                                 td {{ student.userUUID }}
                                 td {{ student.firstName}} {{student.lastName}}
