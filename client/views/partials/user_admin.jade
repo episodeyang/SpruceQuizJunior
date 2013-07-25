@@ -22,6 +22,7 @@ h1 学生管理
         tabset
             //with angular-ui 5.0 (next release), should be able to
             //do: .tabbable.tabs-below left right.
+            //TODO for now only select 'u0001'
             tab(heading="学生名单")
                 div(collapse="isCollapsed")
                     //-You do you data binding here, so that when this list is cleaned up, you can
@@ -44,7 +45,8 @@ h1 学生管理
                                 th 电话
                                 th 住址
 
-                        tbody   //TODO for now only select 'u0001'
+                        tbody
+
                             tr(data-ng-repeat="student in students|filter:'u0001'|filter:newStudentQuery")
                                 td {{ student.userUUID }}
                                 td {{ student.firstName}} {{student.lastName}}
