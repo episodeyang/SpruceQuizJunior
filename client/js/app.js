@@ -38,7 +38,7 @@ angular.module('SpruceQuizApp', ['ui.bootstrap','ngCookies', 'spruceDBServices',
         $routeProvider.when('/admin',
             {
                 templateUrl:    '/partials/admin',
-                controller:     'AdminCtrl',
+                controller:     'StudentAdminCtrl',
                 access:         access.superuser
             });
         $routeProvider.when('/sections',
@@ -46,12 +46,6 @@ angular.module('SpruceQuizApp', ['ui.bootstrap','ngCookies', 'spruceDBServices',
                 templateUrl:    '/partials/sections',
                 controller:     'SectionCtrl',
                 access:         access.loggedin
-            });
-         $routeProvider.when('/user_admin',
-            {
-                templateUrl:    '/partials/user_admin',
-                controller:     'UserAdminCtrl',
-                access:         access.superuser
             });
         $routeProvider.when('/problems',
             {

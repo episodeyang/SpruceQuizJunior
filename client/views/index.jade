@@ -64,7 +64,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/sections') 课程
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/user_admin') 学生管理
+                            a(href='/admin') 学生管理
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav).dropdown
                             a.dropdown-toggle 问题
                                 span.caret
@@ -105,5 +105,6 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src='/js/controllers/problems.js')
         script(src='/js/controllers/reports.js')
         script(src='/js/controllers/sections.js')
+        script(src='/js/controllers/admin.js')
         script(src='/js/filters.js')
         script(src='/js/directives.js')
