@@ -5,7 +5,7 @@
 var app = angular.module('SpruceQuizApp');
 
 
-app.controller('StudentAdminCtrl',
+app.controller('AdminCtrl',
 ['$rootScope', '$scope', 'Students', function($rootScope, $scope, Students) {
 
     $scope.loading = false;
