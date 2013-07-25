@@ -31,7 +31,7 @@ h1 学生管理
                         button.btn.btn-small.btn-danger(ng-click="isCollapsed=!isCollapsed") 清空通知
                     div.pull-right(style="padding-top:3px;")
                         form.form-search
-                            input.span12.search-query(placeholder="搜索用户",ng-model="searchnew")
+                            input.span12.search-query(placeholder="搜索用户",ng-model="newStudentQuery")
                     table.table.table-striped(data-ng-hide="loading")
                         thead
                             tr
@@ -45,7 +45,7 @@ h1 学生管理
                                 th 住址
 
                         tbody   //TODO for now only select 'u0001'
-                            tr(data-ng-repeat="student in students|filter:'u0001'|filter:searchnew")
+                            tr(data-ng-repeat="student in students|filter:'u0001'|filter:newStudentQuery")
                                 td {{ student.userUUID }}
                                 td {{ student.firstName}} {{student.lastName}}
                                 td {{ student.sex}}
