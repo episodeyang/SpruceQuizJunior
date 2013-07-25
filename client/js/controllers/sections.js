@@ -4,20 +4,20 @@
 
 angular.module('SpruceQuizApp')
 .controller('SectionCtrl',
-['$rootScope', '$scope', 'Problems', function($rootScope, $scope, Problems) {
+['$rootScope', '$scope', 'Sections', function($rootScope, $scope, Sections) {
 //function ProblemCtrl($scope, Problems) 
     //$rootScope.error = "Temp warning";
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
     $scope.highlightField = "question";
-
     $scope.problemTypes = ['multipleChoice','fillIn','OpenEnded'];
 
     //Use the next two lines if accessing a specific problem with a uuid
     //$scope.problems = [];
     //$scope.problems.push(Problems.get({uuid: "p0001"}));
-
+    $scope.list = [];
+    $scope.newSection = {};
     //Use the next line to get all problems
-    $scope.problems = Problems.list();
+//    $scope.problems = Problems.list();
 
     //old way using $http
     // Problems.getAll(function(res) {
@@ -32,6 +32,10 @@ angular.module('SpruceQuizApp')
     //     $rootScope.error = "Failed to fetch problems.";
     // });
     $scope.orderProp = 'lastupdated';
+    $scope.createNewSection = function(){
+        Sections.onSections.save($scope.newSection);
+        $scope.list.push($scope.newSection);
+    };
 }]);
 
 //ProblemCtrl.$inject = ['$scope', '$http'];

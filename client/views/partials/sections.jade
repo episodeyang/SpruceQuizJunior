@@ -36,11 +36,6 @@
                 tab(heading="数学")
                 tab(heading="数学")
                 tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
         .span3
             .well
                 .row-fluid
@@ -62,9 +57,31 @@
 
     div(modal="createSectionModal")
         .modal-header
-            h1 创建新课程
+            h3 创建新小组
         .modal-body
-            form
-                h1 haha
+            form.form-horizontal
+                tabset
+                    tab(heading="课程")
+                        div.control-group
+                            label.control-label 课程名称
+                            .controls
+                                input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班，或二年级数学")
+                        div.control-group
+                            label.control-label 简称或学科
+                            .controls
+                                input(ng-model="newSection.sectionDisplayName",type="text", placeholder="如数学")
+                        div.control-group
+                            label.control-label 班级
+                            .controls
+                                input(ng-model="newSection.sectionParent",type="text", placeholder="如三年二班")
+                    tab(heading="班级")
+                        div.control-group
+                            label.control-label 班级名称
+                            .controls
+                                input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班")
         .modal-footer
-            button.btn.btn-success(ng-click="submit()") 提交课程
+            button.btn.btn-success(ng-click="createNewSection()") 提交课程
+            p {{newSection.sectionName}}
+            p {{haha}}
+            p {{list}}
+            p formData is {{newSection}}
