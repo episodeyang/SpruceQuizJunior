@@ -78,16 +78,19 @@ angular.module('spruceDBServices', ['ngResource'])
     };
 })
 .factory('Students', function($resource){
-    return {
-        onStudents: $resource('/api/students/:uuid', {uuid:'@userUUID'}, {
-            list: {method:'GET', params:{uuid: 'all'}, isArray:true},
-            update: {method:'PUT', params:{uuid: '@uuid'}}
-        }),
-        onTeachers: $resource('/api/students/:uuid/teachers', {uuid:'@userUUID'}, {
-        }),
-        onSchools: $resource('/api/students/:uuid/schools', {uuid:'@userUUID'}, {
-        })
-    };
+
+        return $resource('/api/students/:uuid', {uuid:'@userUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+        });
+//        onStudents: $resource('/api/students/:uuid', {uuid:'@userUUID'}, {
+//            list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+//            update: {method:'PUT', params:{uuid: '@uuid'}}
+//        }),
+//        onTeachers: $resource('/api/students/:uuid/teachers', {uuid:'@userUUID'}, {
+//        }),
+//        onSchools: $resource('/api/students/:uuid/schools', {uuid:'@userUUID'}, {
+//        })
+
 })
 .factory('Teachers', function($resource){
     return {
