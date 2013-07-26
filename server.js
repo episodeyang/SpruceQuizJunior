@@ -9,6 +9,8 @@ var express =       require('express')
     , Teacher =     require('./server/models/Teacher.js')
     , School =     require('./server/models/School.js')
     , Section =     require('./server/models/Section.js')
+    , Unit =     require('./server/models/Unit.js')
+    , Material =     require('./server/models/Material.js')
     , Exam  =     require('./server/models/Exam.js');
 
 
