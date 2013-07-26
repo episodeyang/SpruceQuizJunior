@@ -54,7 +54,17 @@
                 .span12.sp-reports-sidebar
                     ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
                         li
+                            a(ng-click="createSectionModal = true") 创建新课程
+                        li
                             a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
                         li
                             a 年级情况
 
+    div(modal="createSectionModal")
+        .modal-header
+            h1 创建新课程
+        .modal-body
+            form
+                h1 haha
+        .modal-footer
+            button.btn.btn-success(ng-click="submit()") 提交课程
