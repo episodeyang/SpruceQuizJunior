@@ -8,6 +8,8 @@ var _ =           require('underscore')
     , TeacherCtrl =  require('./controllers/teacher')
     , SectionCtrl =  require('./controllers/section')
     , SchoolCtrl =  require('./controllers/school')
+    , UnitCtrl =  require('./controllers/unit')
+    , MaterialCtrl =  require('./controllers/material')
     , User =      require('./models/User.js')
     , userRoles = require('../client/js/routingConfig').userRoles
     , accessLevels = require('../client/js/routingConfig').accessLevels;
@@ -278,6 +280,26 @@ var routes = [
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getSchools],
         accessLevel: accessLevels.superuser
+    },
+    {
+        path: '/api/sections/:uuid/units/',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getUnits],
+        accessLevel: accessLevels.superuser
+    },
+    //Unit resource
+    {
+        path: '/api/units/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, UnitCtrl.getbyId],
+        accessLevel: accessLevels.loggedin
+    },
+    //Material resource
+    {
+        path: '/api/materials/:uuid',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, MaterialCtrl.getbyId],
+        accessLevel: accessLevels.loggedin
     },
     //Problem resource
     {

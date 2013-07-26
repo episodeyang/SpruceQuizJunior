@@ -11,7 +11,8 @@ var express =       require('express')
     , Section =     require('./server/models/Section.js')
     , Unit =     require('./server/models/Unit.js')
     , Material =     require('./server/models/Material.js')
-    , Exam  =     require('./server/models/Exam.js');
+    , Exam  =     require('./server/models/Exam.js')
+    , Quiz  =     require('./server/models/Quiz.js');
 
 
 var app = express();

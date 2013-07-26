@@ -9,14 +9,33 @@ var UnitM = require('./SchemaModels').Unit;
 // Begin of temporary initilization
 var tempunit = new UnitM({
         unitUUID: "d0001",
-        unitName: "DirName",
+        unitName: "DirName1",
         comment: "",
         father: [],
-        child: [],
-        items: []
+        child: ["d0003"],
+        items: ["m0001"]
     });
 tempunit.save();
 
+tempunit = new UnitM({
+        unitUUID: "d0002",
+        unitName: "DirName2",
+        comment: "",
+        father: [""],
+        child: [""],
+        items: ["m0002"]
+    });
+tempunit.save();
+
+tempunit = new UnitM({
+        unitUUID: "d0003",
+        unitName: "DirName3",
+        comment: "",
+        father: ["d0001"],
+        child: [],
+        items: ["m0003"]
+    });
+tempunit.save();
 
 // End of temporary initilization
 

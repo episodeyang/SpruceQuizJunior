@@ -74,6 +74,29 @@ var ExamSchema = new mongoose.Schema({
 
 var Exam = mongoose.model('Exam', ExamSchema);
 
+//Quiz and sub-problem-object schema
+var QuizProblemSchema = new mongoose.Schema({ 
+    problemUUID: {
+      type: String,
+      unique: true
+    },
+    weight: Number
+});
+
+var QuizSchema = new mongoose.Schema({ 
+    quizUUID: {
+      type: String,
+      unique: true
+    },
+    quizTitle: String,
+    quizDate: Date,
+    quizTopics: Array,
+    totalScore: Number,
+    quizProblems: [QuizProblemSchema]
+}, { collection : 'quiz' });
+
+var Quiz = mongoose.model('Quiz', QuizSchema);
+
 //Student schema
 var StudentSchema = new mongoose.Schema({ 
     userUUID: {
@@ -127,7 +150,8 @@ var SectionSchema = new mongoose.Schema({
       type: String,
       unique: true
     },
-    sectionName: String
+    sectionName: String,
+    sectionUnits: Array
 }, { collection : 'section' });
 
 var Section = mongoose.model('Section', SectionSchema);
@@ -175,6 +199,7 @@ module.exports = {
   School: School,
   Section: Section,
   Exam: Exam,
+  Quiz: Quiz,
   Unit: Unit,
   Material: Material
 }
