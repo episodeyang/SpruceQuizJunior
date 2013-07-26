@@ -132,6 +132,38 @@ var SectionSchema = new mongoose.Schema({
 
 var Section = mongoose.model('Section', SectionSchema);
 
+//Unit schema
+var UnitSchema = new mongoose.Schema({ 
+    unitUUID: {
+      type: String,
+      unique: true
+    },
+    unitName: String,
+    comment: String,
+    father: Array,
+    child: Array,
+    items: Array
+}, { collection : 'unit' });
+
+var Unit = mongoose.model('Unit', UnitSchema);
+
+//Material schema
+var MaterialSchema = new mongoose.Schema({ 
+    materialUUID: {
+      type: String,
+      unique: true
+    },
+    materialName: String,
+    comment: String,
+    dateOfCreation: Date,
+    dateOfModification: Date,
+    lastEditedBy: String,
+    sourceUrl: String,
+    materialType: String
+}, { collection : 'material' });
+
+var Material = mongoose.model('Material', MaterialSchema);
+
 //other schemas here
 
 //exports
@@ -142,5 +174,7 @@ module.exports = {
   Teacher: Teacher,
   School: School,
   Section: Section,
-  Exam: Exam
+  Exam: Exam,
+  Unit: Unit,
+  Material: Material
 }

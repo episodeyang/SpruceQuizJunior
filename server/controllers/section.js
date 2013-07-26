@@ -20,6 +20,29 @@ module.exports = {
 	    	});
 	    };
 	},
+	removebyId: function(req, res) {
+        SectionM.remove({ sectionUUID: req.params.uuid }, function (err) {
+        	if(err) {
+        		res.send(404, "Remove section failed.");
+        	}
+    	});
+	},
+	savebyId: function(req, res) {
+		var section = new SectionM(req.body);
+		console.log(section);
+		section.save(function (err) {
+			if (err) {
+				res.send(404, "Save section failed.");
+			}
+		});
+	},
+	updatebyId: function(req, res) {
+        SectionM.update({ userUUID: req.params.uuid }, req.body, function (err) {
+        	if(err) {
+        		res.send(404, "Update section failed.");
+        	}
+    	});
+	},
     getStudents: function(req, res) {
         StudentM.find({ sections: { $all: [req.params.uuid] } }, function (err, results) {
             //console.log(results);
