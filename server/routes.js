@@ -244,6 +244,24 @@ var routes = [
         accessLevel: accessLevels.admin
     },
     {
+        path: '/api/sections/:uuid',
+        httpMethod: 'POST',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.savebyId],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/sections/:uuid',
+        httpMethod: 'PUT',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.updatebyId],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/sections/:uuid',
+        httpMethod: 'DELETE',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.removebyId],
+        accessLevel: accessLevels.admin
+    },
+    {
         path: '/api/sections/:uuid/students',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getStudents],
