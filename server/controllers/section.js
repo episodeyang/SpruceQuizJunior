@@ -4,6 +4,7 @@ var _ =           require('underscore')
     , StudentM = require('../models/SchemaModels').Student
     , TeacherM = require('../models/SchemaModels').Teacher
     , SchoolM = require('../models/SchemaModels').School
+    , UnitM = require('../models/SchemaModels').Unit
 
 module.exports = {
 	getbyId: function(req, res) {
@@ -59,6 +60,14 @@ module.exports = {
         SchoolM.find({ sections: { $all: [req.params.uuid] } }, function (err, results) {
             //console.log(results);
             res.json(results);
+    	});
+	},
+	getUnits: function(req, res) {
+        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, results) {
+        	UnitM.find({ unitUUID: { $in: results.sectionUnits } }, function (err, dresults) {
+	            //console.log(dresults);
+            	res.json(dresults);
+	    	});
     	});
 	}
 }
