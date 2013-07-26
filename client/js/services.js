@@ -115,6 +115,20 @@ angular.module('spruceDBServices', ['ngResource'])
         })
     };
 })
+.factory('Units', function($resource){
+    return {
+        onUnits: $resource('/api/units/:uuid', {uuid:'@unitUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+        })
+    };
+})
+.factory('Materials', function($resource){
+    return {
+        onUnits: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+        })
+    };
+})
 .factory('Sections', function($resource){
     return {
         onSections: $resource('/api/sections/:uuid', {uuid:'@sectionUUID'}, {
@@ -126,6 +140,8 @@ angular.module('spruceDBServices', ['ngResource'])
         onTeachers: $resource('/api/sections/:uuid/teachers', {uuid:'@sectionUUID'}, {
         }),
         onSchools: $resource('/api/sections/:uuid/schools', {uuid:'@sectionUUID'}, {
+        }),
+        onUnits: $resource('/api/sections/:uuid/units', {uuid:'@sectionUUID'}, {
         })
     };
 });

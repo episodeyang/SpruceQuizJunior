@@ -9,31 +9,36 @@ var SectionM = require('./SchemaModels').Section;
 // Begin of temporary initilization
 var tempsection = new SectionM({
         sectionUUID: "g0001",
-        sectionName: "Section No.1"
+        sectionName: "Section No.1",
+        sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
         sectionUUID: "g0002",
-        sectionName: "Section No.2"
+        sectionName: "Section No.2",
+        sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
         sectionUUID: "g0003",
-        sectionName: "Section No.3"
+        sectionName: "Section No.3",
+        sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
         sectionUUID: "g0004",
-        sectionName: "Section No.4"
+        sectionName: "Section No.4",
+        sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
         sectionUUID: "g0005",
-        sectionName: "Section No.5"
+        sectionName: "Section No.5",
+        sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
 
