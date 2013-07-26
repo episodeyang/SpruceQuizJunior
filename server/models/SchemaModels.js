@@ -169,7 +169,7 @@ var UnitSchema = new mongoose.Schema({
     father: Array,
     child: Array,
     items: Array,
-    archive: Array
+    archived: Array
 }, { collection : 'unit' });
 
 var Unit = mongoose.model('Unit', UnitSchema);
