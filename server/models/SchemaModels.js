@@ -151,6 +151,8 @@ var SectionSchema = new mongoose.Schema({
       unique: true
     },
     sectionName: String,
+    sectionDisplayName: String,
+    sectionParent: String,
     sectionUnits: Array
 }, { collection : 'section' });
 

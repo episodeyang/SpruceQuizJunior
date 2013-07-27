@@ -15,9 +15,16 @@ module.exports = {
 	        });
 	    }
 	    else {
-	        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, results) {
-	            //console.log(results);
-	            res.json(results);
+	        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, gresults) {
+	        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
+	        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
+	        			var results = gresults.toObject();
+	        			results.school = sresults.schoolUUID;
+	        			results.students = _.map(uresults, function(item) {return item.userUUID});
+			            //console.log(results);
+			            res.json(results);
+			    	});
+		    	});
 	    	});
 	    };
 	},
@@ -29,13 +36,23 @@ module.exports = {
     	});
 	},
 	savebyId: function(req, res) {
-		var section = new SectionM(req.body);
-		console.log(section);
-		section.save(function (err) {
-			if (err) {
-				res.send(404, "Save section failed.");
-			}
-		});
+		SectionM.count(function(err, results) {
+            if (err) {
+                console.log("uuid generating error");
+            } else {
+                var tempid = results + 1;
+                var newid = 'g' + ("000" + tempid).slice(-4);
+                //console.log(newid);
+				var section = new SectionM(req.body);
+				section.sectionUUID = newid;
+				//console.log(section);
+				section.save(function (err) {
+					if (err) {
+						res.send(404, "Save section failed.");
+					}
+				});
+            }
+        });
 	},
 	updatebyId: function(req, res) {
         SectionM.update({ userUUID: req.params.uuid }, req.body, function (err) {
