@@ -133,7 +133,7 @@ angular.module('spruceDBServices', ['ngResource'])
     return {
         onSections: $resource('/api/sections/:uuid', {uuid:'@sectionUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true},
-            update: {method:'PUT', params:{uuid: '@uuid'}}
+            update: {method:'PUT', params:{uuid: '@sectionUUID'}}
         }),
         onStudents: $resource('/api/sections/:uuid/students', {uuid:'@sectionUUID'}, {
         }),

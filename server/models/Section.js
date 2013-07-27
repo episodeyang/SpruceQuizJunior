@@ -10,6 +10,8 @@ var SectionM = require('./SchemaModels').Section;
 var tempsection = new SectionM({
         sectionUUID: "g0001",
         sectionName: "Section No.1",
+        sectionDisplayName: "sectionDisplayName",
+        sectionParent: "sectionParent",
         sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
@@ -17,6 +19,8 @@ tempsection.save();
 tempsection = new SectionM({
         sectionUUID: "g0002",
         sectionName: "Section No.2",
+        sectionDisplayName: "sectionDisplayName",
+        sectionParent: "sectionParent",
         sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
@@ -24,6 +28,8 @@ tempsection.save();
 tempsection = new SectionM({
         sectionUUID: "g0003",
         sectionName: "Section No.3",
+        sectionDisplayName: "sectionDisplayName",
+        sectionParent: "sectionParent",
         sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
@@ -31,6 +37,8 @@ tempsection.save();
 tempsection = new SectionM({
         sectionUUID: "g0004",
         sectionName: "Section No.4",
+        sectionDisplayName: "sectionDisplayName",
+        sectionParent: "sectionParent",
         sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
@@ -38,6 +46,8 @@ tempsection.save();
 tempsection = new SectionM({
         sectionUUID: "g0005",
         sectionName: "Section No.5",
+        sectionDisplayName: "sectionDisplayName",
+        sectionParent: "sectionParent",
         sectionUnits: ["d0001", "d0002"]
     });
 tempsection.save();
