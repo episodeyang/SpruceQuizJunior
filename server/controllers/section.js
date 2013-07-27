@@ -29,13 +29,23 @@ module.exports = {
     	});
 	},
 	savebyId: function(req, res) {
-		var section = new SectionM(req.body);
-		console.log(section);
-		section.save(function (err) {
-			if (err) {
-				res.send(404, "Save section failed.");
-			}
-		});
+		SectionM.count(function(err, results) {
+            if (err) {
+                console.log("uuid generating error");
+            } else {
+                var tempid = results + 1;
+                var newid = 'g' + ("000" + tempid).slice(-4);
+                //console.log(newid);
+				var section = new SectionM(req.body);
+				section.sectionUUID = newid;
+				//console.log(section);
+				section.save(function (err) {
+					if (err) {
+						res.send(404, "Save section failed.");
+					}
+				});
+            }
+        });
 	},
 	updatebyId: function(req, res) {
         SectionM.update({ userUUID: req.params.uuid }, req.body, function (err) {
