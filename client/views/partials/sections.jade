@@ -4,7 +4,7 @@
     .row-fluid
         .span9
             tabset
-                tab(ng-repeat="section in sections",heading="{{section.sectionName}}", select="updateSection()")
+                tab(ng-repeat="section in model.sections",heading="{{section.sectionName}}", select="updateSection(grabMaterials)")
                     div.row-fluid
                         .span1
                             img(src="/img/3_large.png").img-polaroid
