@@ -164,7 +164,7 @@ var UnitSchema = new mongoose.Schema({
       type: String,
       unique: true
     },
-    unitName: String,
+    unitTitle: String,
     comment: String,
     father: Array,
     child: Array,

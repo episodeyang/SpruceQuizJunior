@@ -56,9 +56,9 @@
                         li
                             a(ng-click="createSectionModal = true") 创建新课程
                         li
-                            a(ng-click="createSectionModal = true") 创建新单元
+                            a(ng-click="createUnitModal = true") 创建新单元
                         li
-                            a(ng-click="createSectionModal = true") 创建新测试
+                            a(ng-click="createQuizModal = true") 创建新测试
                         li
                             a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
                         li
@@ -94,3 +94,34 @@
             //-p {{haha}}
             //-p {{list}}
             //-p formData is {{newSection}}
+    div(modal="createUnitModal")
+        .modal-header
+            h3 创建新单元
+        .modal-body
+            form.form-horizontal
+                div.control-group
+                    label.control-label 单元标题
+                    .controls
+                        input(ng-model="newUnit.unitTitle",type="text",placeholder="二元一次方程")
+                div.control-group
+                    label.control-label 备注
+                    .controls
+                        textarea.form-control(rows="5",ng-model="newUnit.comment",placeholder="请在这里输入备注")
+                div.control-group
+                    label.control-label 嵌套在其他单元以下
+                    .controls
+                        input(ng-model="newUnit.father",type="text",placeholder="数学/多项式")
+        .modal-footer
+            button.btn.btn-success(ng-click="createNewUnit()") 提交单元
+    div(modal="createQuizModal")
+        .modal-header
+            h3 创建新测试
+        .modal-body
+            form.form-horizontal
+                div.control-group
+                    label.control-label 测试标题
+                    .controls
+                        input(ng-model="newQuiz.quizTitle",type="text",placeholder="二元一次方程")
+        .modal-footer
+            button.btn.btn-success(ng-click="createNewQuiz()") 提交测试
+
