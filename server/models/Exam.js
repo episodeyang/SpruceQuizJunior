@@ -8,22 +8,22 @@ var ExamM = require('./SchemaModels').Exam;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempexam = new ExamM({
-	    examUUID: "e0001",
+	    examUUID: "e1",
 	    examTitle: "Spring 2013 Mid-term Exam",
 	    examDate: "",
-	    section: "g0001",
+	    section: "g1",
 	    attendence: true,
 	    totalScore: 100,
 	    totalReceivedScore: 93,
 	    rank: 2,
 	    examProblems: [{
-		    problemUUID: "p0002",
+		    problemUUID: "p2",
 		    problemType: "multipleChoice",
 		    weight: 30,
 		    receivedScore: 28,
 		    studentAnswer: ['Washinton','Mrs. Adams']
 	    }, {
-		    problemUUID: "p0001",
+		    problemUUID: "p1",
 		    problemType: "OpenEnded",
 		    weight: 70,
 		    receivedScore: 65,
