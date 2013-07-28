@@ -41,7 +41,8 @@ module.exports = {
                 console.log("uuid generating error");
             } else {
                 var tempid = results + 1;
-                var newid = 'g' + ("000" + tempid).slice(-4);
+                //var newid = 'g' + ("000" + tempid).slice(-4);
+                var newid = 'g' + tempid;
                 //console.log(newid);
 				var section = new SectionM(req.body);
 				section.sectionUUID = newid;
