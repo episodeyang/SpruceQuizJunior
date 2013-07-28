@@ -50,18 +50,18 @@ angular.module('SpruceQuizApp')
     //Sections.onFeeds.get({uuid: "g1", flim: 'all'});
 //$scope.model.temp = Units.onUnits.get({uuid: "d4"})
     $scope.model.sections = Sections.onSections.list();
-//    $scope.sections = _.map($scope.sections, function(section){
-//        console.log(section.sectionUUID;)
-//        return $scope.onSections.get({uuid: section.sectionUUID});
-//    });
-    $scope.updateSection = function(){
-        this.section.sectionUnits =Sections.onUnits.get({uuid: this.section.sectionUUID},console.log(this.section.sectionUnits));
+//    $scope.sectionUnits = Sections.onUnits.get({uuid: this.section.sectionUUID})
+    $scope.updateSection = function(index){
+        $scope.model.sections[index].sectionUnits = Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
+            ,console.log()
+        );
     }
-    $scope.model.unitID = "d1"
+
+    $scope.model.unitID = "d1";
     $scope.grabMaterials = function(unitId){
         //$scope.model.unitID = unitId;
         $scope.model.tempUnit = Units.onUnits.get({uuid: unitId});
-    }
+    };
 
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
