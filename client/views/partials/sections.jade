@@ -17,12 +17,10 @@
                                 li
                                     a
                                         strong 目录
+                                li(ng-repeat="unit in section.sectionUnits")
+                                    a {{unit}} {{unit.unitTitle}}
                                 li
-                                    a 第一章：二元一次方程
-                                li
-                                    a 第二章：没有了。。。
-                                li
-                                    a Directories?
+                                    a 删除小组
                         .span7
                             tabset
                                 tab(heading="测试")

@@ -282,7 +282,7 @@ var routes = [
         accessLevel: accessLevels.superuser
     },
     {
-        path: '/api/sections/:uuid/units/',
+        path: '/api/sections/:uuid/units',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getUnits],
         accessLevel: accessLevels.superuser

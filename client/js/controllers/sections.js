@@ -4,7 +4,7 @@
 
 angular.module('SpruceQuizApp')
 .controller('SectionCtrl',
-['$rootScope', '$scope', 'Sections', function($rootScope, $scope, Sections) {
+['$rootScope', '$scope', 'Sections','Units', function($rootScope, $scope, Sections, Units) {
 //function ProblemCtrl($scope, Problems) 
     //$rootScope.error = "Temp warning";
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
@@ -32,7 +32,12 @@ angular.module('SpruceQuizApp')
     //     $rootScope.error = "Failed to fetch problems.";
     // });
 
-    $scope.sections = Sections.onSections.list()
+    $scope.sections = Sections.onSections.list();
+//    $scope.sections = Sections.onSections.
+    //$scope.sections = {}
+
+    $scope.hahahaha = Units.onUnits.get({uuid: "d1"});
+    $scope.haha = Sections.onUnits.get({uuid: "g1"});
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];
