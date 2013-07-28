@@ -9,18 +9,18 @@ var TeacherM = require('./SchemaModels').Teacher;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempteacher = new TeacherM({
-        userUUID: "u0005",
+        userUUID: "u5",
         teacherName: "TeacherA",
-        sections: ["g0001"],
-        schools: ["s0001"]
+        sections: ["g1"],
+        schools: ["s1"]
     });
 tempteacher.save();
 
 tempteacher = new TeacherM({
-        userUUID: "u0006",
+        userUUID: "u6",
         teacherName: "TeacherB",
-        sections: ["g0001", "g0002"],
-        schools: ["s0001"]
+        sections: ["g1", "g2"],
+        schools: ["s1"]
     });
 tempteacher.save();
 

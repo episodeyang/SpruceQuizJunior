@@ -9,7 +9,7 @@ var StudentM = require('./SchemaModels').Student;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempstudent = new StudentM({
-        userUUID: "u0001",
+        userUUID: "u1",
         firstName: "Alice",
         lastName: "Stark",
         dateOfBirth: "",
@@ -18,15 +18,15 @@ var tempstudent = new StudentM({
         phone: ["12345678", "87654321"],
         address: "aaa",
         profilePic: "",
-        sections: ["g0001", "g0002"],
-        schools: ["s0001"],
-        exams: ["e0001", "e0002"],
+        sections: ["g1", "g2"],
+        schools: ["s1"],
+        exams: ["e1", "e2"],
         comments: "big"
     });
 tempstudent.save();
 
 tempstudent = new StudentM({
-        userUUID: "u0002",
+        userUUID: "u2",
         firstName: "Bob",
         lastName: "Smith",
         dateOfBirth: "",
@@ -35,15 +35,15 @@ tempstudent = new StudentM({
         phone: ["12345678", "87654321"],
         address: "bbb",
         profilePic: "",
-        sections: ["g0001", "g0003"],
-        schools: ["s0001"],
-        exams: ["e0003", "e0004"],
+        sections: ["g1", "g3"],
+        schools: ["s1"],
+        exams: ["e3", "e4"],
         comments: "little"
     });
 tempstudent.save();
 
 tempstudent = new StudentM({
-        userUUID: "u0003",
+        userUUID: "u3",
         firstName: "Charlie",
         lastName: "Thompson",
         dateOfBirth: "",
@@ -52,9 +52,9 @@ tempstudent = new StudentM({
         phone: ["12345678", "87654321"],
         address: "ddd",
         profilePic: "",
-        sections: ["g0004", "g0005"],
-        schools: ["s0002"],
-        exams: ["e0005", "e0006"],
+        sections: ["g4", "g5"],
+        schools: ["s2"],
+        exams: ["e5", "e6"],
         comments: ""
     });
 tempstudent.save();
