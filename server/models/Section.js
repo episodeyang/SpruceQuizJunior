@@ -8,49 +8,41 @@ var SectionM = require('./SchemaModels').Section;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempsection = new SectionM({
-        sectionUUID: "g0001",
-        sectionName: "Section No.1",
-        sectionDisplayName: "sectionDisplayName",
-        sectionParent: "sectionParent",
-        sectionUnits: ["d0001", "d0002"]
+        sectionUUID: "g1",
+        sectionName: "三年级一班",
+        sectionDisplayName: "",
+        sectionParent: "",
+        sectionUnits: ["u1", "u2"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
-        sectionUUID: "g0002",
-        sectionName: "Section No.2",
-        sectionDisplayName: "sectionDisplayName",
-        sectionParent: "sectionParent",
-        sectionUnits: ["d0001", "d0002"]
+        sectionUUID: "g2",
+        sectionName: "三年级二班",
+        sectionDisplayName: "",
+        sectionParent: "",
+        sectionUnits: ["u1", "u2"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
-        sectionUUID: "g0003",
-        sectionName: "Section No.3",
-        sectionDisplayName: "sectionDisplayName",
-        sectionParent: "sectionParent",
-        sectionUnits: ["d0001", "d0002"]
+        sectionUUID: "g3",
+        sectionName: "数学奥林匹克辅导",
+        sectionDisplayName: "奥数（高中）",
+        sectionParent: "",
+        sectionUnits: ["u4", "u5"]
     });
 tempsection.save();
 
 tempsection = new SectionM({
-        sectionUUID: "g0004",
-        sectionName: "Section No.4",
-        sectionDisplayName: "sectionDisplayName",
-        sectionParent: "sectionParent",
-        sectionUnits: ["d0001", "d0002"]
+        sectionUUID: "g4",
+        sectionName: "浪漫主义欣赏",
+        sectionDisplayName: "浪漫主义诗歌",
+        sectionParent: "g2",
+        sectionUnits: ["u6", "u7"]
     });
 tempsection.save();
 
-tempsection = new SectionM({
-        sectionUUID: "g0005",
-        sectionName: "Section No.5",
-        sectionDisplayName: "sectionDisplayName",
-        sectionParent: "sectionParent",
-        sectionUnits: ["d0001", "d0002"]
-    });
-tempsection.save();
 
 
 // End of temporary initilization
