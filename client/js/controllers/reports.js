@@ -13,12 +13,12 @@ angular.module('SpruceQuizApp')
             //API usage examples:
 
             //Get example: single & all
-            //$scope.students.push(Students.onStudents.get({uuid: "u0003"}));
+            //$scope.students.push(Students.onStudents.get({uuid: "u3"}));
             //$scope.students = Students.onstudents.list();
 
             //Create example:
             // var stu = {
-            //         userUUID: "u0004",
+            //         userUUID: "u4",
             //         firstName: "David",
             //         lastName: "Williams",
             //         dateOfBirth: "",
