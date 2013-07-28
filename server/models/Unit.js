@@ -8,32 +8,42 @@ var UnitM = require('./SchemaModels').Unit;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempunit = new UnitM({
-        unitUUID: "d0001",
-        unitName: "DirName1",
+        unitUUID: "d1",
+        unitTitle: "多项式简介",
         comment: "",
         father: [],
-        child: ["d0003"],
-        items: ["m0001"]
+        child: ["d3"],
+        items: ["m1"]
     });
 tempunit.save();
 
 tempunit = new UnitM({
-        unitUUID: "d0002",
-        unitName: "DirName2",
+        unitUUID: "d2",
+        unitTitle: "二元一次多项式",
         comment: "",
         father: [""],
         child: [""],
-        items: ["m0002"]
+        items: ["m2"]
     });
 tempunit.save();
 
 tempunit = new UnitM({
-        unitUUID: "d0003",
-        unitName: "DirName3",
+    unitUUID: "d3",
+    unitTitle: "一元二次多项式",
+    comment: "",
+    father: [""],
+    child: [""],
+    items: ["m2"]
+});
+tempunit.save();
+
+tempunit = new UnitM({
+        unitUUID: "d4",
+        unitTitle: "一元二次多项式的解法",
         comment: "",
-        father: ["d0001"],
+        father: ["d3"],
         child: [],
-        items: ["m0003"]
+        items: ["m3"]
     });
 tempunit.save();
 

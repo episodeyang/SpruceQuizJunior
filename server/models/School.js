@@ -9,16 +9,16 @@ var SchoolM = require('./SchemaModels').School;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempschool = new SchoolM({
-        schoolUUID: "s0001",
+        schoolUUID: "s1",
         schoolName: "No.1 High School",
-        sections: ["g0001", "g0002", "g0003"]
+        sections: ["g1", "g2", "g3"]
     });
 tempschool.save();
 
 tempschool = new SchoolM({
-        schoolUUID: "s0002",
+        schoolUUID: "s2",
         schoolName: "No.2 High School",
-        sections: ["g0004", "g0005"]
+        sections: ["g4", "g5"]
     });
 tempschool.save();
 
