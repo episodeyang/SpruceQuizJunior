@@ -35,7 +35,7 @@ angular.module('SpruceQuizApp')
     $scope.sections = Sections.onSections.list();
 //    $scope.sections = Sections.onSections.
     //$scope.sections = {}
-    //$scope.sections[0].sectionUnits = Sections.onUnits.get({uuid: 'g3'});
+    $scope.hahahaha = Sections.onUnits.get({uuid: "g1"});
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];
