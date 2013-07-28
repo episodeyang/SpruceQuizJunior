@@ -308,6 +308,12 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.getbyId],
         accessLevel: accessLevels.loggedin
     },
+    {
+        path: '/api/problems/:uuid',
+        httpMethod: 'POST',
+        middleware: [ensureAuthenticated, ensureAuthorized, ProblemCtrl.savebyId],
+        accessLevel: accessLevels.loggedin
+    },
 
     // All other get requests should be handled by AngularJS's client-side routing system
     {
