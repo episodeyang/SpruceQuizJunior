@@ -12,7 +12,7 @@ var tempsection = new SectionM({
         sectionName: "三年级一班",
         sectionDisplayName: "",
         sectionParent: "",
-        sectionUnits: ["u1", "u2"]
+        sectionUnits: ["d1", "d2"]
     });
 tempsection.save();
 
@@ -21,7 +21,7 @@ tempsection = new SectionM({
         sectionName: "三年级二班",
         sectionDisplayName: "",
         sectionParent: "",
-        sectionUnits: ["u1", "u2"]
+        sectionUnits: ["d1", "d2"]
     });
 tempsection.save();
 
@@ -30,7 +30,7 @@ tempsection = new SectionM({
         sectionName: "数学奥林匹克辅导",
         sectionDisplayName: "奥数（高中）",
         sectionParent: "",
-        sectionUnits: ["u4", "u5"]
+        sectionUnits: ["d4", "d5"]
     });
 tempsection.save();
 
@@ -39,7 +39,7 @@ tempsection = new SectionM({
         sectionName: "浪漫主义欣赏",
         sectionDisplayName: "浪漫主义诗歌",
         sectionParent: "g2",
-        sectionUnits: ["u6", "u7"]
+        sectionUnits: ["d6", "d7"]
     });
 tempsection.save();
 

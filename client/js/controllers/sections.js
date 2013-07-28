@@ -32,7 +32,7 @@ angular.module('SpruceQuizApp')
     //     $rootScope.error = "Failed to fetch problems.";
     // });
 
-    $scope.orderProp = 'lastupdated';
+    $scope.sections = Sections.onSections.list()
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];

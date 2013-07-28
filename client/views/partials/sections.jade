@@ -4,7 +4,7 @@
     .row-fluid
         .span9
             tabset
-                tab(heading="数学")
+                tab(ng-repeat="section in sections",heading="{{section.sectionName}}")
                     div.row-fluid
                         .span1
                             img(src="/img/3_large.png").img-polaroid
@@ -36,11 +36,6 @@
                                     .well
                                         p 欧拉的故事
 
-                tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
-                tab(heading="数学")
         .span3
             .well
                 .row-fluid
