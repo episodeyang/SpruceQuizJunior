@@ -8,7 +8,7 @@ var MaterialM = require('./SchemaModels').Material;
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization
 var tempmaterial = new MaterialM({
-        materialUUID: "m0001",
+        materialUUID: "m1",
         materialName: "doc1",
         comment: "",
         dateOfCreation: "",
@@ -20,7 +20,7 @@ var tempmaterial = new MaterialM({
 tempmaterial.save();
 
 tempmaterial = new MaterialM({
-        materialUUID: "m0002",
+        materialUUID: "m2",
         materialName: "doc2",
         comment: "",
         dateOfCreation: "",
@@ -32,7 +32,7 @@ tempmaterial = new MaterialM({
 tempmaterial.save();
 
 tempmaterial = new MaterialM({
-        materialUUID: "m0003",
+        materialUUID: "m3",
         materialName: "doc3",
         comment: "",
         dateOfCreation: "",
