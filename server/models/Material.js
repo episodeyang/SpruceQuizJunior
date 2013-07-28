@@ -13,9 +13,9 @@ var tempmaterial = new MaterialM({
         comment: "什么是三元一次方程？请点击这里",
         dateOfCreation: "",
         dateOfModification: "",
-        lastEditedBy: "",
-        sourceUrl: "",
-        materialType: ""
+        lastEditedBy: "episodeyang",
+        sourceUrl: "http://baike.baidu.com/view/853269.htm",
+        materialType: "webpage"
     });
 tempmaterial.save();
 
@@ -25,21 +25,21 @@ tempmaterial = new MaterialM({
         comment: "什么是抛物线？",
         dateOfCreation: "",
         dateOfModification: "",
-        lastEditedBy: "",
-        sourceUrl: "",
-        materialType: ""
+        lastEditedBy: "lizhongchen",
+        sourceUrl: "http://zh.wikipedia.org/wiki/%E6%8A%9B%E7%89%A9%E7%BA%BF",
+        materialType: "webpage"
     });
 tempmaterial.save();
 
 tempmaterial = new MaterialM({
         materialUUID: "m3",
         materialName: "那不是一颗流星",
-        comment: "",
+        comment: "语文第三册课文",
         dateOfCreation: "",
         dateOfModification: "",
-        lastEditedBy: "",
-        sourceUrl: "",
-        materialType: "article"
+        lastEditedBy: "吴轶凡",
+        sourceUrl: "http://baike.baidu.com/view/1344225.htm",
+        materialType: "webpage"
     });
 tempmaterial.save();
 

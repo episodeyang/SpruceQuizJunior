@@ -33,9 +33,15 @@
                         .span7(id="{{model.unitID}}")
                             tabset
                                 tab(heading="测试")
-                                    .well(ng-repeat="material in model.tempUnit.items")
-                                        h3 {{material.materialName}}
-                                        p {{material.comment}}
+                                    .row-fluid
+                                        .span12
+                                            div.clickable(ng-repeat="material in model.tempUnit.items")
+                                                a.fill-clickable(href="{{material.sourceUrl}}", target="_blank")
+                                                .well
+                                                    a.edit.pull-right(href="http://www.facebook.com")
+                                                        i.icon-pencil
+                                                    h3.card {{material.materialName}}
+                                                    p {{material.comment}}
                                 tab(heading="已存档",disabled="true")
                             tabset
                                 tab(heading="阅读")
