@@ -17,7 +17,7 @@ angular.module('SpruceQuizApp')
     //$scope.problems.push(Problems.get({uuid: "p0001"}));
 
     //Use the next line to get all problems
-    $scope.problems = Problems.list();
+    $scope.problems = Problems.onProblems.list();
 
     //old way using $http
     // Problems.getAll(function(res) {

@@ -15,21 +15,8 @@
                         .span1
                             img(src="/img/3_large.png").img-polaroid
                         .span11
-                            alert(close="closeClicked=!closeClicked")
-                                p {{haha}}
-
-                    div.row-fluid
-                        .span1
-                            img(src="/img/3_large.png").img-polaroid
-                        .span11
-                            alert(close="closeClicked=!closeClicked")
-                                p {{hahaha}}
-                    div.row-fluid
-                        .span1
-                            img(src="/img/3_large.png").img-polaroid
-                        .span11
-                            alert(close="closeClicked=!closeClicked")
-                                p {{hahahaha.unitTitle}}
+                            alert(close="updateSection()")
+                                p {{section}}
 
                     div.row-fluid
                         .span5
@@ -38,7 +25,7 @@
                                     a
                                         strong 目录
                                 li(ng-repeat="unit in section.sectionUnits")
-                                    a {{unit}} {{unit.unitTitle}}
+                                    a {{unit.unitTitle}}
                                 li
                                     a 删除小组
                         .span7
