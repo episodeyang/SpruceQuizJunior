@@ -122,6 +122,9 @@ angular.module('spruceDBServices', ['ngResource'])
         onUnits: $resource('/api/units/:uuid', {uuid:'@unitUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true}
         })
+        // onMaterials: $resource('/api/units/:uuid/materials/:mid', {uuid:'@unitUUID', mid:'@materialUUID'}, {
+        //     update: {method:'PUT', params:{uuid: '@uuid', mid: '@mid'}}
+        // })
     };
 })
 .factory('Materials', function($resource){
@@ -135,7 +138,7 @@ angular.module('spruceDBServices', ['ngResource'])
     return {
         onSections: $resource('/api/sections/:uuid', {uuid:'@sectionUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true},
-            update: {method:'PUT', params:{uuid: '@sectionUUID'}}
+            update: {method:'PUT', params:{uuid: '@uuid'}}
         }),
         onStudents: $resource('/api/sections/:uuid/students', {uuid:'@sectionUUID'}, {
         }),
@@ -144,6 +147,7 @@ angular.module('spruceDBServices', ['ngResource'])
         onSchools: $resource('/api/sections/:uuid/schools', {uuid:'@sectionUUID'}, {
         }),
         onUnits: $resource('/api/sections/:uuid/units', {uuid:'@sectionUUID'}, {
+            get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
         })
     };
 });
