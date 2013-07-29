@@ -32,6 +32,9 @@ angular.module('SpruceQuizApp')
     //     $rootScope.error = "Failed to fetch problems.";
     // });
 
+//Test
+    //Units.onMaterials.update({uuid: "d4", mid: "m2", toArchive: "true"});
+
     $scope.sections = Sections.onSections.list();
 //    $scope.sections = Sections.onSections.
     //$scope.sections = {}

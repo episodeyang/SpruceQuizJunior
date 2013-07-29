@@ -14,7 +14,7 @@ var tempunit = new UnitM({
         father: [],
         child: ["d3"],
         items: ["m1"],
-        archive: [false]
+        archived: ["m2"]
     });
 tempunit.save();
 
@@ -25,7 +25,7 @@ tempunit = new UnitM({
         father: [""],
         child: [""],
         items: ["m2"],
-        archive: [true]
+        archived: ["m3"]
     });
 tempunit.save();
 
@@ -36,7 +36,7 @@ tempunit = new UnitM({
     father: [""],
     child: [""],
     items: ["m2"],
-    archive: [false]
+    archived: []
 });
 tempunit.save();
 
@@ -47,7 +47,7 @@ tempunit = new UnitM({
         father: ["d3"],
         child: [],
         items: ["m2", "m3"],
-        archive: [false, true]
+        archived: ["m1"]
     });
 tempunit.save();
 
