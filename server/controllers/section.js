@@ -18,11 +18,15 @@ module.exports = {
 	        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, gresults) {
 	        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
 	        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
-	        			var results = gresults.toObject();
-	        			results.school = sresults.schoolUUID;
-	        			results.students = _.map(uresults, function(item) {return item.userUUID});
-			            //console.log(results);
-			            res.json(results);
+	        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
+	        				//console.log(gresults.sectionUnits);
+		        			var results = gresults.toObject();
+		        			results.school = sresults.schoolUUID;
+		        			results.students = _.map(uresults, function(item) {return item.userUUID});
+		        			results.sectionUnits = dresults;
+				            //console.log(results);
+				            res.json(results);
+			            });
 			    	});
 		    	});
 	    	});
