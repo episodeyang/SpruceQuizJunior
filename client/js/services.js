@@ -88,6 +88,9 @@ angular.module('spruceDBServices', ['ngResource'])
         onTeachers: $resource('/api/students/:uuid/teachers', {uuid:'@userUUID'}, {
         }),
         onSchools: $resource('/api/students/:uuid/schools', {uuid:'@userUUID'}, {
+        }),
+        onSections: $resource('/api/students/:uuid/sections', {uuid:'@userUUID'}, {
+            get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
         })
     };
 })
