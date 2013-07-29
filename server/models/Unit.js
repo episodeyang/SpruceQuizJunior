@@ -13,7 +13,8 @@ var tempunit = new UnitM({
         comment: "",
         father: [],
         child: ["d3"],
-        items: ["m1"]
+        items: ["m1"],
+        archive: [false]
     });
 tempunit.save();
 
@@ -23,7 +24,8 @@ tempunit = new UnitM({
         comment: "",
         father: [""],
         child: [""],
-        items: ["m2"]
+        items: ["m2"],
+        archive: [true]
     });
 tempunit.save();
 
@@ -33,7 +35,8 @@ tempunit = new UnitM({
     comment: "",
     father: [""],
     child: [""],
-    items: ["m2"]
+    items: ["m2"],
+    archive: [false]
 });
 tempunit.save();
 
@@ -43,7 +46,8 @@ tempunit = new UnitM({
         comment: "",
         father: ["d3"],
         child: [],
-        items: ["m3"]
+        items: ["m2", "m3"],
+        archive: [false, true]
     });
 tempunit.save();
 
