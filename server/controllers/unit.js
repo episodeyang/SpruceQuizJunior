@@ -44,22 +44,30 @@ module.exports = {
 	    		else {
 	    			aresults.items.splice(pos, 1);
 	    			aresults.archived.push(req.params.mid);
-	    			console.log(aresults.archived);
-	    			
+	    			//console.log(aresults);
+	    			UnitM.update({ unitUUID: req.params.uuid }, { items: aresults.items, archived: aresults.archived }, function (err, cresults) {
+			        	if(err) {
+			        		res.send(404, "Archive update error.");
+			        	}
+	    			});
 	    		}
 		    }
 		    else {
-
+	    		var pos = _.indexOf(aresults.archived, req.params.mid);
+	    		if(pos == -1) {
+	    			res.send(404, "The material is not found in archive.");
+	    		}
+	    		else {
+	    			aresults.archived.splice(pos, 1);
+	    			aresults.items.push(req.params.mid);
+	    			//console.log(aresults);
+	    			UnitM.update({ unitUUID: req.params.uuid }, { items: aresults.items, archived: aresults.archived }, function (err, cresults) {
+			        	if(err) {
+			        		res.send(404, "Archive update error.");
+			        	}
+	    			});
+	    		}
 		    };
-
-
-			//console.log(req.body);
-			// //console.log(req.params.uuid);
-	  //       StudentM.update({ userUUID: req.params.uuid }, req.body, function (err) {
-	  //       	if(err) {
-	  //       		res.send(404, "Update student failed.");
-	  //       	}
-	  //   	});
 	    });
 	}
 }
