@@ -18,11 +18,48 @@ module.exports = {
 	        			var results = aresults.toObject();
 	        			results.child = cresults;
 	        			results.items = bresults;
-			            console.log(results);
+			            //console.log(results);
 			            res.json(results);
 		            });
 		    	});
 	    	});
 	    };
+	},
+	getArchived: function(req, res) {
+        UnitM.findOne({ unitUUID: req.params.uuid }, function (err, aresults) {
+			MaterialM.find({ materialUUID: { $in: aresults.archived } }, function (err, cresults) {
+				//console.log(aresults.archived);
+				//console.log(cresults);
+	            res.json(cresults);
+            });
+    	});
+	},
+	updatebyId: function(req, res) {
+		UnitM.findOne({ unitUUID: req.params.uuid }, function (err, aresults) {
+	    	if(req.params.toArchive === "true") {
+	    		var pos = _.indexOf(aresults.items, req.params.mid);
+	    		if(pos == -1) {
+	    			res.send(404, "The material is not found in the existing list.");
+	    		}
+	    		else {
+	    			aresults.items.splice(pos, 1);
+	    			aresults.archived.push(req.params.mid);
+	    			console.log(aresults.archived);
+	    			
+	    		}
+		    }
+		    else {
+
+		    };
+
+
+			//console.log(req.body);
+			// //console.log(req.params.uuid);
+	  //       StudentM.update({ userUUID: req.params.uuid }, req.body, function (err) {
+	  //       	if(err) {
+	  //       		res.send(404, "Update student failed.");
+	  //       	}
+	  //   	});
+	    });
 	}
 }

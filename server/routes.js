@@ -300,12 +300,18 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, UnitCtrl.getbyId],
         accessLevel: accessLevels.loggedin
     },
-    // {
-    //     path: '/api/units/:uuid/materials/:mid',
-    //     httpMethod: 'PUT',
-    //     middleware: [ensureAuthenticated, ensureAuthorized, UnitCtrl.updatebyId],
-    //     accessLevel: accessLevels.loggedin
-    // },
+    {
+        path: '/api/units/:uuid/archived',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, UnitCtrl.getArchived],
+        accessLevel: accessLevels.loggedin
+    },
+    {
+        path: '/api/units/:uuid/materials/:mid/:toArchive',
+        httpMethod: 'PUT',
+        middleware: [ensureAuthenticated, ensureAuthorized, UnitCtrl.updatebyId],
+        accessLevel: accessLevels.loggedin
+    },
     //Material resource
     {
         path: '/api/materials/:uuid',
