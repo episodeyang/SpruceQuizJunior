@@ -168,7 +168,8 @@ var UnitSchema = new mongoose.Schema({
     comment: String,
     father: Array,
     child: Array,
-    items: Array
+    items: Array,
+    archive: Array
 }, { collection : 'unit' });
 
 var Unit = mongoose.model('Unit', UnitSchema);
