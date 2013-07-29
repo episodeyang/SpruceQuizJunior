@@ -52,8 +52,13 @@ angular.module('SpruceQuizApp')
     $scope.model.sections = Sections.onSections.list();
 //    $scope.sectionUnits = Sections.onUnits.get({uuid: this.section.sectionUUID})
     $scope.updateSection = function(index){
-        $scope.model.sections[index].sectionUnits = Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
-            ,console.log()
+        Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
+            ,function(results){
+                //console.log(results);
+                $scope.model.sections[index].sectionUnits = results;
+                $scope.grabMaterials(results[0].unitUUID)
+
+            }
         );
     }
 
