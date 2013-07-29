@@ -3,6 +3,7 @@ var _ =           require('underscore')
     , SchoolM = require('../models/SchemaModels').School
     , StudentM = require('../models/SchemaModels').Student
     , TeacherM = require('../models/SchemaModels').Teacher
+    , SectionM = require('../models/SchemaModels').Section
 
 module.exports = {
     getbyId: function(req, res) {
@@ -56,6 +57,15 @@ module.exports = {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
 	        TeacherM.find({ sections: { $in: results.sections } }, function (err, tresults) {
 	            res.json(tresults);
+	    	});
+    	});
+	},
+	getSections: function(req, res) {
+        StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
+	        SectionM.find({ sectionUUID: { $in: results.sections } }, function (err, gresults) {
+	        	//console.log(results.sections);
+	        	//console.log(gresults);
+	            res.json(gresults);
 	    	});
     	});
 	}

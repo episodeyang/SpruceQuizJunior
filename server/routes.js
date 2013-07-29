@@ -231,6 +231,12 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getTeachers],
         accessLevel: accessLevels.loggedin
     },
+    {
+        path: '/api/students/:uuid/sections',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSections],
+        accessLevel: accessLevels.loggedin
+    },
     //AuthUser resources
     {
         path: '/api/users/:uuid',
