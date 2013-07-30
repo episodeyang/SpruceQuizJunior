@@ -3,6 +3,12 @@
         .span12
     .row-fluid
         .span9
+            div.row-fluid
+                .span1
+                    img(src="/img/3_large.png").img-polaroid
+                .span11
+                    alert(close="updateSection()")
+                        p {{sections[0]}}
             tabset
                 tab(ng-repeat="section in sections",heading="{{section.sectionName}}")
                     div.row-fluid
