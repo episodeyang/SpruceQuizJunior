@@ -106,7 +106,7 @@ var StudentSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     dateOfBirth: Date,
-    sex: String,
+    gender: String,
     email: String,
     phone: Array,
     address: String,
