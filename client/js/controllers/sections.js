@@ -39,6 +39,15 @@ angular.module('SpruceQuizApp')
     //Activate "m2":
     //Units.onMaterials.update({uuid: "d4", mid: "m2", toArchive: "false"});
 
+//Newsfeed example 1 - no feed limit => use default 50:
+    //Sections.onFeeds.get({uuid: "g1"});
+
+//Newsfeed example 2 - specify feed limit:
+    //Sections.onFeeds.get({uuid: "g1", flim: '2'});
+
+//Newsfeed example 3 - return all feeds
+    //Sections.onFeeds.get({uuid: "g1", flim: 'all'});
+
     $scope.sections = Sections.onSections.list();
 //    $scope.sections = Sections.onSections.
     //$scope.sections = {}
