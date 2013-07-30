@@ -191,6 +191,22 @@ var MaterialSchema = new mongoose.Schema({
 
 var Material = mongoose.model('Material', MaterialSchema);
 
+//Newsfeed schema
+var FeedSchema = new mongoose.Schema({ 
+    feedUUID: {
+      type: String,
+      unique: true
+    },
+    userUUID: String,
+    groupUUID: String,
+    type: String,
+    feedData: String,
+    createdDate: Date,
+    archived: Array
+}, { collection : 'feed' });
+
+var Feed = mongoose.model('Feed', FeedSchema);
+
 //other schemas here
 
 //exports
@@ -204,5 +220,6 @@ module.exports = {
   Exam: Exam,
   Quiz: Quiz,
   Unit: Unit,
-  Material: Material
+  Material: Material,
+  Feed: Feed
 }
