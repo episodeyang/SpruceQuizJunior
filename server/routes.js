@@ -237,6 +237,12 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSections],
         accessLevel: accessLevels.loggedin
     },
+    {
+        path: '/api/students/:uuid/feeds/:flim',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getFeeds],
+        accessLevel: accessLevels.loggedin
+    },
     //AuthUser resources
     {
         path: '/api/users/:uuid',
@@ -292,6 +298,12 @@ var routes = [
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getUnits],
         accessLevel: accessLevels.superuser
+    },
+    {
+        path: '/api/sections/:uuid/feeds/:flim',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getFeeds],
+        accessLevel: accessLevels.loggedin
     },
     //Unit resource
     {

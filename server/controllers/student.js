@@ -4,6 +4,7 @@ var _ =           require('underscore')
     , StudentM = require('../models/SchemaModels').Student
     , TeacherM = require('../models/SchemaModels').Teacher
     , SectionM = require('../models/SchemaModels').Section
+    , FeedM = require('../models/SchemaModels').Feed
 
 module.exports = {
     getbyId: function(req, res) {
@@ -68,5 +69,19 @@ module.exports = {
 	            res.json(gresults);
 	    	});
     	});
+	},
+	getFeeds: function(req, res) {
+		if(req.params.flim === "all") {
+	        FeedM.find({ userUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}}, function (err, results) {
+	        	//console.log(results);
+	            res.json(results);
+	    	});
+	    }
+	    else {
+	        FeedM.find({ userUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}, limit: req.params.flim}, function (err, results) {
+	        	//console.log(results);
+	            res.json(results);
+	    	});
+	    };
 	}
 }
