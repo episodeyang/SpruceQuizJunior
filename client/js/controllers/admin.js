@@ -4,18 +4,27 @@
 
 var app = angular.module('SpruceQuizApp');
 
-app.controller('AdminCtrl',
-['$rootScope', '$scope', 'Students',function($rootScope, $scope, Students) {
+app.factory('newStudentList', function(){
+    return [];
+});
 
+app.controller('AdminCtrl',
+['$rootScope', '$scope', 'Students', 'newStudentList', function($rootScope, $scope, Students,newStudentList) {
     $scope.loading = false;
     $scope.students = Students.onStudents.list();
     $scope.isCollapsed = false;
-
+    $scope.newStudentList = newStudentList;
+    $scope.deleteNewStudent = function(){
+        $scope.isCollapsed = true;
+        $scope.newStudentList = [];
+    }
 
 }]);
 
 
-var CreateModalCtrl = function($scope,Students) {
+
+var CreateModalCtrl = function($scope,Students,newStudentList) {
+    $scope.newStudentList = newStudentList;
     $scope.newStudent={};
     $scope.opts = {
         backdropFade: true,
@@ -25,6 +34,7 @@ var CreateModalCtrl = function($scope,Students) {
     $scope.addStudent = function(stu) {
         //    console.log(angular.toJson(stu));
         Students.onStudents.save(stu);
+        $scope.newStudentList.push(stu);
         $scope.close();
     }
     $scope.close=function(){
