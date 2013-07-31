@@ -37,11 +37,11 @@ module.exports = {
 		});
 	},
 	updatebyId: function(req, res) {
-		console.log(req.body);
-		console.log(req.params.uuid);
+		//console.log(req.body);
+		//console.log(req.params.uuid);
         StudentM.update({ userUUID: req.params.uuid }, req.body, function (err) {
         	if(err) {
-        		res.send(500, "Update student failed.");
+        		res.send(404, "Update student failed.");
         	}
     	});
 	},

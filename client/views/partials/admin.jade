@@ -29,7 +29,7 @@ h1 学生管理
                     //-hide this entire division.
                     h4.pull-left 新增学生 &nbsp;
                     span.pull-left(style="padding-top:3px;")
-                        button.btn.btn-small.btn-danger(ng-click="isCollapsed=!isCollapsed") 清空通知
+                        button.btn.btn-small.btn-danger(ng-click="deleteNewStudent()") 清空通知
                     div.pull-right(style="padding-top:3px;")
                         form.form-search
                             input.span12.search-query(placeholder="搜索用户",ng-model="newStudentQuery")
@@ -47,7 +47,7 @@ h1 学生管理
 
                         tbody
 
-                            tr(data-ng-repeat="student in students|filter:'u0001'|filter:newStudentQuery")
+                            tr(data-ng-repeat="student in newStudentList")
                                 td {{ student.userUUID }}
                                 td {{ student.firstName}} {{student.lastName}}
                                 td {{ student.sex}}
@@ -252,7 +252,7 @@ h1 学生管理
                 hr
                 h4 教师
                 hr
-//Only superuser(admin, teacher) can see the tab below.
-//The tab directive currently does not support this functionality.
+            //Only superuser(admin, teacher) can see the tab below.
+            //The tab directive currently does not support this functionality.
             tab(heading="学校")
-//tab(heading="学校", data-ng-hide='{{false}}')
+            //tab(heading="学校", data-ng-hide='{{false}}')
