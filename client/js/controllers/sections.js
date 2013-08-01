@@ -4,7 +4,7 @@
 
 angular.module('SpruceQuizApp')
 .controller('SectionCtrl',
-['$rootScope', '$scope', 'Sections','Units', function($rootScope, $scope, Sections, Units) {
+['$rootScope', '$scope', 'Sections','Units','Materials', function($rootScope, $scope, Sections, Units, Materials) {
 //function ProblemCtrl($scope, Problems) 
     //$rootScope.error = "Temp warning";
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
@@ -47,11 +47,17 @@ angular.module('SpruceQuizApp')
 
 //Newsfeed example 3 - return all feeds
     //Sections.onFeeds.get({uuid: "g1", flim: 'all'});
-
+    console.log("printing this out?")
     $scope.sections = Sections.onSections.list();
-    $scope.sections[0] = Sections.onSections.get({uuid: "g2"})
+//    $scope.sections = _.map($scope.sections, function(section){
+//        console.log(section.sectionUUID;)
+//        return $scope.onSections.get({uuid: section.sectionUUID});
+//    });
     $scope.updateSection = function(){
         this.section = Sections.onSections.get({uuid: this.section.sectionUUID});
+    }
+    $scope.grabMaterials = function(){
+        this.material = Materials.onMaterials.get({uuid: "m1"});
     }
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";

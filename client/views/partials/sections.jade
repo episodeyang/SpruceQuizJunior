@@ -3,21 +3,15 @@
         .span12
     .row-fluid
         .span9
-            div.row-fluid
-                .span1
-                    img(src="/img/3_large.png").img-polaroid
-                .span11
-                    alert(close="updateSection()")
-                        p {{sections[0]}}
             tabset
-                tab(ng-repeat="section in sections",heading="{{section.sectionName}}")
+                tab(ng-repeat="section in sections",heading="{{section.sectionName}}", select="updateSection()")
                     div.row-fluid
                         .span1
                             img(src="/img/3_large.png").img-polaroid
                         .span11
                             alert(close="closeClicked=!closeClicked")
                                 p 吴轶凡 推送了今日测试（一）
-                    div.row-fluid
+                    //-div.row-fluid
                         .span1
                             img(src="/img/3_large.png").img-polaroid
                         .span11

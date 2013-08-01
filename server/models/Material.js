@@ -9,7 +9,7 @@ var MaterialM = require('./SchemaModels').Material;
 // Begin of temporary initilization
 var tempmaterial = new MaterialM({
         materialUUID: "m1",
-        materialName: "doc1",
+        materialName: "三元一次方程简介",
         comment: "",
         dateOfCreation: "",
         dateOfModification: "",
@@ -21,7 +21,7 @@ tempmaterial.save();
 
 tempmaterial = new MaterialM({
         materialUUID: "m2",
-        materialName: "doc2",
+        materialName: "抛物线的性质",
         comment: "",
         dateOfCreation: "",
         dateOfModification: "",
@@ -33,13 +33,13 @@ tempmaterial.save();
 
 tempmaterial = new MaterialM({
         materialUUID: "m3",
-        materialName: "doc3",
+        materialName: "那不是一颗流星",
         comment: "",
         dateOfCreation: "",
         dateOfModification: "",
         lastEditedBy: "",
         sourceUrl: "",
-        materialType: ""
+        materialType: "article"
     });
 tempmaterial.save();
 
