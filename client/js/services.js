@@ -138,7 +138,7 @@ angular.module('spruceDBServices', ['ngResource'])
 })
 .factory('Materials', function($resource){
     return {
-        onUnits: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
+        onMaterials: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true}
         })
     };
