@@ -16,6 +16,7 @@ angular.module('SpruceQuizApp')
     //$scope.problems.push(Problems.get({uuid: "p0001"}));
     $scope.list = [];
     $scope.newSection = {};
+    $scope.model={};
     //Use the next line to get all problems
 //    $scope.problems = Problems.list();
 
@@ -56,9 +57,22 @@ angular.module('SpruceQuizApp')
     $scope.updateSection = function(){
         this.section = Sections.onSections.get({uuid: this.section.sectionUUID});
     }
-    $scope.grabMaterials = function(){
-        this.material = Materials.onMaterials.get({uuid: "m1"});
+    $scope.model.unitID = "d1"
+    $scope.grabMaterials = function(unitId){
+        $scope.model.unitID=unitId
+        $scope.model.materials = [
+            {'materialTitle':'hahaha',
+             'comment':'comment 1'
+            },
+            {'materialTitle':'hahaha',
+                'comment':'comment 2'
+            },
+            {'materialTitle':'hahaha',
+                'comment':'comment 3'
+            }
+        ];//Units.onMaterials.get({uuid: unitID, mid: all});
     }
+
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];

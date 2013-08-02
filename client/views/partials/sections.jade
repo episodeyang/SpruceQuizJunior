@@ -20,21 +20,22 @@
 
                     div.row-fluid
                         .span5
-                            ul.nav.nav-tabs.nav-stacked
+                            ul.nav.nav-tabs.nav-stacked(style="margin-top:0px;")
                                 li
-                                    a
-                                        strong 目录
+                                    a: strong 目录
                                 li(ng-repeat="unit in section.sectionUnits")
-                                    a {{unit.unitTitle}}
+                                    a(ng-href='{{"#" + unit.unitUUID}}', ng-click="grabMaterials(unit.unitUUID)")
+                                        | {{unit.unitTitle}}
+                                    //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
+                            ul.nav.nav-tabs.nav-stacked(style="margin-top:20px;")
                                 li
                                     a 删除小组
-                        .span7
+                        .span7(id="{{model.unitID}}")
                             tabset
                                 tab(heading="测试")
-                                    .well
-                                        p 第一单元当天训练
-                                    .well
-                                        p 第一单元双周复习
+                                    .well(ng-repeat="material in model.materials")
+                                        h3 {{material.materialTitle}}
+                                        p {{material.comment}}
                                 tab(heading="已存档",disabled="true")
                             tabset
                                 tab(heading="阅读")
@@ -52,7 +53,7 @@
                         p.bottom(style="margin-bottom:0;") @{{user.username}}
             .row-fluid
                 .span12.sp-reports-sidebar
-                    ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
+                    ul.nav.nav-pills.nav-stacked.sp-reports-sidenav
                         li
                             a(ng-click="createSectionModal = true") 创建新课程
                         li

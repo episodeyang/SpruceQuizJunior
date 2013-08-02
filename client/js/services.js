@@ -132,13 +132,14 @@ angular.module('spruceDBServices', ['ngResource'])
             get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
         }),
         onMaterials: $resource('/api/units/:uuid/materials/:mid/:toArchive', {uuid:'@unitUUID'}, {
+            get: {method:'GET', params:{uuid: '@uuid',mid:'all'}, isArray:true},
             update: {method:'PUT', params:{uuid: '@uuid', mid: '@mid', toArchive: '@toArchive'}}
         })
     };
 })
 .factory('Materials', function($resource){
     return {
-        onUnits: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
+        onMaterials: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true}
         })
     };

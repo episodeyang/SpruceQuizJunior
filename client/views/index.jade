@@ -6,15 +6,17 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src="/js/angular/angular.js")
         //-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js")
         //-script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js")
-        //-script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
-        script(src="/js/angular-ui.min.js")
+        script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
+        //-script(src="/js/lib/angular-ui.js")
+        //-script(src="/js/lib/angular-ui.css")
         //-link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css",
             rel="stylesheet")
         link(href='/css/bootstrap-combined.no-icons.min.SpruceLearning.css',
             rel="stylesheet")
         //-link(href='/css/bootstrap.min.css', rel="stylesheet")
         link(rel='stylesheet', href='/css/app.css')
-        link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
+        link(href="/lib/font-awesome.min.css")
+        //-link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
         //-script.
             'use strict';(function(i){function d(c,a,e){return c[a]||(c[a]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(a,e,f){e&&c.hasOwnProperty(a)&&(c[a]=null);return d(c,a,function(){function b(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+a);var c=[],d=[],h=b("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:a,provider:b("$provide","provider"),factory:b("$provide","factory"),service:b("$provide","service"),
             value:b("$provide","value"),constant:b("$provide","constant","unshift"),filter:b("$filterProvider","register"),directive:b("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);

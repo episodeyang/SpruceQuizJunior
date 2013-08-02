@@ -10,7 +10,7 @@ var MaterialM = require('./SchemaModels').Material;
 var tempmaterial = new MaterialM({
         materialUUID: "m1",
         materialName: "三元一次方程简介",
-        comment: "",
+        comment: "什么是三元一次方程？请点击这里",
         dateOfCreation: "",
         dateOfModification: "",
         lastEditedBy: "",
@@ -22,7 +22,7 @@ tempmaterial.save();
 tempmaterial = new MaterialM({
         materialUUID: "m2",
         materialName: "抛物线的性质",
-        comment: "",
+        comment: "什么是抛物线？",
         dateOfCreation: "",
         dateOfModification: "",
         lastEditedBy: "",
