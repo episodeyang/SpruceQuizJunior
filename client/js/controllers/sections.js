@@ -48,6 +48,7 @@ angular.module('SpruceQuizApp')
 
 //Newsfeed example 3 - return all feeds
     //Sections.onFeeds.get({uuid: "g1", flim: 'all'});
+//$scope.model.temp = Units.onUnits.get({uuid: "d4"})
     console.log("printing this out?")
     $scope.sections = Sections.onSections.list();
 //    $scope.sections = _.map($scope.sections, function(section){
@@ -59,18 +60,20 @@ angular.module('SpruceQuizApp')
     }
     $scope.model.unitID = "d1"
     $scope.grabMaterials = function(unitId){
-        $scope.model.unitID=unitId
-        $scope.model.materials = [
-            {'materialTitle':'hahaha',
-             'comment':'comment 1'
-            },
-            {'materialTitle':'hahaha',
-                'comment':'comment 2'
-            },
-            {'materialTitle':'hahaha',
-                'comment':'comment 3'
-            }
-        ];//Units.onMaterials.get({uuid: unitID, mid: all});
+        //$scope.model.unitID = unitId;
+        $scope.model.tempUnit = Units.onUnits.get({uuid: unitId});
+        //$scope.model.materials = $scope.model.temp.items;
+        // $scope.model.materials = [
+        //     {'materialTitle':'hahaha',
+        //      'comment':'comment 1'
+        //     },
+        //     {'materialTitle':'hahaha',
+        //         'comment':'comment 2'
+        //     },
+        //     {'materialTitle':'hahaha',
+        //         'comment':'comment 3'
+        //     }
+        // ];
     }
 
     $scope.createNewSection = function(){
