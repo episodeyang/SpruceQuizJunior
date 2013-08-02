@@ -23,8 +23,8 @@
                             ul.nav.nav-tabs.nav-stacked(style="margin-top:0px;")
                                 li
                                     a: strong 目录
-                                li(ng-repeat="unit in section.sectionUnits")
-                                    a(ng-href='{{"#" + unit.unitUUID}}', ng-click="grabMaterials(unit.unitUUID)")
+                                li(ng-repeat="unit in section.sectionUnits",class="{{unit.active}}")
+                                    a(ng-click="grabMaterials(unit.unitUUID)")
                                         | {{unit.unitTitle}}
                                     //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
                             ul.nav.nav-tabs.nav-stacked(style="margin-top:20px;")
