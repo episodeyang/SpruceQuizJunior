@@ -33,8 +33,8 @@
                         .span7(id="{{model.unitID}}")
                             tabset
                                 tab(heading="测试")
-                                    .well(ng-repeat="material in model.materials")
-                                        h3 {{material.materialTitle}}
+                                    .well(ng-repeat="material in model.tempUnit.items")
+                                        h3 {{material.materialName}}
                                         p {{material.comment}}
                                 tab(heading="已存档",disabled="true")
                             tabset
