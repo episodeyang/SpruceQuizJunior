@@ -12,7 +12,7 @@ var tempfeed = new FeedM({
         userUUID: "u1",
         groupUUID: "g1",
         type: "Posted blog",
-        feedData: "I am writing a new blog!",
+        feedData: "写了一篇新的博客文章",
         createdDate: new Date,
         archived: [false]
     });
@@ -22,8 +22,8 @@ tempfeed = new FeedM({
         feedUUID: "f2",
         userUUID: "u2",
         groupUUID: "g1",
-        type: "Added photo",
-        feedData: "I am adding a photo!",
+        type: "record",
+        feedData: "突破了新的速度记录",
         createdDate: new Date,
         archived: [false]
     });
@@ -33,8 +33,8 @@ tempfeed = new FeedM({
         feedUUID: "f3",
         userUUID: "u1",
         groupUUID: "g2",
-        type: "Commented",
-        feedData: "I am commenting!",
+        type: "comment",
+        feedData: "留言：这篇文章写的真好啊！收藏了！",
         createdDate: new Date,
         archived: [false]
     });
@@ -42,13 +42,23 @@ tempfeed.save();
 
 tempfeed = new FeedM({
         feedUUID: "f4",
-        userUUID: "u1",
+        userUUID: "u3",
         groupUUID: "g1",
-        type: "Commented",
-        feedData: "I am commenting again!",
+        type: "share",
+        feedData: "分享了维基百科页面：宇宙大爆炸",
         createdDate: new Date,
         archived: [true]
     });
+tempfeed.save();
+tempfeed = new FeedM({
+    feedUUID: "f4",
+    userUUID: "u4",
+    groupUUID: "g1",
+    type: "share",
+    feedData: "分享了维基百科页面：宇宙大爆炸",
+    createdDate: new Date,
+    archived: [true]
+});
 tempfeed.save();
 
 // End of temporary initilization
