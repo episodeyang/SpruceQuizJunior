@@ -78,7 +78,8 @@ module.exports = {
             if (err) {
                 console.log("Counting error");
             } else {
-                var newid = results + 1;
+                var tempid = results + 1;
+                var newid = 'u' + tempid;
                 var user = new UserM({
                     id:         newid,
                     username:   username,

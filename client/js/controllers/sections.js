@@ -50,6 +50,7 @@ angular.module('SpruceQuizApp')
 //Newsfeed example 3 - return all feeds
     //Sections.onFeeds.get({uuid: "g1", flim: 'all'});
 //$scope.model.temp = Units.onUnits.get({uuid: "d4"})
+//$scope.model.temp = Units.onUnits.get();
 //    $scope.model.sections = Sections.onSections.list();
     $scope.model.sections = Students.onSections.get({uuid: 'u1'});
     console.log($scope.user.userRoles)
