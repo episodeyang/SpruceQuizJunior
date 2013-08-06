@@ -48,26 +48,38 @@ module.exports = {
 	},
 	getSchools: function(req, res) {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
-    		SchoolM.find({ schoolUUID: { $in: results.schools } }, function (err, sresults) {
-	            //console.log(sresults);
-	            res.json(sresults);
-	        });
+        	if(!results) {
+        		console.log("Student was not found");
+        	} else {
+	    		SchoolM.find({ schoolUUID: { $in: results.schools } }, function (err, sresults) {
+		            //console.log(sresults);
+		            res.json(sresults);
+		        });
+		    }
     	});
 	},
 	getTeachers: function(req, res) {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
-	        TeacherM.find({ sections: { $in: results.sections } }, function (err, tresults) {
-	            res.json(tresults);
-	    	});
+        	if(!results) {
+        		console.log("Student was not found");
+        	} else {
+		        TeacherM.find({ sections: { $in: results.sections } }, function (err, tresults) {
+		            res.json(tresults);
+		    	});
+		    }
     	});
 	},
 	getSections: function(req, res) {
         StudentM.findOne({ userUUID: req.params.uuid }, function (err, results) {
-	        SectionM.find({ sectionUUID: { $in: results.sections } }, function (err, gresults) {
-	        	//console.log(results.sections);
-	        	//console.log(gresults);
-	            res.json(gresults);
-	    	});
+        	if(!results) {
+        		console.log("Student was not found");
+        	} else {
+		        SectionM.find({ sectionUUID: { $in: results.sections } }, function (err, gresults) {
+		        	//console.log(results.sections);
+		        	//console.log(gresults);
+		            res.json(gresults);
+		    	});
+	    	}
     	});
 	},
 	getFeeds: function(req, res) {
