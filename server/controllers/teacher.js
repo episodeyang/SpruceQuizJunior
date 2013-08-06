@@ -39,10 +39,14 @@ module.exports = {
 	},
 	getStudents: function(req, res) {
         TeacherM.findOne({ userUUID: req.params.uuid }, function (err, results) {
-        	//console.log(results.sections);
-	        StudentM.find({ sections: { $in: results.sections } }, function (err, sresults) {
-	            res.json(sresults);
-	    	});
+        	if(!results) {
+        		console.log("Teacher was not found");
+        	} else {
+	        	//console.log(results.sections);
+		        StudentM.find({ sections: { $in: results.sections } }, function (err, sresults) {
+		            res.json(sresults);
+		    	});
+		    }
     	});
 	}
 }

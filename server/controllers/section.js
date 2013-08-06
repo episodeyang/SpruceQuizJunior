@@ -17,19 +17,23 @@ module.exports = {
 	    }
 	    else {
 	        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, gresults) {
-	        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
-	        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
-	        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
-	        				//console.log(gresults.sectionUnits);
-		        			var results = gresults.toObject();
-		        			results.school = sresults.schoolUUID;
-		        			results.students = _.map(uresults, function(item) {return item.userUUID});
-		        			results.sectionUnits = dresults;
-				            //console.log(results);
-				            res.json(results);
-			            });
+	        	if(!gresults) {
+	        		console.log("Section was not found");
+	        	} else {
+		        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
+		        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
+		        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
+		        				//console.log(gresults.sectionUnits);
+			        			var results = gresults.toObject();
+			        			results.school = sresults.schoolUUID;
+			        			results.students = _.map(uresults, function(item) {return item.userUUID});
+			        			results.sectionUnits = dresults;
+					            //console.log(results);
+					            res.json(results);
+				            });
+				    	});
 			    	});
-		    	});
+			    }
 	    	});
 	    };
 	},
@@ -87,10 +91,14 @@ module.exports = {
 	},
 	getUnits: function(req, res) {
         SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, results) {
-        	UnitM.find({ unitUUID: { $in: results.sectionUnits } }, function (err, dresults) {
-	            //console.log(dresults);
-            	res.json(dresults);
-	    	});
+        	if(!results) {
+        		console.log("Section was not found");
+        	} else {
+	        	UnitM.find({ unitUUID: { $in: results.sectionUnits } }, function (err, dresults) {
+		            //console.log(dresults);
+	            	res.json(dresults);
+		    	});
+	        }
     	});
 	},
 	getFeeds: function(req, res) {
