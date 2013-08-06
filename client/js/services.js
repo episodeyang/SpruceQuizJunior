@@ -24,7 +24,7 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
             if(user === undefined){
                 user = $rootScope.user;
                 };
-            return user.role === userRoles.student || user.role === userRoles.parents || user.role === userRoles.teacher || user.role === userRoles.admin;
+            return user.role === userRoles.student || user.role === userRoles.parents || user.role === userRoles.teacher || user.role === userRoles.admin || user.role === userRoles.superAdmin;
             //return function(){
             //    if(user.role in userRoles && user.role !== userRoles.public){
             //        return true;
