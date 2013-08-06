@@ -8,7 +8,7 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles;
 
-    $rootScope.user = $cookieStore.get('user') || { username: '', role: userRoles.public };
+    $rootScope.user = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
     $cookieStore.remove('user');
 
     $rootScope.accessLevels = accessLevels;
@@ -47,6 +47,7 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
             $http.post('/logout').success(function(){
                 $rootScope.user.username = '';
                 $rootScope.user.role = userRoles.public;
+                $rootScope.user.id = '';
                 success();
             }).error(error);
         },
@@ -120,6 +121,7 @@ angular.module('spruceDBServices', ['ngResource'])
         onStudents: $resource('/api/schools/:uuid/students', {uuid:'@schoolUUID'}, {
         }),
         onSections: $resource('/api/schools/:uuid/sections', {uuid:'@schoolUUID'}, {
+            get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
         })
     };
 })
