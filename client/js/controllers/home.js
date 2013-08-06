@@ -7,6 +7,24 @@ angular.module('SpruceQuizApp')
 ['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students',
     function($filter, $rootScope, $scope, Sections, Units, Materials, Students) {
         $scope.model = {}
+        $scope.model.user =$rootScope.user
+        $scope.model.sections=[]
+
+        //console.log($scope.user)
+        //console.log($rootScope.userRoles)
+        //console.log($rootScope.accessLevels)
+
+        Students.onSections.get({uuid: $scope.model.user.id}
+            ,function(results){
+                $scope.model.sections = results;
+                console.log('printing out the sections')
+                console.log($scope.model.sections)
+            }
+        )
+
+
+        $scope.model.user.id
+
         $scope.model.feeds = Sections.onFeeds.get({uuid: 'g1', flim: '50'})
 
         //$rootScope.model.sections = Students.onSections.get({uuid: 'u1'});

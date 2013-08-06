@@ -63,7 +63,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                             a(href='/private') Private
                         //-li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') Admin
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/sections') 课程
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') 学生管理
