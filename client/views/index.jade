@@ -67,12 +67,16 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                             a(href='/sections') 课程
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') 学生管理
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav).dropdown
-                            a.dropdown-toggle 问题
+                        li(data-access-level='{{ accessLevels.loggedin}}', active-nav).dropdown
+                            a.dropdown-toggle 问答
                                 span.caret
                             ul.dropdown-menu
+                                li(data-access-level="{{accessLevels.superuser}}")
+                                    a(href='/problems/edit') 编辑问题
                                 li
-                                    a(href='/problems') 编辑问题
+                                    a(href='/problems') 问题
+                                li
+                                    a(href='/quizzes') 测试
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/reports') 成绩和报告
                         //-li(data-access-level='{{ accessLevels.loggedin }}')
@@ -107,6 +111,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src='/js/services.js')
         script(src='/js/controllers.js')
         script(src='/js/controllers/problems.js')
+        script(src='/js/controllers/problems_edit.js')
         script(src='/js/controllers/reports.js')
         script(src='/js/controllers/sections.js')
         script(src='/js/controllers/admin.js')
