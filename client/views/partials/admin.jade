@@ -53,7 +53,7 @@ h1 学生管理
                             tr(data-ng-repeat="student in newStudentList")
                                 td {{ student.userUUID }}
                                 td {{ student.firstName}} {{student.lastName}}
-                                td {{ student.sex}}
+                                td {{ student.gender}}
                                 td {{ student.sections}}
                                 td {{ student.schools}}
                                 td {{ student.email}}
@@ -97,12 +97,12 @@ h1 学生管理
                                                                         | 必填
                                                         .row-fluid
                                                             .span6
-                                                                div.control-group(ng-class='{error: studentForm.sex.$invalid}')
+                                                                div.control-group(ng-class='{error: studentForm.gender.$invalid}')
                                                                     |男
-                                                                    input(type='radio',name='sex', ng-model='newStudent.sex', class='input-inline field', value='Male')
+                                                                    input(type='radio',name='gender', ng-model='newStudent.gender', class='input-inline field', value='Male')
                                                                     |&nbsp;&nbsp;&nbsp;&nbsp;女
-                                                                    input(type='radio',name='sex', ng-model='newStudent.sex', class='input-inline field', value='Female')
-                                                                    span.help-inline(ng-show='studentForm.sex.$error.required') 必填
+                                                                    input(type='radio',name='gender', ng-model='newStudent.gender', class='input-inline field', value='Female')
+                                                                    span.help-inline(ng-show='studentForm.gender.$error.required') 必填
                                                             .span6
                                                                 div.control-group(ng-class='{error: studentForm.dateOfBirth.$invalid}')
                                                                     input(type='text', class='input-small', name='dateOfBirth', ng-model='newStudent.dateOfBirth', placeholder='出生日期')
@@ -184,12 +184,12 @@ h1 学生管理
                                                                     | 必填
                                                     .row-fluid
                                                         .span6
-                                                            div.control-group(ng-class='{error: studentForm.sex.$invalid}')
+                                                            div.control-group(ng-class='{error: studentForm.gender.$invalid}')
                                                                 |男
-                                                                input(type='radio',name='sex', ng-model='student.sex', class='input-inline field', value='Male')
+                                                                input(type='radio',name='gender', ng-model='student.gender', class='input-inline field', value='Male')
                                                                 |&nbsp;&nbsp;&nbsp;&nbsp;女
-                                                                input(type='radio',name='sex', ng-model='student.sex', class='input-inline field', value='Female')
-                                                                span.help-inline(ng-show='studentForm.sex.$error.required') 必填
+                                                                input(type='radio',name='gender', ng-model='student.gender', class='input-inline field', value='Female')
+                                                                span.help-inline(ng-show='studentForm.gender.$error.required') 必填
                                                         .span6
                                                             div.control-group(ng-class='{error: studentForm.dateOfBirth.$invalid}')
                                                                 input(type='text', class='input-small', name='dateOfBirth', ng-model='student.dateOfBirth',placeholder='出生日期')
@@ -233,7 +233,7 @@ h1 学生管理
                                         button.btn.btn-primary(ng-click='editStudent(student)', ng-disabled='studentForm.$invalid')保存
                                         button.btn.btn-danger(ng-click='deleteStudent(student)', ng-show='student.userUUID') 删除
                             td {{ student.firstName}} {{student.lastName}}
-                            td {{ student.sex}}
+                            td {{ student.gender}}
                             td {{ student.sections}}
                             td {{ student.schools}}
                             td {{ student.email}}

@@ -11,7 +11,8 @@
             'student',
             'parents',
             'teacher',
-            'admin'
+            'admin',
+            'superAdmin'
             ],
 
         /*
@@ -21,9 +22,10 @@
         accessLevels : {
             'all' : "*",
             'anon': ['public'],
-            'loggedin' : ['student','parents','teacher','admin'],
-            'superuser':['parents','teacher','admin'],
-            'admin': ['admin']
+            'loggedin' : ['student','parents','teacher','admin','superAdmin'],
+            'superuser':['parents','teacher','admin','superAdmin'],
+            'admin':['admin','superAdmin'],
+            'superAdmin': ['superAdmin']
         }
 
     }

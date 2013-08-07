@@ -93,6 +93,9 @@ angular.module('spruceDBServices', ['ngResource'])
         }),
         onSections: $resource('/api/students/:uuid/sections', {uuid:'@userUUID'}, {
             get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
+        }),
+        onFeeds: $resource('/api/students/:uuid/feeds/:flim', {uuid:'@userUUID'}, {
+            get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
         })
     };
 })
@@ -137,7 +140,7 @@ angular.module('spruceDBServices', ['ngResource'])
 })
 .factory('Materials', function($resource){
     return {
-        onUnits: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
+        onMaterials: $resource('/api/materials/:uuid', {uuid:'@materialUUID'}, {
             list: {method:'GET', params:{uuid: 'all'}, isArray:true}
         })
     };
@@ -156,6 +159,9 @@ angular.module('spruceDBServices', ['ngResource'])
         }),
         onUnits: $resource('/api/sections/:uuid/units', {uuid:'@sectionUUID'}, {
             get: {method:'GET', params:{uuid: '@uuid'}, isArray:true}
+        }),
+        onFeeds: $resource('/api/sections/:uuid/feeds/:flim', {uuid:'@sectionUUID'}, {
+            get: {method:'GET', params:{uuid: '@uuid', flim: '50'}, isArray:true}
         })
     };
 });

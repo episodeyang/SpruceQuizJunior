@@ -5,14 +5,14 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         title 云杉习题-新一代学习管理平台
         script(src="/js/jquery/jquery.js")
         script(src="/js/select2/select2.js")
-        script(src="/js/angular/angular.js")
+        script(src="/js/angular/angular.min.js")
         //-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js")
         //-script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js")
         script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
         script(src="/js/angular-ui-select2/src/select2.js")
         //-link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css",
             rel="stylesheet")
-        link(href='/css/bootstrap-combined.no-icons.min.SpruceLearning.css',
+        link(href='/css/bootstrap-combined.no-icons.min.css',
             rel="stylesheet")
         //-link(href='/css/bootstrap.min.css',
             rel="stylesheet")
@@ -65,7 +65,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                             a(href='/private') Private
                         //-li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') Admin
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/sections') 课程
                         li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') 学生管理
@@ -112,5 +112,6 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src='/js/controllers/reports.js')
         script(src='/js/controllers/sections.js')
         script(src='/js/controllers/admin.js')
+        script(src='/js/controllers/home.js')
         script(src='/js/filters.js')
         script(src='/js/directives.js')

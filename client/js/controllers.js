@@ -44,12 +44,6 @@ angular.module('SpruceQuizApp')
 }]);
 
 angular.module('SpruceQuizApp')
-.controller('HomeCtrl',
-['$rootScope', function($rootScope) {
-
-}]);
-
-angular.module('SpruceQuizApp')
 .controller('RegisterCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
     $scope.role = routingConfig.userRoles.user;

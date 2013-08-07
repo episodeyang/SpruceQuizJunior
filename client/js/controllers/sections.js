@@ -4,7 +4,8 @@
 
 angular.module('SpruceQuizApp')
 .controller('SectionCtrl',
-['$rootScope', '$scope', 'Sections','Units', function($rootScope, $scope, Sections, Units) {
+['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students',
+    function($filter, $rootScope, $scope, Sections, Units, Materials, Students) {
 //function ProblemCtrl($scope, Problems) 
     //$rootScope.error = "Temp warning";
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
@@ -16,6 +17,7 @@ angular.module('SpruceQuizApp')
     //$scope.problems.push(Problems.get({uuid: "p0001"}));
     $scope.list = [];
     $scope.newSection = {};
+    $scope.model={};
     //Use the next line to get all problems
 //    $scope.problems = Problems.list();
 
@@ -39,11 +41,37 @@ angular.module('SpruceQuizApp')
     //Activate "m2":
     //Units.onMaterials.update({uuid: "d4", mid: "m2", toArchive: "false"});
 
-    $scope.sections = Sections.onSections.list();
-    $scope.sections[0] = Sections.onSections.get({uuid: "g2"})
-    $scope.updateSection = function(){
-        this.section = Sections.onSections.get({uuid: this.section.sectionUUID});
+//Newsfeed example 1 - no feed limit => use default 50:
+    //Sections.onFeeds.get({uuid: "g1"});
+
+//Newsfeed example 2 - specify feed limit:
+    //Sections.onFeeds.get({uuid: "g1", flim: '2'});
+
+//Newsfeed example 3 - return all feeds
+    //Sections.onFeeds.get({uuid: "g1", flim: 'all'});
+//$scope.model.temp = Units.onUnits.get({uuid: "d4"})
+//$scope.model.temp = Units.onUnits.get();
+//    $scope.model.sections = Sections.onSections.list();
+    $scope.model.sections = Students.onSections.get({uuid: 'u1'});
+    console.log($scope.user.userRoles)
+//    $scope.sectionUnits = Sections.onUnits.get({uuid: this.section.sectionUUID})
+    $scope.updateSection = function(index){
+        Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
+            ,function(results){
+                //console.log(results);
+                $scope.model.sections[index].sectionUnits = results;
+                $scope.grabMaterials(results[0].unitUUID)
+
+            }
+        );
     }
+
+    $scope.model.unitID = "d1";
+    $scope.grabMaterials = function(unitId){
+        //$scope.model.unitID = unitId;
+        $scope.model.tempUnit = Units.onUnits.get({uuid: unitId});
+    };
+
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];
