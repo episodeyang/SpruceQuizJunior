@@ -9,16 +9,18 @@ app.factory('newStudentList', function(){
 });
 
 app.controller('AdminCtrl',
-['$rootScope', '$scope', 'Students', 'newStudentList', function($rootScope, $scope, Students,newStudentList) {
+['$rootScope', '$scope', 'Students', 'Schools', 'Sections', 'Teachers', 'newStudentList', function($rootScope, $scope, Students, Schools, Sections, Teachers, newStudentList) {
     $scope.loading = false;
     $scope.students = Students.onStudents.list();
+    $scope.schools = Schools.onSchools.list();
+    $scope.teachers = Teachers.onTeachers.list();
+    $scope.sections = Sections.onSections.list();
     $scope.isCollapsed = false;
     $scope.newStudentList = newStudentList;
     $scope.deleteNewStudent = function(){
         $scope.isCollapsed = true;
         $scope.newStudentList = [];
-    }
-
+    };
 }]);
 
 
@@ -50,21 +52,10 @@ var EditModalCtrl = function($scope,Students) {
     };
     $scope.editStudentModal = false;
     $scope.editStudent = function(stu) {
-        this.newStu = {};
-        this.newStu.userUUID = stu.userUUID;
-        this.newStu.firstName = stu.firstName;
-        this.newStu.lastName = stu.lastName;
-        this.newStu.dateOfBirth = stu.dateOfBirth;
-        this.newStu.sex = stu.sex;
-        this.newStu.email = stu.email;
-        this.newStu.phone = stu.phone;
-        this.newStu.address = stu.address;
-        this.newStu.profilePic = stu.profilePic;
-        this.newStu.sections = stu.sections;
-        this.newStu.schools = stu.schools;
-        this.newStu.comments = stu.comments;
-        //  console.log(angular.toJson(this.newStu));
-        //  Students.onStudents.update(this.newStu);
+        delete stu.__v;
+        delete stu._id;
+    //  console.log(angular.toJson(stu));
+        Students.onStudents.update(stu);
         $scope.close();
     }
     $scope.deleteStudent = function(stu) {

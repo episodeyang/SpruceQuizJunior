@@ -2,22 +2,25 @@ h1 学生管理
 .row-fluid
     .span3
         h4 选择学校
-        input.span12(type="text", placeholder="学校名称／ID", ng-model="studentQuery.schools")
-        //- the demo javascript please refer to:
-        //- http://angular-ui.github.io/bootstrap/#/alert
-        alert.alert-info(type="info", close="closeAlert()")
-            div
+        select.span12(ui-select2,ng-model="studentQuery.schools",data-placeholder="学校名称／ID",multiple)
+            option(ng-repeat='school in schools', value='{{school.schoolUUID}}') {{school.schoolUUID}},{{school.schoolName}}
+        br
+        br
+        br
         hr
         h4 选择班级或课程
-        input.span12(type="text", placeholder="班级或课程", ng-model="studentQuery.sections")
-        alert.alert-success(type="success", close="closeAlert()")
-
+        select.span12(ui-select2,ng-model="studentQuery.sections",data-placeholder="班级或课程",multiple)
+            option(ng-repeat='section in sections', value='{{section.sectionUUID}}') {{section.sectionUUID}},{{section.sectionName}}
+        br
+        br
+        br
         hr
         h4 选择教师
-        input.span12(type="text", placeholder="教师姓名或ID", ng-model="studentQuery.teacher")
-        alert(close="closeAlert()")
-            | TODO: 在这里显示教师头像，
-        hr
+        select.span12(ui-select2,ng-model="studentQueryTeacher.teacher",data-placeholder="老师姓名或ID",multiple)
+            option(ng-repeat='teacher in teachers', value='{{teacher.userUUID}}') {{teacher.userUUID}},{{teacher.teacherName}}
+        br
+        br
+        br
     .span9
         tabset
             //with angular-ui 5.0 (next release), should be able to
@@ -152,7 +155,7 @@ h1 学生管理
 
 
                     tbody
-                        tr(data-ng-repeat="student in students|filter:studentQuery",ng-controller="EditModalCtrl")
+                        tr(data-ng-repeat="student in students | mapStudents:studentQuery",ng-controller="EditModalCtrl")
                             td {{ student.userUUID }}
                             td
                                 a.icon-pencil(ng-click="editStudentModal=true")
