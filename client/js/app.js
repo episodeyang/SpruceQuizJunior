@@ -109,5 +109,5 @@ angular.module('SpruceQuizApp', ['ui.bootstrap','angular-underscore','ngCookies'
             }
         });
 
-        $rootScope.appInitialized = true;
+        //$rootScope.appInitialized = true;
     }]);

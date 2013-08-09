@@ -114,19 +114,19 @@ var routes = [
         path: '/register',
         httpMethod: 'POST',
         middleware: [AuthCtrl.register],
-        accessLevel: accessLevels.public
+        //accessLevel: accessLevels.public
     },
     {
         path: '/login',
         httpMethod: 'POST',
         middleware: [AuthCtrl.login],
-        accessLevel: accessLevels.public
+        //accessLevel: accessLevels.public
     },
     {
         path: '/logout',
         httpMethod: 'POST',
         middleware: [AuthCtrl.logout],
-        accessLevel: accessLevels.public
+        //accessLevel: accessLevels.public
     },
 
     // User resource
@@ -363,7 +363,7 @@ var routes = [
             }));
             res.render('index');
         }],
-        accessLevel: accessLevels.public
+        //accessLevel: accessLevels.public
     }
 ];
 
