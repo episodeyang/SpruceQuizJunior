@@ -1,5 +1,5 @@
 !!! 5
-html(lang='en', data-ng-app='SpruceQuizApp')
+html(lang='zh', data-ng-app='SpruceQuizApp')
     head
         meta(charset='utf-8')
         title 云杉习题-新一代学习管理平台
@@ -54,38 +54,38 @@ html(lang='en', data-ng-app='SpruceQuizApp')
             .navbar
                 .navbar-inner
                     ul.nav
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                        li(data-access-level='accessLevels.anon', active-nav)
                             a(href='/login') 云杉习题
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                        li(data-access-level='accessLevels.anon', active-nav)
                             a(href='/register') 用户注册
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                        li(data-access-level='accessLevels.loggedin', active-nav)
                             a(href='/') 首页
                         //-li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
                             a(href='/private') Private
                         //-li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                             a(href='/admin') Admin
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+                        li(data-access-level='accessLevels.loggedin', active-nav)
                             a(href='/sections') 课程
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                        li(data-access-level='accessLevels.superuser', active-nav)
                             a(href='/admin') 学生管理
-                        li(data-access-level='{{ accessLevels.loggedin}}', active-nav).dropdown
+                        li(data-access-level='accessLevels.loggedin', active-nav).dropdown
                             a.dropdown-toggle 问答
                                 span.caret
                             ul.dropdown-menu
-                                li(data-access-level="{{accessLevels.superuser}}")
+                                li(data-access-level="accessLevels.superuser")
                                     a(href='/problems/edit') 编辑问题
                                 li
                                     a(href='/problems') 问题
                                 li
                                     a(href='/quizzes') 测试
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                        li(data-access-level='accessLevels.superuser', active-nav)
                             a(href='/reports') 成绩和报告
                         //-li(data-access-level='{{ accessLevels.loggedin }}')
                             a(href="", data-ng-click="logout()")
                                 | Log out
                     div
                         p
-                    div.pull-right.dropdown(data-access-level='{{accessLevels.loggedin}}')
+                    div.pull-right.dropdown(data-access-level='accessLevels.loggedin')
                         a.dropdown-toggle {{ user.username }}
                             span.caret
                         ul.dropdown-menu
