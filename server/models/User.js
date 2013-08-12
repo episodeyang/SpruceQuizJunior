@@ -38,7 +38,7 @@ tempuser = new UserM({
         id:         "u4",
         username:   "parent",
         password:   "123",
-        role:   userRoles.parents
+        role:   userRoles.parent
     });
 tempuser.save();
 tempuser = new UserM({

@@ -24,15 +24,7 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
             if(user === undefined){
                 user = $rootScope.user;
                 };
-            return user.role === userRoles.student || user.role === userRoles.parents || user.role === userRoles.teacher || user.role === userRoles.admin || user.role === userRoles.superAdmin;
-            //return function(){
-            //    if(user.role in userRoles && user.role !== userRoles.public){
-            //        return true;
-            //        }
-            //    else{
-            //        return false;
-            //        };
-            //};
+            return user.role === userRoles.student || user.role === userRoles.parent || user.role === userRoles.teacher || user.role === userRoles.admin || user.role === userRoles.superadmin;
         },
         register: function(user, success, error) {
             $http.post('/register', user).success(success).error(error);
