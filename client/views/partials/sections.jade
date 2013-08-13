@@ -22,7 +22,7 @@
                         .span5
                             ul.nav.nav-tabs.nav-stacked(style="margin-top:0px;")
                                 li
-                                    a: strong 目录
+                                    a: strong 单元目录
                                 li(ng-repeat="unit in section.sectionUnits",class="{{unit.active}}")
                                     a(ng-click="grabMaterials(unit.unitUUID)")
                                         | {{unit.unitTitle}}
@@ -73,7 +73,7 @@
 
     div(modal="createSectionModal")
         .modal-header
-            h3 创建新小组
+            h3 创建新课程
         .modal-body
             form.form-horizontal
                 tabset
