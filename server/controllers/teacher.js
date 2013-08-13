@@ -6,7 +6,7 @@ var _ =           require('underscore')
 module.exports = {
     getbyId: function(req, res) {
     	if(req.params.uuid === "all") {
-	        TeacherM.find(function (err, results) {
+	        TeacherM.find(null, null, {sort: {'userUUID': 1}}, function (err, results) {
 	        	//console.log(results);
 	            res.json(results);
 	        });

@@ -56,7 +56,7 @@ angular.module('SpruceQuizApp')
             $scope.newSection.sectionUnits = [];
             Sections.onSections.save($scope.newSection);
             $scope.list.push($scope.newSection);
-    };
+        };
 }]);
 
 //ProblemCtrl.$inject = ['$scope', '$http'];
