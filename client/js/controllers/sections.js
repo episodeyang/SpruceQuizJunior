@@ -7,7 +7,7 @@ angular.module('SpruceQuizApp')
     $scope.highlightField = "question";
     $scope.problemTypes = ['multipleChoice','fillIn','OpenEnded'];
 
-    $scope.list = [];
+    //$scope.list = [];
     $scope.newSection = {};
     $scope.model={};
     $scope.model.sections = Students.onSections.get({uuid: 'u1'});
@@ -16,8 +16,9 @@ angular.module('SpruceQuizApp')
             ,function(results){
                 //console.log(results);
                 $scope.model.sections[index].sectionUnits = results;
-                $scope.grabMaterials(results[0].unitUUID)
-
+                if(results === []) {
+                    $scope.grabMaterials(results[0].unitUUID);
+                }
             }
         );
     }
@@ -30,7 +31,14 @@ angular.module('SpruceQuizApp')
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];
-        Sections.onSections.save($scope.newSection);
-        $scope.list.push($scope.newSection);
+        Sections.onSections.save($scope.newSection, function (result) {
+            $scope.model.sections.push(result); 
+            Students.onStudents.get({uuid: 'u1'}, function (tempS) {
+                tempS.sections.push(result.sectionUUID);
+                Students.onStudents.update({uuid: 'u1', sections: tempS.sections});
+            });
+        });
+        $scope.createSectionModal = false;
+        //$scope.list.push($scope.newSection);
     };
 }]);
