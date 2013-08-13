@@ -41,6 +41,44 @@ angular.module('SpruceQuizApp')
             //Update example: 
             //Students.onStudents.update({uuid: "u0003", address: "newaddr", email: "newemail@spruceaca.edu"});
 //End of don't delete
+            $scope.student = {};
+            $scope.classRankFakeData = {
+                u1: {
+                    firstname: "小红",
+                    lastname: "张",
+                    grade: 95,
+                    effort: 20,
+                    progress: 0
+                },
+                u2: {
+                    firstname: "小军",
+                    lastname: "刘",
+                    grade: 47,
+                    effort: 40,
+                    progress: 10
+                },
+                u3: {
+                    firstname: "小歌",
+                    lastname: "杨",
+                    grade: 100,
+                    effort: 0,
+                    progress: 0
+                },
+                u4: {
+                    firstname: "小理中",
+                    lastname: "陈",
+                    grade: 99,
+                    effort: 10,
+                    progress: 1
+                },
+                u5: {
+                    firstname: "小轶凡",
+                    lastname: "吴",
+                    grade: 97,
+                    effort: 5,
+                    progress: 0
+                }
+            };
 
             $scope.rankFakeData = ['a data point'];
             $scope.orderProp = 'lastupdated';

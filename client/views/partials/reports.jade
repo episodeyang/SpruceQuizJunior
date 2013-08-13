@@ -142,6 +142,56 @@
                                     a(href="#Preface") 知识点
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                     div(style="height:100%;")
+                        h3 三年级二班排名
+                        table.table.table-bordered
+                            thead
+                                tr
+                                    th 排名
+                                    th 姓名
+                                    th 成绩
+                                    th 学习精力
+                                    th 本周进步
+                            tbody
+                                tr(ng-repeat="(id, student) in classRankFakeData")
+                                    td {{id}}
+                                    td {{student.lastname + student.firstname }}
+                                    td {{student.grade}}
+                                    td {{student.effort}}
+                                    td {{student.progress}}
+                        hr
+                        h3 数学学科排名
+                        table.table.table-bordered
+                            thead
+                                tr
+                                    th 排名
+                                    th 姓名
+                                    th 成绩
+                                    th 学习精力
+                                    th 本周进步
+                            tbody
+                                tr(ng-repeat="(id, student) in classRankFakeData")
+                                    td {{id}}
+                                    td {{student.lastname + student.firstname }}
+                                    td {{student.grade}}
+                                    td {{student.effort}}
+                                    td {{student.progress}}
+                        hr
+                        h3 语文学科排名
+                        table.table.table-bordered
+                            thead
+                                tr
+                                    th 排名
+                                    th 姓名
+                                    th 成绩
+                                    th 学习精力
+                                    th 本周进步
+                            tbody
+                                tr(ng-repeat="(id, student) in classRankFakeData")
+                                    td {{id}}
+                                    td {{student.lastname + student.firstname }}
+                                    td {{student.grade}}
+                                    td {{student.effort}}
+                                    td {{student.progress}}
                 tab(heading="学区分布")
                     .row-fluid
                         .span2.sp-reports-sidebar.affix
