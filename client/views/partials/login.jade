@@ -14,11 +14,8 @@
                 br
                 | 让公益教育项目更加透明量化
             .row-fluid
-                div.span8.offset2
-                    .text-center
-                        a.btn.btn-success(data-ng-click='isCollapsed = !isCollapsed') 点击这里登录
+                div.span10.offset1
                     div(collapse='!isCollapsed')
-                        hr
                         div.well.well-large
                             form(ng-submit="login()", name="loginForm")
                                 .row-fluid
@@ -27,14 +24,14 @@
                                             p(style="margin:6px 5px 10px;") 用户名
                                     .span9
                                         input.span12(type="text", data-ng-model="username", placeholder="在这里输入用户名",
-                                            name="username", required)
+                                        name="username", required)
                                 .row-fluid
                                     .span3
                                         .form-inline.text-right
                                             p(style="margin:6px 5px 10px;") 密码
                                     .span9
                                         input.span12(type="password", data-ng-model="password", placeholder="在这里输入密码",
-                                    name="password",
+                                        name="password",
                                         required)
                                 .row-fluid
                                     .span9.offset3
@@ -46,6 +43,8 @@
                                         button.btn(type="submit") Log in
 
                             .alert.alert-error(data-ng-bind="error", data-ng-show="error")
+                    .text-center
+                        a.btn.btn-success(data-ng-click='isCollapsed = !isCollapsed') 点击这里登录
                     p(style='margin-top: 20px;')
                         .text-center
                             a(href='/register') 现在注册！
