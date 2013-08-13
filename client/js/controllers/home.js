@@ -57,6 +57,11 @@ angular.module('SpruceQuizApp')
             Sections.onSections.save($scope.newSection);
             $scope.list.push($scope.newSection);
         };
+
+        $scope.closeAlert = function(index) {
+            $scope.model.feeds.splice(index, 1);
+            //console.log("print test");
+        };
 }]);
 
 //ProblemCtrl.$inject = ['$scope', '$http'];
