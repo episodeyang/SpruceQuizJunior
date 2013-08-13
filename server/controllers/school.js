@@ -7,7 +7,7 @@ var _ =           require('underscore')
 module.exports = {
     getbyId: function(req, res) {
     	if(req.params.uuid === "all") {
-	        SchoolM.find(function (err, results) {
+	        SchoolM.find(null, null, {sort: {'schoolUUID': 1}}, function (err, results) {
 	        	//console.log(results);
 	            res.json(results);
 	        });
