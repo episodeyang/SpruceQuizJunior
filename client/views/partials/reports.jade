@@ -244,18 +244,4 @@
             alert.alert-info(type="info", close="closeAlert()")
                 | TODO: 在这里显示学校tag，
 
-    table.table.table-striped(data-ng-hide="loading")
-    thead
-        tr
-            th #
-            th 题干
-            th 选择
-    tbody
-        tr(data-ng-repeat="problem in problems")
-            td
-                {{ problem.id }}
-            td
-                {{ problem.question }}
-            td
-                {{ problem.choices}}
 
