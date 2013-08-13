@@ -22,8 +22,8 @@
                             img(ng-src="{{'/img/'+feed.userUUID[1] +'_large.png'}}").img-polaroid
                         .span11
                             alert(close="closeClicked=!closeClicked")
-                                p {{feed.groupUUID}} 的 {{feed.userUUID}} {{feed.type}} {{feed.feedData}}
-                                p {{closeClicked}}
+                                p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
+                                //p {{closeClicked}}
                 tab(heading="新测试")
                 tab(heading="待交")
                 tab(heading="最近任务")
