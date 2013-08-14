@@ -1,10 +1,5 @@
 .row-fluid
-    .span8.offset2
-        .row-fluid.pull-right
-            .span6
-                h1 成绩报告
-            .span2.offset4
-                img(src="/img/3_large.png").img-rounded.img-polaroid
+    .span12
 .row-fluid
     .span8.offset2
         div
@@ -19,15 +14,15 @@
                                 li
                                     a(href="#Chapter1") Analytics
                     div(style="height:100%;")
-                        h1 Decoding Learning:
-                        h3.text-right The Proof, Promise and Potential of Digital Education
+                        h3 Decoding Learning:
+                        h4 The Proof, Promise and Potential of Digital Education
                         br
-                        h2(id="Preface") Preface
+                        h3(id="Preface") Preface
                         p This report, published by Pearson and written by the Economist Intelligence Unit, is part of a wide-ranging programme of quantitative and qualitative analysis, entitled The Learning Curve. It seeks to further our understanding of what leads to successful educational outcomes – both economic and social. The design and execution of the programme has benefited from the ongoing advice of some of the world’s leading educational scholars.
                         img(src="/img/Quarterly.jpg")
                         p This report itself outlines the main findings from analysis of a large body of internationally comparable education data – The Learning Curve Data Bank.  It also draws on extensive desk research, as well as in-depth interviews conducted with 16 experts in education. The research was conducted entirely by the Economist Intelligence Unit, and the views expressed in the report do not necessarily reflect those of Pearson. The report was written by Dr Paul Kielstra, and edited by Denis McCauley of the Economist Intelligence Unit.
                         p Sincere thanks go to the interviewees for sharing their insights on this topic. These include the following individuals:
-                        h2(id="Chapter1") Chapter 1: Learning with Technology
+                        h3(id="Chapter1") Chapter 1: Learning with Technology
                         p in this chapter we provide an overview of promising innovations in learning with technology
                             | . The chapter is organised around the eight learning themes discussed in chapter 1. We
                             | consider the type of learning that takes place within each theme; we then present examples of
@@ -224,6 +219,8 @@
 
 
     .span2
+        div
+            img(src="/img/3_large.png").img-rounded.img-polaroid
         div
             h4 学生
             input.span12(type="text", placeholder="学生姓名或ID", ng-model="sessionsSearchInput")
