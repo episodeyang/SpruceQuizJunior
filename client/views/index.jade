@@ -17,6 +17,8 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         //-link(href="/css/font-awesome.min.css", rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
         link(href='/css/app.css', rel="stylesheet")
+        link(href='/css/report.css', rel="stylesheet")
+        
         //-script.
             'use strict';(function(i){function d(c,a,e){return c[a]||(c[a]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(a,e,f){e&&c.hasOwnProperty(a)&&(c[a]=null);return d(c,a,function(){function b(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+a);var c=[],d=[],h=b("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:a,provider:b("$provide","provider"),factory:b("$provide","factory"),service:b("$provide","service"),
             value:b("$provide","value"),constant:b("$provide","constant","unshift"),filter:b("$filterProvider","register"),directive:b("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
@@ -36,7 +38,10 @@ html(lang='en', data-ng-app='SpruceQuizApp')
             '/js/controllers/problems.js',
             '/js/controllers/reports.js',
             '/js/filters.js',
-            '/js/directives.js'
+            '/js/directives.js',
+            '/js/lib/d3.v2.js',
+            '/js/lib/nv.d3.js',
+            '/js/d3/report.js',            
             ], function() {
             angular.bootstrap(document, ['myApp']);
             });
@@ -118,3 +123,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src='/js/controllers/home.js')
         script(src='/js/filters.js')
         script(src='/js/directives.js')
+        script(src='/js/lib/d3.v2.js')
+        script(src='/js/lib/nv.d3.js')
+        script(src='/js/d3/report.js')
+
