@@ -7,7 +7,7 @@ angular.module('SpruceQuizApp')
         // the 'Reports' service is the driver code for the server API.
         // it is located in service.js.
         //      ['$rootScope', '$scope', 'Reports', function($rootScope, $scope, Problems) {
-        ['$rootScope', '$scope','Students', 'AuthUsers', function($rootScope, $scope, Students, AuthUsers) {
+        ['$rootScope', '$scope','Students', 'AuthUsers', function ($rootScope, $scope, Students, AuthUsers) {
 
 //Begin of "Don't delete" for testing $resource:
             //API usage examples:
