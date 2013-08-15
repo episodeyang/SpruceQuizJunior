@@ -1,5 +1,5 @@
 'use strict';
-angular.module('SpruceQuizApp', ['ui.bootstrap','angular-underscore','ngCookies', 'spruceDBServices', 'ngResource'])
+angular.module('SpruceQuizApp', ['ui.bootstrap','ui.select2','angular-underscore','ngCookies', 'spruceDBServices', 'ngResource'])
 
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
@@ -109,5 +109,5 @@ angular.module('SpruceQuizApp', ['ui.bootstrap','angular-underscore','ngCookies'
             }
         });
 
-        $rootScope.appInitialized = true;
+        //$rootScope.appInitialized = true;
     }]);

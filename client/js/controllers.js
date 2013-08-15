@@ -67,11 +67,28 @@ angular.module('SpruceQuizApp')
 ['$rootScope', function($rootScope) {
 }]);
 
+angular.module('SpruceQuizApp')
+    .controller('AdminCtrl',
+        ['$rootScope', '$scope', 'Users', 'Auth', function($rootScope, $scope, Users, Auth) {
+            $scope.loading = true;
+            $scope.userRoles = Auth.userRoles;
+
+            Users.getAll(function(res) {
+                $scope.users = res;
+                $scope.loading = false;
+            }, function(err) {
+                $rootScope.error = "Failed to fetch users.";
+                $scope.loading = false;
+            });
+
+        }]);
+
 
 angular.module('SpruceQuizApp')
 .controller('UserAdminCtrl',
-['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
+['$rootScope', '$scope', 'Users', 'Auth', function($rootScope, $scope, Users, Auth) {
     $scope.loading = true;
+    $scope.userRoles = Auth.userRoles;
 
     Users.getAll(function(res) {
         $scope.users = res;

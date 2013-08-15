@@ -14,25 +14,26 @@ row-fluid
                     data-ng-minlength="5", data-ng-maxlength="60")
             .control-group
                 label.radio.inline
+
                     input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.superadmin }}")
                     | 后台服务
                 label.radio.inline
-                    input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.admin }}")
+                    input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.admin")
                     | 教务和管理员
                 label.radio.inline
-                    input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.teacher }}")
+                    input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.teacher")
                     | 教师
                 label.radio.inline
                     input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.parent }}")
                     | 家长
                 label.radio.inline
-                    input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.student }}")
+                    input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.student")
                     | 学生
             .control-group
                 .controls
                     button.btn(type="submit", data-ng-disabled="registerForm.$invalid") Submit
 
-            .alert.alert-error(ng-show="registerForm.$invalid")
+            .alert.alert-error(ng-show="registerForm.$invalid && registerForm.$dirty")
                 //-strong Please correct the following errors:
                 ul
                     li(ng-show="registerForm.username.$error.required") Username is required
