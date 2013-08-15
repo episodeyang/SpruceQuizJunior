@@ -4,19 +4,13 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         meta(charset='utf-8')
         title 云杉习题-新一代学习管理平台
         script(src="/js/angular/angular.min.js")
-        //-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js")
-        //-script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js")
         script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
-        //-script(src="/js/lib/angular-ui.js")
-        //-script(src="/js/lib/angular-ui.css")
-        //-link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css",
-            rel="stylesheet")
         link(href='/css/bootstrap-combined.no-icons.min.css',
             rel="stylesheet")
-        //link(href='/css/bootstrap.min.css', rel="stylesheet")
-        //-link(href="/css/font-awesome.min.css", rel="stylesheet")
-        link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
+        link(href="/font/font-awesome.min.css", rel="stylesheet")
         link(href='/css/app.css', rel="stylesheet")
+        link(href='/css/report.css', rel="stylesheet")
+        
         //-script.
             'use strict';(function(i){function d(c,a,e){return c[a]||(c[a]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(a,e,f){e&&c.hasOwnProperty(a)&&(c[a]=null);return d(c,a,function(){function b(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+a);var c=[],d=[],h=b("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:a,provider:b("$provide","provider"),factory:b("$provide","factory"),service:b("$provide","service"),
             value:b("$provide","value"),constant:b("$provide","constant","unshift"),filter:b("$filterProvider","register"),directive:b("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
@@ -36,7 +30,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
             '/js/controllers/problems.js',
             '/js/controllers/reports.js',
             '/js/filters.js',
-            '/js/directives.js'
+            '/js/directives.js',
             ], function() {
             angular.bootstrap(document, ['myApp']);
             });
@@ -100,12 +94,12 @@ html(lang='en', data-ng-app='SpruceQuizApp')
                         a(href="http://www.sprucelearning.com") SpruceLearning
                         | &nbsp; 2013
             //-script(src='/js/widgets.js')
-        script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js')
+        script(src='js/lib/underscore-min.js')
         script(src='/js/lib/angular-underscore.js')
         //-this is just an adapter, not the lib itself.
-        script(src='http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured&dummy=.js')
-        script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-cookies.js')
-        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-resource.js")
+        script(src='js/lib/MathJax.js')
+        script(src='js/lib/angular-cookies.js')
+        script(src="js/lib/angular-resource.js")
         script(src='/js/routingConfig.js')
         script(src='/js/app.js')
         script(src='/js/services.js')
@@ -116,5 +110,9 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src='/js/controllers/sections.js')
         script(src='/js/controllers/admin.js')
         script(src='/js/controllers/home.js')
+        script(src='/js/controllers/reports_viz_ctrl.js')
         script(src='/js/filters.js')
         script(src='/js/directives.js')
+        script(src='/js/lib/d3.v3.min.js')
+        script(src='/js/directives/d3/reports_viz.js')
+
