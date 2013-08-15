@@ -5,8 +5,6 @@
 angular.module('SpruceQuizApp')
 .controller('ProblemEditCtrl',
 ['$rootScope', '$scope', 'Problems', function($rootScope, $scope, Problems) {
-//function ProblemCtrl($scope, Problems) 
-    //$rootScope.error = "Temp warning";
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
     $scope.highlightField = "question";
 
@@ -18,19 +16,8 @@ angular.module('SpruceQuizApp')
 
     //Use the next line to get all problems
     $scope.problems = Problems.onProblems.list();
-
-    //old way using $http
-    // Problems.getAll(function(res) {
-    //     $scope.problems = res;
-    // }, function(err) {
-    //     $rootScope.error = "Failed to fetch problems.";
-    // });
-
-    // Problems.getbyId(function(res) {
-    //     $scope.problems = res;
-    // }, function(err) {
-    //     $rootScope.error = "Failed to fetch problems.";
-    // });
+    $scope.viewVariables = {};
+    $scope.viewVariables.editProblemModal = false;
     $scope.orderProp = 'lastupdated';
 }]);
 

@@ -14,7 +14,7 @@ hr
             .span12
                 .row-fliud
                     .span3
-                        .btn(ng-click="editProblemModal = true") 编辑题目
+                        .btn(ng-click="viewVariables.editProblemModal = true") 编辑题目
                     .span9
                         .row-fluid
                             span(ng-repeat = "segment in problem.question")
@@ -50,7 +50,7 @@ table.table.table-striped(data-ng-hide="loading")
             td
                 {{ problem.choices}}
 
-div(modal="editProblemModal")
+div(modal="viewVariables.editProblemModal")
     .modal-header
         h3 aaa
     .modal-body
