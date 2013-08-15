@@ -12,13 +12,16 @@ br
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
                                     a(href="#Chapter1") Analytics
-                    div(style="height:100%;")
+                    div(style="height:100%;", ng-controller="ReportVizCtrl")
                         br
                         h2(id="Preface") 整体成绩
                         p 不同科目发展情况折线图
-                        #chart1
-                            svg
-                tap(heading="常用图表")
+                        .btn-group
+                          button.btn.btn-primary(type='button', ng-click='getChineseScore()') 语文
+                          button.btn.btn-primary(type='button', ng-click='getMathScore()') 数学
+                          button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
+                        br
+                        student-exam-viz(data='data')
                 tab(heading="成绩走势")
                     .row-fluid
                         .span2.sp-reports-sidebar.affix
@@ -87,6 +90,8 @@ br
                     div
                         h2(id="1") 知识点
                         p 显示各知识点的预习，做题，复习，查错时间等
+                        viz-topic-distro(data='data')
+
                         p 显示班级平均时间
                 tab(heading="方法和时间")
                     .row-fluid
