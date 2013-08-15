@@ -22,6 +22,12 @@ br
                           button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
                         br
                         student-exam-viz(data='data')
+                    div(style="height:100%;")
+                        h3 Decoding Learning:
+                        h4 The Proof, Promise and Potential of Digital Education
+                        br
+
+                tap(heading="常用图表")
                 tab(heading="成绩走势")
                     .row-fluid
                         .span2.sp-reports-sidebar.affix
@@ -206,6 +212,8 @@ br
 
 
     .span2
+        div
+            img(src="/img/3_large.png").img-rounded.img-polaroid
         div
             h4 学生
             input.span12(type="text", placeholder="学生姓名或ID", ng-model="sessionsSearchInput")
