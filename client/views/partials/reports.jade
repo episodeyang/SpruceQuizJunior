@@ -21,7 +21,8 @@ br
                           button.btn.btn-primary(type='button', ng-click='getMathScore()') 数学
                           button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
                         br
-                        student-exam-viz(data='data')
+                        #student-exam-viz-wrapper
+                          student-exam-viz(data='data')
                     div(style="height:100%;")
                         h3 Decoding Learning:
                         h4 The Proof, Promise and Potential of Digital Education
