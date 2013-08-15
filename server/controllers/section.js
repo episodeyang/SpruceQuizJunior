@@ -60,6 +60,9 @@ module.exports = {
 					if (err) {
 						res.send(404, "Save section failed.");
 					}
+					else {
+						res.json(section);
+					}
 				});
             }
         });
