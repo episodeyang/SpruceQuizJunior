@@ -6,10 +6,9 @@ angular.module('SpruceQuizApp')
 .controller('AppCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
 
-    $scope.user = Auth.user;
-    $scope.userRoles = Auth.userRoles;
-    $scope.accessLevels = Auth.accessLevels;
-
+    $scope.getUserRoleText = function(role) {
+        return _.invert(Auth.userRoles)[role];
+    };
     $scope.logout = function() {
         Auth.logout(function() {
             $location.path('/login');
@@ -44,25 +43,24 @@ angular.module('SpruceQuizApp')
 }]);
 
 angular.module('SpruceQuizApp')
-    .controller('RegisterCtrl',
-        ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
-            $scope.role = Auth.userRoles.user;
-            $scope.userRoles = Auth.userRoles;
-
-            $scope.register = function() {
-                Auth.register({
-                        username: $scope.username,
-                        password: $scope.password,
-                        role: $scope.role
-                    },
-                    function() {
-                        $location.path('/');
-                    },
-                    function(err) {
-                        $rootScope.error = err;
-                    });
-            };
-        }]);
+.controller('RegisterCtrl',
+['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
+    $scope.role = routingConfig.userRoles.user;
+    $scope.register = function() {
+        Auth.register({
+                username: $scope.username,
+                password: $scope.password,
+                role: $scope.role
+            },
+            function(res) {
+                $rootScope.user = res;
+                $location.path('/');
+            },
+            function(err) {
+                $rootScope.error = err;
+            });
+    };
+}]);
 
 angular.module('SpruceQuizApp')
 .controller('PrivateCtrl',

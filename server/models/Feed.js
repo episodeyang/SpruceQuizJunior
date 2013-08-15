@@ -22,7 +22,7 @@ tempfeed = new FeedM({
         feedUUID: "f2",
         userUUID: "u2",
         groupUUID: "g1",
-        type: "record",
+        type: "Record",
         feedData: "突破了新的速度记录",
         createdDate: new Date,
         archived: [false]
@@ -33,7 +33,7 @@ tempfeed = new FeedM({
         feedUUID: "f3",
         userUUID: "u1",
         groupUUID: "g2",
-        type: "comment",
+        type: "Comment",
         feedData: "留言：这篇文章写的真好啊！收藏了！",
         createdDate: new Date,
         archived: [false]
@@ -44,21 +44,11 @@ tempfeed = new FeedM({
         feedUUID: "f4",
         userUUID: "u3",
         groupUUID: "g1",
-        type: "share",
+        type: "Share",
         feedData: "分享了维基百科页面：宇宙大爆炸",
         createdDate: new Date,
         archived: [true]
     });
-tempfeed.save();
-tempfeed = new FeedM({
-    feedUUID: "f4",
-    userUUID: "u4",
-    groupUUID: "g1",
-    type: "share",
-    feedData: "分享了维基百科页面：宇宙大爆炸",
-    createdDate: new Date,
-    archived: [true]
-});
 tempfeed.save();
 
 // End of temporary initilization

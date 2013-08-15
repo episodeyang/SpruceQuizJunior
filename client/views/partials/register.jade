@@ -14,7 +14,8 @@ row-fluid
                     data-ng-minlength="5", data-ng-maxlength="60")
             .control-group
                 label.radio.inline
-                    input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.superAdmin")
+
+                    input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.superadmin }}")
                     | 后台服务
                 label.radio.inline
                     input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.admin")
@@ -23,7 +24,7 @@ row-fluid
                     input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.teacher")
                     | 教师
                 label.radio.inline
-                    input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.parent")
+                    input(type="radio", name="role", data-ng-model="role", data-ng-value="{{ userRoles.parent }}")
                     | 家长
                 label.radio.inline
                     input(type="radio", name="role", data-ng-model="role", data-ng-value="userRoles.student")

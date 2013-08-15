@@ -9,21 +9,24 @@
                         .span1
                             img(src="/img/1_large.png").img-polaroid
                         .span11
-                            alert(close="closeClicked=!closeClicked")
-                                p {{user.username}} 刚刚完成了新词100问
+                            alert.alert-success(close="closeClicked=!closeClicked")
+                                p [保留] {{user.username}} 刚刚完成了新词100问
                     div.row-fluid
                         .span1
                             img(ng-src="/img/1_large.png").img-polaroid
                         .span11
                             alert.alert.alert-success(close="closeClicked=!closeClicked")
-                                p 杨歌刚刚答对了100道题目
+                                p [保留] 杨歌刚刚答对了100道题目
                     div.row-fluid(ng-repeat="feed in model.feeds")
                         .span1
                             img(ng-src="{{'/img/'+feed.userUUID[1] +'_large.png'}}").img-polaroid
                         .span11
-                            alert(close="closeClicked=!closeClicked")
-                                p {{feed.groupUUID}} 的 {{feed.userUUID}} {{feed.type}} {{feed.feedData}}
-                                p {{closeClicked}}
+                            //-alert(close="closeClicked=!closeClicked")
+                                p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
+                                //-p {{closeClicked}}
+                            alert(close="closeAlert($index)")
+                                p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
+                                //-p {{closeClicked}}
                 tab(heading="新测试")
                 tab(heading="待交")
                 tab(heading="最近任务")
@@ -40,14 +43,16 @@
             .row-fluid
                 .span12.sp-reports-sidebar
                     ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
-                        li
+                        //-li
                             a(ng-click="testExpression=!testExpression") 班级 {{testExpression}}
                         li
-                            a 主页设置
+                            a(href='/') 主页设置
                         li
-                            a 班级
+                            a(href='/sections') 课程
                         li
-                            a 课程
+                            a(href='/sections') 班级
+                        li
+                            a(href='/reports') 成绩报告
 
 
 

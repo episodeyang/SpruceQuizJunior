@@ -3,6 +3,8 @@ hr
 .row-fluid
     .span3
         .row-fluid.span12
+            p 公式编辑器工具栏
+        .row-fluid.span12
             input(type="text", ng-model="expression", style="width:100%;")
         .row-fluid.span12
             {{expression}}
@@ -12,7 +14,7 @@ hr
             .span12
                 .row-fliud
                     .span3
-                        .btn 编辑题目
+                        .btn(ng-click="viewVariables.editProblemModal = true") 编辑题目
                     .span9
                         .row-fluid
                             span(ng-repeat = "segment in problem.question")
@@ -48,3 +50,10 @@ table.table.table-striped(data-ng-hide="loading")
             td
                 {{ problem.choices}}
 
+div(modal="viewVariables.editProblemModal")
+    .modal-header
+        h3 aaa
+    .modal-body
+        form.form-horizontal
+    .modal-footer
+        button.btn.btn-success bbb

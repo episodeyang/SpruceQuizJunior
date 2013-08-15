@@ -20,9 +20,16 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
             return accessLevel.bitMask & role.bitMask;
         },
         isLoggedIn: function(user) {
+<<<<<<< HEAD
             if(user === undefined)
                 user = currentUser;
             return user.role.title == userRoles.student.title || user.role.title == userRoles.parent.title || user.role.title == userRoles.teacher.title || user.role.title == userRoles.admin.title || user.role.title == userRoles.superAdmin.title ;
+=======
+            if(user === undefined){
+                user = $rootScope.user;
+                };
+            return user.role === userRoles.student || user.role === userRoles.parent || user.role === userRoles.teacher || user.role === userRoles.admin || user.role === userRoles.superadmin;
+>>>>>>> upstream/master
         },
         register: function(user, success, error) {
             $http.post('/register', user).success(function(res) {

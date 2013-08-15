@@ -60,6 +60,9 @@ module.exports = {
 					if (err) {
 						res.send(404, "Save section failed.");
 					}
+					else {
+						res.json(section);
+					}
 				});
             }
         });
@@ -109,10 +112,40 @@ module.exports = {
 	    	});
 	    }
 	    else {
-	        FeedM.find({ groupUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}, limit: req.params.flim}, function (err, results) {
-	        	//console.log(results);
-	            res.json(results);
+	     //    FeedM.find({ groupUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}, limit: req.params.flim}, function (err, results) {
+	     //    	//console.log(results);
+	     //        res.json(results);
+	    	// });
+			var feeds = [];
+			FeedM.find({ groupUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}, limit: req.params.flim}, function (err, fresults) {
+				var tempcount = 0;
+				_.each(fresults, function(feed) {
+					feed = feed.toObject();
+					++tempcount;
+					SectionM.findOne({ sectionUUID: feed.groupUUID }, function (err, gresults) {
+						StudentM.findOne({ userUUID: feed.userUUID }, function (err, sresults) {
+							--tempcount;
+				        	//console.log(feed);
+				        	feed.sectionName = gresults.sectionName;
+				        	feed.firstName = sresults.firstName;
+				        	feed.lastName = sresults.lastName;
+				        	//console.log(feed);
+				        	feeds.push(feed);
+				        	if(tempcount === 0) {
+				        		//console.log(feeds);
+				            	res.json(feeds);
+				            }
+						});
+					});
+				});
 	    	});
 	    };
+	},
+	addFeedInfo: function(feed) {
+		console.log(feed);
 	}
+
+				// _.each(feeds, function(feed) {
+
+	   //          });
 }

@@ -1,10 +1,4 @@
-.row-fluid
-    .span8.offset2
-        .row-fluid.pull-right
-            .span6
-                h1 成绩报告
-            .span2.offset4
-                img(src="/img/3_large.png").img-rounded.img-polaroid
+br
 .row-fluid
     .span8.offset2
         div
@@ -18,29 +12,21 @@
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
                                     a(href="#Chapter1") Analytics
-                    div(style="height:100%;")
-                        h1 Decoding Learning:
-                        h3.text-right The Proof, Promise and Potential of Digital Education
+                    div(style="height:100%;", ng-controller="ReportVizCtrl")
                         br
-                        h2(id="Preface") Preface
-                        p This report, published by Pearson and written by the Economist Intelligence Unit, is part of a wide-ranging programme of quantitative and qualitative analysis, entitled The Learning Curve. It seeks to further our understanding of what leads to successful educational outcomes – both economic and social. The design and execution of the programme has benefited from the ongoing advice of some of the world’s leading educational scholars.
-                        img(src="/img/Quarterly.jpg")
-                        p This report itself outlines the main findings from analysis of a large body of internationally comparable education data – The Learning Curve Data Bank.  It also draws on extensive desk research, as well as in-depth interviews conducted with 16 experts in education. The research was conducted entirely by the Economist Intelligence Unit, and the views expressed in the report do not necessarily reflect those of Pearson. The report was written by Dr Paul Kielstra, and edited by Denis McCauley of the Economist Intelligence Unit.
-                        p Sincere thanks go to the interviewees for sharing their insights on this topic. These include the following individuals:
-                        h2(id="Chapter1") Chapter 1: Learning with Technology
-                        p in this chapter we provide an overview of promising innovations in learning with technology
-                            | . The chapter is organised around the eight learning themes discussed in chapter 1. We
-                            | consider the type of learning that takes place within each theme; we then present examples of
-                            | how technology can support those types of learning. We include a set of case studies that
-                            | provide a snapshot of learning in action.
-                        p We highlight those innovations we believe offer the greatest potential,
-                            | drawn from the 124 research and 86 teacher–led examples reviewed.
-                        p all the examples quoted are referenced in footnotes. a full list of the innovations ranked
-                            | in the comparative judgement exercise along with additional resources from the report
-                            | can be
-                        found online at &nbsp;
-                            a(href="http://www.nesta.org.uk/assets/features/decoding_learning") http://www.nesta.org.uk/assets/features/decoding_learning
-                        span .
+                        h2(id="Preface") 整体成绩
+                        p 不同科目发展情况折线图
+                        .btn-group
+                          button.btn.btn-primary(type='button', ng-click='getChineseScore()') 语文
+                          button.btn.btn-primary(type='button', ng-click='getMathScore()') 数学
+                          button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
+                        br
+                        student-exam-viz(data='data')
+                    div(style="height:100%;")
+                        h3 Decoding Learning:
+                        h4 The Proof, Promise and Potential of Digital Education
+                        br
+
                 tap(heading="常用图表")
                 tab(heading="成绩走势")
                     .row-fluid
@@ -110,6 +96,8 @@
                     div
                         h2(id="1") 知识点
                         p 显示各知识点的预习，做题，复习，查错时间等
+                        viz-topic-distro(data='data')
+
                         p 显示班级平均时间
                 tab(heading="方法和时间")
                     .row-fluid
@@ -142,6 +130,56 @@
                                     a(href="#Preface") 知识点
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                     div(style="height:100%;")
+                        h3 三年级二班排名
+                        table.table.table-bordered
+                            thead
+                                tr
+                                    th 排名
+                                    th 姓名
+                                    th 成绩
+                                    th 学习精力
+                                    th 本周进步
+                            tbody
+                                tr(ng-repeat="(id, student) in classRankFakeData")
+                                    td {{id}}
+                                    td {{student.lastname + student.firstname }}
+                                    td {{student.grade}}
+                                    td {{student.effort}}
+                                    td {{student.progress}}
+                        hr
+                        h3 数学学科排名
+                        table.table.table-bordered
+                            thead
+                                tr
+                                    th 排名
+                                    th 姓名
+                                    th 成绩
+                                    th 学习精力
+                                    th 本周进步
+                            tbody
+                                tr(ng-repeat="(id, student) in classRankFakeData")
+                                    td {{id}}
+                                    td {{student.lastname + student.firstname }}
+                                    td {{student.grade}}
+                                    td {{student.effort}}
+                                    td {{student.progress}}
+                        hr
+                        h3 语文学科排名
+                        table.table.table-bordered
+                            thead
+                                tr
+                                    th 排名
+                                    th 姓名
+                                    th 成绩
+                                    th 学习精力
+                                    th 本周进步
+                            tbody
+                                tr(ng-repeat="(id, student) in classRankFakeData")
+                                    td {{id}}
+                                    td {{student.lastname + student.firstname }}
+                                    td {{student.grade}}
+                                    td {{student.effort}}
+                                    td {{student.progress}}
                 tab(heading="学区分布")
                     .row-fluid
                         .span2.sp-reports-sidebar.affix
@@ -175,6 +213,8 @@
 
     .span2
         div
+            img(src="/img/3_large.png").img-rounded.img-polaroid
+        div
             h4 学生
             input.span12(type="text", placeholder="学生姓名或ID", ng-model="sessionsSearchInput")
             img(src="/img/1.png", style="margin:5px;")
@@ -194,18 +234,4 @@
             alert.alert-info(type="info", close="closeAlert()")
                 | TODO: 在这里显示学校tag，
 
-    table.table.table-striped(data-ng-hide="loading")
-    thead
-        tr
-            th #
-            th 题干
-            th 选择
-    tbody
-        tr(data-ng-repeat="problem in problems")
-            td
-                {{ problem.id }}
-            td
-                {{ problem.question }}
-            td
-                {{ problem.choices}}
 

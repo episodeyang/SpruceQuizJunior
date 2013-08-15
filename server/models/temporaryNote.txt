@@ -37,7 +37,7 @@ var teacher:{
         studentGroup,
 }
 
-var parents:{
+var parent:{
         userUUID
 }
 
