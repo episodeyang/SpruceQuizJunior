@@ -5,6 +5,7 @@ var _ =           require('underscore')
     , TeacherM = require('../models/SchemaModels').Teacher
     , SchoolM = require('../models/SchemaModels').School
     , UnitM = require('../models/SchemaModels').Unit
+    , FeedM = require('../models/SchemaModels').Feed
 
 module.exports = {
 	getbyId: function(req, res) {
@@ -16,19 +17,23 @@ module.exports = {
 	    }
 	    else {
 	        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, gresults) {
-	        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
-	        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
-	        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
-	        				//console.log(gresults.sectionUnits);
-		        			var results = gresults.toObject();
-		        			results.school = sresults.schoolUUID;
-		        			results.students = _.map(uresults, function(item) {return item.userUUID});
-		        			results.sectionUnits = dresults;
-				            //console.log(results);
-				            res.json(results);
-			            });
+	        	if(!gresults) {
+	        		console.log("Section was not found");
+	        	} else {
+		        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
+		        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
+		        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
+		        				//console.log(gresults.sectionUnits);
+			        			var results = gresults.toObject();
+			        			results.school = sresults.schoolUUID;
+			        			results.students = _.map(uresults, function(item) {return item.userUUID});
+			        			results.sectionUnits = dresults;
+					            //console.log(results);
+					            res.json(results);
+				            });
+				    	});
 			    	});
-		    	});
+			    }
 	    	});
 	    };
 	},
@@ -54,6 +59,9 @@ module.exports = {
 				section.save(function (err) {
 					if (err) {
 						res.send(404, "Save section failed.");
+					}
+					else {
+						res.json(section);
 					}
 				});
             }
@@ -86,10 +94,58 @@ module.exports = {
 	},
 	getUnits: function(req, res) {
         SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, results) {
-        	UnitM.find({ unitUUID: { $in: results.sectionUnits } }, function (err, dresults) {
-	            //console.log(dresults);
-            	res.json(dresults);
-	    	});
+        	if(!results) {
+        		console.log("Section was not found");
+        	} else {
+	        	UnitM.find({ unitUUID: { $in: results.sectionUnits } }, function (err, dresults) {
+		            //console.log(dresults);
+	            	res.json(dresults);
+		    	});
+	        }
     	});
+	},
+	getFeeds: function(req, res) {
+		if(req.params.flim === "all") {
+	        FeedM.find({ groupUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}}, function (err, results) {
+	        	//console.log(results);
+	            res.json(results);
+	    	});
+	    }
+	    else {
+	     //    FeedM.find({ groupUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}, limit: req.params.flim}, function (err, results) {
+	     //    	//console.log(results);
+	     //        res.json(results);
+	    	// });
+			var feeds = [];
+			FeedM.find({ groupUUID: { $in: [req.params.uuid] } }, null, {sort: {'feedUUID': -1}, limit: req.params.flim}, function (err, fresults) {
+				var tempcount = 0;
+				_.each(fresults, function(feed) {
+					feed = feed.toObject();
+					++tempcount;
+					SectionM.findOne({ sectionUUID: feed.groupUUID }, function (err, gresults) {
+						StudentM.findOne({ userUUID: feed.userUUID }, function (err, sresults) {
+							--tempcount;
+				        	//console.log(feed);
+				        	feed.sectionName = gresults.sectionName;
+				        	feed.firstName = sresults.firstName;
+				        	feed.lastName = sresults.lastName;
+				        	//console.log(feed);
+				        	feeds.push(feed);
+				        	if(tempcount === 0) {
+				        		//console.log(feeds);
+				            	res.json(feeds);
+				            }
+						});
+					});
+				});
+	    	});
+	    };
+	},
+	addFeedInfo: function(feed) {
+		console.log(feed);
 	}
+
+				// _.each(feeds, function(feed) {
+
+	   //          });
 }

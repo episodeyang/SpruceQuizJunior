@@ -143,32 +143,32 @@ var routes = [
         path: '/api/schools/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getbyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/schools/:uuid/teachers',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getTeachers],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/schools/:uuid/students',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getStudents],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/schools/:uuid/sections',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getSections],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     //Teacher resourse
     {
         path: '/api/teachers/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getbyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/teachers/:uuid',
@@ -237,6 +237,12 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getSections],
         accessLevel: accessLevels.loggedin
     },
+    {
+        path: '/api/students/:uuid/feeds/:flim',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getFeeds],
+        accessLevel: accessLevels.loggedin
+    },
     //AuthUser resources
     {
         path: '/api/users/:uuid',
@@ -249,49 +255,55 @@ var routes = [
         path: '/api/sections/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getbyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/sections/:uuid',
         httpMethod: 'POST',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.savebyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.superuser
     },
     {
         path: '/api/sections/:uuid',
         httpMethod: 'PUT',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.updatebyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.superuser
     },
     {
         path: '/api/sections/:uuid',
         httpMethod: 'DELETE',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.removebyId],
-        accessLevel: accessLevels.admin
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/sections/:uuid/students',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getStudents],
-        accessLevel: accessLevels.superuser
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/sections/:uuid/teachers',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getTeachers],
-        accessLevel: accessLevels.superuser
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/sections/:uuid/schools',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getSchools],
-        accessLevel: accessLevels.superuser
+        accessLevel: accessLevels.loggedin
     },
     {
         path: '/api/sections/:uuid/units',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getUnits],
-        accessLevel: accessLevels.superuser
+        accessLevel: accessLevels.loggedin
+    },
+    {
+        path: '/api/sections/:uuid/feeds/:flim',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getFeeds],
+        accessLevel: accessLevels.loggedin
     },
     //Unit resource
     {
@@ -338,14 +350,16 @@ var routes = [
         path: '/*',
         httpMethod: 'GET',
         middleware: [function(req, res) {
-            var role = userRoles.public, username = '';
+            var role = userRoles.public, username = '', id = '';
             if(req.user) {
                 role = req.user.role;
                 username = req.user.username;
+                id = req.user.id;
             }
             res.cookie('user', JSON.stringify({
                 'username': username,
-                'role': role
+                'role': role,
+                'id': id
             }));
             res.render('index');
         }],

@@ -9,7 +9,6 @@ angular.module('SpruceQuizApp')
     $scope.getUserRoleText = function(role) {
         return _.invert(Auth.userRoles)[role];
     };
-
     $scope.logout = function() {
         Auth.logout(function() {
             $location.path('/login');
@@ -44,16 +43,9 @@ angular.module('SpruceQuizApp')
 }]);
 
 angular.module('SpruceQuizApp')
-.controller('HomeCtrl',
-['$rootScope', function($rootScope) {
-
-}]);
-
-angular.module('SpruceQuizApp')
 .controller('RegisterCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
     $scope.role = routingConfig.userRoles.user;
-
     $scope.register = function() {
         Auth.register({
                 username: $scope.username,

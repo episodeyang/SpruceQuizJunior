@@ -53,6 +53,12 @@ angular.module('SpruceQuizApp', ['ui.bootstrap','ui.select2','angular-underscore
                 controller:     'ProblemCtrl',
                 access:         access.superuser
             });
+        $routeProvider.when('/problems/edit',
+            {
+                templateUrl:    '/partials/problems_edit',
+                controller:     'ProblemEditCtrl',
+                access:         access.superuser
+            });
         $routeProvider.when('/reports',
             {
                 templateUrl:    '/partials/reports',

@@ -1,6 +1,8 @@
-h1 学生管理
 .row-fluid
-    .span3
+    .span12
+.row-fluid
+    .span1
+    .span2
         h4 选择学校
         select.span12(ui-select2,ng-model="studentQuery.schools",data-placeholder="学校名称／ID",multiple)
             option(ng-repeat='school in schools', value='{{school.schoolUUID}}') {{school.schoolUUID}},{{school.schoolName}}
@@ -32,10 +34,10 @@ h1 学生管理
                     //-hide this entire division.
                     h4.pull-left 新增学生 &nbsp;
                     span.pull-left(style="padding-top:3px;")
-                        button.btn.btn-small.btn-danger(ng-click="deleteNewStudent()") 清空通知
+                        button.btn.btn-success(ng-click="isCollapsed=!isCollapsed") 清空通知
                     div.pull-right(style="padding-top:3px;")
                         form.form-search
-                            input.span12.search-query(placeholder="搜索用户",ng-model="newStudentQuery")
+                            input.span12.search-query(placeholder="搜索学生(随打即搜)",ng-model="newStudentQuery")
                     table.table.table-striped(data-ng-hide="loading")
                         thead
                             tr
@@ -64,10 +66,11 @@ h1 学生管理
                 h4.pull-left 学生列表
                 div.pull-right(style="padding-top:3px;")
                     form.form-search
-                        input.span12.search-query(placeholder="搜索用户",ng-model="studentQuery.$")
+                        input.span12.search-query(placeholder="搜索学生(随打即搜)",ng-model="studentQuery.$")
                 table.table.table-striped(data-ng-hide="loading")
                     thead
                         tr
+                            th 
                             th 编号
                             th
                                div(ng-controller="CreateModalCtrl")
@@ -243,6 +246,37 @@ h1 学生管理
 
 
             tab(heading="教师名单")
+                h4.pull-left 教师列表
+                div.pull-right(style="padding-top:3px;")
+                    form.form-search
+                        input.span12.search-query(placeholder="搜索教师(随打即搜)",ng-model="teacherQuery.$")
+                table.table.table-striped(data-ng-hide="loading")
+                    thead
+                        tr
+                            th 
+                            th 编号
+                            th 姓名
+                            th 班级
+                            th 学校
+
+                    tbody
+                        tr(data-ng-repeat="teacher in teachers|filter:teacherQuery")
+                            td 
+                                i.icon-pencil(ng-click="modalShow=!modalShow")
+                            td {{ teacher.userUUID }}
+                                div(modal="modalShow", close="modalShow=false").well
+                                    //the call back sets the parameter flase again.
+                                    div.modal-header 编辑 {{teacher.userUUID}} 信息
+                                    div.modal-body
+                                        {{teacher.userUUID}}
+                                        .row-fluid
+                                            input.span12(type="text", placeholder="type here", ng-model="expression")
+                                            div {{expression}}
+                                    div.modal-footer
+                                        button.btn.btn-success 提交
+                            td {{ teacher.teacherName}}
+                            td {{ teacher.sections}}
+                            td {{ teacher.schools}}
             tab(heading="新增用户")
                 h4 学生
                 table.table.table-striped(data-ng-hide="loading")

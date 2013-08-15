@@ -38,7 +38,7 @@ tempuser = new UserM({
         id:         "u4",
         username:   "parent",
         password:   "123",
-        role:   userRoles.parents
+        role:   userRoles.parent
     });
 tempuser.save();
 tempuser = new UserM({
@@ -78,7 +78,8 @@ module.exports = {
             if (err) {
                 console.log("Counting error");
             } else {
-                var newid = results + 1;
+                var tempid = results + 1;
+                var newid = 'u' + tempid;
                 var user = new UserM({
                     id:         newid,
                     username:   username,

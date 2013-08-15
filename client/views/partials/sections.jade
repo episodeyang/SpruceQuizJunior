@@ -3,21 +3,15 @@
         .span12
     .row-fluid
         .span9
-            div.row-fluid
-                .span1
-                    img(src="/img/3_large.png").img-polaroid
-                .span11
-                    alert(close="updateSection()")
-                        p {{sections[0]}}
             tabset
-                tab(ng-repeat="section in sections",heading="{{section.sectionName}}")
+                tab(ng-repeat="section in model.sections",heading="{{section.sectionName}}", select="updateSection($index)")
                     div.row-fluid
                         .span1
                             img(src="/img/3_large.png").img-polaroid
                         .span11
                             alert(close="closeClicked=!closeClicked")
                                 p 吴轶凡 推送了今日测试（一）
-                    div.row-fluid
+                    //-div.row-fluid
                         .span1
                             img(src="/img/3_large.png").img-polaroid
                         .span11
@@ -26,21 +20,28 @@
 
                     div.row-fluid
                         .span5
-                            ul.nav.nav-tabs.nav-stacked
+                            ul.nav.nav-tabs.nav-stacked(style="margin-top:0px;")
                                 li
-                                    a
-                                        strong 目录
-                                li(ng-repeat="unit in section.sectionUnits")
-                                    a {{unit.unitTitle}}
+                                    a: strong 单元目录
+                                li(ng-repeat="unit in section.sectionUnits",class="{{unit.active}}")
+                                    a(ng-click="grabMaterials(unit.unitUUID)")
+                                        | {{unit.unitTitle}}
+                                    //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
+                            ul.nav.nav-tabs.nav-stacked(style="margin-top:20px;")
                                 li
                                     a 删除小组
-                        .span7
+                        .span7(id="{{model.unitID}}")
                             tabset
                                 tab(heading="测试")
-                                    .well
-                                        p 第一单元当天训练
-                                    .well
-                                        p 第一单元双周复习
+                                    .row-fluid
+                                        .span12
+                                            div.clickable(ng-repeat="material in model.tempUnit.items")
+                                                a.fill-clickable(href="{{material.sourceUrl}}", target="_blank")
+                                                .well
+                                                    a.edit.pull-right(href="http://www.facebook.com")
+                                                        i.icon-pencil
+                                                    h3.card {{material.materialName}}
+                                                    p {{material.comment}}
                                 tab(heading="已存档",disabled="true")
                             tabset
                                 tab(heading="阅读")
@@ -58,7 +59,7 @@
                         p.bottom(style="margin-bottom:0;") @{{user.username}}
             .row-fluid
                 .span12.sp-reports-sidebar
-                    ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
+                    ul.nav.nav-pills.nav-stacked.sp-reports-sidenav
                         li
                             a(ng-click="createSectionModal = true") 创建新课程
                         li
@@ -72,7 +73,7 @@
 
     div(modal="createSectionModal")
         .modal-header
-            h3 创建新小组
+            h3 创建新课程
         .modal-body
             form.form-horizontal
                 tabset
