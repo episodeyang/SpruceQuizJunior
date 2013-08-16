@@ -7,7 +7,7 @@ html,body {
     height:100%;
 }
 body{
-    font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
+    font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',"WenQuanYi Micro Hei",Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
     font-size: 1em;
     /*line-height: 175%;*/
 }
