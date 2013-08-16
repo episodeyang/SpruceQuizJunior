@@ -3,8 +3,8 @@ br
     .span8.offset2
         div
             tabset
-                tab(heading="成绩概况")
-                    .row-fluid
+                tab(heading="成绩走势")
+                    //.row-fluid
                         .span2.sp-reports-sidebar.affix
                             ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
                                 li
@@ -14,22 +14,21 @@ br
                                     a(href="#Chapter1") Analytics
                     div(style="height:100%;", ng-controller="ReportVizCtrl")
                         br
-                        h2(id="Preface") 整体成绩
-                        p 不同科目发展情况折线图
+                        h2(id="Preface") 不同科目发展情况柱形图
                         .btn-group
                           button.btn.btn-primary(type='button', ng-click='getChineseScore()') 语文
                           button.btn.btn-primary(type='button', ng-click='getMathScore()') 数学
                           button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
                         br
-                        #student-exam-viz-wrapper
+                        .viz-wrapper
                           student-exam-viz(data='data')
-                    div(style="height:100%;")
-                        h3 Decoding Learning:
-                        h4 The Proof, Promise and Potential of Digital Education
-                        br
-
-                tap(heading="常用图表")
-                tab(heading="成绩走势")
+                tab(heading="学生情况")
+                  div(ng-controller="StudentVizCtrl")
+                    //| 学生姓名:
+                    //input.input-wrapper(type='text', ng-model='studentName')
+                    .viz-wrapper
+                      student-subject-viz(data='data')
+                //tab(heading="成绩查询")
                     .row-fluid
                         .span2.sp-reports-sidebar.affix
                             ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav

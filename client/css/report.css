@@ -1,10 +1,15 @@
 student-exam-viz svg {
-  height: 300px !important;
+  height: 400px !important;
 }
 
 
-#student-exam-viz-wrapper {
+.viz-wrapper {
   padding-top: 30px;
   padding-bottom: 30px;
 
+}
+
+.input-wrapper {
+  padding-left: 20px;
+  margin-left: 20px;
 }
