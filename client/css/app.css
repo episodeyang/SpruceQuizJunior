@@ -133,3 +133,6 @@ a.edit {
     z-index: 10;
     color: #cccccc;
 }
+.double-line-height{
+    line-height: 2em;
+}

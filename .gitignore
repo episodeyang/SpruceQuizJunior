@@ -3,6 +3,7 @@
 
 #Library Files
 client/js/mathJax/*
+client/js/MathJax/*
 
 #node specific files
 lib-cov
