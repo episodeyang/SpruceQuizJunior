@@ -1,7 +1,10 @@
 *.swp
 .idea
+
+#Library Files
+client/js/mathJax/*
+
 #node specific files
-######################
 lib-cov
 *.seed
 *.log
@@ -17,7 +20,6 @@ results
 
 npm-debug.log
 node_modules
-client/js/mathJax/* 
 
 
 # OS generated files #
