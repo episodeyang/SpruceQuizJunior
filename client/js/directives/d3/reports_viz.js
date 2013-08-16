@@ -13,21 +13,23 @@ angular.module('SpruceQuizApp')
         console.log("calling from directive");
         console.log(scope);
         console.log(scope.data);
+        var data = scope.data;
+
+        // set the values up
+        var width = (barWidth + 10) * data.length;
+        var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
+        var y = d3.scale.linear().domain([0, d3.max(data,
+                function (datum) { return datum.score; })]).
+            rangeRound([0, height]);
+
+        var chart = d3.select(element[0])
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
 
         var plotWithData = function () {
-          var data = scope.data;
 
-          // set the values up
-          var width = (barWidth + 10) * data.length;
-          var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
-          var y = d3.scale.linear().domain([0, d3.max(data,
-                  function (datum) { return datum.score; })]).
-              rangeRound([0, height]);
-
-          var chart = d3.select(element[0])
-              .append('svg')
-              .attr('width', width)
-              .attr('height', height);
+          //data = scope.data;
 
           chart.selectAll("rect").data(data).
               data(data).
@@ -65,7 +67,7 @@ angular.module('SpruceQuizApp')
 
         scope.$watch('data', plotWithData, true);
 
-        }
+      }
     };
 
   });
