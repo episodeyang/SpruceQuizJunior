@@ -22,13 +22,9 @@ br
                         br
                         .viz-wrapper
                           student-exam-viz(data='data')
-                tab(heading="学生情况")
-                  div(ng-controller="StudentVizCtrl")
-                    //| 学生姓名:
-                    //input.input-wrapper(type='text', ng-model='studentName')
-                    .viz-wrapper
-                      student-subject-viz(data='data')
-                //tab(heading="成绩查询")
+                //tab(heading="学生情况")
+
+                tab(heading="成绩查询")
                     .row-fluid
                         .span2.sp-reports-sidebar.affix
                             ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
@@ -45,9 +41,13 @@ br
                                     a(href="#Chapter1") 个人能力变化
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
-                                    a(href="#Chapter1") 排名变化
+                                    a(href="#ranking") 排名变化
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
-
+                    div#ranking(ng-controller="StudentVizCtrl")
+                        //| 学生姓名:
+                        //input.input-wrapper(type='text', ng-model='studentName')
+                        .viz-wrapper
+                          student-subject-viz(data='data')
                     div(style="height:100%;")
                         h1 Decoding Learning:
                         h3.text-right The Proof, Promise and Potential of Digital Education

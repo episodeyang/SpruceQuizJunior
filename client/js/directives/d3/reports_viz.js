@@ -5,53 +5,53 @@ var createSVG, updateBarChart, updateLineGraph;
 angular.module('SpruceQuizApp')
     .directive('studentExamViz', function () {
 
-    return {
-      restrict: 'CE',
-      terminal: true,
-      scope: {
-        data: '='
-      },
-      link: function (scope, element, attrs) {
-        // set the values up
-        scope.h = 300;
-        scope.barW = 40;
-        scope.w = (scope.barW + 30) * scope.data.length;
-        console.log(scope.w);
-        console.log(scope.data.length);
+      return {
+        restrict: 'CE',
+        terminal: true,
+        scope: {
+          data: '='
+        },
+        link: function (scope, element, attrs) {
+          // set the values up
+          scope.h = 300;
+          scope.barW = 40;
+          scope.w = (scope.barW + 30) * scope.data.length;
+          console.log(scope.w);
+          console.log(scope.data.length);
 
-        // call function to make graph
-        createSVG(scope, element);
-        scope.$watch('data', updateBarChart, true);
+          // call function to make graph
+          createSVG(scope, element);
+          scope.$watch('data', updateBarChart, true);
 
-      }
-    };
+        }
+      };
 
-  });
+    });
 
 angular.module('SpruceQuizApp')
     .directive('studentSubjectViz', function () {
 
-    return {
-      restrict: 'CE',
-      terminal: true,
-      scope: {
-        data: '='
-      },
-      link: function (scope, element, attrs) {
-        // set the values up
-        scope.h = 300;
-        scope.margin = 20;
-        scope.w = 400;
-        console.log(scope.w);
-        console.log(scope.data.length);
+      return {
+        restrict: 'CE',
+        terminal: true,
+        scope: {
+          data: '='
+        },
+        link: function (scope, element, attrs) {
+          // set the values up
+          scope.h = 300;
+          scope.margin = 20;
+          scope.w = 400;
+          console.log(scope.w);
+          console.log(scope.data.length);
 
-        // call function to make graph
-        createSVG(scope, element);
-        scope.$watch('data', updateLineGraph, true);
+          // call function to make graph
+          createSVG(scope, element);
+          scope.$watch('data', updateLineGraph, true);
 
-      }
-    };
-  });
+        }
+      };
+    });
 
 // don't create if already exist
 // avoid creating more than more svg
@@ -85,7 +85,7 @@ updateBarChart = function (newVal, oldVal, scope) {
       data(newVal).
       enter().
       append("svg:text").
-      attr("x", function (datum, index) { return x(index) ; }).
+      attr("x", function (datum, index) { return x(index); }).
       attr("y", function (datum) { return scope.h - y(datum.score); }).
       attr("dx", scope.barW / 2).
       attr("dy", "1.2em").
@@ -95,7 +95,7 @@ updateBarChart = function (newVal, oldVal, scope) {
   scope.svg.selectAll("text.yAxis").
       data(newVal).
       enter().append("svg:text").
-      attr("x", function (datum, index) { return x(index) ; }).
+      attr("x", function (datum, index) { return x(index); }).
       attr("y", scope.h).
       attr("dx", scope.barW / 2).
       attr("text-anchor", "middle").
@@ -108,33 +108,33 @@ updateBarChart = function (newVal, oldVal, scope) {
 
 updateLineGraph = function (newVal, oldVal, scope) {
   var y, x, line, g;
-  y = d3.scale.linear().domain([0, d3.max(scope.data)]).range([0 + scope.margin, scope.h - scope.margin]);
-  x = d3.scale.linear().domain([0, scope.data.length]).range([0 + scope.margin, scope.w - scope.margin]);
+  y = d3.scale.linear().domain([0, d3.max(scope.data)]).range([scope.h - scope.margin, scope.margin]);
+  x = d3.scale.linear().domain([0, scope.data.length]).range([scope.margin, scope.w - scope.margin]);
 
-  g = scope.svg.append("svg:g")
-      .attr("transform", "translate(0, 200)");
+  g = scope.svg.append("svg:g");
+  //.attr("transform", "translate(0, 200)");
 
   line = d3.svg.line()
-    .x(function (d, i) {
-      return x(i);
-    })
-    .y(function (d) {
-      return -1 * y(d);
-    });
+      .x(function (d, i) {
+        return x(i);
+      })
+      .y(function (d) {
+        return y(d);
+      });
 
   g.append("svg:path").attr("d", line(scope.data));
 
   g.append("svg:line")
       .attr("x1", x(0))
-      .attr("y1", -1 * y(0))
+      .attr("y1", y(0))
       .attr("x2", x(scope.w))
-      .attr("y2", -1 * y(0));
+      .attr("y2", y(0));
 
   g.append("svg:line")
       .attr("x1", x(0))
-      .attr("y1", -1 * y(0))
+      .attr("y1", y(0))
       .attr("x2", x(0))
-      .attr("y2", -1 * y(d3.max(scope.data)));
+      .attr("y2", y(d3.max(scope.data)));
 
   g.selectAll(".xLabel")
       .data(x.ticks(5))
@@ -142,7 +142,7 @@ updateLineGraph = function (newVal, oldVal, scope) {
       .attr("class", "xLabel")
       .text(String)
       .attr("x", function (d) { return x(d); })
-      .attr("y", 0)
+      .attr("y", y(0) + scope.margin)
       .attr("text-anchor", "middle");
 
   g.selectAll(".yLabel")
@@ -151,7 +151,7 @@ updateLineGraph = function (newVal, oldVal, scope) {
       .attr("class", "yLabel")
       .text(String)
       .attr("x", 0)
-      .attr("y", function (d) { return -1 * y(d); })
+      .attr("y", function (d) { return y(d); })
       .attr("text-anchor", "right")
       .attr("dy", 4);
 
@@ -160,17 +160,17 @@ updateLineGraph = function (newVal, oldVal, scope) {
       .enter().append("svg:line")
       .attr("class", "xTicks")
       .attr("x1", function (d) { return x(d); })
-      .attr("y1", -1 * y(0))
+      .attr("y1", y(0))
       .attr("x2", function (d) { return x(d); })
-      .attr("y2", -1 * y(-0.3));
+      .attr("y2", y(-0.3));
 
   g.selectAll(".yTicks")
       .data(y.ticks(4))
       .enter().append("svg:line")
       .attr("class", "yTicks")
-      .attr("y1", function (d) { return -1 * y(d); })
+      .attr("y1", function (d) { return y(d); })
       .attr("x1", x(-0.3))
-      .attr("y2", function (d) { return -1 * y(d); })
+      .attr("y2", function (d) { return y(d); })
       .attr("x2", x(0));
 
 };

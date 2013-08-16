@@ -17,7 +17,7 @@ var mydata_english = [{exam_id: "一月统练", score: 84}, {exam_id: "二月统
 
 // this is for the line char
 var student_subject_ranking = [[14, 20, 5, 48, 21], [1, 5, 4, 9, 2], [50, 32, 15, 30, 22]];
-var test_line = [3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 7];
+var test_line = [14, 20, 5, 48, 21, 50, 32, 15, 30, 22, 12, 15, 17];
 
 /* Controllers */
 
