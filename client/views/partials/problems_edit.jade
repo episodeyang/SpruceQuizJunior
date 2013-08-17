@@ -14,7 +14,7 @@ hr
             .span12
                 .row-fliud
                     .span3
-                        .btn(ng-click="viewVariables.editProblemModal = true") 编辑题目
+                        .btn(ng-click="editProblemInit($index)") 编辑题目
                     .span9.double-line-height
                         .row-fluid
                             span(ng-repeat = "segment in problem.question")
@@ -35,7 +35,7 @@ hr
                                     p(mathjax-bind = "explanation")
     .span3
 
-table.table.table-striped(data-ng-hide="loading")
+//-table.table.table-striped(data-ng-hide="loading")
     thead
         tr
             th #
@@ -52,8 +52,26 @@ table.table.table-striped(data-ng-hide="loading")
 
 div(modal="viewVariables.editProblemModal")
     .modal-header
-        h3 aaa
+        h3 正在编辑题号为{{viewVariables.editingProb.problemUUID}}的题目:
     .modal-body
         form.form-horizontal
+            div.control-group
+                div(ng-repeat = "segment in viewVariables.questionArr")
+                    label.control-label 题干
+                    .controls
+                        textarea(ng-model="viewVariables.questionArr[$index].str",type="text")
+                div(ng-repeat = "choice in viewVariables.choicesArr")
+                    label.control-label 选项
+                    .controls
+                        input(ng-model="viewVariables.choicesArr[$index].str",type="text")
+            div.control-group
+                label.control-label 答案
+                .controls
+                    textarea(ng-model="viewVariables.editingProb.solutions",type="text")
+            div.control-group
+                label.control-label 解释
+                .controls
+                    textarea(ng-model="viewVariables.editingProb.explanations",type="text")
     .modal-footer
-        button.btn.btn-success bbb
+        button.btn(ng-click="cancelEditing()") 取消
+        button.btn.btn-success(ng-click="saveEditing()") 提交编辑
