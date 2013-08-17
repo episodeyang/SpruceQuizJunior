@@ -488,6 +488,10 @@ disabled look for disabled choices in the results dropdown
     cursor: text;
     overflow: hidden;
 
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
     background-color: #fff;
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
     background-image: -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
