@@ -61,7 +61,8 @@ angular.module('spruceDBServices', ['ngResource'])
 .factory('Problems', function($resource){
     return {
         onProblems: $resource('/api/problems/:uuid', {uuid:'@problemUUID'}, {
-            list: {method:'GET', params:{uuid: 'all'}, isArray:true}
+            list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+            update: {method:'PUT', params:{uuid: '@problemUUID'}}
         })
     };
 })
