@@ -47,7 +47,9 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
         userRoles: userRoles
     };
 });
+sqApp.factory('@Users', function(){
 
+})
 angular.module('SpruceQuizApp')
 .factory('Users', function($http) {
     return {

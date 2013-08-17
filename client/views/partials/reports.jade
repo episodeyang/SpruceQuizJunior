@@ -3,6 +3,25 @@ br
     .span8.offset2
         div
             tabset
+                tab(heading="总体情况报告")
+                    .row-fluid
+                        .span2.sp-reports-sidebar.affix
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
+                                li
+                                    a(href="#Preface") Preface
+                                        i.icon-chevron-right(style="float:right;line-height:1.4em;")
+                                li
+                                    a(href="#Chapter1") Analytics
+                    div(style="height:100%;", ng-controller="ReportVizCtrl")
+                        br
+                        h2(id="Preface") 不同科目发展情况柱形图
+                        .btn-group
+                            button.btn.btn-primary(type='button', ng-click='getChineseScore()') 语文
+                            button.btn.btn-primary(type='button', ng-click='getMathScore()') 数学
+                            button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
+                        br
+                        .viz-wrapper
+                            d3-bar-chart(data='data')
                 tab(heading="成绩走势")
                     //.row-fluid
                         .span2.sp-reports-sidebar.affix
