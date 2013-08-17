@@ -18,7 +18,37 @@ angular.module('SpruceQuizApp')
     $scope.problems = Problems.onProblems.list();
     $scope.viewVariables = {};
     $scope.viewVariables.editProblemModal = false;
+    $scope.viewVariables.probIndex = -1;
     $scope.orderProp = 'lastupdated';
+
+    $scope.editProblemInit = function(index) {
+        $scope.viewVariables.editProblemModal = true;
+        $scope.viewVariables.editingProb = $scope.problems[index];
+        $scope.viewVariables.probIndex = index;
+        $scope.viewVariables.choicesArr = _.map($scope.viewVariables.editingProb.choices, function(choice){ return { str: choice} ; });
+        $scope.viewVariables.questionArr = _.map($scope.viewVariables.editingProb.question, function(segment){ return { str: segment} ; });
+        //console.log($scope.viewVariables.choicesArr);
+        //$scope.viewVariables.index = index;
+        //console.log("print test");
+    };
+
+    $scope.saveEditing = function() {
+        $scope.viewVariables.editingProb.choices = _.map($scope.viewVariables.choicesArr, function(choice){ return choice.str; });
+        $scope.viewVariables.editingProb.question = _.map($scope.viewVariables.questionArr, function(segment){ return segment.str; });
+        console.log($scope.viewVariables.editingProb);
+        $scope.problems[$scope.viewVariables.probIndex] = $scope.viewVariables.editingProb;
+        Problems.onProblems.update($scope.viewVariables.editingProb);
+        $scope.viewVariables.editProblemModal = false;
+    };
+
+    $scope.cancelEditing = function() {
+        $scope.viewVariables.choicesArr = [];
+        $scope.viewVariables.questionArr = [];
+        $scope.viewVariables.editingProb = {};
+        $scope.viewVariables.probIndex = -1;
+        $scope.viewVariables.editProblemModal = false;
+    };
+
 }]);
 
 //ProblemCtrl.$inject = ['$scope', '$http'];
