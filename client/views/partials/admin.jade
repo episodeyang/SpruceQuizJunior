@@ -1,8 +1,6 @@
+h1 学生管理
 .row-fluid
-    .span12
-.row-fluid
-    .span1
-    .span2
+    .span3
         h4 选择学校
         select.span12(ui-select2,ng-model="studentQuery.schools",data-placeholder="学校名称／ID",multiple)
             option(ng-repeat='school in schools', value='{{school.schoolUUID}}') {{school.schoolUUID}},{{school.schoolName}}
@@ -37,7 +35,7 @@
                         button.btn.btn-success(ng-click="isCollapsed=!isCollapsed") 清空通知
                     div.pull-right(style="padding-top:3px;")
                         form.form-search
-                            input.span12.search-query(placeholder="搜索学生(随打即搜)",ng-model="newStudentQuery")
+                            input.span12.search-query(placeholder="搜索学生(随打即搜)",ng-model="newStudentQueryAll.$")
                     table.table.table-striped(data-ng-hide="loading")
                         thead
                             tr
@@ -52,7 +50,7 @@
 
                         tbody
 
-                            tr(data-ng-repeat="student in newStudentList")
+                            tr(data-ng-repeat="student in newStudentList | filter:newStudentQueryAll")
                                 td {{ student.userUUID }}
                                 td {{ student.firstName}} {{student.lastName}}
                                 td {{ student.sex}}
@@ -66,11 +64,10 @@
                 h4.pull-left 学生列表
                 div.pull-right(style="padding-top:3px;")
                     form.form-search
-                        input.span12.search-query(placeholder="搜索学生(随打即搜)",ng-model="studentQuery.$")
+                        input.span12.search-query(placeholder="搜索学生(随打即搜)",ng-model="studentQueryAll.$")
                 table.table.table-striped(data-ng-hide="loading")
                     thead
                         tr
-                            th 
                             th 编号
                             th
                                div(ng-controller="CreateModalCtrl")
@@ -158,7 +155,7 @@
 
 
                     tbody
-                        tr(data-ng-repeat="student in students | mapStudents:studentQuery",ng-controller="EditModalCtrl")
+                        tr(data-ng-repeat="student in students | mapStudents:studentQuery | filter:studentQueryAll.$",ng-controller="EditModalCtrl")
                             td {{ student.userUUID }}
                             td
                                 a.icon-pencil(ng-click="editStudentModal=true")
