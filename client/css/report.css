@@ -14,7 +14,7 @@ student-exam-viz svg {
   margin-left: 20px;
 }
 
-path {
+.nofill path {
   stroke: steelblue;
   stroke-width: 2;
   fill: none;
@@ -31,4 +31,8 @@ text {
 
 #ranking {
   height:100%;
+}
+.slice text {
+  font-size: 16pt;
+  font-family: Arial;
 }

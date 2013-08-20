@@ -21,7 +21,7 @@ br
                           button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
                         br
                         .viz-wrapper
-                          student-exam-viz(data='data')
+                          d3-bar-chart(data='data')
                 //tab(heading="学生情况")
 
                 tab(heading="成绩查询")
@@ -46,8 +46,8 @@ br
                     div#ranking(ng-controller="StudentVizCtrl")
                         //| 学生姓名:
                         //input.input-wrapper(type='text', ng-model='studentName')
-                        .viz-wrapper
-                          student-subject-viz(data='data')
+                        .viz-wrapper.nofill
+                          d3-line-graph(data='data')
                     div(style="height:100%;")
                         h1 Decoding Learning:
                         h3.text-right The Proof, Promise and Potential of Digital Education
@@ -93,10 +93,11 @@ br
                                 li
                                     a(href="#Chapter1") 时间安排
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
-                    div
+                    div(ng-controller="topicDistroCtrl")
                         h2(id="1") 知识点
                         p 显示各知识点的预习，做题，复习，查错时间等
-                        viz-topic-distro(data='data')
+                        .viz-wrapper
+                          d3-pie-chart(data='data')
 
                         p 显示班级平均时间
                 tab(heading="方法和时间")
