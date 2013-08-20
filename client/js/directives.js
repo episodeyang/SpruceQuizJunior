@@ -56,4 +56,3 @@ angular.module('SpruceQuizApp')
 });
 
 //UI Directive
-

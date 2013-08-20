@@ -6,6 +6,11 @@ html,body {
     font-size: 1em;
     height:100%;
 }
+body{
+    font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',"WenQuanYi Micro Hei",Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
+    font-size: 1em;
+    /*line-height: 175%;*/
+}
 .navbar {
     margin-bottom: 0;
 }
@@ -127,4 +132,7 @@ a.edit {
     padding-left: 10px;
     z-index: 10;
     color: #cccccc;
+}
+.double-line-height{
+    line-height: 2em;
 }
