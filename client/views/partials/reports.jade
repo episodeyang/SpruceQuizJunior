@@ -12,7 +12,7 @@ br
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
                                 li
                                     a(href="#Chapter1") Analytics
-                    div(style="height:100%;", ng-controller="ReportVizCtrl")
+                    div(style="height:100%;")
                         br
                         h2(id="Preface") 不同科目发展情况柱形图
                         .btn-group
@@ -20,8 +20,17 @@ br
                             button.btn.btn-primary(type='button', ng-click='getMathScore()') 数学
                             button.btn.btn-primary(type='button', ng-click='getEnglishScore()') 英语
                         br
-                        .viz-wrapper
-                            d3-bar-chart(data='data')
+                        div(ng-controller="ReportVizCtrl")
+                            .viz-wrapper
+                                d3-bar-chart(data='data')
+                        br
+                        div(ng-controller="StudentVizCtrl")
+                            .viz-wrapper.nofill
+                                d3-line-graph(data='data')
+                        div(ng-controller="topicDistroCtrl")
+                            p 显示各知识点的预习，做题，复习，查错时间等
+                            .viz-wrapper
+                                d3-pie-chart(data='data')
                 tab(heading="成绩走势")
                     //.row-fluid
                         .span2.sp-reports-sidebar.affix
@@ -41,7 +50,7 @@ br
                         br
                         .viz-wrapper
                           d3-bar-chart(data='data')
-                //tab(heading="学生情况")
+
 
                 tab(heading="成绩查询")
                     .row-fluid
@@ -62,9 +71,9 @@ br
                                 li
                                     a(href="#ranking") 排名变化
                                         i.icon-chevron-right(style="float:right;line-height:1.4em;")
-                    div#ranking(ng-controller="StudentVizCtrl")
+                    div#ranking(ng-controller="studentvizctrl")
                         //| 学生姓名:
-                        //input.input-wrapper(type='text', ng-model='studentName')
+                        //input.input-wrapper(type='text', ng-model='studentname')
                         .viz-wrapper.nofill
                           d3-line-graph(data='data')
                     div(style="height:100%;")
