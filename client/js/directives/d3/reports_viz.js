@@ -92,43 +92,44 @@ createSVG = function (scope, element) {
 
 // helper functions
 updateBarChart = function (newVal, oldVal, scope) {
-  var x = d3.scale.linear().domain([0, newVal.length]).range([0, scope.w]);
-  var y = d3.scale.linear().domain([0, d3.max(newVal,
+  var x = d3.scale.linear().domain([0, newVal.length]).range([0, scope.w]),
+    y = d3.scale.linear().domain([0, d3.max(newVal,
           function (datum) { return datum.score; })]).
       rangeRound([0, scope.h]);
 
-  scope.svg.selectAll("rect").
-      data(newVal).
-      enter().
-      append('svg:rect').
-      attr('x', function (datum, index) {return x(index); }).
-      attr('y', function (datum) {return scope.h - y(datum.score); }).
-      attr('height', function (datum) {return y(datum.score); }).
-      attr('width', scope.barW).
-      attr('fill', '#2d578b');
-  scope.svg.selectAll("text").
-      data(newVal).
-      enter().
-      append("svg:text").
-      attr("x", function (datum, index) { return x(index); }).
-      attr("y", function (datum) { return scope.h - y(datum.score); }).
-      attr("dx", scope.barW / 2).
-      attr("dy", "1.2em").
-      attr("text-anchor", "middle").
-      text(function (datum) { return datum.score; }).
-      attr("fill", "white");
-  scope.svg.selectAll("text.yAxis").
-      data(newVal).
-      enter().append("svg:text").
-      attr("x", function (datum, index) { return x(index); }).
-      attr("y", scope.h).
-      attr("dx", scope.barW / 2).
-      attr("text-anchor", "middle").
-      attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
-      text(function (datum) { return datum.exam_id; }).
-      attr("transform", "translate(0, 28)").
-      attr("fill", "black").
-      attr("class", "yAxis");
+  scope.svg.selectAll("rect")
+      .data(newVal)
+      .enter()
+      .append('svg:rect')
+      .attr('x', function (datum, index) {return x(index); })
+      .attr('y', function (datum) {return scope.h - y(datum.score); })
+      .attr('height', function (datum) {return y(datum.score); })
+      .attr('width', scope.barW)
+      .attr('fill', '#2d578b');
+  scope.svg.selectAll("text")
+      .data(newVal)
+      .enter()
+      .append("svg:text")
+      .attr("x", function (datum, index) { return x(index); })
+      .attr("y", function (datum) { return scope.h - y(datum.score); })
+      .attr("dx", scope.barW / 2)
+      .attr("dy", "1.2em")
+      .attr("text-anchor", "middle")
+      .text(function (datum) { return datum.score; })
+      .attr("fill", "white");
+  scope.svg.selectAll("text.yAxis")
+      .data(newVal)
+      .enter()
+      .append("svg:text")
+      .attr("x", function (datum, index) { return x(index); })
+      .attr("y", scope.h)
+      .attr("dx", scope.barW / 2)
+      .attr("text-anchor", "middle")
+      .attr("style", "font-size: 12; font-family: Helvetica, sans-serif")
+      .text(function (datum) { return datum.exam_id; })
+      .attr("transform", "translate(0, 28)")
+      .attr("fill", "black")
+      .attr("class", "yAxis");
 };
 
 updateLineGraph = function (newVal, oldVal, scope) {
