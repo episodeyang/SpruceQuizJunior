@@ -11,6 +11,7 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
          link(href='/css/bootstrap-combined.no-icons.min.css',
                  rel="stylesheet")
          link(href="/font/font-awesome.min.css", rel="stylesheet")
+         //-link(href="/css/flat-ui.css", rel="stylesheet")
          link(href='/css/app.css', rel="stylesheet")
          link(href='/css/report.css', rel="stylesheet")
          link(rel='stylesheet', href='/js/select2/select2.css')
@@ -59,7 +60,7 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
                                  | Log out
                      div
                          p
-                     div.pull-right.dropdown(data-access-level='{{accessLevels.loggedin}}')
+                     div.pull-right.dropdown(data-access-level='{{accessLevels.loggedin}}', style="padding-right:10px;")
                          a.dropdown-toggle {{ user.username }}
                              span.caret
                          ul.dropdown-menu

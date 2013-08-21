@@ -2,9 +2,9 @@
 
 var createSVG, updateBarChart, updateLineGraph, updatePieChart;
 
-angular.module('SpruceQuizApp')
-    .directive('d3BarChart', function () {
+var spApp = angular.module('SpruceQuizApp');
 
+spApp.directive('d3BarChart', function () {
     return {
       restrict: 'CE',
       terminal: true,
@@ -28,8 +28,7 @@ angular.module('SpruceQuizApp')
 
     });
 
-angular.module('SpruceQuizApp')
-    .directive('d3LineGraph', function () {
+spApp.directive('d3LineGraph', function () {
 
     return {
       restrict: 'CE',
@@ -53,8 +52,7 @@ angular.module('SpruceQuizApp')
     };
   });
 
-angular.module('SpruceQuizApp')
-    .directive('d3PieChart', function () {
+spApp.directive('d3PieChart', function () {
     return {
       restrict: 'CE',
       terminal: true,
@@ -78,7 +76,6 @@ angular.module('SpruceQuizApp')
 // don't create if already exist
 // avoid creating more than more svg
 createSVG = function (scope, element) {
-
   if (!(scope.svg != null)) {
     return scope.svg = d3.select(element[0])
         .append("svg")
@@ -86,9 +83,6 @@ createSVG = function (scope, element) {
         .attr("height", scope.h);
   }
 };
-
-
-
 
 // helper functions
 updateBarChart = function (newVal, oldVal, scope) {
