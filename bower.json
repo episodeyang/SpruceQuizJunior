@@ -1,0 +1,26 @@
+{
+    "name": "SpruceQuizJunior",
+    "version": "0.0.0",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "devDependencies": {
+        "angular": "PatternConsulting/bower-angular#1.1.4",
+        "angular-ui": ">=0.4.0",
+        "underscore": ">=1.5.1",
+        "angular-underscore": "*",
+        "d3": "~3.2.8",
+        "nvd3": "~1.0.0-beta"
+    },
+    "homepage": "https://github.com/episodeyang/SpruceQuizJunior",
+    "authors": [
+        "Ge Yang <yangge1987@gmail.com>"
+    ],
+    "description": "Learning Platform",
+    "license": "private",
+    "private": true
+}
