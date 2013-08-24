@@ -14,7 +14,8 @@
         "underscore": ">=1.5.1",
         "angular-underscore": "*",
         "d3": "~3.2.8",
-        "nvd3": "~1.0.0-beta"
+        "nvd3": "~1.0.0-beta",
+        "angularjs-nvd3-directives": "https://github.com/cmaurer/angularjs-nvd3-directives.git"
     },
     "homepage": "https://github.com/episodeyang/SpruceQuizJunior",
     "authors": [

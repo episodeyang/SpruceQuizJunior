@@ -7,8 +7,9 @@ angular.module('SpruceQuizApp')
         // the 'Reports' service is the driver code for the server API.
         // it is located in service.js.
         //      ['$rootScope', '$scope', 'Reports', function($rootScope, $scope, Problems) {
-        ['$rootScope', '$scope','Students', 'AuthUsers', function ($rootScope, $scope, Students, AuthUsers) {
-            $scope.student = {};
+        ['$rootScope', '$scope', 'Students', 'AuthUsers','dataModel', function ($rootScope, $scope, Students, AuthUsers, dataModel) {
+            $scope.dataModel = dataModel;
+
             $scope.classRankFakeData = {
                 u1: {
                     firstname: "小红",

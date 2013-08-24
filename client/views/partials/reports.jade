@@ -13,6 +13,51 @@ br
                                 li
                                     a(href="#Chapter1") Analytics
                     div(style="height:100%;")
+                        .row-fluid
+                            .span8
+                                nvd3-pie-chart(data="[dataModel.barChartSeries]", id="pie",
+                                width="400",
+                                height="300",
+                                x="dataModel.pieXFunction()",
+                                y="dataModel.pieYFunction()",
+                                tooltips="true",
+                                interactive="true",
+                                margin="{left:0,top:0,bottom:0,right:0}")
+                                    svg(style="height:300px;width:400px;")
+                        .row-fluid
+                            .span8
+                                nvd3-scatter-chart(data="dataModel.scatterPoints", id="scatter",width="600", height="400", showXAxis="true", showYAxis="true",
+                                tooltips="true",
+                                interactive="true")
+                                    svg
+                            .span4
+                        .row-fluid
+                            .span8
+                                nvd3-discrete-bar-chart(data="[dataModel.discreteBarData]", id="dBar",width="600", height="400", showXAxis="true", showYAxis="true",
+                                tooltips="true",
+                                interactive="true",
+                                margin="{left:20,top:20,bottom:20,right:0}",
+                                )
+                                    svg
+                            .span4
+                                p {{dataModel.discreteBarData}}
+                        .row-fluid
+                            .span8
+                                nvd3-line-chart(data="[dataModel.lineChartData]", id="lChart",width="600", height="400", showXAxis="true", showYAxis="true",
+                                tooltips="true",
+                                interactive="true",
+                                margin="{left:50,top:50,bottom:50,right:50}",
+                                )
+                                    svg
+                        .row-fluid
+                            .span8
+                                nvd3-line-plus-bar-chart(data="[dataModel.lineChartData2,dataModel.Series3]",
+                                id="lineplusbar",width="600",height="400", showXAxis="true", showYAxis="true",
+                                tooltips="true",
+                                interactive="true",
+                                margin="{left:50,top:50,bottom:50,right:50}",
+                                )
+                                    svg
                         br
                         h2(id="Preface") 不同科目发展情况柱形图
                         .btn-group
