@@ -112,8 +112,10 @@ spApp.value('dataModel',
                             y: 2.9,
                             size: 0.8}
                 ]}
-
             ]
         });
+spApp.value('testModel',
+    {
 
-
+    }
+)

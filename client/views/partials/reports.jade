@@ -13,27 +13,31 @@ br
                                 li
                                     a(href="#Chapter1") Analytics
                     div(style="height:100%;")
+                        h3.text-center 学生情况统计
+                        p 通过丰富图表，直观显示学生情况。
                         .row-fluid
-                            .span8
+                            .span6
+                                nvd3-scatter-chart(data="dataModel.scatterPoints", id="scatter",
+                                //-width="600", height="400",
+                                showXAxis="true", showYAxis="true",
+                                tooltips="true",
+                                interactive="true",
+                                margin="{left:20,top:40,bottom:10,right:20}")
+                                    svg
+                            .span6
                                 nvd3-pie-chart(data="[dataModel.barChartSeries]", id="pie",
-                                width="400",
-                                height="300",
+                                width="400", height="300",
                                 x="dataModel.pieXFunction()",
                                 y="dataModel.pieYFunction()",
                                 tooltips="true",
                                 interactive="true",
-                                margin="{left:0,top:0,bottom:0,right:0}")
-                                    svg(style="height:300px;width:400px;")
+                                margin="{left:0,top:0,bottom:30,right:0}")
+                                    svg(style="height:250px;width:400px;")
                         .row-fluid
-                            .span8
-                                nvd3-scatter-chart(data="dataModel.scatterPoints", id="scatter",width="600", height="400", showXAxis="true", showYAxis="true",
-                                tooltips="true",
-                                interactive="true")
-                                    svg
-                            .span4
-                        .row-fluid
-                            .span8
-                                nvd3-discrete-bar-chart(data="[dataModel.discreteBarData]", id="dBar",width="600", height="400", showXAxis="true", showYAxis="true",
+                            .span6
+                                nvd3-discrete-bar-chart(data="[dataModel.discreteBarData]", id="dBar",
+                                width="400", height="250",
+                                showXAxis="true", showYAxis="true",
                                 tooltips="true",
                                 interactive="true",
                                 margin="{left:20,top:20,bottom:20,right:0}",
