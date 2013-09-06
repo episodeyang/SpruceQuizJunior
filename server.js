@@ -1,7 +1,7 @@
-require('nodetime').profile({
-    accountKey: 'cb0835da7eb6304c00877ca11569df1ef72ebb10',
-    appName: 'Node.js Application'
-});
+//require('nodetime').profile({
+//    accountKey: 'cb0835da7eb6304c00877ca11569df1ef72ebb10',
+//    appName: 'SpruceQuizJunior'
+//});
 
 var express =       require('express')
     , http =        require('http')
