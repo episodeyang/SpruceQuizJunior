@@ -1,33 +1,35 @@
 {
-    "name": "SpruceQuiz",
-    "version": "0.0.1",
-    "dependencies": {
-        "express": "*",
-        "jade": "*",
-        "mongoose": "*",
-        "passport": "*",
-        "passport-local": "*",
-        "underscore": "*",
-        "validator": "~1.1.1",
-        "passport-twitter": "~0.1.4",
-        "passport-facebook": "~0.1.5",
-        "passport-google": "~0.3.0",
-        "passport-linkedin": "~0.1.3"
-    },
-    "subdomain": "SpruceQuiz",
-    "scripts": {
-        "start": "server.js"
-    },
-    "engines": {
-        "node": "0.8.x"
-    },
-    "devDependencies": {
-        "sinon": "~1.7.2",
-        "chai": "~1.6.1",
-        "mocha": "~1.10.0",
-        "nodetime": "*"
-    },
-    "scripts": {
-        "test": "mocha server/tests --recursive"
-    }
+  "name": "SpruceQuiz",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "underscore": "*",
+    "validator": "~1.1.1",
+    "passport-twitter": "~0.1.4",
+    "passport-facebook": "~0.1.5",
+    "passport-google": "~0.3.0",
+    "passport-linkedin": "~0.1.3"
+  },
+  "subdomain": "SpruceQuiz",
+  "scripts": {
+    "test": "mocha server/tests --recursive"
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "devDependencies": {
+    "sinon": "~1.7.2",
+    "chai": "~1.6.1",
+    "mocha": "~1.10.0",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "nodetime": "*",
+    "grunt-contrib-jade": "~0.8.0"
+  }
 }
