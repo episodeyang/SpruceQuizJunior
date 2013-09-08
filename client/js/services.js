@@ -1,7 +1,9 @@
 'use strict';
 var sqApp = angular.module('SpruceQuizApp');
 //sqApp.$inject = ['ui.bootstrap','Auth','User',"$element", "$attrs"];
-
+sqApp.factory('_', function() {
+    return window._; // assumes underscore has already been loaded on the page
+});
 //angular.module('SpruceQuizApp')
 sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
 
@@ -47,11 +49,10 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
         userRoles: userRoles
     };
 });
-sqApp.factory('@Users', function(){
-    return {
-
-    }
+sqApp.factory('@Model', function(){
 })
+
+
 angular.module('SpruceQuizApp')
 .factory('Users', function($http) {
     return {
@@ -60,7 +61,6 @@ angular.module('SpruceQuizApp')
         }
     };
 });
-
 angular.module('spruceDBServices', ['ngResource'])
 .factory('Problems', function($resource){
     return {
