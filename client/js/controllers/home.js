@@ -4,11 +4,12 @@
 
 angular.module('SpruceQuizApp')
 .controller('HomeCtrl',
-['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students',
-    function($filter, $rootScope, $scope, Sections, Units, Materials, Students) {
+['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model',
+    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model) {
         $scope.model = {}
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]
+        $scope.Model = Model;
 
         //console.log($scope.user)
         //console.log($rootScope.userRoles)
@@ -22,10 +23,7 @@ angular.module('SpruceQuizApp')
             }
         )
 
-
-        $scope.model.user.id
-
-        $scope.model.feeds = Sections.onFeeds.get({uuid: 'g1', flim: '50'})
+        $scope.model.feeds = Sections.onFeeds.get({uuid: 'g1', flim: '50'});
 
         //$rootScope.model.sections = Students.onSections.get({uuid: 'u1'});
 

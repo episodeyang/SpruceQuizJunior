@@ -8,7 +8,7 @@ angular.module('modelServices',['ngResource'])
             modelInstance.user = $rootScope.user;
             //modelInstance.user = Students.onStudents.list();
         };
-
+        modelInstance.destroy = function(){};
         return modelInstance;
     }])
 // Interface Code

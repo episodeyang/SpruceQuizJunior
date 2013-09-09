@@ -3,25 +3,40 @@ var sqApp = angular.module('SpruceQuizApp');
 sqApp.factory('_', function() {
     return window._; // assumes underscore has already been loaded on the page
 });
-//angular.module('SpruceQuizApp')
-sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
+
+sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function($http, $rootScope, $cookieStore, Model){
 
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles;
 
+    function modelInitializationCallBack (){
+        console.log('Model Initialization started');
+        Model.init();
+    };
+
+    function modelDestroyCallBack (){
+        console.log('Model Destroy started');
+        Model.destroy();
+    };
+
     $rootScope.user = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
     $cookieStore.remove('user');
 
+    if ($rootScope.user.id != '') {
+        modelInitializationCallBack();
+    };
     $rootScope.accessLevels = accessLevels;
     $rootScope.userRoles = userRoles;
 
     return {
         authorize: function(accessLevel, role) {
+//            console.log('check if authorized');
             if(role === undefined)
                 role = $rootScope.user.role;
             return accessLevel & role;
         },
         isLoggedIn: function(user) {
+//            console.log('checking if isLoggedIn');
             if(user === undefined){
                 user = $rootScope.user;
                 };
@@ -33,6 +48,7 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
         login: function(user, success, error) {
             $http.post('/login', user).success(function(user){
                 $rootScope.user = user;
+                modelInitializationCallBack();
                 success(user);
             }).error(error);
         },
@@ -41,13 +57,14 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
                 $rootScope.user.username = '';
                 $rootScope.user.role = userRoles.public;
                 $rootScope.user.id = '';
+                modelDestroyCallBack();
                 success();
             }).error(error);
         },
         accessLevels: accessLevels,
         userRoles: userRoles
     };
-});
+}]);
 
 
 angular.module('SpruceQuizApp')
