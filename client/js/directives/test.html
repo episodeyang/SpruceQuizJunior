@@ -1,0 +1,61 @@
+<tabset>
+    <tab heading="用户">
+        <button ng-click="listStudents()" class="btn btn-success">学生数据</button>
+        <!--p {{model.studentList}}-->
+        <!--div(ng-repeat="student in model.studentList")<p>{{student[0].firstName+" "+student[0].lastName}}</p>-->
+        <br><br>
+
+        <div class="row-fluid">
+            <div class="span2">Sort by:</div>
+            <div class="span4">
+                <div class="alert">{{model.studentList[0][0]}}</div>
+                <select ng-model="orderProp"
+                        ng-options="key.name for key in Object.keys(model.studentList[0][0])"></select></div>
+            <!--select(ng-model='orderProp')<option value="name">Name</option><option value="dateOfBirth">DoB</option><option value="schools">Schools</option><option value="sections">Sections</option><option value="phone">Phone</option>-->
+            <div class="span1">Query:</div>
+            <div class="span4"><input ng-model="query"></div>
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th class="name">Name</th>
+                    <th class="dateOfBirth">DoB</th>
+                    <th class="gender">Gender</th>
+                    <th class="schools">Schools</th>
+                    <th class="sections">Sections</th>
+                    <th class="phone">Phone</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination pull-right">
+                            <ul>
+                                <li ng-class="{disabled: currentPage == 0}"><a href="href" ng-click="prevPage()">«
+                                    Prev</a></li>
+                                <li ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}"
+                                    ng-click="setPage()"><a href="href" ng-bind="n + 1">1</a></li>
+                                <li ng-class="{disabled: currentPage == 0 || currentPage &lt;= pagedItems.length - 1}">
+                                    <a href="href" ng-click="nextPage()">Next »</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr ng-repeat="student in model.studentList[currentPage] | filter:query | orderBy:orderProp">
+                    <td>{{student.firstName + " " + student.lastName}}</td>
+                    <td>{{student.dateOfBirth}}</td>
+                    <td>{{student.sex}}</td>
+                    <td>{{student.schools.toString()}}</td>
+                    <td>{{student.sections.toString()}}</td>
+                    <td>{{student.phone.toString()}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </tab>
+    <tab heading="班级">
+        <button ng-click="listSections()" class="btn btn-success">班级数据</button>
+        <p>{{model.sectionList}}</p></tab>
+    <tab heading="教学材料"></tab>
+</tabset>

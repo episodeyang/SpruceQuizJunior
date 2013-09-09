@@ -1,9 +1,11 @@
 'use strict';
 angular.module('SpruceQuizApp')
-    .controller('DatadumpCtrl',
+    .controller('SuperAdminCtrl',
         ['$rootScope', '$scope', 'Sections', 'Units', 'Materials', 'Students',
             function ($rootScope, $scope, Sections, Units, Materials, Students) {
-
+                // this object is to hold data for future tables
+                $scope.values = {};
+                $scope.studentShowClicked = false;
                 var itemsPerPage = 10;
                 $scope.currentPage = 0;
 
@@ -56,12 +58,22 @@ angular.module('SpruceQuizApp')
 
                 $scope.model = {};
                 $scope.listStudents = function () {
+                    $scope.studentShowClicked = true;
+                    $scope.values['student'] = {};
                     Students.onStudents.list(function(results){
-                        $scope.model.studentList = groupToPages(results);
+                        // the controller gets the data and puts in the correct data structure
+                        $scope.values['student'].header = [
+                            {value:'name',name:'Name'},
+                            {value:'dateOfBirth',name:'DoB'},
+                            {value:'gender',name:'Gender'},
+                            {value:'schools',name:'Schools'},
+                            {value:'sections',name:'Sections'},
+                            {value:'phone',name:'Phone'}
+                        ];
+                        $scope.values['student'].data = groupToPages(results);
+                        //$scope.model.studentList =
                         console.log("direct results are:");
                         console.log(results);
-                        console.log("processed data is:");
-                        console.log($scope.model.studentList.toString());
                     });
                 };
             }

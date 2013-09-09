@@ -65,10 +65,10 @@ angular.module('SpruceQuizApp', ['ngCookies', 'spruceDBServices', 'ngResource',
                 controller:     'ReportCtrl',
                 access:         access.superuser
             });
-      $routeProvider.when('/datadump',
+      $routeProvider.when('/superadmin',
           {
-            templateUrl:    '/partials/datadump',
-            controller:     'DatadumpCtrl',
+            templateUrl:    '/partials/superadmin',
+            controller:     'SuperAdminCtrl',
             access:         access.superadmin
           });
         $routeProvider.when('/404',

@@ -1,0 +1,20 @@
+br
+.row-fluid
+    .span8.offset2
+        div
+            tabset
+                tab(heading="用户")
+                    button.btn.btn-success(ng-click="listStudents()") 学生数据
+                    //p {{model.studentList}}
+                    //div(ng-repeat="student in model.studentList")
+                        p {{student[0].firstName+" "+student[0].lastName}}
+                    br
+                    br
+                        div(ng-show="studentShowClicked && model.studentList.length > 0")
+                            json-table(type="student", data="value")
+
+                tab(heading="班级")
+                    button.btn.btn-success(ng-click="listSections()") 班级数据
+                    p {{model.sectionList}}
+                tab(heading="教学材料")
+
