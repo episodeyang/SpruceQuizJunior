@@ -1,6 +1,6 @@
 'use strict';
-angular.module('SpruceQuizApp', ['ngCookies', 'spruceDBServices', 'ngResource','angular-underscore' , 'ui.bootstrap', 'ui.select2', 'nvd3ChartDirectives'])
-
+angular.module('SpruceQuizApp', ['ngCookies', 'spruceDBServices', 'ngResource',
+        'ui.bootstrap', 'ui.select2', 'nvd3ChartDirectives'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         var access = routingConfig.accessLevels;

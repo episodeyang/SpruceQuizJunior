@@ -7,6 +7,12 @@ angular.module('SpruceQuizApp')
     $scope.highlightField = "question";
     $scope.problemTypes = ['multipleChoice','fillIn','OpenEnded'];
 
+//    Model.init();
+//    $scope.shownVar = Model.users;
+    $scope.shownVar = 'haha';
+//    Model.init();
+//    $scope.shownVar = Model.user;
+
     //$scope.list = [];
     $scope.newSection = {};
     $scope.model={};

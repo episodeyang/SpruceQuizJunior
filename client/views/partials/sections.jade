@@ -1,6 +1,10 @@
 .container(style="width:900px;")
     .row-fluid
         .span12
+            div
+                p {{shownVar}}
+    .row-fluid
+        .span12
     .row-fluid
         .span9
             tabset
@@ -47,7 +51,6 @@
                                 tab(heading="阅读")
                                     .well
                                         p 欧拉的故事
-
         .span3
             .well
                 .row-fluid
@@ -70,7 +73,6 @@
                             a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
                         li
                             a 年级情况
-
     div(modal="createSectionModal")
         .modal-header
             h3 创建新课程
