@@ -9,10 +9,8 @@ angular.module('SpruceQuizApp')
 
 //    Model.init();
 //    $scope.shownVar = Model.users;
-    $scope.shownVar = 'haha';
     Model.init();
-    $scope.shownVar = Model.user;
-
+    $scope.Model = Model;
     //$scope.list = [];
     $scope.newSection = {};
     $scope.model={};

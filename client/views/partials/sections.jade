@@ -1,10 +1,6 @@
 .container(style="width:900px;")
     .row-fluid
         .span12
-            div
-                p {{shownVar}}
-    .row-fluid
-        .span12
     .row-fluid
         .span9
             tabset
@@ -73,6 +69,10 @@
                             a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
                         li
                             a 年级情况
+    .row-fluid
+        .span12
+            .alert.alert-success
+                p {{Model}}
     div(modal="createSectionModal")
         .modal-header
             h3 创建新课程

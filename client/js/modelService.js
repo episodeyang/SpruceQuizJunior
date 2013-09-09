@@ -2,11 +2,13 @@
 
 angular.module('modelServices',['ngResource'])
 //Model Code
-    .factory('Model', ['Students', function (Students) {
+    .factory('Model', ['$rootScope', 'Students', function ($rootScope, Students) {
         var modelInstance = {};
         modelInstance.init = function(){
-            modelInstance.user = Students.onStudents.list();
+            modelInstance.user = $rootScope.user;
+            //modelInstance.user = Students.onStudents.list();
         };
+
         return modelInstance;
     }])
 // Interface Code
