@@ -115,9 +115,9 @@ angular.module('SpruceQuizApp')
                     if (newVal === null) {
                         element.html('<div class="alert alert-info">Select a scope to view its models.</div>');
                     } else if (isEmpty(newVal)) {
-                        element.html('<pre>{ This scope has no models }</pre>');
+                        element.html('<div>{ This scope has no models }</div>');
                     } else {
-                        element.html('<pre>' + buildDom(newVal) + '</pre>');
+                        element.html('<div>' + buildDom(newVal) + '</div>');
                     }
                 });
             }
