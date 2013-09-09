@@ -1,6 +1,5 @@
 'use strict';
 var sqApp = angular.module('SpruceQuizApp');
-//sqApp.$inject = ['ui.bootstrap','Auth','User',"$element", "$attrs"];
 sqApp.factory('_', function() {
     return window._; // assumes underscore has already been loaded on the page
 });
@@ -49,8 +48,8 @@ sqApp.factory('Auth', function($http, $rootScope, $cookieStore){
         userRoles: userRoles
     };
 });
-
-sqApp.factory('Model', ['Students', function (Students) {
+angular.module('spruceDBServices',['ngResource'])
+    .factory('Model', ['Students', function (Students) {
     var modelInstance = {};
     modelInstance.init = function(){
        modelInstance.user = Students.onStudents.list();
