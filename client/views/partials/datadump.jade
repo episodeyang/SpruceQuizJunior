@@ -8,51 +8,49 @@ br
                     //p {{model.studentList}}
                     //div(ng-repeat="student in model.studentList")
                         p {{student[0].firstName+" "+student[0].lastName}}
+                    br
+                    | Sort by:
+                    select(ng-model='orderProp')
+                        option(value='name') Name
+                        option(value='dateOfBirth') DoB
+                        option(value='schools') Schools
+                        option(value='sections') Sections
+                        option(value='phone') Phone
+                    | Query:
+                    input(ng-model="query")
                     table.table.table-striped.table-condensed.table-hover
                         thead
                             tr
-                                th.id
-                                    | Name
-                                    a(ng-click='sort_by(\'name\')')
-                                        i.icon-sort
                                 th.name
+                                    | Name
+                                th.dateOfBirth
                                     | DoB
-                                    a(ng-click='sort_by(\'dateOfBirth\')')
-                                        i.icon-sort
-                                th.description
+                                th.gender
                                     | Gender
-                                    a(ng-click='sort_by(\'sex\')')
-                                        i.icon-sort
-                                th.field3
+                                th.schools
                                     | Schools
-                                    a(ng-click='sort_by(\'schools\')')
-                                        i.icon-sort
-                                th.field4
+                                th.sections
                                     | Sections
-                                    a(ng-click='sort_by(\'sections\')')
-                                        i.icon-sort
-                                th.field5
+                                th.phone
                                     | Phone
-                                    a(ng-click='sort_by(\'phone\')')
-                                        i.icon-sort
-                            tfoot
-                                td(colspan='6')
-                                    .pagination.pull-right
-                                        ul
-                                            li(ng-class='{disabled: currentPage == 0}')
-                                                a(href='href', ng-click='prevPage()') « Prev
-                                            li(ng-repeat='n in range(pagedItems.length)', ng-class='{active: n == currentPage}', ng-click='setPage()')
-                                                a(href='href', ng-bind='n + 1') 1
-                                            li(ng-class='{disabled: currentPage == pagedItems.length - 1}')
-                                                a(href='href', ng-click='nextPage()') Next »
-                            tbody
-                                tr(ng-repeat='student in model.studentList[currentPage] | orderBy:sortingOrder:reverse')
-                                    td {{student.firstName + " " + student.lastName}}
-                                    td {{student.dateOfBirth}}
-                                    td {{student.sex}}
-                                    td {{student.schools.toString()}}
-                                    td {{student.sections.toString()}}
-                                    td {{student.phone.toString()}}
+                        tfoot
+                            td(colspan='6')
+                                .pagination.pull-right
+                                    ul
+                                        li(ng-class='{disabled: currentPage == 0}')
+                                            a(href='href', ng-click='prevPage()') « Prev
+                                        li(ng-repeat='n in range(pagedItems.length)', ng-class='{active: n == currentPage}', ng-click='setPage()')
+                                            a(href='href', ng-bind='n + 1') 1
+                                        li(ng-class='{disabled: currentPage == pagedItems.length - 1}')
+                                            a(href='href', ng-click='nextPage()') Next »
+                        tbody
+                            tr(ng-repeat='student in model.studentList[currentPage] | filter:query | orderBy:orderProp')
+                                td {{student.firstName + " " + student.lastName}}
+                                td {{student.dateOfBirth}}
+                                td {{student.sex}}
+                                td {{student.schools.toString()}}
+                                td {{student.sections.toString()}}
+                                td {{student.phone.toString()}}
 
                 tab(heading="班级")
                     button.btn.btn-success(ng-click="listSections()") 班级数据
