@@ -4,7 +4,7 @@ var _ =               require('underscore')
     , check =           require('validator').check;
     //, userRoles =       require('../../client/js/routingConfig').userRoles;
 
-var ProblemM = require('./SchemaModels').Problem;
+var ProblemM = require('./../SchemaModels').Problem;
 
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization

@@ -3,7 +3,7 @@ var _ =               require('underscore')
     , LocalStrategy =   require('passport-local').Strategy
     , check =           require('validator').check;
 
-var QuizM = require('./SchemaModels').Quiz;
+var QuizM = require('./../SchemaModels').Quiz;
 
 // For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
 // Begin of temporary initilization

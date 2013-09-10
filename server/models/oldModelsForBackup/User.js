@@ -11,6 +11,67 @@ var User
 
 var UserM = require('./SchemaModels').User;
 
+// For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
+// Begin of temporary initilization
+//var tempuser = new UserM({
+//        id:         "u1",
+//        username:   "student1",
+//        password:   "123",
+//        role:   userRoles.student
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u2",
+//        username:   "student2",
+//        password:   "123",
+//        role:   userRoles.student
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u3",
+//        username:   "student3",
+//        password:   "123",
+//        role:   userRoles.student
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u4",
+//        username:   "parent",
+//        password:   "123",
+//        role:   userRoles.parent
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u5",
+//        username:   "teacher1",
+//        password:   "123",
+//        role:   userRoles.teacher
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u6",
+//        username:   "teacher2",
+//        password:   "123",
+//        role:   userRoles.teacher
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u7",
+//        username:   "admin",
+//        password:   "123",
+//        role:   userRoles.admin
+//    });
+//tempuser.save();
+// End of temporary initilization
+
+
+// //For testing objects-creation
+// var users;
+// UserM.find(function (err, results) {
+//     users = results;
+//     console.log(users);
+// })
+
 module.exports = {
     addUser: function(username, password, role, callback) {
         UserM.count(function(err, results) {
