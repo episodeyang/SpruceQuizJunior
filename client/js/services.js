@@ -75,22 +75,3 @@ angular.module('SpruceQuizApp')
         }
     };
 });
-    // .factory('StudentProperties', function($resource){
-    //     //TODO: I want an API that looks like:
-    //     //      /api/student/:id/grades/:key
-    //     return $resource('/api/problems/:uuid', {}, {
-    //         list: {method:'GET', params:{uuid: 'all'}, isArray:true},
-    //     });
-    // });
-// angular.module('SpruceQuizApp')
-// .factory('Problems', function($http) {
-//     return {
-//         getAll: function(success, error) {
-//             $http.get('/problems').success(success).error(error);
-//         },
-//         getbyId: function(success, error) {
-//             $http.get('/api/problems/', {params:{uuid: "d0001"}}).success(success).error(error);
-//             //$http.get('/api/problems/id').success(success).error(error);
-//         }
-//     };
-// });
