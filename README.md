@@ -1,7 +1,7 @@
 Spruce Quiz Junior
 =================
 
-# After git clone:
+## After git clone:
 
 1. Run `npm install` or `npm update` to download all of the npm packages.
 2. Run `bower install` to load all of the library files.
@@ -13,7 +13,7 @@ Spruce Quiz Junior
           ```npm install -g grunt-cli```
   * Now you are pretty much ready to go
 
-# How to run:
+## How to run:
 
 Type in the following command to run. 
 
