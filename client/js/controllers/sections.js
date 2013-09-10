@@ -1,18 +1,16 @@
 'use strict';
 angular.module('SpruceQuizApp')
 .controller('SectionCtrl',
-['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students',
-    function($filter, $rootScope, $scope, Sections, Units, Materials, Students) {
+['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model',
+    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model) {
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
     $scope.highlightField = "question";
     $scope.problemTypes = ['multipleChoice','fillIn','OpenEnded'];
 
 //    Model.init();
 //    $scope.shownVar = Model.users;
-    $scope.shownVar = 'haha';
-//    Model.init();
-//    $scope.shownVar = Model.user;
-
+    Model.init();
+    $scope.Model = Model;
     //$scope.list = [];
     $scope.newSection = {};
     $scope.model={};
