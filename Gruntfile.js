@@ -380,7 +380,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('clientwatch', [
-        'karma'
+        'karma:watch'
     ]);
 
     grunt.registerTask('clienttest', [

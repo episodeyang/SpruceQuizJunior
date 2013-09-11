@@ -25,4 +25,10 @@ to allow karma to compile the `angular-placeholders` library
 Type in the following command to run. 
 
     cd SpruceQuizJunior && npm install
-    supervisor server.js
+    npm start
+
+## How to Let Karma watch the folder and keep running the client-side test:
+
+    grunt clientwatch
+
+other testing scripts are coming.

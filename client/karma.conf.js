@@ -20,7 +20,13 @@ module.exports = function(config) {
     ],
 
     // list of files / patterns to exclude
-    exclude: ['../client/js/directives.js'],
+    exclude: [
+        '../client/js/directives.js',
+        '../client/js/MathJax/**',
+        '../client/js/MathJax/*',
+        '../client/js/lib/**'
+
+    ],
 
     // web server port
     port: 8080,
