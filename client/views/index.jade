@@ -54,6 +54,8 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
                                      a(href='/quizzes') 测试
                          li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                              a(href='/reports') 成绩和报告
+                         li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
+                             a(href='/superadmin') 后台管理
                          //-li(data-access-level='{{ accessLevels.loggedin }}')
                              a(href="", data-ng-click="logout()")
                                  | Log out
@@ -94,9 +96,11 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
          script(src='/js/controllers/home.js')
          script(src='/js/modelService.js')
          script(src='/js/controllers/reports_viz_ctrl.js')
+         script(src='/js/controllers/superadmin.js')
          script(src='/js/filters.js')
          script(src='/js/directives.js')
          script(src='/js/directives/d3/reports_viz.js')
+         script(src='/js/directives/superadmin_dir.js')
          script(src='/lib/d3/d3.js')
          script(src='/lib/nvd3/nv.d3.js')
          link(rel='stylesheet', href='/css/lib/nvd3/nv.d3.sp.css')
