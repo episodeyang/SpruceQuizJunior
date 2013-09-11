@@ -9,9 +9,10 @@ spApp.directive('dirTest', function () {
     var myHTML = "<h1>{{val}}</h1>";
     return {
         restrict: 'E',
-        template: myHTML, // '<div>{{val}}</div>',
-        link: function (scope) {
+        //template: myHTML, // ,
+        link: function (scope, element) {
             scope.val = "hello world";
+            element.replaceWith('<div>Object.toString()</div>');
         }
     };
 });
@@ -29,6 +30,10 @@ spApp.directive('jsonTable', function () {
             '<thead><tr>' +
             '<th ng-repeat="key in data[\'student\'].header">{{key.name}}</th>' +
             '</tr></thead>' +
+            '<tbody>' +
+            '<tr ng-repeat="item in data[\'student\'].data [currentPage] | filter:query | orderBy:orderProp">' +
+            '<td ng-repeat="key in data[\'student\'].header">{{student[key.value].toString()}}</td>' +
+            '</tr></tbody>' +
             '<tfoot><tr>' +
             '<td colspan="6">' +
             '<div class="pagination pull-right">' +
@@ -40,12 +45,9 @@ spApp.directive('jsonTable', function () {
             '<li ng-class="{disabled: currentPage == 0 || currentPage &lt;= pagedItems.length - 1}">' +
             '<a href="href" ng-click="nextPage()">Next »</a></li>' +
             '</ul></div></td></tr></tfoot>' +
-            '<tbody>' +
-            '<tr ng-repeat="item in data[type].data [currentPage] | filter:query | orderBy:orderProp">' +
-        '</table></div>';
+            '</table></div>';
 
     // no need to have isolate scope because this directive need data from the controller's scope
-    // FIXME: this is bad practice since it might pollute the scope but I'm not sure how to fix
     return {
         restrict: 'CE',
         replace: true,        // replace original markup with template
@@ -55,19 +57,16 @@ spApp.directive('jsonTable', function () {
             data: "="
         },
         link: function (scope, element, attrs) {
-            console.log("from directive");
-            console.log(scope.data['student'].header);
-
-            //scope.$watch('testVal', watchTest, true);
+            console.log(scope.type);
+            scope.$watch('data', function (newVal, oldVal) {
+                console.log("logging from watch of directive, and the new value is:");
+                console.log("changing, the new val is:");
+                console.log(newVal);
+                console.log(oldVal);
+                //element.replaceWith(tableTemplate);
+            });
         }
     };
 });
 
-// directive listeners (from $watch)
-watchTest = function (newVal, oldVal, scope) {
-    scope.testVal = oldVal;
-    console.log("logging from directive");
-    console.log(newVal);
-    console.log(oldVal);
-}
 

@@ -10,13 +10,13 @@ spApp.controller('SuperAdminCtrl',
             $scope.studentShowClicked = false;
             var itemsPerPage = 10;
             $scope.currentPage = 0;
+            //$scope.student = "student";
 
             // helper function: calculate page
             // takes in the list and returns a processed list of lists.
             var groupToPages = function (items) {
                 var pagedItems = [];
 
-                console.log(items.length);
                 for (var i = 0; i < items.length; i++) {
 
                     if (i % itemsPerPage === 0) {
@@ -26,7 +26,6 @@ spApp.controller('SuperAdminCtrl',
                     }
                 }
 
-                console.log(pagedItems);
                 return pagedItems;
             };
 
@@ -58,28 +57,11 @@ spApp.controller('SuperAdminCtrl',
                 $scope.currentPage = this.n;
             };
 
-//                $scope.testVal = [
-//                    {value: 'name', name: 'Name'},
-//                    {value: 'dateOfBirth', name: 'DoB'},
-//                    {value: 'gender', name: 'Gender'},
-//                    {value: 'schools', name: 'Schools'},
-//                    {value: 'sections', name: 'Sections'},
-//                    {value: 'phone', name: 'Phone'}
-//                ];
-
             $scope.listStudents = function () {
                 $scope.studentShowClicked = true;
                 $scope.data['student'] = {};
                 Students.onStudents.list(function (results) {
                     // the controller gets the data and puts in the correct data structure
-                    $scope.testVal = [
-                        {value: 'name', name: 'Name'},
-                        {value: 'dateOfBirth', name: 'DoB'},
-                        {value: 'gender', name: 'Gender'},
-                        {value: 'schools', name: 'Schools'},
-                        {value: 'sections', name: 'Sections'},
-                        {value: 'phone', name: 'Phone'}
-                    ];
                     $scope.data['student'].header = [
                         {value: 'name', name: 'Name'},
                         {value: 'dateOfBirth', name: 'DoB'},
@@ -89,9 +71,8 @@ spApp.controller('SuperAdminCtrl',
                         {value: 'phone', name: 'Phone'}
                     ];
                     $scope.data['student'].data = groupToPages(results);
-                    //$scope.model.studentList =
-                    console.log("direct results are:");
-                    console.log(results);
+                    console.log("logging from controller:");
+                    console.log($scope.data['student'].data);
                 });
             };
         }
