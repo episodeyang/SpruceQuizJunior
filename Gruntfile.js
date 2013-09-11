@@ -345,6 +345,11 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        bower: {
+            default: {
+                script: 'bower update && cd client/lib/angular-placeholders && npm install && npm install grunt-cli && grunt'
+            }
         }
     });
 
@@ -378,7 +383,9 @@ module.exports = function (grunt) {
     grunt.registerTask('servertest', [
         'jasmin'
     ]);
-
+    grunt.registerTask('bower', [
+        'bower'
+    ]);
     grunt.registerTask('build', [
         'clean:dist',
         'useminPrepare',

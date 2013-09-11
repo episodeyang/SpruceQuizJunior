@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('modelServices',['ngResource'])
+angular.module('modelServices',['ngResource','ngRoute'])
 //Model Code
     .factory('Model', ['$rootScope', 'Students', function ($rootScope, Students) {
         var modelInstance = {};
