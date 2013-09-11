@@ -9,7 +9,8 @@ spApp.controller('SuperAdminCtrl',
             $scope.data = {}; // initialized here and updated later when things are clicked.
             $scope.studentShowClicked = false;
             var itemsPerPage = 10;
-            $scope.currentPage = 0;
+            $scope.pageStatus = {};
+            $scope.pageStatus.currentPage = 0;
             //$scope.student = "student";
 
             // helper function: calculate page
@@ -57,24 +58,38 @@ spApp.controller('SuperAdminCtrl',
                 $scope.currentPage = this.n;
             };
 
-            $scope.listStudents = function () {
-                $scope.studentShowClicked = true;
-                $scope.data['student'] = {};
-                Students.onStudents.list(function (results) {
-                    // the controller gets the data and puts in the correct data structure
-                    $scope.data['student'].header = [
-                        {value: 'name', name: 'Name'},
-                        {value: 'dateOfBirth', name: 'DoB'},
-                        {value: 'gender', name: 'Gender'},
-                        {value: 'schools', name: 'Schools'},
-                        {value: 'sections', name: 'Sections'},
-                        {value: 'phone', name: 'Phone'}
-                    ];
-                    $scope.data['student'].data = groupToPages(results);
-                    console.log("logging from controller:");
-                    console.log($scope.data['student'].data);
-                });
-            };
+            //$scope.listStudents = function () {
+            $scope.studentShowClicked = true;
+            $scope.data['student'] = {};
+            Students.onStudents.list(function (results) {
+                // the controller gets the data and puts in the correct data structure
+                $scope.data['student'].header = [
+                    {value: 'firstName', name: 'First Name'},
+                    {value: 'lastName', name: 'Last Name'},
+                    {value: 'dateOfBirth', name: 'DoB'},
+                    {value: 'gender', name: 'Gender'},
+                    {value: 'schools', name: 'Schools'},
+                    {value: 'sections', name: 'Sections'},
+                    {value: 'phone', name: 'Phone'}
+                ];
+
+//                $scope.data['student'].data = [
+//                    [
+//                        {
+//                            name: 'A',
+//                            dateOfBirth: '0901',
+//                            gender: 'F',
+//                            schools: 'S',
+//                            sections: 'SC',
+//                            phone: '911'
+//                        }
+//                    ]
+//                ];
+                $scope.data['student'].data = groupToPages(results);
+                console.log("logging from controller:");
+                console.log($scope.data['student'].data);
+            });
+            //};
         }
     ]
 );
