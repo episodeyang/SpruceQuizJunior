@@ -1,5 +1,7 @@
+#Custom Ignore Files
 *.swp
 .idea
+temp
 
 #Library Files
 client/js/mathJax/*

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngResource',
+angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngResource',
         'ui.bootstrap', 'ui.select2', 'nvd3ChartDirectives'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
