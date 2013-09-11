@@ -9,11 +9,12 @@ br
                     br
                     br
                     div(ng-show="studentShowClicked && data['student'].data.length > 0")
-                        //dir-test
-                        json-table(type="student", data="data")
+                        //dir-test(pageStatus="pageStatus")
+                        json-table(type="student", data="data", pageStatus="pageStatus")
 
                 tab(heading="班级")
-                    button.btn.btn-success(ng-click="listSections()") 班级数据
-                    p {{model.sectionList}}
+                    p TODO
+                    //button.btn.btn-success(ng-click="listSections()") 班级数据
+                    //p {{model.sectionList}}
                 tab(heading="教学材料")
 
