@@ -313,6 +313,9 @@ module.exports = function (grunt) {
             ]
         },
         karma: {
+            watch: {
+                configFile: 'client/karma.conf.js'
+            },
             unit: {
                 configFile: 'client/karma.conf.js',
                 singleRun: true
@@ -373,6 +376,10 @@ module.exports = function (grunt) {
         'concurrent:test',
         'autoprefixer',
         'connect:test',
+        'karma'
+    ]);
+
+    grunt.registerTask('clientwatch', [
         'karma'
     ]);
 
