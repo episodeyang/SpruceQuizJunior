@@ -12,11 +12,11 @@
                             alert(close="closeClicked=!closeClicked")
                                 p 吴轶凡 推送了今日测试（一）
                     //-div.row-fluid
-                        .span1
-                            img(src="/img/3_large.png").img-polaroid
-                        .span11
-                            alert(close="updateSection()")
-                                p {{section}}
+                    .span1
+                        img(src="/img/3_large.png").img-polaroid
+                    .span11
+                        alert(close="updateSection()")
+                            p {{section}}
 
                     div.row-fluid
                         .span5
@@ -26,7 +26,7 @@
                                 li(ng-repeat="unit in section.sectionUnits",class="{{unit.active}}")
                                     a(ng-click="grabMaterials(unit.unitUUID)")
                                         | {{unit.unitTitle}}
-                                    //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
+                            //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
                             ul.nav.nav-tabs.nav-stacked(style="margin-top:20px;")
                                 li
                                     a 删除小组
@@ -103,10 +103,10 @@
                                 input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班")
         .modal-footer
             button.btn.btn-success(ng-click="createNewSection()") 提交课程
-            //-p {{newSection.sectionName}}
-            //-p {{haha}}
-            //-p {{list}}
-            //-p formData is {{newSection}}
+//-p {{newSection.sectionName}}
+//-p {{haha}}
+//-p {{list}}
+//-p formData is {{newSection}}
     div(modal="createUnitModal")
         .modal-header
             h3 创建新单元

@@ -1,0 +1,19 @@
+br
+.row-fluid
+    .span8.offset2
+        div
+            tabset
+                tab(heading="用户")
+                    //div(ng-controller="SuperAdminUserTableCtrl")
+                    button.btn.btn-success(ng-click="listStudents()") 学生数据
+                    br
+                    br
+                    div(ng-show="studentShowClicked && data['student'].data.length > 0")
+                        //dir-test
+                        json-table(type="student", data="data")
+
+                tab(heading="班级")
+                    button.btn.btn-success(ng-click="listSections()") 班级数据
+                    p {{model.sectionList}}
+                tab(heading="教学材料")
+

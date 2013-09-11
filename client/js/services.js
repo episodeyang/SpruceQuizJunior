@@ -29,6 +29,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
     $rootScope.userRoles = userRoles;
 
     return {
+
         authorize: function(accessLevel, role) {
 //            console.log('check if authorized');
             if(role === undefined)
@@ -39,21 +40,22 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
 //            console.log('checking if isLoggedIn');
             if(user === undefined){
                 user = $rootScope.user;
-                };
+            }
+
             return user.role === userRoles.student || user.role === userRoles.parent || user.role === userRoles.teacher || user.role === userRoles.admin || user.role === userRoles.superadmin;
         },
-        register: function(user, success, error) {
+        register: function (user, success, error) {
             $http.post('/register', user).success(success).error(error);
         },
-        login: function(user, success, error) {
-            $http.post('/login', user).success(function(user){
+        login: function (user, success, error) {
+            $http.post('/login', user).success(function (user) {
                 $rootScope.user = user;
                 modelInitializationCallBack();
                 success(user);
             }).error(error);
         },
-        logout: function(success, error) {
-            $http.post('/logout').success(function(){
+        logout: function (success, error) {
+            $http.post('/logout').success(function () {
                 $rootScope.user.username = '';
                 $rootScope.user.role = userRoles.public;
                 $rootScope.user.id = '';
@@ -64,6 +66,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         accessLevels: accessLevels,
         userRoles: userRoles
     };
+
 }]);
 
 
