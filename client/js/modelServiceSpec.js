@@ -12,7 +12,7 @@
 describe('Controller: MainCtrl', function () {
 
     // load the controller's module
-    beforeEach(module('yoTempApp'));
+    beforeEach(module('modelServices'));
 
     var MainCtrl,
         scope;
@@ -26,6 +26,12 @@ describe('Controller: MainCtrl', function () {
     }));
 
     it('should attach a list of awesomeThings to the scope', function () {
+        expect(scope.awesomeThings.length).toBe(3);
+    });
+    it('test 2', function () {
+        expect(scope.awesomeThings.length).toBe(3);
+    });
+    it('test 3 hahahaha muhahahhaha', function () {
         expect(scope.awesomeThings.length).toBe(3);
     });
 });

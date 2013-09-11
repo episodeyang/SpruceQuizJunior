@@ -14,16 +14,15 @@ module.exports = function(config) {
       '../client/lib/angular/angular.js',
       '../client/lib/angular-mocks/angular-mocks.js',
       '../client/js/*.js',
-      '../client/js/**/*.js',
-      '../client/mock/**/*.js',
-      '../client/spec/**/*.js'
+      '../client/js/**/*.js'
+//        ,
+//      '../client/mock/**/*.js',
+//      '../client/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude
     exclude: [
         '../client/js/directives.js',
-        '../client/js/MathJax/**',
-        '../client/js/MathJax/*',
         '../client/js/lib/**'
 
     ],
