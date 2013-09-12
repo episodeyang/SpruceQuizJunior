@@ -1,3 +1,5 @@
+'use strict';
+
 //Implementation of the APIs of Student
 var _ =           require('underscore')
     , SchoolM = require('../models/SchemaModels').School
@@ -19,7 +21,7 @@ module.exports = {
 	            //console.log(results);
 	            res.json(results);
 	    	});
-	    };
+	    }
 	},
 	removebyId: function(req, res) {
         StudentM.remove({ userUUID: req.params.uuid }, function (err) {

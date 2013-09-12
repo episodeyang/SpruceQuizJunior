@@ -2,7 +2,7 @@ var _ = require('underscore')
     , passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
     , check = require('validator').check
-    , userRoles =       require('../../client/js/routingConfig').userRoles;
+    , userRoles = require('../../client/js/routingConfig').userRoles;
 
 
 // For initilizing Spruce database in MongoDB as some initial tests. Not needed if data is already in MongoDB
@@ -388,73 +388,73 @@ var tempuser = new UserM({
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "student2",
-    password:   "123",
-    role:   userRoles.student,
+    username: "student2",
+    password: "123",
+    role: userRoles.student,
     userId: stu2_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "student3",
-    password:   "123",
-    role:   userRoles.student,
+    username: "student3",
+    password: "123",
+    role: userRoles.student,
     userId: stu3_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "parent1",
-    password:   "123",
-    role:   userRoles.parent,
+    username: "parent1",
+    password: "123",
+    role: userRoles.parent,
     userId: prt1_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "parent2",
-    password:   "123",
-    role:   userRoles.parent,
+    username: "parent2",
+    password: "123",
+    role: userRoles.parent,
     userId: prt2_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "parent3",
-    password:   "123",
-    role:   userRoles.parent,
+    username: "parent3",
+    password: "123",
+    role: userRoles.parent,
     userId: prt3_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "teacher1",
-    password:   "123",
-    role:   userRoles.teacher,
+    username: "teacher1",
+    password: "123",
+    role: userRoles.teacher,
     userId: tchr1_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "teacher2",
-    password:   "123",
-    role:   userRoles.teacher,
+    username: "teacher2",
+    password: "123",
+    role: userRoles.teacher,
     userId: tchr2_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "admin",
-    password:   "123",
-    role:   userRoles.admin,
+    username: "admin",
+    password: "123",
+    role: userRoles.admin,
     userId: a1_id
 });
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "superadmin",
-    password:   "123",
-    role:   userRoles.superadmin,
+    username: "superadmin",
+    password: "123",
+    role: userRoles.superadmin,
     userId: sa1_id
 });
 tempuser.save();
@@ -468,13 +468,16 @@ var tempquiz = new QuizM({
     quizDate: "",
     quizTopics: ["math", "geometry", "algebra"],
     totalScore: 100,
-    quizProblems: [{
-        problemId: p2_id,
-        weight: 30
-    }, {
-        problemUUID: p1_id,
-        weight: 70
-    }]
+    quizProblems: [
+        {
+            problemId: p2_id,
+            weight: 30
+        },
+        {
+            problemUUID: p1_id,
+            weight: 70
+        }
+    ]
 });
 tempquiz.save();
 var q1_id = tempquiz._id;
