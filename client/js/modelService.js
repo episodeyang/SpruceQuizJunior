@@ -4,9 +4,11 @@ angular.module('modelServices',['ngResource','ngRoute'])
 //Model Code
     .factory('Model', ['$rootScope', 'Students', function ($rootScope, Students) {
         var modelInstance = {};
+        modelInstance.test = 1;
         modelInstance.init = function(){
             modelInstance.user = $rootScope.user;
             //modelInstance.user = Students.onStudents.list();
+            // testing code
         };
         modelInstance.destroy = function(){};
         return modelInstance;

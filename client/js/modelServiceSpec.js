@@ -9,29 +9,15 @@
 
 'use strict';
 
-describe('Controller: MainCtrl', function () {
-
-    // load the controller's module
-    beforeEach(module('modelServices'));
-
-    var MainCtrl,
-        scope;
-
-    // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope) {
-        scope = $rootScope.$new();
-        MainCtrl = $controller('MainCtrl', {
-            $scope: scope
+describe('Model test', function () {
+    describe('when I call Model.test', function () {
+        it('returns 1', function () {
+            var $injector = angular.injector([ 'modelServices','ngResource' ]);
+            var Model = $injector.get('Model');
+            expect(Model.test).toEqual(1);
         });
-    }));
 
-    it('should attach a list of awesomeThings to the scope', function () {
-        expect(scope.awesomeThings.length).toBe(3);
     });
-    it('test 2', function () {
-        expect(scope.awesomeThings.length).toBe(3);
-    });
-    it('test 3 hahahaha muhahahhaha', function () {
-        expect(scope.awesomeThings.length).toBe(3);
-    });
+
 });
+
