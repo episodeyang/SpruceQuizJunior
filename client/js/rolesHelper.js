@@ -93,4 +93,4 @@
         return accessLevels;
     }
 
-})(typeof exports === 'undefined' ? this['routingConfig'] = {} : exports);
+})(typeof exports === 'undefined' ? this['rolesHelper'] = {} : exports);

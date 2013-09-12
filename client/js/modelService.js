@@ -10,11 +10,20 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
     .factory('Model', ['$rootScope', 'Students',
         function ($rootScope, Students) {
             var modelInstance = {};
-            // testing code
+
+            // testing code, to be deleted
             modelInstance.test = 1;
+
             modelInstance.init = function () {
+
                 // this should assign all the fields in
                 modelInstance.user = $rootScope.user;
+                //rolesHelper needs no special importing since it's explosed via js exports
+                modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role << 1];
+                //if (modelInstance.user.role.roleName === 'student')
+
+
+
 
                 //TODO: Now with ModelInstance.user.userRole, call '/api/%userRole/:id and load it into ModelInstance.user
                 //      At the end of the day, user should have both the original keys as well as those from 'student',

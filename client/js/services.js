@@ -6,8 +6,8 @@ sqApp.factory('_', function() {
 
 sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function($http, $rootScope, $cookieStore, Model){
 
-    var accessLevels = routingConfig.accessLevels
-        , userRoles = routingConfig.userRoles;
+    var accessLevels = rolesHelper.accessLevels
+        , userRoles = rolesHelper.userRoles;
 
     function modelInitializationCallBack (){
         console.log('Model Initialization started');
