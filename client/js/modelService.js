@@ -8,6 +8,8 @@ angular.module('modelServices',['ngResource','ngRoute'])
         modelInstance.test = 1;
         modelInstance.init = function(){
             modelInstance.user = $rootScope.user;
+            modelInstance.userRoles = routeConfig.userRoles;
+
             //TODO: Look up user role from routeConfig.userRoles and assign to ModelIntance.user.userRole
             //TODO: Now with ModelInstance.user.userRole, call '/api/%userRole/:id and load it into ModelInstance.user
             //      At the end of the day, user should have both the original keys as well as those from 'student',
@@ -22,6 +24,7 @@ angular.module('modelServices',['ngResource','ngRoute'])
             //TODO: Retrieve
 
             //modelInstance.user = Students.onStudents.list();
+
         };
         modelInstance.destroy = function(){};
         return modelInstance;

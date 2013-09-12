@@ -24,7 +24,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
 
     if ($rootScope.user.id != '') {
         modelInitializationCallBack();
-    };
+    }
     $rootScope.accessLevels = accessLevels;
     $rootScope.userRoles = userRoles;
 
