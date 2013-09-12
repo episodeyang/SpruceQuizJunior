@@ -3,27 +3,34 @@
 //    appName: 'SpruceQuizJunior'
 //});
 
+var InitializeSpruceDB = true;
+
 var express =       require('express')
     , http =        require('http')
     , mongoose =    require('mongoose')
     , passport =    require('passport')
     , path =        require('path')
-    , User =        require('./server/models/User.js')
-    , Problem =     require('./server/models/Problem.js')
-    , Student =     require('./server/models/Student.js')
-    , Teacher =     require('./server/models/Teacher.js')
-    , School =     require('./server/models/School.js')
-    , Section =     require('./server/models/Section.js')
-    , Unit =     require('./server/models/Unit.js')
-    , Material =     require('./server/models/Material.js')
-    , Exam  =     require('./server/models/Exam.js')
-    , Quiz  =     require('./server/models/Quiz.js')
-    , Feed  =     require('./server/models/Feed.js');
-
+    , User =        require('./server/models/User.js');
+    //, Material =     require('./server/models/Material.js')
+    //, Unit =     require('./server/models/Unit.js')
+    //, Section =     require('./server/models/Section.js')
+    //, School =     require('./server/models/School.js')
+    //, Problem =     require('./server/models/Problem.js')
+    //, Exam  =     require('./server/models/Exam.js')
+    //, Student =     require('./server/models/Student.js')
+    //, Teacher =     require('./server/models/Teacher.js')
+    //, Quiz  =     require('./server/models/Quiz.js')
+    //, Feed  =     require('./server/models/Feed.js');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/sprucedb');
+mongoose.connect('mongodb://localhost/sprucedb', function(err) {
+    if(InitializeSpruceDB) {
+        mongoose.connection.db.dropDatabase(function(err){
+            require('./server/models/Initialization.js');
+        });
+    }
+});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
