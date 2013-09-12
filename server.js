@@ -24,10 +24,7 @@ var express =       require('express')
     //, Feed  =     require('./server/models/Feed.js');
 
 var app = express();
-/*
- *
 
- */
 mongoose.connect('mongodb://localhost/sprucedb', function(err) {
     if(InitializeSpruceDB) {
         mongoose.connection.db.dropDatabase(function(err){
@@ -35,6 +32,10 @@ mongoose.connect('mongodb://localhost/sprucedb', function(err) {
         });
     }
 });
+/**
+ * testing jsDoc
+ * @param test
+ */
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
