@@ -19,7 +19,8 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
                 // this should assign all the fields in
                 modelInstance.user = $rootScope.user;
                 //rolesHelper needs no special importing since it's explosed via js exports
-                modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role << 1];
+                //console.log(rolesHelper.roles);
+                //modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role >> 2];
 
 //                if (modelInstance.user.role.roleName === 'student') {
 //                    // fill in

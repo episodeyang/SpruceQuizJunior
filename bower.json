@@ -1,43 +1,41 @@
 {
-
-    "name": "SpruceQuizJunior",
-    "version": "0.0.0",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "angular": "~1.2.0-rc.2",
-        "angular-route": "~1.2.0-rc.2",
-        "angular-resource": "~1.2.0-rc.2",
-        "angular-cookies": "~1.2.0-rc.2",
-        "angular-sanitize": "~1.2.0-rc.2",
-        "angular-ui": ">=0.4.0",
-        "underscore": ">=1.5.1",
-        "d3": "~3.2.8",
-        "nvd3": "~1.0.0-beta",
-        "angularjs-nvd3-directives": "https://github.com/cmaurer/angularjs-nvd3-directives.git",
-        "angular-placeholders": "*",
-        "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#bootstrap3_bis",
-        "bootstrap": "~3.0.0",
-        "angular-ui-select2": "latest",
-        "jquery": "latest"
-    },
-    "devDependencies": {
-        "angular-mocks": "~1.0.7",
-        "angular-scenario": "~1.0.7"
-    },
-    "homepage": "https://github.com/episodeyang/SpruceQuizJunior",
-    "authors": [
-        "Ge Yang <yangge1987@gmail.com>"
-    ],
-    "description": "Learning Platform",
-    "license": "private",
-    "private": true,
-    "resolutions": {
-        "angular": "~1.2.0-rc.2"
-    }
+  "name": "SpruceQuizJunior",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.0-rc.2",
+    "angular-route": "~1.2.0-rc.2",
+    "angular-resource": "~1.2.0-rc.2",
+    "angular-cookies": "~1.2.0-rc.2",
+    "angular-sanitize": "~1.2.0-rc.2",
+    "angular-ui": ">=0.4.0",
+    "underscore": ">=1.5.1",
+    "d3": "~3.2.8",
+    "nvd3": "~1.0.0-beta",
+    "angularjs-nvd3-directives": "https://github.com/cmaurer/angularjs-nvd3-directives.git",
+    "angular-placeholders": "*",
+    "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#bootstrap3_bis",
+    "bootstrap": "~3.0.0",
+    "MathJax": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.0.7",
+    "angular-scenario": "~1.0.7"
+  },
+  "homepage": "https://github.com/episodeyang/SpruceQuizJunior",
+  "authors": [
+    "Ge Yang <yangge1987@gmail.com>"
+  ],
+  "description": "Learning Platform",
+  "license": "private",
+  "private": true,
+  "resolutions": {
+    "angular": "~1.2.0-rc.2"
+  }
 }
