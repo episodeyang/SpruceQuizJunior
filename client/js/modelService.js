@@ -15,13 +15,31 @@ angular.module('modelServices',['ngResource','ngRoute'])
             //      Check all the schema.
             //      Check if schools, sections, and exams are loaded.
 
-            //The following are for tomorrow:
-            //TODO: Retrieve schools that belong to the user and added to Model.schools
-            //TODO: Retrieve
-
             //modelInstance.user = Students.onStudents.list();
         };
         modelInstance.destroy = function(){};
+
+        //The following are for tomorrow:
+        //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+        //      handle input cases of :
+        //          model == undefined => model = Model.user
+        //
+        //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+        //TODO: Model.getExams(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+
+        //TODO: Model.schools <= This is the school object for general use.
+        //TODO: Model.updateSchools() <= input is a list
+        //TODO: Model.section.addStudent()
+        //TODO: Model.deleteSchools() <= imput is a list
+
+        //TODO: Model.sections<= This is the section object for general use.
+        //TODO: Model.getSections()
+        //TODO: MOdel.updateSections()
+        //TODO: Model.exams <= This is the school object for general use.
+        //TODO: Model.onExams()
+        //TODO: Model.problems<= This is the school object for general use.
+        //TODO: Model.onExams()
+
         return modelInstance;
     }])
 // Interface Code
