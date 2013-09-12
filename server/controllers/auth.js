@@ -16,7 +16,7 @@ module.exports = {
 
             req.logIn(user, function(err) {
                 if(err)     { next(err); }
-                else        { res.json(200, { "role": user.role, "username": user.username }); }
+                else        { res.json(200, { "role": user.role, "username": user.username, "id": user.userId }); }
             });
         });
     },
@@ -34,7 +34,7 @@ module.exports = {
                 }
 
                 if(req.body.rememberme) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-                res.json(200, { "role": user.role, "username": user.username });
+                res.json(200, { "role": user.role, "username": user.username, "id": user.userId });
             });
         })(req, res, next);
     },

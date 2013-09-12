@@ -1,35 +1,8 @@
 var mongoose = require("mongoose");
-
-//User schema
-var UserSchema = new mongoose.Schema({ 
-    id: {
-      type: String,
-      unique: true
-    },
-    username: {
-    	type: String,
-    	unique: true
-    },
-    password: String,
-    role: Number
-}, { collection : 'user' });
-
-UserSchema.methods.validPassword = function (password) {
-  if (password === this.password) {
-    return true; 
-  } else {
-    return false;
-  }
-}
-
-var User = mongoose.model('User', UserSchema);
+var Schema = mongoose.Schema;
 
 //Problem schema
 var ProblemSchema = new mongoose.Schema({
-    problemUUID: {
-      type: String,
-      unique: true
-    },
     topLevel: Boolean,
     problemType: String,
     question: Array,
@@ -45,45 +18,13 @@ var ProblemSchema = new mongoose.Schema({
 
 var Problem = mongoose.model('Problem', ProblemSchema);
 
-//Exam and sub-problem-object schema
-var ExamProblemSchema = new mongoose.Schema({ 
-    problemUUID: {
-      type: String,
-      unique: true
-    },
-    problemType: String,
-    weight: Number,
-    receivedScore: Number,
-    studentAnswer: Array
-});
-
-var ExamSchema = new mongoose.Schema({ 
-    examUUID: {
-      type: String,
-      unique: true
-    },
-    examTitle: String,
-    examDate: Date,
-    section: String,
-    attendence: Boolean,
-    totalScore: Number,
-    totalReceivedScore: Number,
-    rank: Number,
-    examProblems: [ExamProblemSchema]
-}, { collection : 'exam' });
-
-var Exam = mongoose.model('Exam', ExamSchema);
-
 //Quiz and sub-problem-object schema
-var QuizProblemSchema = new mongoose.Schema({ 
-    problemUUID: {
-      type: String,
-      unique: true
-    },
+var QuizProblemSchema = new mongoose.Schema({
+    problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
     weight: Number
 });
 
-var QuizSchema = new mongoose.Schema({ 
+var QuizSchema = new mongoose.Schema({
     quizUUID: {
       type: String,
       unique: true
@@ -97,92 +38,11 @@ var QuizSchema = new mongoose.Schema({
 
 var Quiz = mongoose.model('Quiz', QuizSchema);
 
-//Student schema
-var StudentSchema = new mongoose.Schema({ 
-    userUUID: {
-      type: String,
-      unique: true
-    },
-    firstName: String,
-    lastName: String,
-    dateOfBirth: Date,
-    gender: String,
-    email: String,
-    phone: Array,
-    address: String,
-    profilePic: String,
-    sections: Array,
-    schools: Array,
-    exams: Array,
-    comments: String
-}, { collection : 'student' });
-
-var Student = mongoose.model('Student', StudentSchema);
-
-//Teacher schema
-var TeacherSchema = new mongoose.Schema({ 
-    userUUID: {
-      type: String,
-      unique: true
-    },
-    teacherName: String,
-    sections: Array,
-    schools: Array
-}, { collection : 'teacher' });
-
-var Teacher = mongoose.model('Teacher', TeacherSchema);
-
-//School schema
-var SchoolSchema = new mongoose.Schema({ 
-    schoolUUID: {
-      type: String,
-      unique: true
-    },
-    schoolName: String,
-    sections: Array
-}, { collection : 'school' });
-
-var School = mongoose.model('School', SchoolSchema);
-
-//Section schema
-var SectionSchema = new mongoose.Schema({ 
-    sectionUUID: {
-      type: String,
-      unique: true
-    },
-    sectionName: String,
-    sectionDisplayName: String,
-    sectionParent: String,
-    sectionUnits: Array
-}, { collection : 'section' });
-
-var Section = mongoose.model('Section', SectionSchema);
-
-//Unit schema
-var UnitSchema = new mongoose.Schema({ 
-    unitUUID: {
-      type: String,
-      unique: true
-    },
-    unitTitle: String,
-    comment: String,
-    father: Array,
-    child: Array,
-    items: Array,
-    archived: Array
-}, { collection : 'unit' });
-
-var Unit = mongoose.model('Unit', UnitSchema);
-
 //Material schema
-var MaterialSchema = new mongoose.Schema({ 
-    materialUUID: {
-      type: String,
-      unique: true
-    },
+var MaterialSchema = new mongoose.Schema({
     materialName: String,
     comment: String,
-    dateOfCreation: Date,
+    dateOfCreation: { type: Date, default: Date.now },
     dateOfModification: Date,
     lastEditedBy: String,
     sourceUrl: String,
@@ -191,14 +51,133 @@ var MaterialSchema = new mongoose.Schema({
 
 var Material = mongoose.model('Material', MaterialSchema);
 
-//Newsfeed schema
-var FeedSchema = new mongoose.Schema({ 
-    feedUUID: {
-      type: String,
-      unique: true
+//Unit schema
+var UnitSchema = new mongoose.Schema({
+    unitTitle: String,
+    comment: String,
+    father: [{ type: Schema.Types.ObjectId, ref: 'UnitSchema' }],
+    child: [{ type: Schema.Types.ObjectId, ref: 'UnitSchema' }],
+    items: [{ type: Schema.Types.ObjectId, ref: 'Material' }],
+    archived: Array
+}, { collection : 'unit' });
+
+var Unit = mongoose.model('Unit', UnitSchema);
+
+//Section schema
+var SectionSchema = new mongoose.Schema({
+    sectionName: String,
+    sectionDisplayName: String,
+    sectionParent: { type: Schema.Types.ObjectId, ref: 'SectionSchema' },
+    sectionUnits: [{ type: Schema.Types.ObjectId, ref: 'Unit' }],
+}, { collection : 'section' });
+
+var Section = mongoose.model('Section', SectionSchema);
+
+//School schema
+var SchoolSchema = new mongoose.Schema({
+    schoolName: String,
+    sections: [{ type: Schema.Types.ObjectId, ref: 'Section' }],
+}, { collection : 'school' });
+
+var School = mongoose.model('School', SchoolSchema);
+
+var ExamSchema = new mongoose.Schema({
+    examTitle: String,
+    examDate: Date,
+    section: { type: Schema.Types.ObjectId, ref: 'Section' },
+    attendence: Boolean,
+    totalScore: Number,
+    totalReceivedScore: Number,
+    rank: Number,
+    examProblems: [ExamProblemSchema]
+}, { collection : 'exam' });
+
+//Exam and sub-problem-object schema
+var ExamProblemSchema = new mongoose.Schema({
+    problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
+    problemType: String,
+    weight: Number,
+    receivedScore: Number,
+    studentAnswer: Array
+});
+
+var Exam = mongoose.model('Exam', ExamSchema);
+
+//Student schema
+var StudentSchema = new mongoose.Schema({
+    firstName: String,
+    lastName: String,
+    dateOfBirth: Date,
+    gender: String,
+    email: String,
+    phone: Array,
+    address: String,
+    profilePic: String,
+    sections: [{ type: Schema.Types.ObjectId, ref: 'Section' }],
+    schools: [{ type: Schema.Types.ObjectId, ref: 'School' }],
+    exams: [{ type: Schema.Types.ObjectId, ref: 'Exam' }],
+    comments: String
+}, { collection : 'student' });
+
+var Student = mongoose.model('Student', StudentSchema);
+
+//Parent schema
+var ParentSchema = new mongoose.Schema({
+    parentName: String,
+    studentIds: [{ type: Schema.Types.ObjectId, ref: 'Student' }]
+}, { collection : 'parent' });
+
+var Parent = mongoose.model('Parent', ParentSchema);
+
+//Teacher schema
+var TeacherSchema = new mongoose.Schema({
+    teacherName: String,
+    sections: [{ type: Schema.Types.ObjectId, ref: 'Section' }],
+    schools: [{ type: Schema.Types.ObjectId, ref: 'School' }]
+}, { collection : 'teacher' });
+
+var Teacher = mongoose.model('Teacher', TeacherSchema);
+
+//Admin schema
+var AdminSchema = new mongoose.Schema({
+    adminName: String,
+    schools: [{ type: Schema.Types.ObjectId, ref: 'schools' }]
+}, { collection : 'admin' });
+
+var Admin = mongoose.model('Admin', AdminSchema);
+
+//Superadmin schema
+var SuperadminSchema = new mongoose.Schema({
+    superadminName: String
+}, { collection : 'superadmin' });
+
+var Superadmin = mongoose.model('Superadmin', SuperadminSchema);
+
+//User schema
+var UserSchema = new mongoose.Schema({
+    username: {
+    	type: String,
+    	unique: true
     },
-    userUUID: String,
-    groupUUID: String,
+    password: String,
+    role: Number,
+    userId: { type: Schema.Types.ObjectId }   //Note: not reference
+}, { collection : 'user' });
+
+UserSchema.methods.validPassword = function (password) {
+  if (password === this.password) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+var User = mongoose.model('User', UserSchema);
+
+//Newsfeed schema
+var FeedSchema = new mongoose.Schema({
+    userId: { type: Schema.Types.ObjectId },   //Note: not reference
+    groupId: { type: Schema.Types.ObjectId },   //Note: not reference
     type: String,
     feedData: String,
     createdDate: Date,
@@ -211,15 +190,18 @@ var Feed = mongoose.model('Feed', FeedSchema);
 
 //exports
 module.exports = {
-  User: User,
-  Problem: Problem,
-  Student: Student,
-  Teacher: Teacher,
-  School: School,
-  Section: Section,
-  Exam: Exam,
-  Quiz: Quiz,
-  Unit: Unit,
-  Material: Material,
-  Feed: Feed
+    Material: Material,
+    Unit: Unit,
+    Section: Section,
+    School: School,
+    Student: Student,
+    Parent: Parent,
+    Teacher: Teacher,
+    Admin: Admin,
+    Superadmin: Superadmin,
+    User: User,
+    Problem: Problem,
+    Exam: Exam,
+    Quiz: Quiz,
+    Feed: Feed
 }
