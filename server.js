@@ -1,3 +1,4 @@
+
 //require('nodetime').profile({
 //    accountKey: 'cb0835da7eb6304c00877ca11569df1ef72ebb10',
 //    appName: 'SpruceQuizJunior'
@@ -23,7 +24,10 @@ var express =       require('express')
     //, Feed  =     require('./server/models/Feed.js');
 
 var app = express();
+/*
+ *
 
+ */
 mongoose.connect('mongodb://localhost/sprucedb', function(err) {
     if(InitializeSpruceDB) {
         mongoose.connection.db.dropDatabase(function(err){
