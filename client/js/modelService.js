@@ -96,7 +96,7 @@ angular.module('modelServices',['ngResource'])
     })
     .factory('Sections', function($resource){
         return {
-            onSections: $resource('/api/sections/:uuid', {uuid:'@sectionUUID'}, {
+            onSections: $resource('/api/sections/:id', {id:'@_id'}, {
                 list: {method:'GET', params:{uuid: 'all'}, isArray:true},
                 update: {method:'PUT', params:{uuid: '@uuid'}}
             }),

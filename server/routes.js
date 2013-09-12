@@ -252,7 +252,7 @@ var routes = [
     },
     //Section resourse
     {
-        path: '/api/sections/:uuid',
+        path: '/api/sections/:id',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getbyId],
         accessLevel: accessLevels.loggedin
@@ -406,6 +406,7 @@ function ensureAuthenticated(req, res, next) {
 function ensureAuthorized(req, res, next) {
     if(!req.user) return res.send(401);
 
+    //console.log(req.user);
     var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;  //This look a bit fishy.
     if(!(accessLevel & req.user.role)) return res.send(403);
 
