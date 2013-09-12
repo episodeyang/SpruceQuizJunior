@@ -5,7 +5,7 @@ var _ =           require('underscore')
     , TeacherM = require('../models/SchemaModels').Teacher
     , SchoolM = require('../models/SchemaModels').School
     , UnitM = require('../models/SchemaModels').Unit
-    , FeedM = require('../models/SchemaModels').Feed
+    , FeedM = require('../models/SchemaModels').Feed;
 
 module.exports = {
 //	getbyId: function(req, res) {

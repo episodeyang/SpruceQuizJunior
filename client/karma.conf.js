@@ -11,19 +11,24 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'client/lib/angular/angular.js',
-      'client/lib/angular-mocks/angular-mocks.js',
-      'client/js/*.js',
-      'client/js/**/*.js',
-      'client/mock/**/*.js',
-      'client/spec/**/*.js'
+      '../client/lib/angular/angular.js',
+      '../client/lib/angular-mocks/angular-mocks.js',
+      '../client/js/*.js',
+      '../client/js/**/*.js'
+//        ,
+//      '../client/mock/**/*.js',
+//      '../client/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: [
+        '../client/js/directives.js',
+        '../client/js/lib/**'
+
+    ],
 
     // web server port
-    port: 8000,
+    port: 8080,
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
@@ -31,7 +36,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:

@@ -6,7 +6,6 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
          script(src="/js/jquery/jquery.js")
          script(src="/js/select2/select2.js")
          script(src="/lib/angular/angular.min.js")
-         script(src="/js/angular-ui/ui-bootstrap-tpls-0.4.0.min.js")
          script(src="/js/angular-ui-select2/src/select2.js")
          link(href='/css/bootstrap-combined.no-icons.min.css',
                  rel="stylesheet")
@@ -55,6 +54,8 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
                                      a(href='/quizzes') 测试
                          li(data-access-level='{{ accessLevels.superuser }}', active-nav)
                              a(href='/reports') 成绩和报告
+                         li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
+                             a(href='/superadmin') 后台管理
                          //-li(data-access-level='{{ accessLevels.loggedin }}')
                              a(href="", data-ng-click="logout()")
                                  | Log out
@@ -75,13 +76,14 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
                      p &copy;
                          a(href="http://www.sprucelearning.com") SpruceLearning
                          | &nbsp; 2013
-         script(src='/lib/angular/angular-cookies.js')
-         script(src="/lib/angular/angular-resource.js")
+
+         script(src="/lib/angular-route/angular-route.js")
+         script(src='/lib/angular-cookies/angular-cookies.js')
+         script(src="/lib/angular-resource/angular-resource.js")
          script(src='/lib/underscore/underscore-min.js')
-         //script(src='/lib/angular-underscore/angular-underscore.js')
+         script(src="/lib/angular-bootstrap/ui-bootstrap-tpls.min.js")
          //-this is just an adapter, not the lib itself.
          script(src='js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
-
          script(src='/js/routingConfig.js')
          script(src='/js/app.js')
          script(src='/js/services.js')
@@ -94,9 +96,11 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
          script(src='/js/controllers/home.js')
          script(src='/js/modelService.js')
          script(src='/js/controllers/reports_viz_ctrl.js')
+         script(src='/js/controllers/superadmin.js')
          script(src='/js/filters.js')
          script(src='/js/directives.js')
          script(src='/js/directives/d3/reports_viz.js')
+         script(src='/js/directives/superadmin_dir.js')
          script(src='/lib/d3/d3.js')
          script(src='/lib/nvd3/nv.d3.js')
          link(rel='stylesheet', href='/css/lib/nvd3/nv.d3.sp.css')

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngResource',
+angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngResource',
         'ui.bootstrap', 'ui.select2', 'nvd3ChartDirectives'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
@@ -65,6 +65,12 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngResource',
                 controller:     'ReportCtrl',
                 access:         access.superuser
             });
+      $routeProvider.when('/superadmin',
+          {
+            templateUrl:    '/partials/superadmin',
+            controller:     'SuperAdminCtrl',
+            access:         access.superadmin
+          });
         $routeProvider.when('/404',
             {
                 templateUrl:    '/partials/404',
