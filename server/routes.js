@@ -12,8 +12,8 @@ var _ =           require('underscore')
     , UnitCtrl =  require('./controllers/unit')
     , MaterialCtrl =  require('./controllers/material')
     , User =      require('./models/User.js')
-    , userRoles = require('../client/js/routingConfig').userRoles
-    , accessLevels = require('../client/js/routingConfig').accessLevels;
+    , userRoles = require('../client/js/rolesHelper').userRoles
+    , accessLevels = require('../client/js/rolesHelper').accessLevels;
 
 var routes = [
 

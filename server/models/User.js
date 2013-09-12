@@ -9,7 +9,7 @@ var User
     , GoogleStrategy = require('passport-google').Strategy
     , LinkedInStrategy = require('passport-linkedin').Strategy
     , check =           require('validator').check
-    , userRoles =       require('../../client/js/routingConfig').userRoles;
+    , userRoles =       require('../../client/js/rolesHelper').userRoles;
 
 var UserM = require('./SchemaModels').User
     , StudentM = require('./SchemaModels').Student
