@@ -24,6 +24,11 @@ angular.module('modelServices',['ngResource','ngRoute'])
         //      handle input cases of :
         //          model == undefined => model = Model.user
         //
+        //TODO: Model.updateSchools(*student/section)
+        //TODO: Model.addStudent(school/section,student)
+        //TODO: Model.deleteStudent(school/section,student.id)
+        //TODO: Model.addSchool(student/section,school)
+        //TODO: Model.addSection(student/school)
         //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
         //TODO: Model.getExams(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
 
