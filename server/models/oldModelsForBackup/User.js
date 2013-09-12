@@ -9,56 +9,92 @@ var User
     , check =           require('validator').check
     , userRoles =       require('../../client/js/routingConfig').userRoles;
 
-var UserM = require('./SchemaModels').User
-    , StudentM = require('./SchemaModels').Student
-    , TeacherM = require('./SchemaModels').Teacher;
+var UserM = require('./SchemaModels').User;
+
+// For initilizing Spruce database in MongoDB. Will be taken out later. Not needed if data is already in MongoDB
+// Begin of temporary initilization
+//var tempuser = new UserM({
+//        id:         "u1",
+//        username:   "student1",
+//        password:   "123",
+//        role:   userRoles.student
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u2",
+//        username:   "student2",
+//        password:   "123",
+//        role:   userRoles.student
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u3",
+//        username:   "student3",
+//        password:   "123",
+//        role:   userRoles.student
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u4",
+//        username:   "parent",
+//        password:   "123",
+//        role:   userRoles.parent
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u5",
+//        username:   "teacher1",
+//        password:   "123",
+//        role:   userRoles.teacher
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u6",
+//        username:   "teacher2",
+//        password:   "123",
+//        role:   userRoles.teacher
+//    });
+//tempuser.save();
+//tempuser = new UserM({
+//        id:         "u7",
+//        username:   "admin",
+//        password:   "123",
+//        role:   userRoles.admin
+//    });
+//tempuser.save();
+// End of temporary initilization
+
+
+// //For testing objects-creation
+// var users;
+// UserM.find(function (err, results) {
+//     users = results;
+//     console.log(users);
+// })
 
 module.exports = {
     addUser: function(username, password, role, callback) {
-        UserM.findOne({ username: username }, function (err, duplicate) {
+        UserM.count(function(err, results) {
             if (err) {
-                console.log("An error occurred in checking User database.");
+                console.log("Counting error");
             } else {
-                if(duplicate) {
-                    console.log("User already exists");
-                    return callback("UserAlreadyExists");
-                } else {
-                    var user = new UserM({
-                        username:   username,
-                        password:   password,
-                        role:       role,
-                        userId:     null
-                    });
-                    var tempobject;
-                    if(role === 2) {
-                        tempobject = new StudentM();
-                        tempobject.save();
-                    } else if(role === 4) {
-                        tempobject = new ParentM();
-                        tempobject.save();
-                    } else if(role === 8) {
-                        tempobject = new TeacherM();
-                        tempobject.save();
-                    } else if(role === 16) {
-                        tempobject = new AdminM();
-                        tempobject.save();
-                    } else if(role === 32) {
-                        tempobject = new SuperadminM();
-                        tempobject.save();
+                var tempid = results + 1;
+                var newid = 'u' + tempid;
+                var user = new UserM({
+                    id:         newid,
+                    username:   username,
+                    password:   password,
+                    role:       role
+                });
+                user.save(function (err, fluffy) {
+                    if (err) {
+                        return callback("UserAlreadyExists");
                     } else {
-                        console.log("Not a valid role number!");
+                        return callback(null, user);
                     }
-                    user.userId = tempobject._id;
-                    user.save(function (err) {
-                        if (err) {
-                            console.log("An error occurred in saving new user to database.");
-                        } else {
-                            return callback(null, user);
-                        }
-                    });
-                }
+                });
             }
-        });
+        })
     },
 
     // findOrCreateOauthUser: function(provider, providerId) {
@@ -101,9 +137,7 @@ module.exports = {
         // TODO: Seems node-validator's isIn function doesn't handle Number arrays very well...
         // Till this is rectified Number arrays must be converted to string arrays
         // https://github.com/chriso/node-validator/issues/185
-        //var stringArr = _.map(_.values(userRoles), function(val) { return val.toString() });
-        var stringArr = [ '1', '2', '4', '8'];
-        //console.log(stringArr);
+        var stringArr = _.map(_.values(userRoles), function(val) { return val.toString() });
         check(user.role, 'Invalid user role given').isIn(stringArr);
     },
 
@@ -182,8 +216,7 @@ module.exports = {
     //     );
     // },
     serializeUser: function(user, done) {
-        //console.log(user);
-        done(null, user.userId);
+        done(null, user.id);
     },
 
     // deserializeUser: function(id, done) {
@@ -194,7 +227,7 @@ module.exports = {
     // }
 
     deserializeUser: function(id, done) {
-        UserM.findOne({ userId: id }, function(err, user) {
+        UserM.findOne({ id: id }, function(err, user) {
             if(user)    { done(null, user); }
             else        { done(null, false); }
         });
