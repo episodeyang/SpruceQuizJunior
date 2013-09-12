@@ -2,11 +2,11 @@
 
 angular.module('modelServices', ['ngResource', 'ngRoute'])
 //Model Code
-    /**
-     * model factory
-     * @author test
-     * @param random
-     */
+/**
+ * model factory
+ * @author test
+ * @param random
+ */
     .factory('Model', ['$rootScope', 'Students',
         function ($rootScope, Students) {
             var modelInstance = {};
@@ -22,8 +22,18 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
                 modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role << 1];
                 //if (modelInstance.user.role.roleName === 'student')
 
-
-
+                //The following are for tomorrow:
+                //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+                //      handle input cases of :
+                //          model == undefined => model = Model.user
+                //
+                //TODO: Model.updateSchools(*student/section)
+                //TODO: Model.addStudent(school/section,student)
+                //TODO: Model.deleteStudent(school/section,student.id)
+                //TODO: Model.addSchool(student/section,school)
+                //TODO: Model.addSection(student/school)
+                //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+                //TODO: Model.getExams(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
 
                 //TODO: Now with ModelInstance.user.userRole, call '/api/%userRole/:id and load it into ModelInstance.user
                 //      At the end of the day, user should have both the original keys as well as those from 'student',
