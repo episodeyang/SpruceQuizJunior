@@ -45,7 +45,7 @@ angular.module('SpruceQuizApp')
 angular.module('SpruceQuizApp')
 .controller('RegisterCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
-    $scope.role = routingConfig.userRoles.user;
+    $scope.role = rolesHelper.userRoles.user;
     $scope.register = function() {
         Auth.register({
                 username: $scope.username,

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
@@ -14,7 +16,7 @@ var ProblemSchema = new mongoose.Schema({
     hints: Array,
     hintRules: Array,
     lastUpdated: Date
-}, { collection : 'problem' });
+}, { collection: 'problem' });
 
 var Problem = mongoose.model('Problem', ProblemSchema);
 
@@ -26,15 +28,15 @@ var QuizProblemSchema = new mongoose.Schema({
 
 var QuizSchema = new mongoose.Schema({
     quizUUID: {
-      type: String,
-      unique: true
+        type: String,
+        unique: true
     },
     quizTitle: String,
     quizDate: Date,
     quizTopics: Array,
     totalScore: Number,
     quizProblems: [QuizProblemSchema]
-}, { collection : 'quiz' });
+}, { collection: 'quiz' });
 
 var Quiz = mongoose.model('Quiz', QuizSchema);
 
@@ -47,7 +49,7 @@ var MaterialSchema = new mongoose.Schema({
     lastEditedBy: String,
     sourceUrl: String,
     materialType: String
-}, { collection : 'material' });
+}, { collection: 'material' });
 
 var Material = mongoose.model('Material', MaterialSchema);
 
@@ -55,11 +57,17 @@ var Material = mongoose.model('Material', MaterialSchema);
 var UnitSchema = new mongoose.Schema({
     unitTitle: String,
     comment: String,
-    father: [{ type: Schema.Types.ObjectId, ref: 'UnitSchema' }],
-    child: [{ type: Schema.Types.ObjectId, ref: 'UnitSchema' }],
-    items: [{ type: Schema.Types.ObjectId, ref: 'Material' }],
+    father: [
+        { type: Schema.Types.ObjectId, ref: 'UnitSchema' }
+    ],
+    child: [
+        { type: Schema.Types.ObjectId, ref: 'UnitSchema' }
+    ],
+    items: [
+        { type: Schema.Types.ObjectId, ref: 'Material' }
+    ],
     archived: Array
-}, { collection : 'unit' });
+}, { collection: 'unit' });
 
 var Unit = mongoose.model('Unit', UnitSchema);
 
@@ -76,8 +84,10 @@ var SectionSchema = new mongoose.Schema({
     sectionDisplayName: String,
     school: { type: Schema.Types.ObjectId, ref: 'School' },
     sectionParent: { type: Schema.Types.ObjectId, ref: 'SectionSchema' },
-    sectionUnits: [{ type: Schema.Types.ObjectId, ref: 'Unit' }],
-}, { collection : 'section' });
+    sectionUnits: [
+        { type: Schema.Types.ObjectId, ref: 'Unit' }
+    ],
+}, { collection: 'section' });
 
 var Section = mongoose.model('Section', SectionSchema);
 
@@ -90,7 +100,7 @@ var ExamSchema = new mongoose.Schema({
     totalReceivedScore: Number,
     rank: Number,
     examProblems: [ExamProblemSchema]
-}, { collection : 'exam' });
+}, { collection: 'exam' });
 
 //Exam and sub-problem-object schema
 var ExamProblemSchema = new mongoose.Schema({
@@ -113,63 +123,77 @@ var StudentSchema = new mongoose.Schema({
     phone: Array,
     address: String,
     profilePic: String,
-    sections: [{ type: Schema.Types.ObjectId, ref: 'Section' }],
-    schools: [{ type: Schema.Types.ObjectId, ref: 'School' }],
-    exams: [{ type: Schema.Types.ObjectId, ref: 'Exam' }],
+    sections: [
+        { type: Schema.Types.ObjectId, ref: 'Section' }
+    ],
+    schools: [
+        { type: Schema.Types.ObjectId, ref: 'School' }
+    ],
+    exams: [
+        { type: Schema.Types.ObjectId, ref: 'Exam' }
+    ],
     comments: String
-}, { collection : 'student' });
+}, { collection: 'student' });
 
 var Student = mongoose.model('Student', StudentSchema);
 
 //Parent schema
 var ParentSchema = new mongoose.Schema({
     parentName: String,
-    studentIds: [{ type: Schema.Types.ObjectId, ref: 'Student' }]
-}, { collection : 'parent' });
+    studentIds: [
+        { type: Schema.Types.ObjectId, ref: 'Student' }
+    ]
+}, { collection: 'parent' });
 
 var Parent = mongoose.model('Parent', ParentSchema);
 
 //Teacher schema
 var TeacherSchema = new mongoose.Schema({
     teacherName: String,
-    sections: [{ type: Schema.Types.ObjectId, ref: 'Section' }],
-    schools: [{ type: Schema.Types.ObjectId, ref: 'School' }]
-}, { collection : 'teacher' });
+    sections: [
+        { type: Schema.Types.ObjectId, ref: 'Section' }
+    ],
+    schools: [
+        { type: Schema.Types.ObjectId, ref: 'School' }
+    ]
+}, { collection: 'teacher' });
 
 var Teacher = mongoose.model('Teacher', TeacherSchema);
 
 //Admin schema
 var AdminSchema = new mongoose.Schema({
     adminName: String,
-    schools: [{ type: Schema.Types.ObjectId, ref: 'schools' }]
-}, { collection : 'admin' });
+    schools: [
+        { type: Schema.Types.ObjectId, ref: 'schools' }
+    ]
+}, { collection: 'admin' });
 
 var Admin = mongoose.model('Admin', AdminSchema);
 
 //Superadmin schema
 var SuperadminSchema = new mongoose.Schema({
     superadminName: String
-}, { collection : 'superadmin' });
+}, { collection: 'superadmin' });
 
 var Superadmin = mongoose.model('Superadmin', SuperadminSchema);
 
 //User schema
 var UserSchema = new mongoose.Schema({
     username: {
-    	type: String,
-    	unique: true
+        type: String,
+        unique: true
     },
     password: String,
     role: Number,
     userId: { type: Schema.Types.ObjectId }   //Note: not reference
-}, { collection : 'user' });
+}, { collection: 'user' });
 
 UserSchema.methods.validPassword = function (password) {
-  if (password === this.password) {
-    return true;
-  } else {
-    return false;
-  }
+    if (password === this.password) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 var User = mongoose.model('User', UserSchema);
@@ -182,7 +206,7 @@ var FeedSchema = new mongoose.Schema({
     feedData: String,
     createdDate: Date,
     archived: Array
-}, { collection : 'feed' });
+}, { collection: 'feed' });
 
 var Feed = mongoose.model('Feed', FeedSchema);
 

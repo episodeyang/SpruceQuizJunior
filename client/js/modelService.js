@@ -1,52 +1,82 @@
 'use strict';
 
-angular.module('modelServices',['ngResource','ngRoute'])
+angular.module('modelServices', ['ngResource', 'ngRoute'])
 //Model Code
-    .factory('Model', ['$rootScope', 'Students', function ($rootScope, Students) {
-        var modelInstance = {};
-        modelInstance.init = function(){
-            modelInstance.user = $rootScope.user;
-            //TODO: Look up user role from routeConfig.userRoles and assign to ModelIntance.user.userRole
-            //TODO: Now with ModelInstance.user.userRole, call '/api/%userRole/:id and load it into ModelInstance.user
-            //      At the end of the day, user should have both the original keys as well as those from 'student',
-            //      'teacher', 'parent', 'admin' etc.
-            //      Also, all the sections, schools, and exams should at this point be loaded into `user`
-            //TODO: Testing Cases: I want testing cases to include testing cases for four different user types. Also
-            //      Check all the schema.
-            //      Check if schools, sections, and exams are loaded.
+/**
+ * model factory
+ * @author test
+ * @param random
+ */
+    .factory('Model', ['$rootScope', 'Students',
+        function ($rootScope, Students) {
+            var modelInstance = {};
 
-            //modelInstance.user = Students.onStudents.list();
-        };
-        modelInstance.destroy = function(){};
+            // testing code, to be deleted
+            modelInstance.test = 1;
 
-        //The following are for tomorrow:
-        //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
-        //      handle input cases of :
-        //          model == undefined => model = Model.user
-        //
-        //TODO: Model.updateSchools(*student/section)
-        //TODO: Model.addStudent(school/section,student)
-        //TODO: Model.deleteStudent(school/section,student.id)
-        //TODO: Model.addSchool(student/section,school)
-        //TODO: Model.addSection(student/school)
-        //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
-        //TODO: Model.getExams(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+            modelInstance.init = function () {
 
-        //TODO: Model.schools <= This is the school object for general use.
-        //TODO: Model.updateSchools() <= input is a list
-        //TODO: Model.section.addStudent()
-        //TODO: Model.deleteSchools() <= imput is a list
+                // this should assign all the fields in
+                modelInstance.user = $rootScope.user;
+                //rolesHelper needs no special importing since it's explosed via js exports
+                //console.log(rolesHelper.roles);
+                //modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role >> 2];
 
-        //TODO: Model.sections<= This is the section object for general use.
-        //TODO: Model.getSections()
-        //TODO: MOdel.updateSections()
-        //TODO: Model.exams <= This is the school object for general use.
-        //TODO: Model.onExams()
-        //TODO: Model.problems<= This is the school object for general use.
-        //TODO: Model.onExams()
+//                if (modelInstance.user.role.roleName === 'student') {
+//                    // fill in
+//                    //Students.onSections
+//                }
 
-        return modelInstance;
-    }])
+                //The following are for tomorrow:
+                //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+                //      handle input cases of :
+                //          model == undefined => model = Model.user
+                //
+                //TODO: Model.updateSchools(*student/section)
+                //TODO: Model.addStudent(school/section,student)
+                //TODO: Model.deleteStudent(school/section,student.id)
+                //TODO: Model.addSchool(student/section,school)
+                //TODO: Model.addSection(student/school)
+                //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+                //TODO: Model.getExams(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+
+                //TODO: Now with ModelInstance.user.userRole, call '/api/%userRole/:id and load it into ModelInstance.user
+                //      At the end of the day, user should have both the original keys as well as those from 'student',
+                //      'teacher', 'parent', 'admin' etc.
+                //      Also, all the sections, schools, and exams should at this point be loaded into `user`
+                //TODO: Testing Cases: I want testing cases to include testing cases for four different user types. Also
+                //      Check all the schema.
+                //      Check if schools, sections, and exams are loaded.
+
+                //modelInstance.user = Students.onStudents.list();
+
+            };
+            modelInstance.destroy = function () {
+            };
+
+            //The following are for tomorrow:
+            //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+            //      handle input cases of :
+            //          model == undefined => model = Model.user
+            //
+            //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+            //TODO: Model.getExams(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
+
+            //TODO: Model.schools <= This is the school object for general use.
+            //TODO: Model.updateSchools() <= input is a list
+            //TODO: Model.section.addStudent()
+            //TODO: Model.deleteSchools() <= imput is a list
+
+            //TODO: Model.sections<= This is the section object for general use.
+            //TODO: Model.getSections()
+            //TODO: MOdel.updateSections()
+            //TODO: Model.exams <= This is the school object for general use.
+            //TODO: Model.onExams()
+            //TODO: Model.problems<= This is the school object for general use.
+            //TODO: Model.onExams()
+
+            return modelInstance;
+        }])
 // Interface Code
     .factory('Admins', function($resource){
         return {

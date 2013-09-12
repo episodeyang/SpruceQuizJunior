@@ -1,3 +1,5 @@
+'use strict';
+
 var passport =  require('passport')
     , User = require('../models/User.js');
 

@@ -1,21 +1,18 @@
-!!! 5
+doctype 5
+
 html(lang='zh', data-ng-app='SpruceQuizApp')
      head
          meta(charset='utf-8')
          title 云杉习题-新一代学习管理平台
-         script(src="/js/jquery/jquery.js")
-         script(src="/js/select2/select2.js")
          script(src="/lib/angular/angular.min.js")
-         script(src="/js/angular-ui-select2/src/select2.js")
-         link(href='/css/bootstrap-combined.no-icons.min.css',
-                 rel="stylesheet")
+         //-script(src="/js/angular-ui-select2/src/select2.js")
+         //-link(href='/css/bootstrap-combined.no-icons.min.css', rel="stylesheet")
+         link(href='/lib/bootstrap/dist/css/bootstrap.min.css', rel="stylesheet")
+         link(href='/lib/bootstrap/dist/css/bootstrap-theme.min.css', rel="stylesheet")
          link(href="/font/font-awesome.min.css", rel="stylesheet")
          //-link(href="/css/flat-ui.css", rel="stylesheet")
          link(href='/css/app.css', rel="stylesheet")
          link(href='/css/report.css', rel="stylesheet")
-         link(rel='stylesheet', href='/js/select2/select2.css')
-
-
          // This is needed because Facebook login redirects add #_=_ at the end of the URL
 
          script(type="text/javascript").
@@ -81,10 +78,10 @@ html(lang='zh', data-ng-app='SpruceQuizApp')
          script(src='/lib/angular-cookies/angular-cookies.js')
          script(src="/lib/angular-resource/angular-resource.js")
          script(src='/lib/underscore/underscore-min.js')
-         script(src="/lib/angular-bootstrap/ui-bootstrap-tpls.min.js")
+         script(src="/lib/angular-bootstrap/dist/ui-bootstrap-tpls-0.6.0-SNAPSHOT.min.js")
          //-this is just an adapter, not the lib itself.
-         script(src='js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
-         script(src='/js/routingConfig.js')
+         script(src='/lib/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+         script(src='/js/rolesHelper.js')
          script(src='/js/app.js')
          script(src='/js/services.js')
          script(src='/js/controllers.js')
