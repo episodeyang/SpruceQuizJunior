@@ -1,4 +1,5 @@
 {
+
     "name": "SpruceQuizJunior",
     "version": "0.0.0",
     "ignore": [
@@ -20,7 +21,8 @@
         "nvd3": "~1.0.0-beta",
         "angularjs-nvd3-directives": "https://github.com/cmaurer/angularjs-nvd3-directives.git",
         "angular-placeholders": "*",
-        "angular-bootstrap": "~0.6.0",
+        "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#bootstrap3_bis",
+        "bootstrap": "~3.0.0",
         "angular-ui-select2": "latest",
         "jquery": "latest"
     },

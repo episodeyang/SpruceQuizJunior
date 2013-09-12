@@ -6,6 +6,10 @@ Spruce Quiz Junior
 ### Single-liner:
     npm install && npm update && bower update && cd client/lib/angular-placeholders && npm install && npm install grunt-cli && grunt && cd ../../..
 
+okay I lied. There is another line:
+
+    cd client/lib/angular-bootstrap/ && npm install && npm install grunt-cli && grunt && cd ../../..
+
 During the second to last command, open browser at [http://localhost:9018](http://localhost:9018)
 to allow karma to compile the `angular-placeholders` library
 

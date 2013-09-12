@@ -20,7 +20,11 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
                 modelInstance.user = $rootScope.user;
                 //rolesHelper needs no special importing since it's explosed via js exports
                 modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role << 1];
-                //if (modelInstance.user.role.roleName === 'student')
+
+//                if (modelInstance.user.role.roleName === 'student') {
+//                    // fill in
+//                    //Students.onSections
+//                }
 
                 //The following are for tomorrow:
                 //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
