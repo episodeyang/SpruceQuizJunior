@@ -8,6 +8,19 @@ angular.module('modelServices',['ngResource','ngRoute'])
         modelInstance.test = 1;
         modelInstance.init = function(){
             modelInstance.user = $rootScope.user;
+            //TODO: Look up user role from routeConfig.userRoles and assign to ModelIntance.user.userRole
+            //TODO: Now with ModelInstance.user.userRole, call '/api/%userRole/:id and load it into ModelInstance.user
+            //      At the end of the day, user should have both the original keys as well as those from 'student',
+            //      'teacher', 'parent', 'admin' etc.
+            //      Also, all the sections, schools, and exams should at this point be loaded into `user`
+            //TODO: Testing Cases: I want testing cases to include testing cases for four different user types. Also
+            //      Check all the schema.
+            //      Check if schools, sections, and exams are loaded.
+
+            //The following are for tomorrow:
+            //TODO: Retrieve schools that belong to the user and added to Model.schools
+            //TODO: Retrieve
+
             //modelInstance.user = Students.onStudents.list();
         };
         modelInstance.destroy = function(){};
