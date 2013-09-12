@@ -9,8 +9,8 @@ var _ = require('underscore')
 // In the following order to address ObjectId dependency
 //    Material,
 //    Unit,
-//    Section,
 //    School,
+//    Section,
 //    Problem,
 //    Exam,
 //    Student,
@@ -114,12 +114,29 @@ tempunit.save();
 var d4_id = tempunit._id;
 
 
+// Initialization of School data
+var SchoolM = require('./SchemaModels').School;
+
+var tempschool = new SchoolM({
+    schoolName: "No.1 High School"
+});
+tempschool.save();
+var s1_id = tempschool._id;
+
+tempschool = new SchoolM({
+    schoolName: "No.2 High School"
+});
+tempschool.save();
+var s2_id = tempschool._id;
+
+
 // Initialization of Section data
 var SectionM = require('./SchemaModels').Section;
 
 var tempsection = new SectionM({
     sectionName: "三年级一班",
     sectionDisplayName: "",
+    school: s1_id,
     sectionParent: null,
     sectionUnits: [d1_id, d2_id]
 });
@@ -129,6 +146,7 @@ var g1_id = tempsection._id;
 tempsection = new SectionM({
     sectionName: "三年级二班",
     sectionDisplayName: "",
+    school: s1_id,
     sectionParent: null,
     sectionUnits: [d1_id, d2_id]
 });
@@ -138,6 +156,7 @@ var g2_id = tempsection._id;
 tempsection = new SectionM({
     sectionName: "数学奥林匹克辅导",
     sectionDisplayName: "奥数（高中）",
+    school: s2_id,
     sectionParent: null,
     sectionUnits: []
 });
@@ -147,29 +166,12 @@ var g3_id = tempsection._id;
 tempsection = new SectionM({
     sectionName: "浪漫主义欣赏",
     sectionDisplayName: "浪漫主义诗歌",
+    school: s1_id,
     sectionParent: g2_id,
     sectionUnits: []
 });
 tempsection.save();
 var g4_id = tempsection._id;
-
-
-// Initialization of School data
-var SchoolM = require('./SchemaModels').School;
-
-var tempschool = new SchoolM({
-    schoolName: "No.1 High School",
-    sections: [g1_id, g2_id, g3_id]
-});
-tempschool.save();
-var s1_id = tempschool._id;
-
-tempschool = new SchoolM({
-    schoolName: "No.2 High School",
-    sections: [g4_id]
-});
-tempschool.save();
-var s2_id = tempschool._id;
 
 
 // Initialization of Problem data

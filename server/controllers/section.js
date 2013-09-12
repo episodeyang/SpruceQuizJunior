@@ -8,35 +8,52 @@ var _ =           require('underscore')
     , FeedM = require('../models/SchemaModels').Feed;
 
 module.exports = {
-	getbyId: function(req, res) {
-    	if(req.params.uuid === "all") {
-	        SectionM.find(function (err, results) {
-	        	//console.log(results);
-	            res.json(results);
-	        });
-	    }
-	    else {
-	        SectionM.findOne({ sectionUUID: req.params.uuid }, function (err, gresults) {
-	        	if(!gresults) {
-	        		console.log("Section was not found");
-	        	} else {
-		        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
-		        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
-		        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
-		        				//console.log(gresults.sectionUnits);
-			        			var results = gresults.toObject();
-			        			results.school = sresults.schoolUUID;
-			        			results.students = _.map(uresults, function(item) {return item.userUUID});
-			        			results.sectionUnits = dresults;
-					            //console.log(results);
-					            res.json(results);
-				            });
-				    	});
-			    	});
-			    }
-	    	});
-	    };
-	},
+//	getbyId: function(req, res) {
+//    	if(req.params.id === "all") {
+//	        SectionM.find(function (err, results) {
+//	        	//console.log(results);
+//	            res.json(results);
+//	        });
+//	    }
+//	    else {
+//	        SectionM.findOne({ _id: req.params.id }, function (err, gresults) {
+//	        	if(!gresults) {
+//	        		console.log("Section was not found");
+//	        	} else {
+//		        	SchoolM.findOne({ sections: { $all: [req.params.uuid] } }, function (err, sresults) {
+//		        		StudentM.find({ sections: { $all: [req.params.uuid] } }, {"userUUID": 1, "_id": 0}, function (err, uresults) {
+//		        			UnitM.find({ unitUUID: { $in: gresults.sectionUnits } }, function (err, dresults) {
+//		        				//console.log(gresults.sectionUnits);
+//			        			var results = gresults.toObject();
+//			        			results.school = sresults.schoolUUID;
+//			        			results.students = _.map(uresults, function(item) {return item.userUUID});
+//			        			results.sectionUnits = dresults;
+//					            //console.log(results);
+//					            res.json(results);
+//				            });
+//				    	});
+//			    	});
+//			    }
+//	    	});
+//	    };
+//	},
+    getbyId: function(req, res) {
+        if(req.params.id === "all") {
+            SectionM.find(function (err, results) {
+                //console.log(results);
+                res.json(results);
+            });
+        }
+        else {
+            //console.log(req.user.userId);
+            SectionM.findOne({ _id: req.params.id })
+            .populate('sectionUnits')
+            .exec(function (err, gresults) {
+                //console.log(gresults);
+                res.json(gresults);
+            });
+        }
+    },
 	removebyId: function(req, res) {
         SectionM.remove({ sectionUUID: req.params.uuid }, function (err) {
         	if(err) {

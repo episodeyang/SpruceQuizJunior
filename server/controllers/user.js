@@ -1,7 +1,7 @@
 var _ =           require('underscore')
     //, User =      require('../models/User.js')
     , UserM = require('../models/SchemaModels').User
-    , userRoles = require('../../client/js/routingConfig').userRoles;
+    , userRoles = require('../../client/js/rolesHelper').userRoles;
 
 module.exports = {
     index: function(req, res) {

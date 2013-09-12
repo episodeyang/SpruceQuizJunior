@@ -6,13 +6,14 @@ var _ =           require('underscore')
     , ProblemCtrl =  require('./controllers/problem')
     , StudentCtrl =  require('./controllers/student')
     , TeacherCtrl =  require('./controllers/teacher')
+    , AdminCtrl =  require('./controllers/admin')
     , SectionCtrl =  require('./controllers/section')
     , SchoolCtrl =  require('./controllers/school')
     , UnitCtrl =  require('./controllers/unit')
     , MaterialCtrl =  require('./controllers/material')
     , User =      require('./models/User.js')
-    , userRoles = require('../client/js/routingConfig').userRoles
-    , accessLevels = require('../client/js/routingConfig').accessLevels;
+    , userRoles = require('../client/js/rolesHelper').userRoles
+    , accessLevels = require('../client/js/rolesHelper').accessLevels;
 
 var routes = [
 
@@ -163,7 +164,14 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getSections],
         accessLevel: accessLevels.loggedin
     },
-    //Teacher resourse
+    //Admin resource
+    {
+        path: '/api/admins/sections/:id',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.getSections],
+        accessLevel: accessLevels.admin
+    },
+    //Teacher resources
     {
         path: '/api/teachers/:uuid',
         httpMethod: 'GET',
@@ -194,7 +202,7 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, TeacherCtrl.getStudents],
         accessLevel: accessLevels.superuser
     },
-    //Student resourse
+    //Student resources
     {
         path: '/api/students/:uuid',
         httpMethod: 'GET',
@@ -250,9 +258,9 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.removebyId],
         accessLevel: accessLevels.admin
     },
-    //Section resourse
+    //Section resources
     {
-        path: '/api/sections/:uuid',
+        path: '/api/sections/:id',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getbyId],
         accessLevel: accessLevels.loggedin
@@ -305,7 +313,7 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, SectionCtrl.getFeeds],
         accessLevel: accessLevels.loggedin
     },
-    //Unit resource
+    //Unit resources
     {
         path: '/api/units/:uuid',
         httpMethod: 'GET',
@@ -324,14 +332,14 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, UnitCtrl.updatebyId],
         accessLevel: accessLevels.loggedin
     },
-    //Material resource
+    //Material resources
     {
         path: '/api/materials/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, MaterialCtrl.getbyId],
         accessLevel: accessLevels.loggedin
     },
-    //Problem resource
+    //Problem resources
     {
         path: '/api/problems/:uuid',
         httpMethod: 'GET',
@@ -406,6 +414,7 @@ function ensureAuthenticated(req, res, next) {
 function ensureAuthorized(req, res, next) {
     if(!req.user) return res.send(401);
 
+    //console.log(req.user);
     var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;  //This look a bit fishy.
     if(!(accessLevel & req.user.role)) return res.send(403);
 

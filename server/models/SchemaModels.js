@@ -71,10 +71,18 @@ var UnitSchema = new mongoose.Schema({
 
 var Unit = mongoose.model('Unit', UnitSchema);
 
+//School schema
+var SchoolSchema = new mongoose.Schema({
+    schoolName: String
+}, { collection : 'school' });
+
+var School = mongoose.model('School', SchoolSchema);
+
 //Section schema
 var SectionSchema = new mongoose.Schema({
     sectionName: String,
     sectionDisplayName: String,
+    school: { type: Schema.Types.ObjectId, ref: 'School' },
     sectionParent: { type: Schema.Types.ObjectId, ref: 'SectionSchema' },
     sectionUnits: [
         { type: Schema.Types.ObjectId, ref: 'Unit' }
@@ -82,16 +90,6 @@ var SectionSchema = new mongoose.Schema({
 }, { collection: 'section' });
 
 var Section = mongoose.model('Section', SectionSchema);
-
-//School schema
-var SchoolSchema = new mongoose.Schema({
-    schoolName: String,
-    sections: [
-        { type: Schema.Types.ObjectId, ref: 'Section' }
-    ],
-}, { collection: 'school' });
-
-var School = mongoose.model('School', SchoolSchema);
 
 var ExamSchema = new mongoose.Schema({
     examTitle: String,
