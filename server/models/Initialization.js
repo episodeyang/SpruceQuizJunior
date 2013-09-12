@@ -14,7 +14,10 @@ var _ = require('underscore')
 //    Problem,
 //    Exam,
 //    Student,
+//    Parent,
 //    Teacher,
+//    Admin,
+//    Superadmin,
 //    User,
 //    Quiz,
 //    Feed
@@ -308,6 +311,31 @@ tempstudent.save();
 var stu3_id = tempstudent._id;
 
 
+// Initialization of Parent data
+var ParentM = require('./SchemaModels').Parent;
+
+var tempparent = new ParentM({
+    parentName: "parentA",
+    studentIds: [s1_id]
+});
+tempparent.save();
+var prt1_id = tempparent._id;
+
+tempparent = new ParentM({
+    parentName: "parentB",
+    studentIds: [s1_id]
+});
+tempparent.save();
+var prt2_id = tempparent._id;
+
+tempparent = new ParentM({
+    parentName: "parentC",
+    studentIds: [s2_id]
+});
+tempparent.save();
+var prt3_id = tempparent._id;
+
+
 // Initialization of Teacher data
 var TeacherM = require('./SchemaModels').Teacher;
 
@@ -326,6 +354,26 @@ tempteacher = new TeacherM({
 });
 tempteacher.save();
 var tchr2_id = tempteacher._id;
+
+// Initialization of Admin data
+var AdminM = require('./SchemaModels').Admin;
+
+var tempadmin = new AdminM({
+    adminName: "admin",
+    schools: [s1_id, s2_id]
+});
+tempadmin.save();
+var a1_id = tempadmin._id;
+
+
+// Initialization of Superadmin data
+var SuperadminM = require('./SchemaModels').Superadmin;
+
+var tempsuperadmin = new SuperadminM({
+    superadminName: "superadmin"
+});
+tempsuperadmin.save();
+var sa1_id = tempsuperadmin._id;
 
 
 // Initialization of User data
@@ -356,10 +404,26 @@ tempuser = new UserM({
 tempuser.save();
 
 tempuser = new UserM({
-    username:   "parent",
+    username:   "parent1",
     password:   "123",
     role:   userRoles.parent,
-    userId: null
+    userId: prt1_id
+});
+tempuser.save();
+
+tempuser = new UserM({
+    username:   "parent2",
+    password:   "123",
+    role:   userRoles.parent,
+    userId: prt2_id
+});
+tempuser.save();
+
+tempuser = new UserM({
+    username:   "parent3",
+    password:   "123",
+    role:   userRoles.parent,
+    userId: prt3_id
 });
 tempuser.save();
 
@@ -383,9 +447,18 @@ tempuser = new UserM({
     username:   "admin",
     password:   "123",
     role:   userRoles.admin,
-    userId: null
+    userId: a1_id
 });
 tempuser.save();
+
+tempuser = new UserM({
+    username:   "superadmin",
+    password:   "123",
+    role:   userRoles.superadmin,
+    userId: sa1_id
+});
+tempuser.save();
+
 
 // Initialization of Quiz data
 var QuizM = require('./SchemaModels').Quiz;
@@ -454,6 +527,8 @@ tempfeed = new FeedM({
 tempfeed.save();
 var f4_id = tempfeed._id;
 
+
+//
 
 // End of temporary initilization
 

@@ -9,31 +9,56 @@ var User
     , check =           require('validator').check
     , userRoles =       require('../../client/js/routingConfig').userRoles;
 
-var UserM = require('./SchemaModels').User;
+var UserM = require('./SchemaModels').User
+    , StudentM = require('./SchemaModels').Student
+    , TeacherM = require('./SchemaModels').Teacher;
 
 module.exports = {
     addUser: function(username, password, role, callback) {
-        UserM.count(function(err, results) {
+        UserM.findOne({ username: username }, function (err, duplicate) {
             if (err) {
-                console.log("Counting error");
+                console.log("An error occurred in checking User database.");
             } else {
-                var tempid = results + 1;
-                var newid = 'u' + tempid;
-                var user = new UserM({
-                    id:         newid,
-                    username:   username,
-                    password:   password,
-                    role:       role
-                });
-                user.save(function (err, fluffy) {
-                    if (err) {
-                        return callback("UserAlreadyExists");
+                if(duplicate) {
+                    console.log("User already exists");
+                    return callback("UserAlreadyExists");
+                } else {
+                    var user = new UserM({
+                        username:   username,
+                        password:   password,
+                        role:       role,
+                        userId:     null
+                    });
+                    var tempobject;
+                    if(role === 2) {
+                        tempobject = new StudentM();
+                        tempobject.save();
+                    } else if(role === 4) {
+                        tempobject = new ParentM();
+                        tempobject.save();
+                    } else if(role === 8) {
+                        tempobject = new TeacherM();
+                        tempobject.save();
+                    } else if(role === 16) {
+                        tempobject = new AdminM();
+                        tempobject.save();
+                    } else if(role === 32) {
+                        tempobject = new SuperadminM();
+                        tempobject.save();
                     } else {
-                        return callback(null, user);
+                        console.log("Not a valid role number!");
                     }
-                });
+                    user.userId = tempobject._id;
+                    user.save(function (err) {
+                        if (err) {
+                            console.log("An error occurred in saving new user to database.");
+                        } else {
+                            return callback(null, user);
+                        }
+                    });
+                }
             }
-        })
+        });
     },
 
     // findOrCreateOauthUser: function(provider, providerId) {
@@ -76,7 +101,9 @@ module.exports = {
         // TODO: Seems node-validator's isIn function doesn't handle Number arrays very well...
         // Till this is rectified Number arrays must be converted to string arrays
         // https://github.com/chriso/node-validator/issues/185
-        var stringArr = _.map(_.values(userRoles), function(val) { return val.toString() });
+        //var stringArr = _.map(_.values(userRoles), function(val) { return val.toString() });
+        var stringArr = [ '1', '2', '4', '8'];
+        //console.log(stringArr);
         check(user.role, 'Invalid user role given').isIn(stringArr);
     },
 
@@ -155,7 +182,8 @@ module.exports = {
     //     );
     // },
     serializeUser: function(user, done) {
-        done(null, user.id);
+        //console.log(user);
+        done(null, user.userId);
     },
 
     // deserializeUser: function(id, done) {
@@ -166,7 +194,7 @@ module.exports = {
     // }
 
     deserializeUser: function(id, done) {
-        UserM.findOne({ id: id }, function(err, user) {
+        UserM.findOne({ userId: id }, function(err, user) {
             if(user)    { done(null, user); }
             else        { done(null, false); }
         });

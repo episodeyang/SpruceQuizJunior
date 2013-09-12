@@ -121,6 +121,14 @@ var StudentSchema = new mongoose.Schema({
 
 var Student = mongoose.model('Student', StudentSchema);
 
+//Parent schema
+var ParentSchema = new mongoose.Schema({
+    parentName: String,
+    studentIds: [{ type: Schema.Types.ObjectId, ref: 'Student' }]
+}, { collection : 'parent' });
+
+var Parent = mongoose.model('Parent', ParentSchema);
+
 //Teacher schema
 var TeacherSchema = new mongoose.Schema({
     teacherName: String,
@@ -130,12 +138,23 @@ var TeacherSchema = new mongoose.Schema({
 
 var Teacher = mongoose.model('Teacher', TeacherSchema);
 
+//Admin schema
+var AdminSchema = new mongoose.Schema({
+    adminName: String,
+    schools: [{ type: Schema.Types.ObjectId, ref: 'schools' }]
+}, { collection : 'admin' });
+
+var Admin = mongoose.model('Admin', AdminSchema);
+
+//Superadmin schema
+var SuperadminSchema = new mongoose.Schema({
+    superadminName: String
+}, { collection : 'superadmin' });
+
+var Superadmin = mongoose.model('Superadmin', SuperadminSchema);
+
 //User schema
 var UserSchema = new mongoose.Schema({
-    id: {
-      type: String,
-      unique: true
-    },
     username: {
     	type: String,
     	unique: true
@@ -171,15 +190,18 @@ var Feed = mongoose.model('Feed', FeedSchema);
 
 //exports
 module.exports = {
-  Material: Material,
-  Unit: Unit,
-  Section: Section,
-  School: School,
-  Student: Student,
-  Teacher: Teacher,
-  User: User,
-  Problem: Problem,
-  Exam: Exam,
-  Quiz: Quiz,
-  Feed: Feed
+    Material: Material,
+    Unit: Unit,
+    Section: Section,
+    School: School,
+    Student: Student,
+    Parent: Parent,
+    Teacher: Teacher,
+    Admin: Admin,
+    Superadmin: Superadmin,
+    User: User,
+    Problem: Problem,
+    Exam: Exam,
+    Quiz: Quiz,
+    Feed: Feed
 }
