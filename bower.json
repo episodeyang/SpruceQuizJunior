@@ -20,7 +20,7 @@
     "nvd3": "~1.0.0-beta",
     "angularjs-nvd3-directives": "https://github.com/cmaurer/angularjs-nvd3-directives.git",
     "angular-placeholders": "*",
-    "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#bootstrap3_bis",
+    "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#bootstrap3_bis2",
     "bootstrap": "~3.0.0",
     "MathJax": "*"
   },
