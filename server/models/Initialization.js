@@ -2,7 +2,7 @@ var _ = require('underscore')
     , passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
     , check = require('validator').check
-    , userRoles = require('../../client/js/routingConfig').userRoles;
+    , userRoles = require('../../client/js/rolesHelper').userRoles;
 
 
 // For initilizing Spruce database in MongoDB as some initial tests. Not needed if data is already in MongoDB
@@ -362,7 +362,7 @@ var AdminM = require('./SchemaModels').Admin;
 
 var tempadmin = new AdminM({
     adminName: "admin",
-    schools: [s1_id, s2_id]
+    schools: [s1_id]
 });
 tempadmin.save();
 var a1_id = tempadmin._id;
