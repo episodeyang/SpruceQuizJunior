@@ -14,28 +14,30 @@
                 br
                 | 让公益教育项目更加透明量化
             .row
-                div.col-md-10.offset1
+                div.col-lg-10.col-lg-offset-1
                     div
                         //-div(collapse='!isCollapsed')
-                        div
-                            form(ng-submit="login()", name="loginForm", role="form")
-                                .form-group
-                                    input.form-control(type="text", data-ng-model="username", placeholder="在这里输入用户名",
-                                    name="username", required)
-                                .form-group
-                                    input.form-control(type="password", data-ng-model="password", placeholder="在这里输入密码",
-                                    name="password",
-                                    required)
-                                .form-group
-                                    .checkbox
-                                        label(for="rememberme").checkbox
-                                            input(type="checkbox", data-ng-model="rememberme", name="rememberme")
-                                            | 记住我
-                                .row
-                                    .col-md-4.offset7
-                                        button.btn(type="submit") Log in
+                        form.form-horizontal(ng-submit="login()", name="loginForm", role="form")
+                            .form-group
+                                label.sr-only User Name
+                                div.col-lg-8.col-lg-offset-2
+                                    input.form-control(type="text", data-ng-model="username",
+                                    placeholder="在这里输入用户名", name="username", required)
+                            .form-group
+                                label.sr-only Password
+                                div.col-lg-8.col-lg-offset-2
+                                    input.form-control(type="password", data-ng-model="password",
+                                    placeholder="在这里输入密码",name="password",required)
+                            //-.form-group
+                                .checkbox.col-lg-4.col-lg-offset-4
+                                    label(for="rememberme").checkbox
+                                        input(type="checkbox", data-ng-model="rememberme", name="rememberme")
+                                        | 记住我
+                            .form-group
+                                div.text-center
+                                    button.btn.btn-success(type="submit") Log in
 
-                            .alert.alert-error(data-ng-bind="error", data-ng-show="error")
+                        .alert.alert-error(data-ng-bind="error", data-ng-show="error")
                     .text-center
                         a.btn.btn-success(data-ng-click='isCollapsed = !isCollapsed') 点击这里登录
                     p(style='margin-top: 20px;')
