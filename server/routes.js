@@ -171,6 +171,12 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.getSections],
         accessLevel: accessLevels.admin
     },
+    {
+        path: '/api/admins/sections/:id',
+        httpMethod: 'POST',
+        middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.createSections],
+        accessLevel: accessLevels.admin
+    },
     //Teacher resources
     {
         path: '/api/teachers/:uuid',
