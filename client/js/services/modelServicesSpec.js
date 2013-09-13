@@ -1,9 +1,9 @@
+'use strict';
+
 /**
  *
  * front end spec code using Karma and Jasmin
  */
-
-'use strict';
 
 describe('Model test', function () {
     // a rather trivial hello world example, need to clean up later

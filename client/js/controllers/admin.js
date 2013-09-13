@@ -35,9 +35,9 @@ var CreateModalCtrl = function($scope,Students,newStudentList) {
     $scope.createStudentModal = false;
     $scope.addStudent = function(stu) {
         //    console.log(angular.toJson(stu));
-        Students.onStudents.save(stu);
+//        Students.onStudents.save(stu);
         $scope.newStudentList.push(stu);
-        $scope.$parent.students = Students.onStudents.list();
+//        $scope.$parent.students = Students.onStudents.list();
         $scope.close();
     }
     $scope.close=function(){
@@ -57,18 +57,18 @@ var EditModalCtrl = function($scope,$q,$timeout,Students) {
         delete stu.__v;
         delete stu._id;
     //  console.log(angular.toJson(stu));
-        Students.onStudents.update(stu);
+//        Students.onStudents.update(stu);
         $scope.close();
 
     }
     $scope.deleteStudent = function(stu) {
         //   console.log(angular.toJson(stu));
         $scope.close();
-        Students.onStudents.remove({uuid:stu.userUUID})
+//        Students.onStudents.remove({uuid:stu.userUUID})
         var updateParent = $q.defer();
         updateParent.promise
             .then(function(){
-             $scope.$parent.$parent.students = Students.onStudents.list()
+//             $scope.$parent.$parent.students = Students.onStudents.list()
             });
 
         $timeout(function(){
