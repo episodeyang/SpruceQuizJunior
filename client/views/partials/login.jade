@@ -1,9 +1,9 @@
 
 .container(style="width:900px;")
-    .row-fluid(style='margin-top: 80px;')
-        .span6
+    .row(style='margin-top: 80px;')
+        .col-md-6
             img(style='margin: 0px 0px 20px 60px;float:right;', width="", src='/img/firstpic.png', alt='first picture')
-        .span6
+        .col-md-6
             br
             br
             br
@@ -13,34 +13,34 @@
                 | 让山区的孩子跨越千山万水
                 br
                 | 让公益教育项目更加透明量化
-            .row-fluid
-                div.span10.offset1
+            .row
+                div.col-md-10.offset1
                     div
                         //-div(collapse='!isCollapsed')
                         div
                             form(ng-submit="login()", name="loginForm")
-                                .row-fluid
-                                    //-.span3
+                                .row
+                                    //-.col-md-3
                                         .form-inline.text-right
                                             p(style="margin:6px 5px 10px;") 用户名
-                                    .span8.offset2
-                                        input.span12(type="text", data-ng-model="username", placeholder="在这里输入用户名",
+                                    .col-md-8.offset2
+                                        input.col-md-12(type="text", data-ng-model="username", placeholder="在这里输入用户名",
                                         name="username", required)
-                                .row-fluid
-                                    //-.span3
+                                .row
+                                    //-.col-md-3
                                         .form-inline.text-right
                                             p(style="margin:6px 5px 10px;") 密码
-                                    .span8.offset2
-                                        input.span12(type="password", data-ng-model="password", placeholder="在这里输入密码",
+                                    .col-md-8.offset2
+                                        input.col-md-12(type="password", data-ng-model="password", placeholder="在这里输入密码",
                                         name="password",
                                         required)
-                                .row-fluid
-                                    .span8.offset2
+                                .row
+                                    .col-md-8.offset2
                                         label(for="rememberme").checkbox
                                             input(type="checkbox", data-ng-model="rememberme", name="rememberme")
                                             | 记住我
-                                .row-fluid
-                                    .span4.offset7
+                                .row
+                                    .col-md-4.offset7
                                         button.btn(type="submit") Log in
 
                             .alert.alert-error(data-ng-bind="error", data-ng-show="error")
@@ -51,23 +51,23 @@
                             a(href='/register') 现在注册！
 
     hr
-    .row-fluid.marketing
-        .span6.text-center
+    .row.marketing
+        .col-md-6.text-center
             br
             br
             h3 让每个孩子都能享受到个性化的帮助
             p 希望不再是冰冷的课桌和书本，
             p 爱心不再是支票和铅笔橡皮。
             p 更贴心的帮助，是一对一的你问我答
-        .span6
+        .col-md-6
             img(src="/img/string_telephone.jpg")
 
     hr
-    .row-fluid.marketing
-        .span6
+    .row.marketing
+        .col-md-6
             div
                 img(src="/img/dandelion2.jpg", style="height: 200px;margin-top:20px;margin-bottom:20px;").pull-right
-        .span6.text-center
+        .col-md-6.text-center
             br
             br
             h3 从一到万
@@ -75,8 +75,8 @@
             p 辅助当地教师，精确推送阅读和题目。
             p 让同样的数字内容，帮助到更多需要的受助学生
     hr
-    .row-fluid.marketing
-        .span6.text-center
+    .row.marketing
+        .col-md-6.text-center
             br
             br
             h3 云端助手，不让任何一个学生落下
@@ -87,13 +87,13 @@
             br
             br
             br
-        .span6
+        .col-md-6
             div
                 img(src="/img/wordcloud.png", style="height: 200px;margin-top:20px;margin-bottom:20px;")
     //-hr
-    //-.row-fluid.marketing
-        .span6
-        .span6.text-center
+    //-.row.marketing
+        .col-md-6
+        .col-md-6.text-center
             h3 为老师减轻负担，为学生提高效率
             p 将有限的人力资源用在更重要的地方
             p 完整的报告工具，让老师更快更好掌握学生情况
