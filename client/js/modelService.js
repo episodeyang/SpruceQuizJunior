@@ -11,7 +11,7 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
         function ($rootScope, Students) {
             var modelInstance = {};
 
-            // testing code, to be deleted
+            // TODO: testing code, to be deleted
             modelInstance.test = 1;
 
             modelInstance.init = function () {
@@ -19,14 +19,28 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
                 // this should assign all the fields in
                 modelInstance.user = $rootScope.user;
                 //rolesHelper needs no special importing since it's explosed via js exports
-                //console.log(rolesHelper.roles);
-                //modelInstance.user.roleName = rolesHelper.roles[$rootScope.user.role >> 2];
+                console.log($rootScope.user);
+                console.log(rolesHelper.userRoles);
 
-//                if (modelInstance.user.role.roleName === 'student') {
-//                    // fill in
-//                    //Students.onSections
-//                }
+                // Now retrieve Student information and assemble it with Model.user.
 
+                modelInstance.user.roleName =
+                    modelInstance.reverseRoleLookup(modelInstance.user.role, rolesHelper.userRoles);
+
+                // get basic data
+                if (modelInstance.user.role.roleName === 'student') {
+                    // fill in
+                    //Students.onSections
+                }
+
+                // logic:
+//                modelInstance.user.schools =
+
+                //console.log(modelInstance.user.roleName);
+
+//
+
+                //modelInstance.getStudent();
                 //The following are for tomorrow:
                 //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
                 //      handle input cases of :
@@ -51,8 +65,19 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
                 //modelInstance.user = Students.onStudents.list();
 
             };
-            modelInstance.destroy = function () {
+
+            modelInstance.reverseRoleLookup = function (value, obj) {
+                for (var key in obj) {
+                    if (obj[key] === value) {
+                        console.log(obj[key]);
+                        return key;
+                    }
+                }
+                console.log("messup up and didn't find anything!", value);
+                return null;
             };
+//            modelInstance.destroy = function () {
+//            };
 
             //The following are for tomorrow:
             //TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};

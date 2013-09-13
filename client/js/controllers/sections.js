@@ -1,8 +1,8 @@
 'use strict';
 angular.module('SpruceQuizApp')
 .controller('SectionCtrl',
-['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model',
-    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model) {
+['$filter','$rootScope', '$scope', 'Admin', 'Sections','Units','Materials','Students','Model',
+    function($filter, $rootScope, $scope, Admin, Sections, Units, Materials, Students, Model) {
     $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
     $scope.highlightField = "question";
     $scope.problemTypes = ['multipleChoice','fillIn','OpenEnded'];
@@ -16,15 +16,20 @@ angular.module('SpruceQuizApp')
     $scope.model={};
     $scope.model.sections = Students.onSections.get({uuid: 'u1'});
     $scope.updateSection = function(index){
-        Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
-            ,function(results){
-                //console.log(results);
-                $scope.model.sections[index].sectionUnits = results;
-                if(results === []) {
-                    $scope.grabMaterials(results[0].unitUUID);
-                }
-            }
-        );
+        Admin.onSections.create({
+            sectionName: "三一班",
+            sectionDisplayName: "",
+            sectionParent: null
+        });
+//        Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
+//            ,function(results){
+//                //console.log(results);
+//                $scope.model.sections[index].sectionUnits = results;
+//                if(results === []) {
+//                    $scope.grabMaterials(results[0].unitUUID);
+//                }
+//            }
+//        );
     }
 
     $scope.model.unitID = "d1";
