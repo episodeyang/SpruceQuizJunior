@@ -8,7 +8,7 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
  * @param random
  */
     .factory('Model', ['$rootScope',// 'Students',
-        function ($rootScope, Students) {
+        function ($rootScope) {//, Students) {
             var modelInstance = {};
 
             // TODO: testing code, to be deleted
@@ -114,7 +114,7 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
 //            }),
             onSections: $resource('/api/admins/sections/:id', {id:'@_id'}, {
                 list: {method:'GET', params:{id: 'all'}, isArray:true},
-                create: {method:'POST'}
+                create: {method:'POST', params:{id: 'create'}}
             })
         };
     });
