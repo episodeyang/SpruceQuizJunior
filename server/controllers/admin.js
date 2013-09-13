@@ -6,24 +6,39 @@ var _ = require('underscore')
 
 module.exports = {
     getSections: function (req, res) {
-        AdminM.findOne({ _id: req.user.userId }), {"schools": 1, "_id": 0}, function (err, aschools) {
-            console.log(aschools);
-            if (req.params.id === "all") {
-                SectionM.find({ school: { $in: aschools } }, function (err, results) {
+        AdminM.findOne({ _id: req.user.userId }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Admin was not found or an error occurred");
+            } else if (req.params.id === "all") {
+                SectionM.find({ school: { $in: aresult.schools } }, function (err, results) {
                     //console.log(results);
                     res.json(results);
                 });
             }
             else {
-                //console.log(req.user.userId);
-                SectionM.findOne({ _id: req.params.id, school: { $in: aschools } })
-                    .populate('sectionUnits')
-                    .exec(function (err, results) {
+                SectionM.findOne({ _id: req.params.id })
+                .populate('sectionUnits')
+                .exec(function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "Section was not found or an error occured");
+                    } else if( aresult.schools.indexOf(results.school) === -1 ) {
+                        res.send(404, "Operation was not authorized.");
+                    } else {
                         //console.log(results);
                         res.json(results);
-                    });
+                    }
+                });
             }
-        }
+        });
+    },
+    createSections: function(req, res) {
+        var section = new SectionM(req.body);
+        console.log(section);
+        section.save(function (err) {
+            if (err) {
+                res.send(404, "Save student failed.");
+            }
+        });
     }
 //    getSchools: function (req, res) {
 //        TeacherM.findOne({ userUUID: req.params.uuid }, function (err, results) {
