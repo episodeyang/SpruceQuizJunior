@@ -19,7 +19,7 @@ spApp.directive('dirTest', function () {
         }
     };
 });
-
+/*
 spApp.directive('jsonTable', function () {
 
     // putting the variable here so it doesn't clogger up
@@ -88,5 +88,7 @@ spApp.directive('jsonTable', function () {
         };
     //};
 });
+
+ */
 
 

@@ -1,20 +1,37 @@
-br
-.row-fluid
-    .span8.offset2
-        div
+.panel-left
+    p(ph-txt='5p2s')
+.panel-body
+    .container
+        .row
             tabset
                 tab(heading="用户")
-                    //div(ng-controller="SuperAdminUserTableCtrl")
-                    button.btn.btn-success(ng-click="listStudents()") 学生数据
-                    br
-                    br
-                    div(ng-show="studentShowClicked && data['student'].data.length > 0")
-                        //dir-test(pageStatus="pageStatus")
-                        json-table(type="student", data="data", pageStatus="pageStatus")
+                    div.background-white
+                        //div(ng-controller="SuperAdminUserTableCtrl")
+                        br
+                        button.btn.btn-success(ng-click="listStudents()") 学生数据
+                        br
+                        br
+                        h3(ph-txt='1s')
+                        div(ph-txt='3p2s').background-white
+                        div(ng-show="studentShowClicked && data['student'].data.length > 0")
+                            //dir-test(pageStatus="pageStatus")
+                            //json-table(type="student", data="data", pageStatus="pageStatus")
 
                 tab(heading="班级")
                     p TODO
                     //button.btn.btn-success(ng-click="listSections()") 班级数据
                     //p {{model.sectionList}}
                 tab(heading="教学材料")
+.panel-right
+    .container
+        .row
+            .col-md-4
+                div.img-circle(ph-img='80x80', style='width: 80px; height: 80px; background-repeat: no-repeat;')
+            .col-md-8
+                div.user-bio
+                    h4 {{userData.lastName + userData.firstName}}
+                    p
+                        small {{userData.schools[0].schoolName}}
+                        br
+                        small {{userData.roleName}}
 
