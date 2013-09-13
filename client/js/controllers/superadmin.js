@@ -73,18 +73,6 @@ spApp.controller('SuperAdminCtrl',
                     {value: 'phone', name: 'Phone'}
                 ];
 
-//                $scope.data['student'].data = [
-//                    [
-//                        {
-//                            name: 'A',
-//                            dateOfBirth: '0901',
-//                            gender: 'F',
-//                            schools: 'S',
-//                            sections: 'SC',
-//                            phone: '911'
-//                        }
-//                    ]
-//                ];
                 $scope.data['student'].data = groupToPages(results);
                 console.log("logging from controller:");
                 console.log($scope.data['student'].data);
@@ -94,9 +82,3 @@ spApp.controller('SuperAdminCtrl',
     ]
 );
 
-//spApp.controller('SuperAdminCtrl',
-//    ['$scope', 'Students',//'$rootScope', '$scope', 'Sections', 'Units', 'Materials', 'Students',
-//        function ($scope, Students) {
-//        }
-//    ]
-//);
