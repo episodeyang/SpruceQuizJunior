@@ -40,13 +40,22 @@ angular.module('SpruceQuizApp')
     $scope.createNewSection = function(){
         $scope.newSection.sectionUUID = "new";
         $scope.newSection.sectionUnits = [];
-        var test = Admins.onSections.list();
-        console.log(test);
-        Admins.onSections.create({
-            sectionName: "三一班",
-            sectionDisplayName: "",
-            sectionParent: null
-        });
+//        var test = Admins.onSections.list();
+//        console.log(test);
+//        Admins.onSections.create({
+//            sectionName: "三一班",
+//            sectionDisplayName: "",
+//            school: "5232acad594a228610000009",
+//            sectionParent: null,
+//            sectionUnit: null
+//        });
+//        Admins.onSections.update({
+//            id: "5232b25d0084571411000002",
+//            sectionName: "三班"
+//        });
+//        Admins.onSections.remove({
+//            id: "5232b25d0084571411000002"
+//        });
 //        Sections.onSections.save($scope.newSection, function (result) {
 //            $scope.model.sections.push(result);
 //            Students.onStudents.get({uuid: 'u1'}, function (tempS) {
