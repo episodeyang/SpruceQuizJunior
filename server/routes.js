@@ -177,6 +177,18 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.createSections],
         accessLevel: accessLevels.admin
     },
+//    {
+//        path: '/api/admins/sections/:id',
+//        httpMethod: 'DELETE',
+//        middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.removeSections],
+//        accessLevel: accessLevels.admin
+//    },
+//    {
+//        path: '/api/admins/sections/:id',
+//        httpMethod: 'PUT',
+//        middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.updateSections],
+//        accessLevel: accessLevels.admin
+//    },
     //Teacher resources
     {
         path: '/api/teachers/:uuid',
