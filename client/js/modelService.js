@@ -114,7 +114,9 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
 //            }),
             onSections: $resource('/api/admins/sections/:id', {id:'@_id'}, {
                 list: {method:'GET', params:{id: 'all'}, isArray:true},
-                create: {method:'POST', params:{id: 'create'}}
+                create: {method:'POST', params:{id: 'create'}},
+                update: {method:'PUT', params:{id: '@id'}},
+                remove: {method:'DELETE', params:{id: '@_id'}}
             })
         };
     });
