@@ -6,6 +6,7 @@ html,body {
     font-size: 1em;
     height:100%;
 }
+body { padding-top: 70px; }
 body{
     font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',"WenQuanYi Micro Hei",Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
     font-size: 1em;
