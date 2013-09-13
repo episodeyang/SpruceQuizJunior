@@ -7,7 +7,7 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
  * @author test
  * @param random
  */
-    .factory('Model', ['$rootScope', 'Students',
+    .factory('Model', ['$rootScope',// 'Students',
         function ($rootScope, Students) {
             var modelInstance = {};
 

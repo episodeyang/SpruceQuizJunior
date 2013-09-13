@@ -8,38 +8,39 @@
             br
             br
             h1.text-center(style='font-size: 36px; padding-bottom: 20px;') 欢迎来到游子基金会
-            h1.text-center(style='font-size: 36px; padding-bottom: 20px; margin-top:0;') 你问我答公益平台演示站点
+            h1.text-center(style='font-size: 36px; padding-bottom: 20px; margin-top:0;') 你问我答公益平台示范站点
             p.lead.text-center(style='padding-bottom: 30px;')
                 | 让山区的孩子跨越千山万水
                 br
                 | 让公益教育项目更加透明量化
             .row-fluid
                 div.span10.offset1
-                    div(collapse='!isCollapsed')
-                        div.well.well-large
+                    div
+                        //-div(collapse='!isCollapsed')
+                        div
                             form(ng-submit="login()", name="loginForm")
                                 .row-fluid
-                                    .span3
+                                    //-.span3
                                         .form-inline.text-right
                                             p(style="margin:6px 5px 10px;") 用户名
-                                    .span9
+                                    .span8.offset2
                                         input.span12(type="text", data-ng-model="username", placeholder="在这里输入用户名",
                                         name="username", required)
                                 .row-fluid
-                                    .span3
+                                    //-.span3
                                         .form-inline.text-right
                                             p(style="margin:6px 5px 10px;") 密码
-                                    .span9
+                                    .span8.offset2
                                         input.span12(type="password", data-ng-model="password", placeholder="在这里输入密码",
                                         name="password",
                                         required)
                                 .row-fluid
-                                    .span9.offset3
+                                    .span8.offset2
                                         label(for="rememberme").checkbox
                                             input(type="checkbox", data-ng-model="rememberme", name="rememberme")
                                             | 记住我
                                 .row-fluid
-                                    .span4.offset8
+                                    .span4.offset7
                                         button.btn(type="submit") Log in
 
                             .alert.alert-error(data-ng-bind="error", data-ng-show="error")
