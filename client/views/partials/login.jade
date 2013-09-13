@@ -18,24 +18,16 @@
                     div
                         //-div(collapse='!isCollapsed')
                         div
-                            form(ng-submit="login()", name="loginForm")
-                                .row
-                                    //-.col-md-3
-                                        .form-inline.text-right
-                                            p(style="margin:6px 5px 10px;") 用户名
-                                    .col-md-8.offset2
-                                        input.col-md-12(type="text", data-ng-model="username", placeholder="在这里输入用户名",
-                                        name="username", required)
-                                .row
-                                    //-.col-md-3
-                                        .form-inline.text-right
-                                            p(style="margin:6px 5px 10px;") 密码
-                                    .col-md-8.offset2
-                                        input.col-md-12(type="password", data-ng-model="password", placeholder="在这里输入密码",
-                                        name="password",
-                                        required)
-                                .row
-                                    .col-md-8.offset2
+                            form(ng-submit="login()", name="loginForm", role="form")
+                                .form-group
+                                    input.form-control(type="text", data-ng-model="username", placeholder="在这里输入用户名",
+                                    name="username", required)
+                                .form-group
+                                    input.form-control(type="password", data-ng-model="password", placeholder="在这里输入密码",
+                                    name="password",
+                                    required)
+                                .form-group
+                                    .checkbox
                                         label(for="rememberme").checkbox
                                             input(type="checkbox", data-ng-model="rememberme", name="rememberme")
                                             | 记住我
