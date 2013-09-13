@@ -14,8 +14,7 @@ module.exports = {
                     //console.log(results);
                     res.json(results);
                 });
-            }
-            else {
+            } else {
                 SectionM.findOne({ _id: req.params.id })
                 .populate('sectionUnits')
                 .exec(function (err, results) {
@@ -40,6 +39,39 @@ module.exports = {
             }
         });
     }
+//    updateSections: function(req, res) {
+//        //console.log(req.body);
+//        //console.log(req.params.uuid);
+//        StudentM.update({ userUUID: req.params.uuid }, req.body, function (err) {
+//            if(err) {
+//                res.send(404, "Update student failed.");
+//            }
+//        });
+//    },
+//    removeSections: function(req, res) {
+//        StudentM.remove({ userUUID: req.params.uuid }, function (err) {
+//            if(err) {
+//                res.send(404, "Remove student failed.");
+//            }
+//        });
+//        AdminM.findOne({ _id: req.user.userId }, function (err, aresult) {
+//            if(err || !aresult) {
+//                res.send(404, "Admin was not found or an error occurred");
+//            } else {
+//                SectionM.remove({ _id: req.params.id })
+//                .exec(function (err) {
+//                    if(err) {
+//                        res.send(404, "Remove student failed.");
+//                    } else if( aresult.schools.indexOf(results.school) === -1 ) {
+//                        res.send(404, "Operation was not authorized.");
+//                    } else {
+//                        //console.log(results);
+//                        res.json(results);
+//                    }
+//                });
+//            }
+//        });
+//    }
 //    getSchools: function (req, res) {
 //        TeacherM.findOne({ userUUID: req.params.uuid }, function (err, results) {
 //            //console.log(results);
