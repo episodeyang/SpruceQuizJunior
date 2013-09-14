@@ -9,8 +9,9 @@ var InitializeSpruceDB = false;
 var express =       require('express')
     , http =        require('http')
     , mongoose =    require('mongoose')
-    , passport =    require('passport')
-    , path =        require('path')
+    , passport =    require('passport');
+var lessMiddleware = require('less-middleware');
+var path =          require('path')
     , User =        require('./server/models/User.js');
     //, Material =     require('./server/models/Material.js')
     //, Unit =     require('./server/models/Unit.js')
@@ -48,7 +49,7 @@ app.use(express.logger('dev'))
 app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.compiler({ src: __dirname + '/client', enable: ['less'] }));
+app.use(lessMiddleware({ src: __dirname + '/client', compress: true }));
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(express.cookieSession(
     {
