@@ -23,6 +23,9 @@
 .background-grey {
   background: #f2f2f2;
 }
+.border-white {
+  border:solid 4px fadeout(white, 20%);
+}
 @sidebar-color: #f2f2f2;
 @sidebar-color-dark: darken(desaturate(@sidebar-color,100%),20%);
 //div{
@@ -44,7 +47,7 @@
   width: 240px;
   background: #ffffff;
   height: 100%;
-  #gradient.horizontal-three-colors(@sidebar-color-dark,@sidebar-color,1%,@sidebar-color);
+  #gradient.horizontal-three-colors(@sidebar-color-dark,@sidebar-color,2%,@sidebar-color);
   .column{
     height: 100%;
   }
