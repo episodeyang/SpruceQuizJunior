@@ -32,15 +32,17 @@
 
     };
 
+
     exports.userRoles = buildRoles(config.roles);
     exports.accessLevels = buildAccessLevels(config.accessLevels, exports.userRoles);
 
-    /*
-     Method to build a distinct bit mask for each role
-     It starts off with "1" and shifts the bit to the left for each element in the
-     roles array parameter
+    /**
+     * This userRoles returns the mapping of role string to the role number
+     * Method to build a distinct bit mask for each role
+     * It starts off with "1" and shifts the bit to the left for each element in the
+     * roles array parameter
+     * @type {*}
      */
-
     function buildRoles(roles) {
 
         var bitMask = "01";
