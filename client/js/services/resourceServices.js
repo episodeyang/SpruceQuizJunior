@@ -3,6 +3,7 @@
 angular.module('modelServices', ['ngResource', 'ngRoute'])
 
 
+    // need to change to onSelf or discuss with Lizhong
     .factory('AuthUsers', function ($resource) {
         return {
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
