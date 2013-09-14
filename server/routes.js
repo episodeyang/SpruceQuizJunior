@@ -7,6 +7,7 @@ var _ =           require('underscore')
     , StudentCtrl =  require('./controllers/student')
     , TeacherCtrl =  require('./controllers/teacher')
     , AdminCtrl =  require('./controllers/admin')
+    , SuperadminCtrl =  require('./controllers/superadmin')
     , SectionCtrl =  require('./controllers/section')
     , SchoolCtrl =  require('./controllers/school')
     , UnitCtrl =  require('./controllers/unit')
@@ -164,6 +165,13 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getSections],
         accessLevel: accessLevels.loggedin
     },
+    //Superadmin resource
+    {
+        path: '/api/superadmins/sections/:id',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, SuperadminCtrl.getSections],
+        accessLevel: accessLevels.superadmin
+    },
     //Admin resource
     {
         path: '/api/admins/sections/:id',
@@ -187,6 +195,12 @@ var routes = [
         path: '/api/admins/sections/:id',
         httpMethod: 'PUT',
         middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.updateSections],
+        accessLevel: accessLevels.admin
+    },
+    {
+        path: '/api/admins/schools/:id',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.getSchools],
         accessLevel: accessLevels.admin
     },
     //Teacher resources
