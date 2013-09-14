@@ -86,7 +86,7 @@ var SectionSchema = new mongoose.Schema({
     sectionParent: { type: Schema.Types.ObjectId, ref: 'SectionSchema' },
     sectionUnits: [
         { type: Schema.Types.ObjectId, ref: 'Unit' }
-    ],
+    ]
 }, { collection: 'section' });
 
 var Section = mongoose.model('Section', SectionSchema);
