@@ -48,6 +48,7 @@ app.use(express.logger('dev'))
 app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(express.compiler({ src: __dirname + '/client', enable: ['less'] }));
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(express.cookieSession(
     {
@@ -55,6 +56,7 @@ app.use(express.cookieSession(
     }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 passport.use(User.localStrategy);
 //passport.use(User.twitterStrategy());  // Comment out this line if you don't want to enable login via Twitter

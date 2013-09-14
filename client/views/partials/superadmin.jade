@@ -1,11 +1,11 @@
 .panel-left
-    p(ph-txt='5p2s')
+    //-p(ph-txt='5p2s')
 .panel-body
     .container
         .row
             tabset
                 tab(heading="用户")
-                    div.background-white
+                    div.tab-box.background-white
                         //div(ng-controller="SuperAdminUserTableCtrl")
                         br
                         button.btn.btn-success(ng-click="listStudents()") 学生数据
@@ -23,15 +23,20 @@
                     //p {{model.sectionList}}
                 tab(heading="教学材料")
 .panel-right
+    br
+    br
+    br
+    div(style="width:80px;margin:20px;float:left;")
+        div.img-circle(ph-img='80x80', style='width: 80px; height: 80px; background-repeat: no-repeat;')
+    div(style="width:110px;margin-top:20px; float:left;")
+        div.user-bio
+            h4 {{userData.lastName + userData.firstName}}
+            p
+                small {{userData.schools[0].schoolName}}
+                br
+                small {{userData.roleName}}
     .container
-        .row
-            .col-md-4
-                div.img-circle(ph-img='80x80', style='width: 80px; height: 80px; background-repeat: no-repeat;')
-            .col-md-8
-                div.user-bio
-                    h4 {{userData.lastName + userData.firstName}}
-                    p
-                        small {{userData.schools[0].schoolName}}
-                        br
-                        small {{userData.roleName}}
+
+
+
 
