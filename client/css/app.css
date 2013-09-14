@@ -47,12 +47,12 @@
   width: 240px;
   background: #ffffff;
   height: 100%;
-  background-image: -webkit-gradient(left, linear, 0 0, 0 100%, from(#cccccc), color-stop(2%, #f2f2f2), to(#f2f2f2));
-  background-image: -webkit-linear-gradient(left, #cccccc, #f2f2f2 2%, #f2f2f2);
-  background-image: -moz-linear-gradient(left, #cccccc, #f2f2f2 2%, #f2f2f2);
-  background-image: linear-gradient(to right, #cccccc, #f2f2f2 2%, #f2f2f2);
+  background-image: -webkit-gradient(left, linear, 0 0, 0 100%, from(#d6d6d6), color-stop(2%, #fcfcfc), to(#fcfcfc));
+  background-image: -webkit-linear-gradient(left, #d6d6d6, #fcfcfc 2%, #fcfcfc);
+  background-image: -moz-linear-gradient(left, #d6d6d6, #fcfcfc 2%, #fcfcfc);
+  background-image: linear-gradient(to right, #d6d6d6, #fcfcfc 2%, #fcfcfc);
   background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccccc', endColorstr='#fff2f2f2', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd6d6d6', endColorstr='#fffcfcfc', GradientType=1);
 }
 .panel-right .column {
   height: 100%;
