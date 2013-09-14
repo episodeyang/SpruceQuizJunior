@@ -57,10 +57,20 @@
 .panel-right .column {
   height: 100%;
 }
+nav .nav-fixes {
+  height: 50px;
+  width: 100px;
+  right: 200px;
+  top: 0px;
+  position: absolute;
+}
+nav .nav-fixes small {
+  padding: 5px;
+}
 .tab-box {
   border-bottom: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-right: 1px solid #ddd;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }

@@ -1,8 +1,8 @@
-.container(style="width:900px;")
-    .row-fluid
-        .span12
-    .row-fluid
-        .span9
+.panel-left
+//-p(ph-txt='5p2s')
+.panel-body
+    .container
+        .row
             tabset
                 tab(heading="新鲜事")
                     div.row-fluid
@@ -62,6 +62,17 @@
                         p the Model =
                     .span10
                         bat-json-tree(val="Model")
+.panel-right
+    div(style="width:80px;margin:20px;float:left;")
+        div.img-circle.border-white(ph-img='78x78', style='width: 82px; height: 82px; background-repeat: no-repeat;')
+    div(style="width:110px;margin-top:20px; float:left;")
+        div.user-bio
+            h4 {{userData.lastName + userData.firstName}}
+            p
+                small {{userData.schools[0].schoolName}}
+                br
+                small {{userData.roleName}}
+    .containerdd
 
 
 
