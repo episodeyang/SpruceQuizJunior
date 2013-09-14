@@ -31,11 +31,15 @@
   left: 10;
   position: absolute;
   min-width: 240px;
+  min-height: 100%;
+  background: #ffffff;
 }
 .panel-body {
   left: 240px;
   right: 240px;
   position: absolute;
+  min-height: 100%;
+  background: #ffffff;
 }
 .panel-right {
   right: 0px;
@@ -43,12 +47,12 @@
   width: 240px;
   background: #ffffff;
   height: 100%;
-  background-image: -webkit-gradient(left, linear, 0 0, 0 100%, from(#bfbfbf), color-stop(2%, #f2f2f2), to(#f2f2f2));
-  background-image: -webkit-linear-gradient(left, #bfbfbf, #f2f2f2 2%, #f2f2f2);
-  background-image: -moz-linear-gradient(left, #bfbfbf, #f2f2f2 2%, #f2f2f2);
-  background-image: linear-gradient(to right, #bfbfbf, #f2f2f2 2%, #f2f2f2);
+  background-image: -webkit-gradient(left, linear, 0 0, 0 100%, from(#cccccc), color-stop(2%, #f2f2f2), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(left, #cccccc, #f2f2f2 2%, #f2f2f2);
+  background-image: -moz-linear-gradient(left, #cccccc, #f2f2f2 2%, #f2f2f2);
+  background-image: linear-gradient(to right, #cccccc, #f2f2f2 2%, #f2f2f2);
   background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbfbfbf', endColorstr='#fff2f2f2', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccccc', endColorstr='#fff2f2f2', GradientType=1);
 }
 .panel-right .column {
   height: 100%;

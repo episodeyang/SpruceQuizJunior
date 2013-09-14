@@ -6,16 +6,17 @@
             tabset
                 tab(heading="用户")
                     div.tab-box.background-white
-                        //div(ng-controller="SuperAdminUserTableCtrl")
-                        br
-                        button.btn.btn-success(ng-click="listStudents()") 学生数据
-                        br
-                        br
-                        h3(ph-txt='1s')
-                        div(ph-txt='3p2s').background-white
-                        div(ng-show="studentShowClicked && data['student'].data.length > 0")
-                            //dir-test(pageStatus="pageStatus")
-                            //json-table(type="student", data="data", pageStatus="pageStatus")
+                        .container
+                            //div(ng-controller="SuperAdminUserTableCtrl")
+                            br
+                            button.btn.btn-success(ng-click="listStudents()") 学生数据
+                            br
+                            br
+                            h3(ph-txt='1s')
+                            div(ph-txt='3p2s').background-white
+                            div(ng-show="studentShowClicked && data['student'].data.length > 0")
+                                //dir-test(pageStatus="pageStatus")
+                                //json-table(type="student", data="data", pageStatus="pageStatus")
 
                 tab(heading="班级")
                     p TODO
