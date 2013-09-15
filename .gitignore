@@ -2,6 +2,7 @@
 *.swp
 .idea
 temp
+docs
 
 #Library Files
 client/js/mathJax/*

@@ -1,66 +1,9 @@
-/*
- * SpruceQuizJunior v0.0.1
- * app.less
- * Copyright 2013 SpruceLearning Inc.
- * author Ge Yang
- *
- * Designed and built with all the love and passion by @episodeyang
- */
-/*---------------------------------------------------
-    LESS Elements 0.9
-  ---------------------------------------------------
-    A set of useful LESS mixins
-    More info at: http://lesselements.com
-  ---------------------------------------------------*/
-#cover {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: white;
-}
-.background-white {
-  background: #ffffff;
-}
-.background-grey {
-  background: #f2f2f2;
-}
-.border-white {
-  border: solid 4px rgba(255, 255, 255, 0.8);
-}
-.panel-left {
-  left: 10;
-  position: absolute;
-  min-width: 240px;
-  min-height: 100%;
-  background: #ffffff;
-}
-.panel-body {
-  left: 240px;
-  right: 240px;
-  position: absolute;
-  min-height: 100%;
-  background: #ffffff;
-}
-.panel-right {
-  right: 0px;
-  position: absolute;
-  width: 240px;
-  background: #ffffff;
-  height: 100%;
-  background-image: -webkit-gradient(left, linear, 0 0, 0 100%, from(#cccccc), color-stop(2%, #f2f2f2), to(#f2f2f2));
-  background-image: -webkit-linear-gradient(left, #cccccc, #f2f2f2 2%, #f2f2f2);
-  background-image: -moz-linear-gradient(left, #cccccc, #f2f2f2 2%, #f2f2f2);
-  background-image: linear-gradient(to right, #cccccc, #f2f2f2 2%, #f2f2f2);
-  background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccccc', endColorstr='#fff2f2f2', GradientType=1);
-}
-.panel-right .column {
-  height: 100%;
-}
-.tab-box {
-  border-bottom: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
+
+#cover{position:absolute;height:100%;width:100%;background:white}
+.background-white{background:#ffffff}
+.background-grey{background:#f2f2f2}
+.border-white{border:solid 4px rgba(255,255,255,0.8)}
+.panel-left{left:10;position:absolute;min-width:240px;min-height:100%;background:#fff}
+.panel-body{left:240px;right:240px;position:absolute;min-height:100%;background:#fff}
+.panel-right{right:0px;position:absolute;width:240px;background:#ffffff;height:100%;background-image:-webkit-gradient(left, linear, 0 0, 0 100%, from(#ccc), color-stop(2%, #f2f2f2), to(#f2f2f2));background-image:-webkit-linear-gradient(left, #ccc, #f2f2f2 2%, #f2f2f2);background-image:-moz-linear-gradient(left, #ccc, #f2f2f2 2%, #f2f2f2);background-image:linear-gradient(to right, #ccc, #f2f2f2 2%, #f2f2f2);background-repeat:no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccccc', endColorstr='#fff2f2f2', GradientType=1)}.panel-right .column{height:100%}
+.tab-box{border-bottom:1px solid #ddd;border-left:1px solid #ddd;border-right:1px solid #ddd;border-bottom-right-radius:5px;border-bottom-left-radius:5px}

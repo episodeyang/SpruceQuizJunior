@@ -3,8 +3,8 @@
         "allowUnknownTags": true
     },
     "source": {
-        "include": [],
-        "exclude": ["node_modules", "client/lib"],
+        "include": ["./server","./client/js/services"],
+        "exclude": [],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },

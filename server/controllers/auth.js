@@ -3,7 +3,16 @@
 var passport =  require('passport')
     , User = require('../models/User.js');
 
+
 module.exports = {
+    /**
+     * @name register
+     * @function
+     * @param req
+     * @param res
+     * @param next
+     * @returns {*}
+     */
     register: function(req, res, next) {
         try {
             User.validate(req.body);
