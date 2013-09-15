@@ -2,7 +2,11 @@
 *.swp
 .idea
 temp
+#Build Files
 docs
+client/css/app.css
+client/css/app-old.css
+
 
 #Library Files
 client/js/mathJax/*
