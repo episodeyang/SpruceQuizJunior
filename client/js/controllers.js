@@ -6,12 +6,12 @@ angular.module('SpruceQuizApp')
 .controller('AppCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
 
-    $scope.getUserRoleText = function(role) {
+    $rootScope.getUserRoleText = function(role) {
         return _.invert(Auth.userRoles)[role];
     };
-    $scope.logout = function() {
+    $rootScope.logout = function() {
         Auth.logout(function() {
-            $location.path('/login');
+            $location.path('/public/login');
         }, function() {
             $rootScope.error = "Failed to logout";
         });
