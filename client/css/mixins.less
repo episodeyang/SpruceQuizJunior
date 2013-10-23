@@ -214,7 +214,14 @@
   filter: ~"alpha(opacity=@{opacity-ie})";
 }
 
-
+.filter-blur(@radius) {
+  filter: blur(@radius);
+  -webkit-filter: blur(@radius);
+  -moz-filter: blur(@radius);
+  -o-filter: blur(@radius);
+  -ms-filter: blur(@radius);
+  margin: -@radius -@radius -@radius -@radius;
+}
 
 // GRADIENTS
 // --------------------------------------------------
