@@ -17,16 +17,8 @@ html(lang='en', data-ng-app='SpruceQuizApp')
             if (window.location.href.indexOf('#_=_') > 0) {
                 window.location = window.location.href.replace(/#.*/, '');
             }
-    body(data-ng-controller="AppCtrl", data-ng-cloak)
-        div.background
-        #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-        div.sp-container
-            div(data-ng-view='ng-view')
-            div.footer(data-access-level='{{ accessLevels.loggedin }}')
-                .container.text-center(style="padding-top: 30px")
-                    p &copy;
-                        a(href="http://www.sprucelearning.com") SpruceLearning
-                        | &nbsp; 2013
+    body(data-ng-controller="AppCtrl",data-ng-view='ng-view', data-ng-cloak)
+
 
         //script(src='/views/partials/public/loginPageCtrl.js')
         script(src="/lib/angular-route/angular-route.js")

@@ -1,140 +1,113 @@
-.container(style="width:900px;")
-    .row-fluid
-        .span12
-    .row-fluid
-        .span9
-            tabset
-                tab(ng-repeat="section in model.sections",heading="{{section.sectionName}}", select="updateSection($index)")
-                    div.row-fluid
-                        .span1
-                            img(src="/img/3_large.png").img-polaroid
-                        .span11
-                            alert(close="closeClicked=!closeClicked")
-                                p 吴轶凡 推送了今日测试（一）
-                    //-div.row-fluid
-                    .span1
-                        img(src="/img/3_large.png").img-polaroid
-                    .span11
-                        alert(close="updateSection()")
-                            p {{section}}
-
-                    div.row-fluid
-                        .span5
-                            ul.nav.nav-tabs.nav-stacked(style="margin-top:0px;")
-                                li
-                                    a: strong 单元目录
-                                li(ng-repeat="unit in section.sectionUnits",class="{{unit.active}}")
-                                    a(ng-click="grabMaterials(unit.unitUUID)")
-                                        | {{unit.unitTitle}}
-                            //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
-                            ul.nav.nav-tabs.nav-stacked(style="margin-top:20px;")
-                                li
-                                    a 删除小组
-                        .span7(id="{{model.unitID}}")
-                            tabset
-                                tab(heading="测试")
-                                    .row-fluid
-                                        .span12
-                                            div.clickable(ng-repeat="material in model.tempUnit.items")
-                                                a.fill-clickable(href="{{material.sourceUrl}}", target="_blank")
-                                                .well
-                                                    a.edit.pull-right(href="http://www.facebook.com")
-                                                        i.icon-pencil
-                                                    h3.card {{material.materialName}}
-                                                    p {{material.comment}}
-                                tab(heading="已存档",disabled="true")
-                            tabset
-                                tab(heading="阅读")
-                                    .well
-                                        p 欧拉的故事
-        .span3
-            .well
-                .row-fluid
-                    .span12
-                        img(src="/img/1_large.png", style="margin-bottom:20px;")
-                .row-fluid
-                    div.span12.text-center
-                        p.bottom.bold 杨歌
-                        p.bottom(style="margin-bottom:0;") @{{user.username}}
+include mixins/navbar
+include mixins/footer
+div.background
+#cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+.sp-container
+    +navbar
+    .container(style="width:900px;")
+        .container(style="width:900px;")
             .row-fluid
-                .span12.sp-reports-sidebar
-                    ul.nav.nav-pills.nav-stacked.sp-reports-sidenav
-                        li
-                            a(ng-click="createSectionModal = true") 创建新课程
-                        li
-                            a(ng-click="createUnitModal = true") 创建新单元
-                        li
-                            a(ng-click="createQuizModal = true") 创建新测试
-                        li
-                            a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
-                        li
-                            a 年级情况
-    .row-fluid
-        .span12
-            .alert.alert-info
-                .row-fluid
-                    .span2.text-right
-                        p the Model =
-                    .span10
-                        bat-json-tree(val="Model")
-    div(modal="createSectionModal")
-        .modal-header
-            h3 创建新课程
-        .modal-body
-            form.form-horizontal
-                tabset
-                    tab(heading="课程")
-                        div.control-group
-                            label.control-label 课程名称
-                            .controls
-                                input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班，或二年级数学")
-                        div.control-group
-                            label.control-label 简称或学科
-                            .controls
-                                input(ng-model="newSection.sectionDisplayName",type="text", placeholder="如数学")
-                        div.control-group
-                            label.control-label 班级
-                            .controls
-                                input(ng-model="newSection.sectionParent",type="text", placeholder="如三年二班")
-                    tab(heading="班级")
-                        div.control-group
-                            label.control-label 班级名称
-                            .controls
-                                input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班")
-        .modal-footer
-            button.btn.btn-success(ng-click="createNewSection()") 提交课程
-//-p {{newSection.sectionName}}
-//-p {{haha}}
-//-p {{list}}
-//-p formData is {{newSection}}
-    div(modal="createUnitModal")
-        .modal-header
-            h3 创建新单元
-        .modal-body
-            form.form-horizontal
-                div.control-group
-                    label.control-label 单元标题
-                    .controls
-                        input(ng-model="newUnit.unitTitle",type="text",placeholder="二元一次方程")
-                div.control-group
-                    label.control-label 备注
-                    .controls
-                        textarea.form-control(rows="5",ng-model="newUnit.comment",placeholder="请在这里输入备注")
-                div.control-group
-                    label.control-label 嵌套在其他单元以下
-                    .controls
-                        input(ng-model="newUnit.father",type="text",placeholder="数学/多项式")
-        .modal-footer
-            button.btn.btn-success(ng-click="createNewUnit()") 提交单元
-    div(modal="createQuizModal")
-        .modal-header
-            h3 创建新测试
-        .modal-body
-            form.form-horizontal
-                div.control-group
-                    label.control-label 测试标题
-                    .controls
-                        input(ng-model="newQuiz.quizTitle",type="text",placeholder="二元一次方程")
-        .modal-footer
-            button.btn.btn-success(ng-click="createNewQuiz()") 提交测试
+                .span12
+            .row-fluid
+                .span9
+                    tabset
+                        tab(ng-repeat="section in model.sections",heading="{{section.sectionName}}", select="updateSection($index)")
+                            div.row-fluid
+                                .span1
+                                    img(src="/img/3_large.png").img-polaroid
+                                .span11
+                                    alert(close="closeClicked=!closeClicked")
+                                        p 吴轶凡 推送了今日测试（一）
+                            //-div.row-fluid
+                            .span1
+                                img(src="/img/3_large.png").img-polaroid
+                            .span11
+                                alert(close="updateSection()")
+                                    p {{section}}
 
+                            div.row-fluid
+                                .span5
+                                    ul.nav.nav-tabs.nav-stacked(style="margin-top:0px;")
+                                        li
+                                            a: strong 单元目录
+                                        li(ng-repeat="unit in section.sectionUnits",class="{{unit.active}}")
+                                            a(ng-click="grabMaterials(unit.unitUUID)")
+                                                | {{unit.unitTitle}}
+                                    //-a(href="#{{unit.unitTitle}}", ng-click="grabMaterials()") {{unit.unitTitle}}
+                                    ul.nav.nav-tabs.nav-stacked(style="margin-top:20px;")
+                                        li
+                                            a 删除小组
+                                .span7(id="{{model.unitID}}")
+                                    tabset
+                                        tab(heading="测试")
+                                            .row-fluid
+                                                .span12
+                                                    div.clickable(ng-repeat="material in model.tempUnit.items")
+                                                        a.fill-clickable(href="{{material.sourceUrl}}", target="_blank")
+                                                        .well
+                                                            a.edit.pull-right(href="http://www.facebook.com")
+                                                                i.icon-pencil
+                                                            h3.card {{material.materialName}}
+                                                            p {{material.comment}}
+                                        tab(heading="已存档",disabled="true")
+                                    tabset
+                                        tab(heading="阅读")
+                                            .well
+                                                p 欧拉的故事
+                .span3
+                    .well
+                        .row-fluid
+                            .span12
+                                img(src="/img/1_large.png", style="margin-bottom:20px;")
+                        .row-fluid
+                            div.span12.text-center
+                                p.bottom.bold 杨歌
+                                p.bottom(style="margin-bottom:0;") @{{user.username}}
+                    .row-fluid
+                        .span12.sp-reports-sidebar
+                            ul.nav.nav-pills.nav-stacked.sp-reports-sidenav
+                                li
+                                    a(ng-click="createSectionModal = true") 创建新课程
+                                li
+                                    a(ng-click="createUnitModal = true") 创建新单元
+                                li
+                                    a(ng-click="createQuizModal = true") 创建新测试
+                                li
+                                    a(ng-click="testExpression=!testExpression") 错题本 {{testExpression}}
+                                li
+                                    a 年级情况
+            .row-fluid
+                .span12
+                    .alert.alert-info
+                        .row-fluid
+                            .span2.text-right
+                                p the Model =
+                            .span10
+                                bat-json-tree(val="Model")
+            div(modal="createSectionModal")
+                .modal-header
+                    h3 创建新课程
+                .modal-body
+                    form.form-horizontal
+                        tabset
+                            tab(heading="课程")
+                                div.control-group
+                                    label.control-label 课程名称
+                                    .controls
+                                        input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班，或二年级数学")
+                                div.control-group
+                                    label.control-label 简称或学科
+                                    .controls
+                                        input(ng-model="newSection.sectionDisplayName",type="text", placeholder="如数学")
+                                div.control-group
+                                    label.control-label 班级
+                                    .controls
+                                        input(ng-model="newSection.sectionParent",type="text", placeholder="如三年二班")
+                            tab(heading="班级")
+                                div.control-group
+                                    label.control-label 班级名称
+                                    .controls
+                                        input(ng-model="newSection.sectionName",type="text", placeholder="如三年二班")
+                .modal-footer
+                    button.btn.btn-success(ng-click="createNewSection()") 提交课程
+        +footer

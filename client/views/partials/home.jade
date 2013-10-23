@@ -1,79 +1,86 @@
-.panel-left
-//-p(ph-txt='5p2s')
-.panel-body
-    .container
-        .row
-            tabset
-                tab(heading="新鲜事")
-                    div.row-fluid
-                        .span1
-                            img(src="/img/1_large.png").img-polaroid
-                        .span11
-                            alert.alert-success(close="closeClicked=!closeClicked")
-                                p [保留] {{user.username}} 刚刚完成了新词100问
-                    div.row-fluid
-                        .span1
-                            img(ng-src="/img/1_large.png").img-polaroid
-                        .span11
-                            alert.alert.alert-success(close="closeClicked=!closeClicked")
-                                p [保留] 杨歌刚刚答对了100道题目
-                    div.row-fluid(ng-repeat="feed in model.feeds")
-                        .span1
-                            img(ng-src="{{'/img/'+feed.userUUID[1] +'_large.png'}}").img-polaroid
-                        .span11
-                            //-alert(close="closeClicked=!closeClicked")
-                                p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
-                                //-p {{closeClicked}}
-                            alert(close="closeAlert($index)")
-                                p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
-                                //-p {{closeClicked}}
-                tab(heading="新测试")
-                tab(heading="待交")
-                tab(heading="最近任务")
+include mixins/navbar
+include mixins/footer
+div.background
+#cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+.sp-container
+    +navbar
+    div.container(style="width:900px;")
+        .panel-left
+        //-p(ph-txt='5p2s')
+        .panel-body
+            .container
+                .row
+                    tabset
+                        tab(heading="新鲜事")
+                            div.row-fluid
+                                .span1
+                                    img(src="/img/1_large.png").img-polaroid
+                                .span11
+                                    alert.alert-success(close="closeClicked=!closeClicked")
+                                        p [保留] {{user.username}} 刚刚完成了新词100问
+                            div.row-fluid
+                                .span1
+                                    img(ng-src="/img/1_large.png").img-polaroid
+                                .span11
+                                    alert.alert.alert-success(close="closeClicked=!closeClicked")
+                                        p [保留] 杨歌刚刚答对了100道题目
+                            div.row-fluid(ng-repeat="feed in model.feeds")
+                                .span1
+                                    img(ng-src="{{'/img/'+feed.userUUID[1] +'_large.png'}}").img-polaroid
+                                .span11
+                                    //-alert(close="closeClicked=!closeClicked")
+                                        p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
+                                        //-p {{closeClicked}}
+                                    alert(close="closeAlert($index)")
+                                        p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
+                                        //-p {{closeClicked}}
+                        tab(heading="新测试")
+                        tab(heading="待交")
+                        tab(heading="最近任务")
 
-        .span3
-            .well
-                .row-fluid
-                    .span12
-                        img(src="/img/1_large.png", style="margin-bottom:20px;")
-                .row-fluid
-                    div.span12.text-center
-                        p.bottom.bold 杨歌
-                        p.bottom(style="margin-bottom:0;") @{{user.username}}
+                .span3
+                    .well
+                        .row-fluid
+                            .span12
+                                img(src="/img/1_large.png", style="margin-bottom:20px;")
+                        .row-fluid
+                            div.span12.text-center
+                                p.bottom.bold 杨歌
+                                p.bottom(style="margin-bottom:0;") @{{user.username}}
+                    .row-fluid
+                        .span12.sp-reports-sidebar
+                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
+                                //-li
+                                    a(ng-click="testExpression=!testExpression") 班级 {{testExpression}}
+                                li
+                                    a(href='/') 主页设置
+                                li
+                                    a(href='/sections') 课程
+                                li
+                                    a(href='/sections') 班级
+                                li
+                                    a(href='/reports') 成绩报告
+            //Debugging tool
             .row-fluid
-                .span12.sp-reports-sidebar
-                    ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
-                        //-li
-                            a(ng-click="testExpression=!testExpression") 班级 {{testExpression}}
-                        li
-                            a(href='/') 主页设置
-                        li
-                            a(href='/sections') 课程
-                        li
-                            a(href='/sections') 班级
-                        li
-                            a(href='/reports') 成绩报告
-    //Debugging tool
-    .row-fluid
-        .span12
-            .alert.alert-info
-                .row-fluid
-                    .span2.text-right
-                        p the Model =
-                    .span10
-                        bat-json-tree(val="Model")
-.panel-right
-    div(style="width:80px;margin:20px;float:left;")
-        div.img-circle.border-white(ph-img='78x78', style='width: 82px; height: 82px; background-repeat: no-repeat;')
-    div(style="width:110px;margin-top:20px; float:left;")
-        div.user-bio
-            h4 {{userData.lastName + userData.firstName}}
-            p
-                small {{userData.schools[0].schoolName}}
-                br
-                small {{userData.roleName}}
-    .containerdd
-
+                .span12
+                    .alert.alert-info
+                        .row-fluid
+                            .span2.text-right
+                                p the Model =
+                            .span10
+                                bat-json-tree(val="Model")
+        .panel-right
+            div(style="width:80px;margin:20px;float:left;")
+                div.img-circle.border-white(ph-img='78x78', style='width: 82px; height: 82px; background-repeat: no-repeat;')
+            div(style="width:110px;margin-top:20px; float:left;")
+                div.user-bio
+                    h4 {{userData.lastName + userData.firstName}}
+                    p
+                        small {{userData.schools[0].schoolName}}
+                        br
+                        small {{userData.roleName}}
+            .containerdd
+        +footer
 
 
 

@@ -1,50 +1,85 @@
-h1 问题输入页面
-hr
-.row-fluid
-    .span3
-        .row-fluid.span12
-            input(type="text", ng-model="expression", style="width:100%;")
-        .row-fluid.span12
-            {{expression}}
-            div(mathjax-bind="expression")
-    .span6
-        .row-fluid(data-ng-repeat="problem in problems",style="padding: 20px; margin-bottom: 30px; border-radius: 5px; background-color:#f5f5f5;")
-            .span12
-                .row-fliud
-                    .span3
-                        .btn 编辑题目
-                    .span9.double-line-height
-                        .row-fluid
-                            span(ng-repeat = "segment in problem.question")
-                                span(mathjax-bind = "segment")
-                                span(ng-hide = "$position=='last'") {{'&nbsp;'}}
-                                    input(ng-Hide = "(problem.problemType =='multipleChoice')",type="text",style="width:100px;")
-                        .row-fluid
-                            .span9.offset1
-                                div(ng-repeat = "choice in problem.choices")
-                                    div(style = "padding: 5px; margin-bottom: 5px; border-radius: 5px; background-color:#ffffff;")
-                                        span(mathjax-bind = "choice")
-                        .row-fluid
-                            .span9 答案是:
-                                span(mathjax-bind = "problem.solutions.join(', ')+ '.'")
-                        .row-fluid
-                            .span9
-                                div(ng-repeat = "explanation in problem.explanations")
-                                    p(mathjax-bind = "explanation")
-    .span3
+include mixins/navbar
+include mixins/footer
+div.background
+#cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+.sp-container
+    +navbar
+    .container(style="width:900px;")
+        h1 问题输入页面
+        hr
+        .row-fluid
+            .span3
+                .row-fluid.span12
+                    input(type="text", ng-model="expression", style="width:100%;")
+                .row-fluid.span12
+                    {{expression}}
+                    div(mathjax-bind="expression")
+            .span6
+                .row-fluid(data-ng-repeat="problem in problems",style="padding: 20px; margin-bottom: 30px; border-radius: 5px; background-color:#f5f5f5;")
+                    .span12
+                        .row-fliud
+                            .span3
+                                .btn 编辑题目
+                            .span9.double-line-height
+                                .row-fluid
+                                    span(ng-repeat = "segment in problem.question")
+                                        span(mathjax-bind = "segment")
+                                        span(ng-hide = "$position=='last'") {{'&nbsp;'}}
+                                            input(ng-Hide = "(problem.problemType =='multipleChoice')",type="text",style="width:100px;")
+                                .row-fluid
+                                    .span9.offset1
+                                        div(ng-repeat = "choice in problem.choices")
+                                            div(style = "padding: 5px; margin-bottom: 5px; border-radius: 5px; background-color:#ffffff;")
+                                                span(mathjax-bind = "choice")
+                                .row-fluid
+                                    .span9 答案是:
+                                        span(mathjax-bind = "problem.solutions.join(', ')+ '.'")
+                                .row-fluid
+                                    .span9
+                                        div(ng-repeat = "explanation in problem.explanations")
+                                            p(mathjax-bind = "explanation")
+            .span3
 
-table.table.table-striped(data-ng-hide="loading")
-    thead
-        tr
-            th #
-            th 题干
-            th 选择
-    tbody
-        tr(data-ng-repeat="problem in problems")
-            td 
-                {{ problem.id }}
-            td 
-                {{ problem.question }}
-            td
-                {{ problem.choices}}
+        table.table.table-striped(data-ng-hide="loading")
+            thead
+                tr
+                    th #
+                    th 题干
+                    th 选择
+            tbody
+                tr(data-ng-repeat="problem in problems")
+                    td
+                        {{ problem.id }}
+                    td
+                        {{ problem.question }}
+                    td
+                        {{ problem.choices}}
+
+        div(modal="viewVariables.editProblemModal")
+            .modal-header
+                h3 正在编辑题号为{{viewVariables.editingProb.problemUUID}}的题目:
+            .modal-body
+                form.form-horizontal
+                    div.control-group
+                        div(ng-repeat = "segment in viewVariables.questionArr")
+                            label.control-label 题干
+                            .controls
+                                textarea(ng-model="viewVariables.questionArr[$index].str",type="text")
+                        div(ng-repeat = "choice in viewVariables.choicesArr")
+                            label.control-label 选项
+                            .controls
+                                input(ng-model="viewVariables.choicesArr[$index].str",type="text")
+                    div.control-group
+                        label.control-label 答案
+                        .controls
+                            textarea(ng-model="viewVariables.editingProb.solutions",type="text")
+                    div.control-group
+                        label.control-label 解释
+                        .controls
+                            textarea(ng-model="viewVariables.editingProb.explanations",type="text")
+            .modal-footer
+                button.btn(ng-click="cancelEditing()") 取消
+                button.btn.btn-success(ng-click="saveEditing()") 提交编辑
+
+        +footer
 

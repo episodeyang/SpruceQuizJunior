@@ -4,8 +4,7 @@
 temp
 #Build Files
 docs
-client/css/app.css
-client/css/app-old.css
+client/*/*.css
 
 
 #Library Files
