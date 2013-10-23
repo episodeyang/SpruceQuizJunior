@@ -1,0 +1,13 @@
+include ../mixins/navbar
+mixin navbar
+.container(style="width:900px;")
+    .absoluteCenter
+        .row
+            .col-xs-6
+                button.btn.btn-block.sp-btn-h120.sp-blue(onclick="parent.location='/public/login'")
+                    p.sp-text-24 登录
+            .col-xs-6
+                button.btn.btn-block.sp-btn-h120.sp-yellow(onclick="parent.location='/public/register'")
+                    p.sp-text-24 注册
+
+

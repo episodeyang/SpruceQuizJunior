@@ -11,6 +11,24 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
                 controller:     'HomeCtrl',
                 access:         access.loggedin
             });
+        $routeProvider.when('/public/frontPage',
+            {
+                templateUrl:    '/partials/public/frontPage',
+                controller:     'LoginCtrl',
+                access:         access.anon
+            });
+        $routeProvider.when('/public/login',
+            {
+                templateUrl:    '/partials/public/login',
+                controller:     'LoginCtrl',
+                access:         access.anon
+            });
+        $routeProvider.when('/public/register',
+            {
+                templateUrl:    '/partials/public/register',
+                controller:     'LoginCtrl',
+                access:         access.anon
+            });
         $routeProvider.when('/login',
             {
                 templateUrl:    '/partials/login',
@@ -111,7 +129,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
                 if(Auth.isLoggedIn()) $location.path('/');
-                else                  $location.path('/login');
+                else                  $location.path('/public/frontPage');
             }
         });
 

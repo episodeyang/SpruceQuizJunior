@@ -10,6 +10,7 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         link(href='/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg', rel="stylesheet")
         link(href='/css/app-old.css', rel="stylesheet")
         link(href='/css/index.css', rel="stylesheet")
+        link(href='/css/loginWidget.css', rel="stylesheet")
 
         // This is needed because Facebook login redirects add #_=_ at the end of the URL
         script(type="text/javascript").
@@ -20,56 +21,14 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         div.background
         #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
         div.sp-container
-            nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
-                //Brand and toggle get grouped for better mobile display
-                .navbar-header
-                    button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
-                        span.sr-only Toggle navigation
-                        span.icon-bar
-                        span.icon-bar
-                        span.icon-bar
-                    a.navbar-brand(href='#')
-                //Collect the nav links, forms, and other content for toggling
-                .collapse.navbar-collapse.navbar-ex1-collapse
-                    ul.nav.navbar-nav
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                            a(href='/') 首页
-                        li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                            a(href='/sections') 课程
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/admin') 学生管理
-                        li(data-access-level='{{ accessLevels.loggedin}}', active-nav).dropdown
-                            a.dropdown-toggle 问答
-                                span.caret
-                            ul.dropdown-menu
-                                li(data-access-level="{{accessLevels.superuser}}")
-                                    a(href='/problems/edit') 编辑问题
-                            //-li
-                                a(href='/problems') 问题
-                                li
-                                    a(href='/quizzes') 测试
-                        li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                            a(href='/reports') 成绩和报告
-                        li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
-                            a(href='/superadmin') 后台管理
-                    ul.nav.navbar-nav.navbar-right
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/register') 注册
-                        li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
-                            a.dropdown-toggle(data-toggle='dropdown') {{ user.username }}
-                                b.caret
-                            ul.dropdown-menu
-                                li
-                                    a(href="", data-ng-click="logout()")
-                                        | 登出
-            div
-                div(data-ng-view='ng-view')
+            div(data-ng-view='ng-view')
             div.footer(data-access-level='{{ accessLevels.loggedin }}')
                 .container.text-center(style="padding-top: 30px")
                     p &copy;
                         a(href="http://www.sprucelearning.com") SpruceLearning
                         | &nbsp; 2013
 
+        //script(src='/views/partials/public/loginPageCtrl.js')
         script(src="/lib/angular-route/angular-route.js")
         script(src='/lib/angular-cookies/angular-cookies.js')
         script(src="/lib/angular-resource/angular-resource.js")
@@ -101,6 +60,5 @@ html(lang='en', data-ng-app='SpruceQuizApp')
         script(src='/js/data.js')
         script(src='/lib/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js')
         script(src='/lib/angular-placeholders/dist/placeholders-0.0.1-SNAPSHOT.min.js')
-
 
 

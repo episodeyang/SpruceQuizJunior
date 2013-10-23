@@ -5,7 +5,7 @@
 //});
 
 //comment
-var InitializeSpruceDB = false;
+var InitializeSpruceDB = true;
 
 var express =       require('express')
     , http =        require('http')

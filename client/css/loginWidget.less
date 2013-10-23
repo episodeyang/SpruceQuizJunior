@@ -1,0 +1,53 @@
+@import "elements.less";
+@import "mixins.less";
+
+.centerDiv{
+  position: absolute;
+  top: 50;
+
+}
+
+.absoluteCenter {
+  /* Must manually set width/height */
+  width:600px;
+  height:120px;
+
+  /* The magic centering code */
+  margin:auto;
+  position:absolute;
+  top:0;bottom:0; /* Aligns Vertically - Remove for Horizontal Only */
+  left:0;right:0; /* Aligns Horizontally - Remove for Vertical Only  */
+
+  /* Prevent div from overflowing main window */
+  max-width:100%;
+  max-height:100%;
+  overflow: none;
+}
+
+/* IE 7 and Below */
+:first-child+html .absoluteCenter,
+* html .absoluteCenter {
+  /* Place code here to override all above values, and add IE friendly centering */
+}
+
+.sp-btn-h120 {
+  height: 120px;
+}
+
+.sp-blue{
+  background-color: #69cbe1;
+}
+.sp-yellow{
+  background-color: #ffcd33;
+}
+.sp-text-24{
+  font-size: 3em;
+  color: white;
+}
+
+.btn{
+  border-radius: 0;
+  .active{
+
+  }
+}
