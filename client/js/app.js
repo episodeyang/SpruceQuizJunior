@@ -11,9 +11,9 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
                 controller:     'HomeCtrl',
                 access:         access.loggedin
             });
-        $routeProvider.when('/public/frontPage',
+        $routeProvider.when('/frontPage',
             {
-                templateUrl:    '/partials/public/frontPage',
+                templateUrl:    '/partials/frontPage',
                 controller:     'LoginCtrl',
                 access:         access.anon
             });
@@ -27,18 +27,6 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             {
                 templateUrl:    '/partials/public/register',
                 controller:     'LoginCtrl',
-                access:         access.anon
-            });
-        $routeProvider.when('/login',
-            {
-                templateUrl:    '/partials/login',
-                controller:     'LoginCtrl',
-                access:         access.anon
-            });
-        $routeProvider.when('/register',
-            {
-                templateUrl:    '/partials/register',
-                controller:     'RegisterCtrl',
                 access:         access.anon
             });
         $routeProvider.when('/auth/twitter',
@@ -106,7 +94,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             function error(response) {
 
                 if(response.status === 401) {
-                    $location.path('/login');
+                    $location.path('/frontPage');
                     return $q.reject(response);
                 }
                 else {
@@ -129,7 +117,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
                 if(Auth.isLoggedIn()) $location.path('/');
-                else                  $location.path('/public/frontPage');
+                else                  $location.path('/frontPage');
             }
         });
 
