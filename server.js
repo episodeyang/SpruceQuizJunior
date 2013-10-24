@@ -4,6 +4,7 @@
 //    appName: 'SpruceQuizJunior'
 //});
 
+//comment
 var InitializeSpruceDB = false;
 
 var express =       require('express')
