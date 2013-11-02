@@ -1,5 +1,5 @@
 'use strict';
-
+'use utf-8';
 /* Controllers */
 
 angular.module('SpruceQuizApp')
@@ -22,6 +22,13 @@ angular.module('SpruceQuizApp')
 .controller('LoginCtrl',
 ['$rootScope', '$scope', '$location', '$window', 'Auth', function($rootScope, $scope, $location, $window, Auth) {
 
+    $scope.viewCtrl = {};
+    $scope.viewCtrl.showLoginForm = false;
+    $scope.form = {};
+    $scope.form.userName = "";
+    $scope.form.password = "";
+
+
     $scope.rememberme = true;
     $scope.login = function() {
         Auth.login({
@@ -40,6 +47,7 @@ angular.module('SpruceQuizApp')
     $scope.loginOauth = function(provider) {
         $window.location.href = '/auth/' + provider;
     };
+
 }]);
 
 angular.module('SpruceQuizApp')

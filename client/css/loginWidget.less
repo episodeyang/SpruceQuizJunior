@@ -6,7 +6,7 @@
   top: 50;
 
 }
-
+//Layout =======================================
 .absoluteCenter {
   /* Must manually set width/height */
   width:600px;
@@ -29,25 +29,118 @@
 * html .absoluteCenter {
   /* Place code here to override all above values, and add IE friendly centering */
 }
-
-.sp-btn-h120 {
-  height: 120px;
-}
-
-.sp-blue{
-  background-color: #69cbe1;
-}
-.sp-yellow{
-  background-color: #ffcd33;
-}
-.sp-text-24{
-  font-size: 3em;
-  color: white;
-}
-
-.btn{
-  border-radius: 0;
-  .active{
-
+//General Styling
+//Colors ======================================
+  .tr-70{
+      opacity: 0.7;
   }
-}
+
+//Typseting ===================================
+  //Colors-------------------
+    .bg-blue{
+      background-color: #69cbe1;
+    }
+    .bg-yellow{
+      background-color: #ffcd33;
+    }
+    .text-semi-white{
+      color: fadeout(white,30%);
+    }
+    .text-white{
+      color: white;
+    }
+  //Font-size-----------------
+    .sp-text-24{
+      font-size: 3em;
+      color: white;
+    }
+
+    .sp-btn-h120 {
+      height: 120px;
+    }
+  //Headers-------------------
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',"WenQuanYi Micro Hei",Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
+      font-weight: 300;
+      line-height: 1.1;
+    }
+
+//Buttons ======================================
+  .btn{
+    border-radius: 0;
+    .active{
+
+    }
+  }
+
+//Images ======================================
+  img.logo{
+    float: left;
+    margin-right:0.3em;
+    margin-top:-1px;
+    height: 1.0em;
+    top:0;bottom:0;
+  }
+  h3{
+    font-size: 1.7em;
+    margin:20px 0 20px 0;
+  }
+//PlaceHolders ===============================
+  div.sp-up-cover{
+    position:relative;
+    top:0;
+    height:50%;
+    margin-bottom:-70px;
+    width:100%;
+    background-color: rgba(0,0,0,0);
+  }
+//Directives =================================
+  //metroCards
+    @inputWidth : 140px;
+    @totalWidth : @inputWidth + 70px;
+    sp-input{
+      height:70px;
+      width:@totalWidth;
+      margin-bottom:20px;
+      display: block;
+      background-color: rgba(0,0,0,0);
+      clear:both;
+    }
+    div.metro.input.icon{
+        width:70px;
+        height:70px;
+        float:left;
+    }
+    span.metro{
+      margin:16px 21px 17.5px;
+      width:35px;
+      height:35px;
+      font-size:1.8em;
+      position:relative;
+      bottom:0;
+      color:white;
+    }
+    input.metro.input{
+      height:70px;
+      width:@inputWidth;
+      float:left;
+      position:relative;
+      padding:17px;
+      border:0;
+      :focus{
+
+      }
+    }
+    div.sp-modal{
+      width:100%;height:100%;
+      position:absolute;bottom:0;
+      background-color:rgba(0,0,0,0.8);
+    }
+    div.sp-modal.container{
+      height:100%;max-width: 900px;background-color:rgba(0,0,0,0);
+      position:absolute;
+      left:0;right:0;
+    }
+    div.sp-modal.container.inner{
+      min-width:210px; height:100%;margin-left: 340px;position:relative;float:left; background-color:rgba(0,0,0,0);
+    }
