@@ -27,7 +27,9 @@ angular.module('SpruceQuizApp')
     $scope.form = {};
     $scope.form.userName = "";
     $scope.form.password = "";
-
+    $scope.exit = function(){
+        $scope.viewCtrl.showLoginForm = false;
+    };
 
     $scope.rememberme = true;
     $scope.login = function() {

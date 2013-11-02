@@ -11,18 +11,20 @@ div.background(background-img="/img/classroom.png")
     .absoluteCenter
         .row
             .col-xs-6
-                button.btn.btn-block.sp-btn-h120.bg-blue(ng-click="viewCtrl.showLoginForm = true")
+                button.btn.btn-block.sp-btn-h120.bg-blue(ng-click="viewCtrl.showLoginForm=true")
                     p.sp-text-24 登录
             .col-xs-6
                 button.btn.btn-block.sp-btn-h120.bg-yellow(onclick="parent.location='/public/register'")
                     p.sp-text-24 注册
 
 div.sp-modal(ng-show="viewCtrl.showLoginForm")
+    //-, ng-click="viewCtrl.showLoginForm=false")
     .sp-modal.container
+        span.glyphicon.glyphicon-share-alt(style="font-size:5em;color:rgba(255,255,255,0.7);margin:80px 20px 0; position:absolute;transform: scale(-1,1);-ms-transform: scale(-1,1); /* IE 9 */  -webkit-transform: scale(-1,1); /* Safari and Chrome */", ng-click="exit()")
         div.sp-modal.container.inner
             div.sp-up-cover
             sp-input(value="form.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")
-            sp-input(value="form.userName", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")
+            sp-input(value="form.password", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")
 
             p {{form.userName}}
 
