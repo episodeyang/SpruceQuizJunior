@@ -106,44 +106,91 @@
       background-color: rgba(0,0,0,0);
       clear:both;
     }
-    div.metro.input.icon{
-        width:70px;
-        height:70px;
-        float:left;
+    div.metro.input.icon, .metro.checkbox{
+      width:70px;
+      height:70px;
+      float:left;
+      border-radius: 0;
+      margin:0;
+      box-sizing: border-box;
+
     }
     span.metro{
       margin:16px 21px 17.5px;
       width:35px;
       height:35px;
       font-size:1.8em;
-      position:relative;
+      position: relative;
       bottom:0;
       color:white;
     }
-    input.metro.input{
+    input.metro.input,.metro.text-block-right{
       height:70px;
       width:@inputWidth;
-      float:left;
+      float: right;
       position:relative;
       padding:17px;
       border:0;
-      :focus{
-
+      background-color: white;
+      &:focus{
       }
     }
-  //sp-modal
+    .sp-checkbox{
+      height:70px;width:70px;
+    }
+    .sp-button-small{
+      height: 70px;
+      border-radius: 0;
+      min-width: 70px;
+      float: right;
+      background-color:#44ffff;
+      text-align: center middle;
+      color: fadeout(white,0.7);
+      &:hover{
+        color: fadeout(white,0.9);
+      }
+      &:active{
+        color:fadeout(white,1);
+      }
+      &:focus{
+        color:fadeout(white,1);
+      }
+      font-size:1.8em;
+
+
+    }
+    p.sp-button-text{
+      color:white;
+      width:70px;
+      height:35px;
+      margin:auto;
+      position:absolute;
+      left:0;right:0;
+      top:0;bottom:0;
+    }
+//sp-modal
     div.sp-modal{
       width:100%;height:100%;
       position:absolute;bottom:0;
       background-color:rgba(0,0,0,0.8);
     }
     div.sp-modal.container{
-      height:100%;max-width: 900px;background-color:rgba(0,0,0,0);
+      height:100%;
+      max-width: 900px;
+      background-color:rgba(0,0,0,0);
       position:absolute;
       left:0;right:0;
     }
     div.sp-modal.container.inner{
-      min-width:210px; height:100%;margin-left: 340px;position:relative;float:left; background-color:rgba(0,0,0,0);
+      width:210px;
+      height:100%;
+      left:0;
+      right:0;
+      margin:auto;
+      padding:0;
+      position: absolute;
+      background-color:rgba(0,0,0,0);
+
     }
 
     .sp-modal.icon-exit{
@@ -151,10 +198,12 @@
       color:rgba(255,255,255,0.7);
       margin:80px 20px 0;
       position:absolute;
+      z-index: +20;
       .reflect-verticle;
       &:hover{
         color: rgba(255,255,255,0.9);
       }
+
     }
 //-Effects ===================================
 .outer-glow(@color){

@@ -38,9 +38,9 @@ angular.module('SpruceQuizApp')
     $scope.rememberme = true;
     $scope.login = function() {
         Auth.login({
-                username: $scope.username,
-                password: $scope.password,
-                rememberme: $scope.rememberme
+                username: $scope.loginForm.userName,
+                password: $scope.loginForm.password,
+                rememberme: $scope.loginForm.rememberMe
             },
             function(res) {
                 $location.path('/');
