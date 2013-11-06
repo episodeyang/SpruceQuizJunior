@@ -28,7 +28,7 @@ spApp.directive('spInput', function () {
             '<input ng-model="value" type="{{type}}" style="color:{{color}};"'+
                 'placeholder={{placeholder}} class="metro input"/>',
         link: function (scope, element, attrs) {
-            console.log(attrs.data);
+            console.log(attrs.value);
         }
     }
 });

@@ -1,86 +1,58 @@
 include mixins/navbar
 include mixins/footer
-div.background
+div.background(background-img="/img/collections.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.sp-container
+.container
     +navbar
-    div.container(style="width:900px;")
-        .panel-left
-        //-p(ph-txt='5p2s')
-        .panel-body
-            .container
-                .row
-                    tabset
-                        tab(heading="新鲜事")
-                            div.row-fluid
-                                .span1
-                                    img(src="/img/1_large.png").img-polaroid
-                                .span11
-                                    alert.alert-success(close="closeClicked=!closeClicked")
-                                        p [保留] {{user.username}} 刚刚完成了新词100问
-                            div.row-fluid
-                                .span1
-                                    img(ng-src="/img/1_large.png").img-polaroid
-                                .span11
-                                    alert.alert.alert-success(close="closeClicked=!closeClicked")
-                                        p [保留] 杨歌刚刚答对了100道题目
-                            div.row-fluid(ng-repeat="feed in model.feeds")
-                                .span1
-                                    img(ng-src="{{'/img/'+feed.userUUID[1] +'_large.png'}}").img-polaroid
-                                .span11
-                                    //-alert(close="closeClicked=!closeClicked")
-                                        p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
-                                        //-p {{closeClicked}}
-                                    alert(close="closeAlert($index)")
-                                        p [{{feed.type}}] {{feed.sectionName}} 的 {{feed.firstName}} {{feed.lastName}} {{feed.feedData}}
-                                        //-p {{closeClicked}}
-                        tab(heading="新测试")
-                        tab(heading="待交")
-                        tab(heading="最近任务")
+    .row(style="padding-top:200px;")
+    .row
+        .col-xs-12.col-md-2(style="text-align:center;")
+            img.img-circle(ph-img="160x160", style="margin-bottom:20px;margin-left:-20px;").border-circle
+            h3 添加错题&nbsp
+                span.glyphicon.glyphicon-plus
+            h3 杉景题库&nbsp
+                span.glyphicon.glyphicon-share-alt
+        .col-md-10
+            .row
+                .col-md-2
+                    h1(style="float:right;display:inline-block;") 错题本
+                        span(style="margin-top:300%;").glyphicon.glyphicon-chevron-left
+                .col-md-8
+                    .row
+                        .col-md-1
+                            h1 错题本
+                        .col-md-offset-1.col-md-10(style="padding-top:140px;")
+                            h2 语文
+                            h2 数学
+                            h2 英语
+                            h2 历史
+                            h2 地理
+                            h2 政治
+                            h2 物理
+                            h2 化学
+                            h2 生物
+                            h2 计算机
+                            h2 理科综合
+                            h2 文科综合
+                    .row
+                        .col-md-offset-10.col-md-1
+                            br
+                            br
+                            h3
+                                span.glyphicon.glyphicon-plus
+                                p 添加
 
-                .span3
-                    .well
-                        .row-fluid
-                            .span12
-                                img(src="/img/1_large.png", style="margin-bottom:20px;")
-                        .row-fluid
-                            div.span12.text-center
-                                p.bottom.bold 杨歌
-                                p.bottom(style="margin-bottom:0;") @{{user.username}}
-                    .row-fluid
-                        .span12.sp-reports-sidebar
-                            ul.nav.nav-tabs.nav-stacked.sp-reports-sidenav
-                                //-li
-                                    a(ng-click="testExpression=!testExpression") 班级 {{testExpression}}
-                                li
-                                    a(href='/') 主页设置
-                                li
-                                    a(href='/sections') 课程
-                                li
-                                    a(href='/sections') 班级
-                                li
-                                    a(href='/reports') 成绩报告
-            //Debugging tool
-            .row-fluid
-                .span12
-                    .alert.alert-info
-                        .row-fluid
-                            .span2.text-right
-                                p the Model =
-                            .span10
-                                bat-json-tree(val="Model")
-        .panel-right
-            div(style="width:80px;margin:20px;float:left;")
-                div.img-circle.border-white(ph-img='78x78', style='width: 82px; height: 82px; background-repeat: no-repeat;')
-            div(style="width:110px;margin-top:20px; float:left;")
-                div.user-bio
-                    h4 {{userData.lastName + userData.firstName}}
-                    p
-                        small {{userData.schools[0].schoolName}}
-                        br
-                        small {{userData.roleName}}
-            .containerdd
-        +footer
+                .col-md-2
+                    h1 复习&nbsp
+                        span(style="margin-top:300%;").glyphicon.glyphicon-chevron-right
 
 
 
+div.sp-modal(ng-show="viewCtrl.showRegisterForm")
+    //-, ng-click="viewCtrl.showLoginForm=false")
+    .sp-modal.container
+        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").sp-modal.icon-exit
+        div.sp-modal.container.inner
+            div.sp-up-cover
+            sp-input(value="form.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")
+            sp-input(value="form.password", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")

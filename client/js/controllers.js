@@ -25,6 +25,7 @@ angular.module('SpruceQuizApp')
     $scope.viewCtrl = {};
     $scope.viewCtrl.showLoginForm = false;
     $scope.viewCtrl.showRegisterForm = false;
+    console.log('success in updating the variables')
     $scope.form = {};
     $scope.form.userName = "";
     $scope.form.password = "";

@@ -1,0 +1,55 @@
+include mixins/navbar
+include mixins/footer
+div.background(style="background-color:grey;")
+#cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+.container
+    +navbar
+    .row
+        .col-md-3
+            .btn-group(style="margin-top:200px; margin-bottom:20px;")
+                button.btn.btn-default(type="button") 知识点
+                button.btn.btn-default(type="button") 时间顺序
+                button.btn.btn-default(type="button") 单元
+            div(style="width:100%; height:500px;background-color:rgba(255,255,255,.50)")
+        .col-md-9
+            .btn-toolbar(role="toolbar", style="margin-top:200px; margin-bottom:20px;")
+                div.btn-group
+                    button.btn.btn-default(type="button") 添加
+                div.btn-group(style="float:right")
+                    button.btn.btn-default(type="button") 最新
+                    button.btn.btn-default(type="button") 《
+                    button.btn.btn-default(type="button")  》
+
+                    button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                        | 排列顺序
+                        span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='#') Dropdown link
+                            li
+                                a(href='#') Dropdown link
+            .row
+                .col-md-8
+                    p 东城区会考
+                        span
+                            a 相似题目
+
+                .col-md-4
+                    p 概念不清 +
+            .row
+                .col-md-8(style="background-color:white;")
+                    span(style="margin-right:-30px;min-width:20px;" ) 124
+                    p 二元一次不等式Ax+By+C
+                .col-md-4(style="background-color:white;")
+                    p 二元一次不等式
+            div
+
+
+div.sp-modal(ng-show="viewCtrl.showRegisterForm")
+    //-, ng-click="viewCtrl.showLoginForm=false")
+    .sp-modal.container
+        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").sp-modal.icon-exit
+        div.sp-modal.container.inner
+            div.sp-up-cover
+            sp-input(value="form.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")
+            sp-input(value="form.password", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")
