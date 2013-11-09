@@ -113,6 +113,20 @@ var ExamProblemSchema = new mongoose.Schema({
 
 var Exam = mongoose.model('Exam', ExamSchema);
 
+//Erratum schema
+var ErratumSchema = new mongoose.Schema({
+    erratumTitle: String,
+    subject: String,
+    url: String,
+    problems: [
+        { type: Schema.Types.ObjectId, ref: 'Problem' }
+    ],
+    dateCreated: Date,
+    dateModified: Date
+}, { collection: 'erratum' });
+
+var Erratum = mongoose.model('Erratum', ErratumSchema);
+
 //Student schema
 var StudentSchema = new mongoose.Schema({
     firstName: String,
@@ -131,6 +145,9 @@ var StudentSchema = new mongoose.Schema({
     ],
     exams: [
         { type: Schema.Types.ObjectId, ref: 'Exam' }
+    ],
+    errata: [
+        { type: Schema.Types.ObjectId, ref: 'Erratum' }
     ],
     comments: String
 }, { collection: 'student' });
@@ -226,6 +243,7 @@ module.exports = {
     User: User,
     Problem: Problem,
     Exam: Exam,
+    Erratum: Erratum,
     Quiz: Quiz,
     Feed: Feed
 }

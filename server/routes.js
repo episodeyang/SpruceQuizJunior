@@ -236,6 +236,30 @@ var routes = [
     },
     //Student resources
     {
+        path: '/api/students/errata/:id',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getErrata],
+        accessLevel: accessLevels.loggedin
+    },
+    {
+        path: '/api/students/errata/:id',
+        httpMethod: 'POST',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.createErrata],
+        accessLevel: accessLevels.loggedin
+    },
+    {
+        path: '/api/students/errata/:id',
+        httpMethod: 'DELETE',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.removeErrata],
+        accessLevel: accessLevels.loggedin
+    },
+    {
+        path: '/api/students/errata/:id',
+        httpMethod: 'PUT',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.updateErrata],
+        accessLevel: accessLevels.loggedin
+    },
+    {
         path: '/api/students/:uuid',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getbyId],

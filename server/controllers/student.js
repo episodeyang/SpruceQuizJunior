@@ -6,9 +6,101 @@ var _ =           require('underscore')
     , StudentM = require('../models/SchemaModels').Student
     , TeacherM = require('../models/SchemaModels').Teacher
     , SectionM = require('../models/SchemaModels').Section
+    , ErratumM = require('../models/SchemaModels').Erratum
     , FeedM = require('../models/SchemaModels').Feed
 
 module.exports = {
+    getErrata: function (req, res) {
+        StudentM.findOne({ _id: req.user.userId }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Student was not found or an error occurred");
+            } else if (req.params.id === "all") {
+                ErratumM.find({ _id: { $in: aresult.errata } }, function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "No erratum was found or an error occurred");
+                    } else {
+                        //console.log(results);
+                        res.json(results);
+                    }
+                });
+            } else {
+                ErratumM.findOne({ _id: req.params.id })
+                    .populate('problems')
+                    .exec(function (err, results) {
+                        if(err || !results) {
+                            res.send(404, "Erratum was not found or an error occurred");
+                        } else if( aresult.errata.indexOf(results._id) === -1 ) {
+                            console.log("Operation was not authorized.");
+                            res.send(404, "Operation was not authorized.");
+                        } else {
+                            //console.log(results);
+                            res.json(results);
+                        }
+                    });
+            }
+        });
+    },
+    createErrata: function(req, res) {
+        StudentM.findOne({ _id: req.user.userId }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Student was not found or an error occurred");
+            } else {
+                var erratum = new ErratumM(req.body);
+                //console.log(erratum);
+                erratum.save(function (err) {
+                    if (err) {
+                        res.send(404, "Save erratum failed.");
+                    }
+                });
+            }
+        });
+    },
+    updateErrata: function(req, res) {
+        StudentM.findOne({ _id: req.user.userId }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Student was not found or an error occurred");
+            } else {
+                ErratumM.findOne({ _id: req.params.id }, function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "Erratum was not found or an error occurred");
+                    } else if( aresult.errata.indexOf(results._id) === -1 ) {
+                        console.log("Operation was not authorized.");
+                        res.send(404, "Operation was not authorized.");
+                    } else {
+                        delete req.body._id;
+                        ErratumM.update({ _id: req.params.id }, req.body, function (err) {
+                            if (err) {
+                                res.send(404, "Update erratum failed.");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    },
+    removeErrata: function(req, res) {
+        StudentM.findOne({ _id: req.user.userId }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Student was not found or an error occurred");
+            } else {
+                ErratumM.findOne({ _id: req.params.id }, function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "Erratum was not found or an error occurred");
+                    } else if( aresult.errata.indexOf(results._id) === -1 ) {
+                        console.log("Operation was not authorized.");
+                        res.send(404, "Operation was not authorized.");
+                    } else {
+                        ErratumM.remove({ _id: req.params.id }, function (err) {
+                            if (err) {
+                                res.send(404, "Remove erratum failed.");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    },
+    //old functions below
     getbyId: function(req, res) {
     	if(req.params.uuid === "all") {
 	        StudentM.find(null, null, {sort: {'userUUID': 1}}, function (err, results) {
