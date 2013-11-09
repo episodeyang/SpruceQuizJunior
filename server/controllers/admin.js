@@ -15,7 +15,7 @@ module.exports = {
             } else if (req.params.id === "all") {
                 SectionM.find({ school: { $in: aresult.schools } }, function (err, results) {
                     if(err || !results) {
-                        res.send(404, "No section was not found or an error occurred");
+                        res.send(404, "No section was found or an error occurred");
                     } else {
                         //console.log(results);
                         res.json(results);

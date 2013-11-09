@@ -13,6 +13,7 @@ var _ = require('underscore')
 //    Section,
 //    Problem,
 //    Exam,
+//    Erratum,
 //    Student,
 //    Parent,
 //    Teacher,
@@ -257,6 +258,19 @@ var tempexam = new ExamM({
 tempexam.save();
 var e1_id = tempexam._id;
 
+// Initialization of Erratum data
+var ErratumM = require('./SchemaModels').Erratum;
+
+var temperratum = new ErratumM({
+    erratumTitle: "Physics",
+    subject: "Physics",
+    url: "fake/url",
+    problems: [p1_id, p2_id, p3_id],
+    dateCreated: "",
+    dateModified: ""
+});
+temperratum.save();
+var ert1_id = temperratum._id;
 
 // Initialization of Student data
 var StudentM = require('./SchemaModels').Student;
@@ -273,6 +287,7 @@ var tempstudent = new StudentM({
     sections: [g1_id, g2_id],
     schools: [s1_id],
     exams: [e1_id],
+    errata: [ert1_id],
     comments: "big"
 });
 tempstudent.save();
