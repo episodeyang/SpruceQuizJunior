@@ -22,23 +22,13 @@ div.background(background-img="/img/collections.jpg")
                         .col-md-1
                             h1 错题本
                         .col-md-offset-1.col-md-10(style="padding-top:140px;")
-                            h2 语文
-                            h2 数学
-                            h2 英语
-                            h2 历史
-                            h2 地理
-                            h2 政治
-                            h2 物理
-                            h2 化学
-                            h2 生物
-                            h2 计算机
-                            h2 理科综合
-                            h2 文科综合
+                            h2(ng-repeat="subject in model.subjects")
+                                a(ng-href="{{subject.url}}") {{subject.title}}
                     .row
                         .col-md-offset-10.col-md-1
                             br
                             br
-                            h3
+                            h3(ng-click="viewCtrl.showErrataForm = true;")
                                 span.glyphicon.glyphicon-plus
                                 p 添加
 
@@ -48,10 +38,10 @@ div.background(background-img="/img/collections.jpg")
 
 
 
-div.sp-modal(ng-show="viewCtrl.showRegisterForm")
+div.sp-modal(ng-show="viewCtrl.showErrataForm")
     //-, ng-click="viewCtrl.showLoginForm=false")
     .sp-modal.container
-        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").sp-modal.icon-exit
+        span.glyphicon.glyphicon-remove(ng-click="viewCtrl.showErrataForm = false").sp-modal.icon-exit
         div.sp-modal.container.inner
             div.sp-up-cover
             sp-input(value="form.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")

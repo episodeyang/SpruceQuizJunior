@@ -37,16 +37,14 @@ angular.module('modelServices')
             // TODO: testing code, to be deleted
             modelInstance.test = 1;
 
-            /**
-             * Destroy the model instance
+            /** Destroy the model instance
              *    place holder for now, to be called later by log out
              *    @alias Model.destroy()
              */
             modelInstance.destroy = function() {
                 // do nothing
             }
-            /**
-             * init function will initialize some of the most basic and commonly assessed components
+            /** init function will initialize some of the most basic and commonly assessed components
              *      that are needed by the UI
              * note that some fields will be over written and some may not be written depending on
              *      the user role and specific user settings
@@ -78,8 +76,7 @@ angular.module('modelServices')
                 }
             };
 
-            /**
-             * helper function that gets the role string by looking up the object defined for the roles
+            /** helper function that gets the role string by looking up the object defined for the roles
              * @param value
              * @param obj
              * @returns {*}

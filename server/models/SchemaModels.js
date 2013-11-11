@@ -115,7 +115,7 @@ var Exam = mongoose.model('Exam', ExamSchema);
 
 //Erratum schema
 var ErratumSchema = new mongoose.Schema({
-    erratumTitle: String,
+    title: String,
     subject: String,
     url: String,
     problems: [

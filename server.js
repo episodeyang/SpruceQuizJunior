@@ -31,6 +31,7 @@ mongoose.connect('mongodb://localhost/sprucedb', function(err) {
     if(InitializeSpruceDB) {
         mongoose.connection.db.dropDatabase(function(err){
             require('./server/models/Initialization.js');
+        console.log("reset database complete");
         });
     }
 });

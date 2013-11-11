@@ -262,8 +262,8 @@ var e1_id = tempexam._id;
 var ErratumM = require('./SchemaModels').Erratum;
 
 var temperratum = new ErratumM({
-    erratumTitle: "Physics",
-    subject: "Physics",
+    title: "语文",
+    subject: "语文",
     url: "fake/url",
     problems: [p1_id, p2_id, p3_id],
     dateCreated: "",
@@ -271,6 +271,26 @@ var temperratum = new ErratumM({
 });
 temperratum.save();
 var ert1_id = temperratum._id;
+var temperratum = new ErratumM({
+    title: "数学",
+    subject: "数学",
+    url: "fake/url",
+    problems: [p1_id, p2_id, p3_id],
+    dateCreated: "",
+    dateModified: ""
+});
+temperratum.save();
+var ert2_id = temperratum._id;
+var temperratum = new ErratumM({
+    title: "英语",
+    subject: "英语",
+    url: "fake/url",
+    problems: [p1_id, p2_id, p3_id],
+    dateCreated: "",
+    dateModified: ""
+});
+temperratum.save();
+var ert3_id = temperratum._id;
 
 // Initialization of Student data
 var StudentM = require('./SchemaModels').Student;
@@ -287,7 +307,7 @@ var tempstudent = new StudentM({
     sections: [g1_id, g2_id],
     schools: [s1_id],
     exams: [e1_id],
-    errata: [ert1_id],
+    errata: [ert1_id,ert2_id,ert3_id],
     comments: "big"
 });
 tempstudent.save();
@@ -305,6 +325,7 @@ tempstudent = new StudentM({
     sections: [g1_id, g3_id],
     schools: [s1_id],
     exams: [e1_id],
+    errata: [ert1_id],
     comments: "little"
 });
 tempstudent.save();
@@ -322,6 +343,7 @@ tempstudent = new StudentM({
     sections: [g4_id],
     schools: [s2_id],
     exams: [e1_id],
+    errata: [ert1_id],
     comments: ""
 });
 tempstudent.save();

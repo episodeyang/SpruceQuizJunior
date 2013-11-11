@@ -1,5 +1,4 @@
 'use strict';
-
 /* Controllers */
 
 angular.module('SpruceQuizApp')
@@ -10,18 +9,23 @@ angular.module('SpruceQuizApp')
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]
         $scope.Model = Model;
+        $scope.model.subjects = Students.onErrata.list()
 
+        $scope.viewCtrol={};
+        $scope.viewCtrol.showErrataForm = false;
         //console.log($scope.user)
         //console.log($rootScope.userRoles)
         //console.log($rootScope.accessLevels)
 
-        Students.onSections.get({uuid: $scope.model.user.id}
+        Students.onErrata.get({id: '' }
             ,function(results){
                 $scope.model.sections = results;
                 console.log('printing out the sections')
                 console.log($scope.model.sections)
             }
         )
+
+        //Students.onErrata.create({id:})
 
         $scope.model.feeds = Sections.onFeeds.get({uuid: 'g1', flim: '50'});
 
