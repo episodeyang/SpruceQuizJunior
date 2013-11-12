@@ -30,10 +30,57 @@
   /* Place code here to override all above values, and add IE friendly centering */
 }
 //General Styling
-//Colors ======================================
-  .tr-70{
-      opacity: 0.7;
+
+body{
+  color:white;
+  h1,h2,h3,h4,h5,p{
+    font-family: FangSong;
+    font: FangSong;
+    color:@white-moderate;
+    font-weight: 000;
+    line-height: 1.1;
   }
+  h1 {
+    width: 50px;
+    font-size: 50px;
+    word-wrap: break-word;
+    text-shadow: 0 0 24px @white-moderate;
+  }
+  h2 {
+    width: 40px;
+    font-size: 40px;
+    word-wrap: break-word;
+    display: inline-block;
+    margin-right:20px;
+    margin-left:20px;
+    vertical-align: text-top;
+    border-right: 1px solid @white-light;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+.border-circle{
+  border-right: 8px solid @white;
+  border-top: 8px solid @white;
+  border-left: 8px solid transparent;
+  border-bottom: 8px solid @white;
+  border-radius: 180px;
+  -moz-border-radius: 180px;
+  -webkit-border-radius: 180px;
+}
+//Colors ======================================
+
+@white:white;
+@white-moderate: fadeout(white,20%);
+@white-light: fadeout(white,50%);
+@white-faint: fadeout(white,80%);
 
 //Typseting ===================================
   //Colors-------------------
@@ -97,115 +144,21 @@
   }
 //Directives =================================
   //metroCards
-    @inputWidth : 140px;
-    @totalWidth : @inputWidth + 70px;
-    sp-input{
-      height:70px;
-      width:@totalWidth;
-      margin-bottom:20px;
-      display: block;
-      background-color: rgba(0,0,0,0);
-      clear:both;
-    }
-    div.metro.input.icon, .metro.checkbox{
-      width:70px;
-      height:70px;
-      float:left;
-      border-radius: 0;
-      margin:0;
-      box-sizing: border-box;
-
-    }
-    span.metro{
-      margin:16px 21px 17.5px;
-      width:35px;
-      height:35px;
-      font-size:1.8em;
-      position: relative;
-      bottom:0;
-      color:white;
-    }
-    input.metro.input,.metro.text-block-right{
-      height:70px;
-      width:@inputWidth;
-      float: right;
-      position:relative;
-      padding:17px;
-      border:0;
-      background-color: white;
-      &:focus{
-      }
-    }
-    .sp-checkbox{
-      height:70px;width:70px;
-    }
-    .sp-button-small{
-      height: 70px;
-      border-radius: 0;
-      min-width: 70px;
-      float: right;
-      background-color:#44ffff;
-      text-align: center middle;
-      color: fadeout(white,0.7);
-      &:hover{
-        color: fadeout(white,0.9);
-      }
-      &:active{
-        color:fadeout(white,1);
-      }
-      &:focus{
-        color:fadeout(white,1);
-      }
-      font-size:1.8em;
+.sp-modal{
+  width:100%;height:100%;
+  position:absolute;bottom:0;
+  background-color:rgba(0,0,0,0.7);
+}
+.sp-modal .container {
+  width: 700px;
+  height: 500px;
+  background-color: #ccc;
+  padding: 20px;
 
 
-    }
-    p.sp-button-text{
-      color:white;
-      width:70px;
-      height:35px;
-      margin:auto;
-      position:absolute;
-      left:0;right:0;
-      top:0;bottom:0;
-    }
-//sp-modal
-    div.sp-modal{
-      width:100%;height:100%;
-      position:absolute;bottom:0;
-      background-color:rgba(0,0,0,0.8);
-    }
-    div.sp-modal.container{
-      height:100%;
-      max-width: 900px;
-      background-color:rgba(0,0,0,0);
-      position:absolute;
-      left:0;right:0;
-    }
-    div.sp-modal.container.inner{
-      width:210px;
-      height:100%;
-      left:0;
-      right:0;
-      margin:auto;
-      padding:0;
-      position: absolute;
-      background-color:rgba(0,0,0,0);
+}
 
-    }
 
-    .sp-modal.icon-exit{
-      font-size:5em;
-      color:rgba(255,255,255,0.7);
-      margin:80px 20px 0;
-      position:absolute;
-      z-index: +20;
-      .reflect-verticle;
-      &:hover{
-        color: rgba(255,255,255,0.9);
-      }
-
-    }
 //-Effects ===================================
 .outer-glow(@color){
   .box-shadow(0px 0px 15px 5px @color)

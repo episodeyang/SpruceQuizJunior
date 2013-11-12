@@ -24,25 +24,29 @@ div.background(background-img="/img/collections.jpg")
                         .col-md-offset-1.col-md-10(style="padding-top:140px;")
                             h2(ng-repeat="subject in model.subjects")
                                 a(ng-href="{{subject.url}}") {{subject.title}}
-                    .row
+                            h2 {{form.title}}
+                            h2 {{form.subject}}
+                    .row(ng-show="viewCtrl.showErrataForm", style="margin-top:40px;")
+                        .col-md-offset-1.col-md-10
+                            form(role='form').form-horizontal
+                                .form-group
+                                    label.col-sm-4.control-label 学科
+                                    .col-sm-8
+                                        input.form-control(type='subject', placeholder='',ng-model="form.subject")
+                                .form-group
+                                    label.col-sm-4.control-label 错题本标题
+                                    .col-sm-8
+                                        input.form-control(type='title', placeholder='',ng-model="form.title")
+                                button.btn.btn-default(type='submit', ng-click="createErratum()").col-sm-2.col-sm-offset-10 完成
+                    .row(ng-hide="viewCtrl.showErrataForm")
                         .col-md-offset-10.col-md-1
                             br
                             br
                             h3(ng-click="viewCtrl.showErrataForm = true;")
                                 span.glyphicon.glyphicon-plus
                                 p 添加
-
                 .col-md-2
                     h1 复习&nbsp
                         span(style="margin-top:300%;").glyphicon.glyphicon-chevron-right
 
-
-
-div.sp-modal(ng-show="viewCtrl.showErrataForm")
-    //-, ng-click="viewCtrl.showLoginForm=false")
-    .sp-modal.container
-        span.glyphicon.glyphicon-remove(ng-click="viewCtrl.showErrataForm = false").sp-modal.icon-exit
-        div.sp-modal.container.inner
-            div.sp-up-cover
-            sp-input(value="form.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")
-            sp-input(value="form.password", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")
+link(href='/css/homePage.css', rel="stylesheet")

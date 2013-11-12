@@ -13,6 +13,18 @@ angular.module('SpruceQuizApp')
 
         $scope.viewCtrol={};
         $scope.viewCtrol.showErrataForm = false;
+
+        $scope.form = {
+            subject: "",
+            title: "",
+            url: "fake/url",
+            problems: [],
+            dateCreated: "",
+            dateModified: ""
+        }
+        $scope.createErratum = function(){
+            Students.onErrata.create($scope.form);
+        }
         //console.log($scope.user)
         //console.log($rootScope.userRoles)
         //console.log($rootScope.accessLevels)
