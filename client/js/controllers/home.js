@@ -9,10 +9,10 @@ angular.module('SpruceQuizApp')
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]
         $scope.Model = Model;
-        $scope.model.subjects = Students.onErrata.list()
+        $scope.model.errata = Students.onErrata.list()
 
-        $scope.viewCtrol={};
-        $scope.viewCtrol.showErrataForm = false;
+        $scope.viewCtrl={};
+        $scope.viewCtrl.state = 'defaultView' ;
 
         $scope.form = {
             subject: "",
@@ -21,13 +21,18 @@ angular.module('SpruceQuizApp')
             problems: [],
             dateCreated: "",
             dateModified: ""
-        }
+        };
         $scope.createErratum = function(){
             Students.onErrata.create($scope.form);
         }
         //console.log($scope.user)
         //console.log($rootScope.userRoles)
         //console.log($rootScope.accessLevels)
+        $scope["subject"] = undefined;
+        $scope.$watch('subject', function() {
+
+            $scope.title = $scope.subject;
+        });
 
         Students.onErrata.get({id: '' }
             ,function(results){

@@ -22,29 +22,42 @@ div.background(background-img="/img/collections.jpg")
                         .col-md-1
                             h1 错题本
                         .col-md-offset-1.col-md-10(style="padding-top:140px;")
-                            h2(ng-repeat="subject in model.subjects")
-                                a(ng-href="{{subject.url}}") {{subject.title}}
-                            h2 {{form.title}}
-                            h2 {{form.subject}}
-                    .row(ng-show="viewCtrl.showErrataForm", style="margin-top:40px;")
+                            h2(ng-repeat-start="erratum in model.errata")
+                                a(ng-href="{{erratum.url}}") {{erratum.title}}
+                            a(ng-repeat-end, ng-show="viewCtrl.state == 'editView' ",
+                            ng-click="delete(erratum.id)")
+                                span.glyphicon.glyphicon-remove
+                            h2 {{title}}
+                    .row(ng-show="viewCtrl.state == 'createView' ", style="margin-top:40px;")
                         .col-md-offset-1.col-md-10
                             form(role='form').form-horizontal
                                 .form-group
                                     label.col-sm-4.control-label 学科
                                     .col-sm-8
-                                        input.form-control(type='subject', placeholder='',ng-model="form.subject")
+                                        input#input1.form-control(type='subject', placeholder='',ng-model="subject")
                                 .form-group
                                     label.col-sm-4.control-label 错题本标题
                                     .col-sm-8
-                                        input.form-control(type='title', placeholder='',ng-model="form.title")
-                                button.btn.btn-default(type='submit', ng-click="createErratum()").col-sm-2.col-sm-offset-10 完成
-                    .row(ng-hide="viewCtrl.showErrataForm")
-                        .col-md-offset-10.col-md-1
+                                        input#input2.form-control(type='title', placeholder='{{subject}}',ng-model="title")
+                                button.btn.btn-default(ng-click="viewCtrl.state =  'defaultView' ").col-sm-2.col-sm-offset-7 取消
+                                button.btn.btn-default(type='submit', ng-click="createErratum()").col-sm-offset-1.col-sm-2 完成
+                    .row(ng-show="viewCtrl.state == 'defaultView' ")
+                        .col-md-offset-8.col-md-4
                             br
                             br
-                            h3(ng-click="viewCtrl.showErrataForm = true;")
+                            h3.h3-verticle(ng-click="viewCtrl.state = 'createView' ")
                                 span.glyphicon.glyphicon-plus
                                 p 添加
+                            h3.h3-verticle(ng-click="viewCtrl.state = 'editView' ")
+                                span.glyphicon.glyphicon-remove-sign
+                                p 编辑
+                    .row(ng-show="viewCtrl.state == 'editView' ")
+                        .col-md-offset-8.col-md-4
+                            br
+                            br
+                            h3.h3-verticle(ng-click="viewCtrl.state = 'defaultView' ")
+                                span.glyphicon.glyphicon-share-alt
+                                p 完成编辑
                 .col-md-2
                     h1 复习&nbsp
                         span(style="margin-top:300%;").glyphicon.glyphicon-chevron-right

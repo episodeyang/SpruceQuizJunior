@@ -56,6 +56,20 @@ body{
     vertical-align: text-top;
     border-right: 1px solid @white-light;
   }
+  h3{
+    font-size: 1.7em;
+    margin:20px 10px 0;
+  }
+  h3.h3-verticle {
+    font-size: 1.7em;
+    margin:20px 10px 0;
+    width: 30px;
+    word-wrap: break-word;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+
+
   a {
     color: white;
     text-decoration: none;
@@ -129,10 +143,6 @@ body{
     height: 1.0em;
     top:0;bottom:0;
   }
-  h3{
-    font-size: 1.7em;
-    margin:20px 0 20px 0;
-  }
 //PlaceHolders ===============================
   div.sp-up-cover{
     position:relative;
@@ -154,10 +164,16 @@ body{
   height: 500px;
   background-color: #ccc;
   padding: 20px;
-
-
 }
-
+#input1, #input2 {
+  color: white;
+  background-color: fadeout(black, 80%);
+  border-style: solid;
+  border-width: 0 0 1px;
+  border-color: white;
+  font-size: 1.1em;
+  border-radius: 0px;
+}
 
 //-Effects ===================================
 .outer-glow(@color){
