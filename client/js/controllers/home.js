@@ -44,7 +44,7 @@ angular.module('SpruceQuizApp')
         $scope.delete = function(id){
             console.log("id is" + id);
             Students.onErrata.delete({id: id}
-                , function(result){
+                , function(res){
                     loadErrata();
                     console.log("trying to reload the data");
                 });
