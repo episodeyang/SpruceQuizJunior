@@ -51,6 +51,14 @@ module.exports = {
                     if (err) {
                         res.send(404, "Save erratum failed.");
                     }
+                    else {
+                        aresult.errata.push(erratum._id);
+                        StudentM.update({ _id: req.user.userId }, {errata: aresult.errata}, function (err) {
+                            if (err) {
+                                res.send(404, "Update erratum failed.");
+                            }
+                        });
+                    }
                 });
             }
         });
@@ -93,6 +101,14 @@ module.exports = {
                         ErratumM.remove({ _id: req.params.id }, function (err) {
                             if (err) {
                                 res.send(404, "Remove erratum failed.");
+                            }
+                            else {
+                                aresult.errata.remove(req.params.id);
+                                StudentM.update({ _id: req.user.userId }, {errata: aresult.errata}, function (err) {
+                                    if (err) {
+                                        res.send(404, "Update erratum failed.");
+                                    }
+                                });
                             }
                         });
                     }
