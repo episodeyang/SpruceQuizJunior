@@ -271,7 +271,8 @@ var temperratum = new ErratumM({
 });
 temperratum.save();
 var ert1_id = temperratum._id;
-var temperratum = new ErratumM({
+
+temperratum = new ErratumM({
     title: "数学",
     subject: "数学",
     url: "fake/url",
@@ -281,7 +282,8 @@ var temperratum = new ErratumM({
 });
 temperratum.save();
 var ert2_id = temperratum._id;
-var temperratum = new ErratumM({
+
+temperratum = new ErratumM({
     title: "英语",
     subject: "英语",
     url: "fake/url",
