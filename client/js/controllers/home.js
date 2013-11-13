@@ -10,7 +10,9 @@ angular.module('SpruceQuizApp')
         $scope.model.sections=[]
         $scope.Model = Model;
         function loadErrata (){
-            $scope.model.errata = Students.onErrata.list();
+            Students.onErrata.list(function(res){
+                $scope.model.errata = res;
+            });
             console.log('loaded data to Errata of student');
         }
         loadErrata();
@@ -38,11 +40,8 @@ angular.module('SpruceQuizApp')
                     loadErrata();
                     $scope.subject = "";
                     $scope.title = "";
-                    console.log('created and trying to reload');
-                    console.log(res)
                 }
                 ,function(err){
-                    console.log('there is an error in creating an erratum.')
                     console.log(err)
                 }
             );
@@ -52,7 +51,6 @@ angular.module('SpruceQuizApp')
             Students.onErrata.delete({id: id}
                 , function(res){
                     loadErrata();
-                    console.log("trying to reload the data");
                 });
         };
         //console.log($scope.user)

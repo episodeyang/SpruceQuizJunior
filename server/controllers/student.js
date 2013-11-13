@@ -56,7 +56,9 @@ module.exports = {
                         StudentM.update({ _id: req.user.userId }, {errata: aresult.errata}, function (err) {
                             if (err) {
                                 res.send(404, "Update erratum failed.");
-                            }
+                            }else {
+                                res.send(200, "create success");
+                            };
                         });
                     }
                 });
@@ -79,7 +81,9 @@ module.exports = {
                         ErratumM.update({ _id: req.params.id }, req.body, function (err) {
                             if (err) {
                                 res.send(404, "Update erratum failed.");
-                            }
+                            }else {
+                                res.send(200, "update success");
+                            };
                         });
                     }
                 });
@@ -107,7 +111,9 @@ module.exports = {
                                 StudentM.update({ _id: req.user.userId }, {errata: aresult.errata}, function (err) {
                                     if (err) {
                                         res.send(404, "Update erratum failed.");
-                                    }
+                                    }else {
+                                        res.send(200, "update success");
+                                    };
                                 });
                             }
                         });
