@@ -33,13 +33,19 @@ angular.module('SpruceQuizApp')
         $scope.createErratum = function(){
             $scope.form.subject = $scope.subject;
             $scope.form.title = $scope.title;
-            Students.onErrata.create($scope.form,
-                function(res){
+            Students.onErrata.create($scope.form
+                ,function(res){
                     loadErrata();
                     $scope.subject = "";
                     $scope.title = "";
                     console.log('created and trying to reload');
-                });
+                    console.log(res)
+                }
+                ,function(err){
+                    console.log('there is an error in creating an erratum.')
+                    console.log(err)
+                }
+            );
         };
         $scope.delete = function(id){
             console.log("id is" + id);
