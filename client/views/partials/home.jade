@@ -25,7 +25,7 @@ div.background(background-img="/img/collections.jpg")
                             h2(ng-repeat-start="erratum in model.errata")
                                 a(ng-href="{{erratum.url}}") {{erratum.title}}
                             a(ng-repeat-end, ng-show="viewCtrl.state == 'editView' ",
-                            ng-click="delete(erratum.id)")
+                            ng-click="delete(erratum._id)")
                                 span.glyphicon.glyphicon-remove
                             h2 {{title}}
                     .row(ng-show="viewCtrl.state == 'createView' ", style="margin-top:40px;")
