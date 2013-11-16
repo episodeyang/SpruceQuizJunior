@@ -1,0 +1,211 @@
+@import "elements.less";
+@import "mixins.less";
+
+//Layout =======================================
+.absoluteCenter {
+  /* Must manually set width/height */
+  width:600px;
+  height:120px;
+
+  /* The magic centering code */
+  margin:auto;
+  position:absolute;
+  top:0;bottom:0; /* Aligns Vertically - Remove for Horizontal Only */
+  left:0;right:0; /* Aligns Horizontally - Remove for Vertical Only  */
+
+  /* Prevent div from overflowing main window */
+  max-width:100%;
+  max-height:100%;
+  overflow: none;
+}
+
+/* IE 7 and Below */
+:first-child+html .absoluteCenter,
+* html .absoluteCenter {
+  /* Place code here to override all above values, and add IE friendly centering */
+}
+//General Styling
+
+body{
+  color:white;
+  h1,h2,h3,h4,h5,p{
+    font-family: FangSong;
+    font: FangSong;
+    color:@white-moderate;
+    font-weight: 000;
+    line-height: 1.1;
+  }
+  h1 {
+    width: 50px;
+    font-size: 50px;
+    word-wrap: break-word;
+    text-shadow: 0 0 24px @white-moderate;
+  }
+  h2 {
+    width: 40px;
+    font-size: 40px;
+    word-wrap: break-word;
+    display: inline-block;
+    margin-right:20px;
+    margin-left:20px;
+    vertical-align: text-top;
+    border-right: 1px solid @white-light;
+  }
+  h3{
+    font-size: 1.7em;
+    margin:20px 10px 0;
+  }
+  h3.h3-verticle {
+    font-size: 1.7em;
+    margin:20px 10px 0;
+    width: 30px;
+    word-wrap: break-word;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+
+
+  a {
+    color: white;
+    text-decoration: none;
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+.border-circle{
+  border-right: 8px solid @white;
+  border-top: 8px solid @white;
+  border-left: 8px solid transparent;
+  border-bottom: 8px solid @white;
+  border-radius: 180px;
+  -moz-border-radius: 180px;
+  -webkit-border-radius: 180px;
+}
+//Colors ======================================
+
+@white:white;
+@white-moderate: fadeout(white,20%);
+@white-light: fadeout(white,50%);
+@white-faint: fadeout(white,80%);
+
+//Typseting ===================================
+  //Colors-------------------
+  //Headers-------------------
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',"WenQuanYi Micro Hei",Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
+      font-weight: 300;
+      line-height: 1.1;
+    }
+
+//Buttons ======================================
+  .btn-transparent(@color){
+    border-radius: 0;
+    line-height: 20px;
+    @showColor: fadeout(@color,100%);
+    color: fadeout(white, 40%);
+    background-color: @showColor;
+    @shadow: inset 0 0 26px @showColor;
+    .box-shadow(@shadow);
+    &:active{
+      color: grey;
+      @showColor: fadeout(@color,0%);
+      background-color: @showColor;
+      @shadow: inset 0 0 13px @showColor;
+      .box-shadow(@shadow);
+    }
+    &:hover{
+      color: grey;
+      @showColor: fadeout(@color,0%);
+      background-color: @showColor;
+      @shadow: 0 0 26px @showColor;
+      .box-shadow(@shadow);
+    }
+  }
+
+  .btn-color(@color){
+    border-radius: 0;
+    line-height: 20px;
+    @showColor: fadeout(@color,0%);
+    color: fadeout(white, 30%);
+    background-color: @showColor;
+    @shadow: inset 0 0 6px @showColor;
+    .box-shadow(@shadow);
+    &:active{
+      color: grey;
+      @showColor: fadeout(@color,30%);
+      @shadow: 0 0 26px @color;
+      .box-shadow(@shadow);
+      background-color: @showColor;
+    }
+    &:hover{
+      color: grey;
+      @showColor: fadeout(@color,0%);
+      background-color: @showColor;
+      @shadow: 0 0 26px @color;
+      .box-shadow(@shadow);
+    }
+
+  }
+
+  .btn-transparent-blue{
+    .btn-transparent(#66cbe0);
+  }
+  .btn-blue{
+    .btn-color(#66cbe0);
+  }
+  .btn-green{
+    .btn-color(#a1c543)
+  }
+  .btn-orange{
+    .btn-color(#ebad2b)
+  }
+  .btn-yellow{
+    .btn-color(#fcb415)
+  }
+  .btn-pink{
+    .btn-color(#cd6279)
+  }
+  .btn-earth{
+    .btn-color(#cccc99)
+  }
+
+
+//Images ======================================
+  img.logo{
+    float: left;
+    margin-right:0.3em;
+    margin-top:-1px;
+    height: 1.0em;
+    top:0;bottom:0;
+  }
+//PlaceHolders ===============================
+  div.sp-up-cover{
+    position:relative;
+    top:0;
+    height:50%;
+    margin-bottom:-70px;
+    width:100%;
+    background-color: rgba(0,0,0,0);
+  }
+//Directives =================================
+  //metroCards
+.sp-modal{
+  width:100%;height:100%;
+  position:absolute;bottom:0;
+  background-color:rgba(0,0,0,0.7);
+}
+.sp-modal .container {
+  width: 700px;
+  height: 500px;
+  background-color: #ccc;
+  padding: 20px;
+}
+
+//-Effects ===================================
+.outer-glow(@color){
+  .box-shadow(0px 0px 15px 5px @color)
+}
+
