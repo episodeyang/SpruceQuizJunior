@@ -6,11 +6,13 @@ div.background(style="background-color:grey;")
     +navbar
     .row
         .col-md-3
-            .btn-group(style="margin-top:80px; margin-bottom:20px;")
+            .row(style="margin-top:70px; margin-bottom:17px;")
+                h4 数学
+            .btn-group
                 button.btn.btn-transparent-blue(type="button") 知识点
                 button.btn.btn-transparent-blue(type="button") 时间顺序
                 button.btn.btn-transparent-blue(type="button") 单元
-            div(style="width:100%; height:300px;background-color:rgba(255,255,255,.50)")
+            div(style="height:300px;margin-right: 20px;display:inline-box; background-color:rgba(255,255,255,.50)")
         .col-md-9
             .btn-toolbar(role="toolbar", style="margin-top:80px; margin-bottom:20px;")
                 div.btn-group
@@ -32,21 +34,23 @@ div.background(style="background-color:grey;")
 
                     button.btn.btn-earth(type="button")
                         span.glyphicon.glyphicon-chevron-right
-            .row
+            .row(ng-repeat-start="problem in Model.problems")
                 .col-md-8
-                    p 东城区会考
+                    p {{problem.tagName}}
                         span
                             a 相似题目
-
                 .col-md-4
-                    p 概念不清 +
-            .row
-                .col-md-8(style="background-color:white;")
-                    span(style="margin-right:-30px;min-width:20px;" ) 124
-                    p 二元一次不等式Ax+By+C
-                .col-md-4(style="background-color:white;")
-                    p 二元一次不等式
-            div
+                    p
+                        span(ng-repeat="reason in problem.reasons") {{reason + "&nbsp"}}
+            .row(ng-repeat-end)
+                .col-md-8
+                    .problem-number {{problem.numberId}}
+                    .problem-main-text
+                        p {{problem.mainText}}
+                .col-md-4
+                    .problem-note
+                        p {{problem.note}}
+
 
 
 div.sp-modal(ng-show="viewCtrl.showRegisterForm")
