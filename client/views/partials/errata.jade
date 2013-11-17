@@ -34,16 +34,17 @@ div.background(style="background-color:grey;")
 
                     button.btn.btn-earth(type="button")
                         span.glyphicon.glyphicon-chevron-right
-            .row(ng-repeat-start="problem in Model.problems")
+            .row(ng-repeat-start="problem in Model.problemNotes")
                 .col-md-8
                     p {{problem.tagName}}
-                        span.problem-similar(ng-click="openProblemView({id:''})") &nbsp 相似题目
-                        span.problem-similar.glyphicon.glyphicon-share-alt
+                        span.problem-similar
+                            span(ng-click="openProblemView({id:''})") &nbsp 相似题目
+                            span.glyphicon.glyphicon-share-alt
                 .col-md-4
                     .problem-note-container
                         .problem-reason(ng-repeat-start="reason in problem.reasons")
                             | {{reason}}
-                        .problem-tag-remove(ng-repeat-end)
+                        .problem-reason-remove(ng-repeat-end)
                             .glyphicon.glyphicon-remove
 
 

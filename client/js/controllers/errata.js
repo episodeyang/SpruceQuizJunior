@@ -10,20 +10,23 @@ angular.module('SpruceQuizApp')
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]
         $scope.Model = Model;
-        $scope.Model['problems'] = [
+        $scope.Model['problemNotes'] = [
             {   numberId: "124",
+                problemId: "",
                 tagName:"东城区统测",
                 mainText:"二元一次不等式Ax+By+C",
                 reasons:["审题不清", "概念模糊"],
                 note: "审题不清，没有看到题干中对角度的要求",
             },
             {   numberId: "125",
+                problemId: "",
                 tagName:"西城区第一次模拟",
                 mainText:"二元一次不等式Ax+By+C",
                 reasons:["审题不清", "概念模糊"],
                 note: "审题不清，没有看到题干中对角度的要求",
             },
             {   numberId: "126",
+                problemId: "",
                 tagName:"东城区统测",
                 mainText:"二元一次不等式Ax+By+C",
                 reasons:["审题不清", "概念模糊"],
