@@ -37,11 +37,16 @@ div.background(style="background-color:grey;")
             .row(ng-repeat-start="problem in Model.problems")
                 .col-md-8
                     p {{problem.tagName}}
-                        span
-                            a 相似题目
+                        span.problem-similar(ng-click="openProblemView({id:''})") &nbsp 相似题目
+                        span.problem-similar.glyphicon.glyphicon-share-alt
                 .col-md-4
-                    p
-                        span(ng-repeat="reason in problem.reasons") {{reason + "&nbsp"}}
+                    .problem-note-container
+                        .problem-reason(ng-repeat-start="reason in problem.reasons")
+                            | {{reason}}
+                        .problem-tag-remove(ng-repeat-end)
+                            .glyphicon.glyphicon-remove
+
+
             .row(ng-repeat-end)
                 .col-md-8
                     .problem-number {{problem.numberId}}
