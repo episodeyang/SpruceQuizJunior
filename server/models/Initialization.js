@@ -264,7 +264,7 @@ var ErratumM = require('./SchemaModels').Erratum;
 var temperratum = new ErratumM({
     title: "语文",
     subject: "语文",
-    url: "fake/url",
+    url: "/errata",
     problems: [p1_id, p2_id, p3_id],
     dateCreated: "",
     dateModified: ""
@@ -275,7 +275,7 @@ var ert1_id = temperratum._id;
 temperratum = new ErratumM({
     title: "数学",
     subject: "数学",
-    url: "fake/url",
+    url: "/errata",
     problems: [p1_id, p2_id, p3_id],
     dateCreated: "",
     dateModified: ""
@@ -286,7 +286,7 @@ var ert2_id = temperratum._id;
 temperratum = new ErratumM({
     title: "英语",
     subject: "英语",
-    url: "fake/url",
+    url: "/errata",
     problems: [p1_id, p2_id, p3_id],
     dateCreated: "",
     dateModified: ""

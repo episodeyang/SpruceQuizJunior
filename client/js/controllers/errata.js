@@ -4,11 +4,17 @@
 
 angular.module('SpruceQuizApp')
 .controller('ErrataCtrl',
-['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model','dataModel',
-    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model, dataModel) {
+['$filter','$routeParams','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model','dataModel',
+    function($filter, $routeParams, $rootScope, $scope, Sections, Units, Materials, Students, Model, dataModel) {
+
+
         $scope.model = {}
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]
+
+        $scope.model.erratum = {}
+        $scope.model.erratum['_id'] = $routeParams.errataId;
+
         $scope.Model = Model;
         $scope.Model['problemNotes'] = [
             {   numberId: "124",
