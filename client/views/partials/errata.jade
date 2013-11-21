@@ -52,7 +52,7 @@ div.background(style="background-color:grey;")
                 .col-md-8
                     .problem-number {{problem.numberId}}
                     .problem-main-text
-                        p {{problem.mainText}}
+                        span(mathjax-bind="problem.mainText")
                 .col-md-4
                     .problem-note
                         p {{problem.note}}

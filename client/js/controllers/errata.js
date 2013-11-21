@@ -4,8 +4,8 @@
 
 angular.module('SpruceQuizApp')
 .controller('ErrataCtrl',
-['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model',
-    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model) {
+['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model','dataModel',
+    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model, dataModel) {
         $scope.model = {}
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]
@@ -14,23 +14,26 @@ angular.module('SpruceQuizApp')
             {   numberId: "124",
                 problemId: "",
                 tagName:"东城区统测",
-                mainText:"二元一次不等式Ax+By+C",
+                mainText:"二元一次不等式\\(A_x+B_y+C_z\\)",
                 reasons:["审题不清", "概念模糊"],
                 note: "审题不清，没有看到题干中对角度的要求",
+                problem: dataModel.problems[0]
             },
             {   numberId: "125",
                 problemId: "",
                 tagName:"西城区第一次模拟",
-                mainText:"二元一次不等式Ax+By+C",
+                mainText:"二元一次不等式\\(A_x+B_y+C\\)",
                 reasons:["审题不清", "概念模糊"],
                 note: "审题不清，没有看到题干中对角度的要求",
+                problem: dataModel.problems[1]
             },
             {   numberId: "126",
                 problemId: "",
                 tagName:"东城区统测",
-                mainText:"二元一次不等式Ax+By+C",
+                mainText:"二元一次不等式\\(A_x+B_y+C\\)",
                 reasons:["审题不清", "概念模糊"],
                 note: "审题不清，没有看到题干中对角度的要求",
+                problem: dataModel.problems[2]
             },
         ];
         //console.log($scope.user)
