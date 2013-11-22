@@ -6,13 +6,13 @@ angular.module('SpruceQuizApp')
 .controller('ErrataCtrl',
 ['$filter','$routeParams','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model','dataModel',
     function($filter, $routeParams, $rootScope, $scope, Sections, Units, Materials, Students, Model, dataModel) {
+        $scope.viewCtrl = {};
+        $scope.viewCtrl.showNewProblemModal = false;
+        $scope.model = {};
+        $scope.model.user =$rootScope.user;
+        $scope.model.sections=[];
 
-
-        $scope.model = {}
-        $scope.model.user =$rootScope.user
-        $scope.model.sections=[]
-
-        $scope.model.erratum = {}
+        $scope.model.erratum = {};
         $scope.model.erratum['_id'] = $routeParams.errataId;
 
         $scope.Model = Model;
