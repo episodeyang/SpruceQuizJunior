@@ -63,7 +63,7 @@ div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
     //-, ng-click="viewCtrl.showLoginForm=false")
     //-.sp-modal.container
     div#notice.absoluteCenter
-        div#back-btn
+        div#back-btn(ng-click="viewCtrl.showNewProblemModal = false")
             .glyphicon.glyphicon-chevron-left
 
 
