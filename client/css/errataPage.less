@@ -31,43 +31,13 @@ body{
   h1,h2,h3,h4,h5,p{
     font-family: MicrosoftYaHei, '微软雅黑', 'Hiragino Sans GB', "WenQuanYi Micro Hei", Arial, Tahoma, Helvetica, Georgia, STXihei, '华文黑体', Hei, 'Hiragina Kaku Gothic Pro', SimSun;
     font: FangSong;
-    color:@white-moderate;
+    color: grey;
     font-weight: 000;
     line-height: 1.1;
-  }
-  h1 {
-    width: 50px;
-    font-size: 50px;
-    word-wrap: break-word;
-    text-shadow: 0 0 24px @white-moderate;
-  }
-  h2 {
-    width: 40px;
-    font-size: 40px;
-    word-wrap: break-word;
-    display: inline-block;
-    margin-right:20px;
-    margin-left:20px;
-    vertical-align: text-top;
-    border-right: 1px solid @white-light;
-  }
-  h3{
-    font-size: 1.7em;
-    margin:20px 10px 0;
-  }
-  h3.h3-verticle {
-    font-size: 1.7em;
-    margin:20px 10px 0;
-    width: 30px;
-    word-wrap: break-word;
-    display: inline-block;
-    vertical-align: text-top;
   }
   p {
     margin-bottom: 0.2em;
   }
-
-
   a {
     color: white;
     text-decoration: none;
@@ -93,6 +63,16 @@ body{
 @white-moderate: fadeout(white,20%);
 @white-light: fadeout(white,50%);
 @white-faint: fadeout(white,80%);
+
+@Green: #bacf5e;
+@Blue: #70c2d0;
+@Alarm: #f79838;
+@Pink: #e96262;
+@Orange-dense: #f2855c;
+@Yellow-dense: #E4AF62;
+@Yellow: #f9c940;
+@Green: #89c540;
+@Blue-light: #60c3b0;
 
 //Typseting ===================================
   //Colors-------------------
@@ -280,7 +260,7 @@ body{
 
 //-Effects ===================================
 .outer-glow(@color){
-  .box-shadow(0px 0px 15px 5px @color)
+  .box-shadow(0px 0px 15px 5px @color);
 }
 
 //sp-modal
@@ -291,19 +271,57 @@ body{
   z-index: +20;
   overflow-y: auto;
 }
-#notice{
-  max-width: 500px; height:800px;
+#notice-container{
+  max-width: 500px;
+  height: 35em;
   position: absolute;top:0;
   margin-top: 100px;
   margin-bottom: 100px;
   background-color: white;
+  padding: 0px 30px 20px 30px;
+
+  hr,h3,h4,p{
+    color: grey;
+  }
+  hr{
+    margin-top:0.8em;
+    margin-bottom:0.8em;
+  }
+  h3{
+    font-size: 1.5em;
+  }
+  h4{
+    color:@Blue;
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top: 0.8em;
+    margin-bottom: 1.1em;
+  }
+  p{
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top:0.8em;
+    margin-bottom: 0.8em;
+  }
 }
 #back-btn{
-  width: 50px;
-  height: 50px;
-  margin-left: -60px;
+  width: 60px;
+  height: 60px;
+  margin-left: -100px;
   position: absolute;
   top: 0;
   float: left;
-  background-color: yellow;
+  background-color: @Yellow;
+  border: none;
+  &:hover{
+    .box-shadow(0px 0px 15px @Yellow);
+  ;
+    -moz-box-sizing: box-shadow(0px 0px 15px @Yellow);;
+    box-sizing: box-shadow(0px 0px 15px @Yellow);;
+  }
+  div:first-child {
+    font-size:1.6em;
+    line-height: 1.6em;
+    color: white;
+  }
 }
