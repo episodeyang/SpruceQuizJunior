@@ -19,9 +19,9 @@ div.background(background-img="/img/classroom.jpg")
 
 div.sp-modal(ng-show="viewCtrl.showLoginForm")
     //-, ng-click="viewCtrl.showLoginForm=false")
-    .sp-modal.container
-        span.glyphicon.glyphicon-share-alt(ng-click="exitLogin()").sp-modal.icon-exit
-        div.sp-modal.container.inner
+    .container
+        span.glyphicon.glyphicon-share-alt(ng-click="exitLogin()").icon-exit
+        div.inner
             div.sp-up-cover
             sp-input(value="loginForm.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")
             sp-input(value="loginForm.password", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")
@@ -32,9 +32,9 @@ div.sp-modal(ng-show="viewCtrl.showLoginForm")
 
 div.sp-modal(ng-show="viewCtrl.showRegisterForm")
     //-, ng-click="viewCtrl.showLoginForm=false")
-    .sp-modal.container
-        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").sp-modal.icon-exit
-        div.sp-modal.container.inner
+    .container
+        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").icon-exit
+        div.inner
             div.sp-up-cover
             sp-input(value="form.userName", type="text", icon="user", color="#17e8ff", placeholder="请输入用户名")
             sp-input(value="form.password", type="password", icon="flash", color="#ffcd33", placeholder="请输入密码")
