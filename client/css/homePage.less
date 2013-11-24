@@ -216,6 +216,7 @@ body{
 }
 #panel-1.s1{
   .make-xs-column(2);
+  .make-sm-column(3);
   h1{
     float:right;
     display:inline-block;
@@ -246,9 +247,11 @@ body{
 
 #panel-1.s2{
   .make-xs-column(1);
+  .make-sm-column(2);
   h1{
     float:right;
     display:inline-block;
+    margin-right: -15px;
   }
   opacity:0.5;
   &:hover{
@@ -257,6 +260,10 @@ body{
 }
 #panel-2.s2{
   .make-xs-column(1);
+  h1{
+    float:right;
+    display:inline-block;
+  }
 }
 #panel-3.s2{
   .make-xs-column(2);
@@ -272,10 +279,12 @@ body{
 
 #panel-1.s3{
   .make-xs-column(1);
-  opacity:0.5;
+  opacity:0.3;
+  z-index: +1;
   h1{
     float:right;
     display:inline-block;
+    margin-right: -30px;
   }
   &:hover{
     opacity:1.0;
@@ -283,7 +292,12 @@ body{
 }
 #panel-2.s3{
   .make-xs-column(1);
-  opacity:0.5;
+  opacity:0.4;
+  h1{
+    float:right;
+    display:inline-block;
+    margin-right: -5px;
+  }
   &:hover{
     opacity:1.0;
   }
