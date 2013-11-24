@@ -144,6 +144,11 @@
   -ms-transform: scale(-1,1); // IE9+
   transform: scale(-1,1);
 }
+.scale-horizontal(@ratio) {
+  -webkit-transform: scale(@ratio, 1);
+  -ms-transform: scale(@ratio, 1); // IE9+
+  transform: scale(@ratio, 1);
+}
 .translate(@x; @y) {
   -webkit-transform: translate(@x, @y);
       -ms-transform: translate(@x, @y); // IE9+

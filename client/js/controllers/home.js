@@ -19,6 +19,9 @@ angular.module('SpruceQuizApp')
 
         $scope.viewCtrl={};
         $scope.viewCtrl.state = 'defaultView' ;
+        $scope.viewCtrl.panelStates = {'errata':"s1", 'recent':"s2" , 'review':"s3"} ;
+        $scope.viewCtrl.panelState = $scope.viewCtrl.panelStates.errata ;
+
 
         $scope.form = {
             subject: "",
