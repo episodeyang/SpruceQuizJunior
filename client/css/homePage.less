@@ -8,23 +8,9 @@
 
 }
 //Layout =======================================
-.absoluteCenter {
-  /* Must manually set width/height */
-  width:600px;
-  height:120px;
-
-  /* The magic centering code */
-  margin:auto;
-  position:absolute;
-  top:0;bottom:0; /* Aligns Vertically - Remove for Horizontal Only */
-  left:0;right:0; /* Aligns Horizontally - Remove for Vertical Only  */
-
-  /* Prevent div from overflowing main window */
-  max-width:100%;
-  max-height:100%;
-  overflow: none;
+.absoluteCenter{
+  .vertical-center(600px, 120px);
 }
-
 /* IE 7 and Below */
 :first-child+html .absoluteCenter,
 * html .absoluteCenter {
@@ -34,6 +20,7 @@
 
 body{
   color:white;
+  height: none;
   h1,h2,h3,h4,h5,p{
     font-family: FangSong;
     font: FangSong;
@@ -79,6 +66,11 @@ body{
       color: white;
       text-decoration: none;
     }
+  }
+  .container{
+    height:100%;
+    overflow-y: auto;
+    position: absolute;
   }
 }
 
@@ -306,31 +298,46 @@ body{
   .make-xs-column(1);
 }
 
-
+@time: 0.1s;
 .panel-content{
-  .transition(0.1s ease-out all);
   .make-xs-column(7);
   .make-md-column(6);
+  height: 90%;
+  overflow: auto;
+  padding-top:10%;
 }
 .panel-content.ng-hide-add{
+  .transition(@time linear all);
   display:block!important;
   .make-xs-column(7);
   .make-md-column(6);
+  height: 400px;
+  overflow:hidden;
   opacity: 1;
 }
 .panel-content.ng-hide-add-active{
+  .transition(@time linear all);
   display:block!important;
-  .make-xs-column(1);
+  width:0px;
+  height: 400px;
+  overflow:hidden;
   opacity: 0;
 }
+
 .panel-content.ng-hide-remove{
-  display:block!important;
-  .make-xs-column(1);
+  .transition(@time linear all);
+  display:block!important; //comment out to prevent having two columns at the same time.
+  width:0px;
+  overflow:hidden;
+  height: 400px;
   opacity: 0;
 }
 .panel-content.ng-hide-remove-active{
+  .transition(@time linear all);
   display:block!important;
   .make-xs-column(7);
   .make-md-column(6);
+  height: 400px;
+  overflow:hidden;
   opacity: 1;
 }
