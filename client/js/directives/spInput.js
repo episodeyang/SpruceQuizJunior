@@ -45,7 +45,7 @@ spApp.directive('spSelect', function () {
             '<div style="" class="">'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
             '<select ng-model="value" type="{{type}}" ng-transclude class="transcluded">'+
-                '<option value="test this" selected> hahahaa {{placeholder}} </option>' +
+                '<option value="test this" selected> {{placeholder}} </option>' +
             '</select>',
         link: function (scope, element, attrs) {
             console.log(attrs.value);
