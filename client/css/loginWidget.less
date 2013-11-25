@@ -290,9 +290,17 @@ option.c8{.option-color(@c8)}
           background-color:rgba(0,0,0,0);
           overflow: auto;
           button.submit{
-            opacity:0;
-            width:0;
-            height:0; //hide the submit button;
+            float:right;
+            background-color: transparent;
+            color: @white-light;
+            border:0;
+            &:hover{
+              text-shadow : 0 0 5px @white;
+
+            }
+            //opacity:0;
+            //width:0;
+            //height:0; //hide the submit button;
           }
         }
       }

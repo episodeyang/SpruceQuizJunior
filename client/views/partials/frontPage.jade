@@ -27,6 +27,8 @@ div.sp-modal(ng-show="viewCtrl.showLoginForm")
                 sp-input.c1(value="loginForm.userName", type="text", icon="user", placeholder="请输入用户名")
                 sp-input.c2(value="loginForm.password", type="password", icon="flash", placeholder="请输入密码")
                 button.submit(ng-click="login()", type="submit") 提交
+                    span.glyphicon.glyphicon-chevron-right
+                    span.glyphicon.glyphicon-chevron-right
                 .warining
                     p.text-semi-white {{error}}
 
