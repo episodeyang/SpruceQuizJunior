@@ -26,6 +26,57 @@
   @white-moderate: fadeout(white,20%);
   @white-light: fadeout(white,50%);
   @white-faint: fadeout(white,80%);
+  @Green-light: #bacf5e;
+  @Blue: #70c2d0;
+  @Pink: #e96262;
+  @Orange-dense: #f2855c;
+  @Yellow-dense: #E4AF62;
+  @Yellow: #f9c940;
+  @Green: #89c540;
+  @Blue-light: #60c3b0;
+  @Alarm: #f79838;
+
+  @c1: @Green-light;
+  @c2: @Blue;
+  @c3: @Pink;
+  @c4: @Orange-dense;
+  @c5: @Yellow-dense;
+  @c6: @Yellow;
+  @c7: @Green;
+  @c8: @Blue-light;
+.sp-input-style(@color){
+  div:first-child{background-color:@color;}
+  input{
+    color:@color;
+    .placeholder(@color);
+  }
+  .transcluded{
+    color:@color;
+  }
+}
+.c1{.sp-input-style(@c1);}
+.c2{.sp-input-style(@c2);}
+.c3{.sp-input-style(@c3);}
+.c4{.sp-input-style(@c4);}
+.c5{.sp-input-style(@c5);}
+.c6{.sp-input-style(@c6);}
+.c7{.sp-input-style(@c7);}
+.c8{.sp-input-style(@c8);}
+
+.option-color(@color){
+  background-color: @color;
+  .transcluded{
+    color:@color;
+  }
+}
+option.c1{.option-color(@c1)}
+option.c2{.option-color(@c2)}
+option.c3{.option-color(@c3)}
+option.c4{.option-color(@c4)}
+option.c5{.option-color(@c5)}
+option.c6{.option-color(@c6)}
+option.c7{.option-color(@c7)}
+option.c8{.option-color(@c8)}
 
 //Typseting ===================================
   //Colors-------------------
@@ -81,53 +132,95 @@
     margin:20px 0 20px 0;
   }
 //PlaceHolders ===============================
-  div.sp-up-cover{
+  .sp-up-cover{
     position:relative;
     top:0;
     height:50%;
-    margin-bottom:-70px;
+    margin-top:-20%;
+    margin-bottom:-60%;
     width:100%;
     background-color: rgba(0,0,0,0);
   }
 //Directives =================================
   //metroCards
+    @height: 60px;
     @inputWidth : 140px;
-    @totalWidth : @inputWidth + 70px;
+    @totalWidth : @inputWidth + @height;
     sp-input{
-      height:70px;
+      height:@height;
       width:@totalWidth;
       margin-bottom:20px;
       display: block;
       background-color: rgba(0,0,0,0);
       clear:both;
-    }
-    div.metro.input.icon, .metro.checkbox{
-      width:70px;
-      height:70px;
-      float:left;
-      border-radius: 0;
-      margin:0;
-      box-sizing: border-box;
-
-    }
-    span.metro{
-      margin:16px 21px 17.5px;
-      width:35px;
-      height:35px;
-      font-size:1.8em;
-      position: relative;
-      bottom:0;
-      color:white;
-    }
-    input.metro.input,.metro.text-block-right{
-      height:70px;
-      width:@inputWidth;
-      float: right;
-      position:relative;
-      padding:17px;
-      border:0;
-      background-color: white;
-      &:focus{
+      div{
+        width:@height;
+        height:@height;
+        float:left;
+        border-radius: 0;
+        margin:0;
+        box-sizing: border-box;
+        span{
+          margin:@height/4 @height/3.6 @height/4;
+          width:@height/2;
+          height:@height/2;
+          font-size:@height/2.2;
+          position: relative;
+          bottom:0;
+          color:white;
+        }
+      }
+      input,.text-block-right{
+          height:@height;
+          width:@inputWidth;
+          float: right;
+          position:relative;
+          padding:@height/4;
+          border:0;
+          background-color: white;
+          &:focus{
+          }
+        }
+      }
+    sp-select{
+      height:@height;
+      width:@totalWidth;
+      margin-bottom:20px;
+      display: block;
+      background-color: rgba(0,0,0,0);
+      clear:both;
+      div:first-child{
+        width:@height;
+        height:@height;
+        float:left;
+        border-radius: 0;
+        margin:0;
+        box-sizing: border-box;
+        span{
+          margin:@height/4 @height/3.6 @height/4;
+          width:@height/2;
+          height:@height/2;
+          font-size:@height/2.2;
+          position: relative;
+          bottom:0;
+          color:white;
+            }
+          }
+      .transcluded{
+        height:@height;
+        width:@inputWidth;
+        float: right;
+        position:relative;
+        padding:@height/4;
+        border:0;
+        .border-radius(0px);
+        -webkit-appearance: none;  /*Removes default chrome and safari style*/
+        -moz-appearance: none;  /*Removes default style Firefox*/
+        background-color: white;
+        font-size: @height/3.7;
+        line-height: @height/2;
+        &:focus{
+        }
       }
     }
     .sp-checkbox{
@@ -187,7 +280,7 @@
         position:absolute;
         left:0;right:0;
         .inner{
-          width:210px;
+          width:@totalWidth;
           height:100%;
           left:0;
           right:0;
@@ -195,6 +288,12 @@
           padding:0;
           position: absolute;
           background-color:rgba(0,0,0,0);
+          overflow: auto;
+          button.submit{
+            opacity:0;
+            width:0;
+            height:0; //hide the submit button;
+          }
         }
       }
     }

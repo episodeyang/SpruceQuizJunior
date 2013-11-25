@@ -19,13 +19,12 @@ spApp.directive('spInput', function () {
             value: "=",
             type: "@",
             placeholder: "@",
-            icon: "@",
-            color: "@"
+            icon: "@"
         },
         template:
-            '<div style="background-color:{{color}};" class="metro input icon">'+
+            '<div style="" class="">'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
-            '<input ng-model="value" type="{{type}}" style="color:{{color}};"'+
+            '<input ng-model="value" type="{{type}}" style=""'+
                 'placeholder={{placeholder}} class="metro input"/>',
         link: function (scope, element, attrs) {
             console.log(attrs.value);
@@ -33,3 +32,23 @@ spApp.directive('spInput', function () {
     }
 });
 
+spApp.directive('spSelect', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            value: "=",
+            placeholder: "@",
+            icon: "@"
+        },
+        transclude: true,
+        template:
+            '<div style="" class="">'+
+                '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
+            '<select ng-model="value" type="{{type}}" ng-transclude class="transcluded">'+
+                '<option value="test this" selected> hahahaa {{placeholder}} </option>' +
+            '</select>',
+        link: function (scope, element, attrs) {
+            console.log(attrs.value);
+        }
+    }
+});
