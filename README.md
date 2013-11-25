@@ -2,11 +2,32 @@ Spruce Quiz Junior
 =================
 
 ## After git clone:
+1. First you need to install those command line tools globally:
 
-### Single-liner:
-    npm install && npm update && bower update && cd client/lib/angular-placeholders && npm install && npm install grunt-cli && grunt && cd ../../..
+    npm install -g bower grunt-cli grunt
 
-okay I lied. There is another line:
+2. then run:
+
+    npm install
+
+3. finally:
+
+    sh init.sh
+
+Note that you need to open the browser at http://localhost:9018 to compile it.
+You have to manually open the browser to compile the code, so support for a headless server deployment is not included.
+
+## Single-liner:
+
+    npm install && npm update && bower update && cd client/lib/angular-placeholders && npm install && grunt && cd ../../.. && cd client/lib/angular-bootstrap/ && npm install && npm install grunt-cli && grunt && cd ../../..
+
+
+## Break down of script:
+### angular-placeholder make
+
+    npm install && npm update && bower update && cd client/lib/angular-placeholders && npm install && grunt && cd ../../..
+
+### angular-bootstrap make
 
     cd client/lib/angular-bootstrap/ && npm install && npm install grunt-cli && grunt && cd ../../..
 
