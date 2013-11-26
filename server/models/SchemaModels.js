@@ -20,6 +20,28 @@ var ProblemSchema = new mongoose.Schema({
 
 var Problem = mongoose.model('Problem', ProblemSchema);
 
+//MistakeTag schema
+var MistakeTagSchema = new mongoose.Schema({
+    title: String,
+    comment: String
+}, { collection: 'mistakeTag' });
+
+var MistakeTag = mongoose.model('MistakeTag', MistakeTagSchema);
+
+//ProblemNote schema
+var ProblemNoteSchema = new mongoose.Schema({
+    problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
+    tagName: String,
+    mainText: String,
+    mistakeTags: [
+        { type: Schema.Types.ObjectId, ref: 'MistakeTag' }
+    ],
+    note: String,
+    lastUpdated: Date
+}, { collection: 'problemNote' });
+
+var ProblemNote = mongoose.model('ProblemNote', ProblemNoteSchema);
+
 //Quiz and sub-problem-object schema
 var QuizProblemSchema = new mongoose.Schema({
     problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
@@ -118,8 +140,8 @@ var ErratumSchema = new mongoose.Schema({
     title: String,
     subject: String,
     url: String,
-    problems: [
-        { type: Schema.Types.ObjectId, ref: 'Problem' }
+    problemNotes: [
+        { type: Schema.Types.ObjectId, ref: 'ProblemNotes' }
     ],
     dateCreated: Date,
     dateModified: Date
@@ -145,6 +167,9 @@ var StudentSchema = new mongoose.Schema({
     ],
     exams: [
         { type: Schema.Types.ObjectId, ref: 'Exam' }
+    ],
+    mistakeTags: [
+        { type: Schema.Types.ObjectId, ref: 'MistakeTag' }
     ],
     errata: [
         { type: Schema.Types.ObjectId, ref: 'Erratum' }
@@ -241,7 +266,9 @@ module.exports = {
     Admin: Admin,
     Superadmin: Superadmin,
     User: User,
+    MistakeTag: MistakeTag,
     Problem: Problem,
+    ProblemNote: ProblemNote,
     Exam: Exam,
     Erratum: Erratum,
     Quiz: Quiz,
