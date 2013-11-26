@@ -16,7 +16,19 @@
   /* Place code here to override all above values, and add IE friendly centering */
 }
 
-
+body{
+  overflow-y: hidden;
+}
+::-webkit-scrollbar {
+  width: 2px;
+  //height: 10px;
+  background-color: fadeout(white,98%);
+}
+::-webkit-scrollbar-thumb {
+  //width: 10px;
+  height: 10px;
+  background-color: fadeout(white,80%);
+}
 //General Styling
 //Colors ======================================
   .tr-70{
@@ -64,10 +76,8 @@
 .c8{.sp-input-style(@c8);}
 
 .option-color(@color){
-  background-color: @color;
-  .transcluded{
-    color:@color;
-  }
+  color: @color;
+  background-color: white;
 }
 option.c1{.option-color(@c1)}
 option.c2{.option-color(@c2)}
@@ -135,7 +145,7 @@ option.c8{.option-color(@c8)}
   .sp-up-cover{
     position:relative;
     top:0;
-    height:50%;
+    height:49%;
     margin-top:-20%;
     margin-bottom:-60%;
     width:100%;
@@ -259,10 +269,13 @@ option.c8{.option-color(@c8)}
 //sp-modal
     .sp-modal{
       width:100%;height:100%;
-      position:absolute;bottom:0;
+      position:absolute;
+      top:0;
+      bottom:0;
       background-color:rgba(0,0,0,0.8);
+      margin:0;
       z-index: +20;
-      .transition(0.2s ease all);
+      .transition(0.3s ease-out all);
       span.icon-exit{
         font-size:5em;
         color:rgba(255,255,255,0.7);
@@ -279,16 +292,24 @@ option.c8{.option-color(@c8)}
         background-color:rgba(0,0,0,0);
         position:absolute;
         left:0;right:0;
+        box-sizing:border-box;
         .inner{
-          width:@totalWidth;
+          width:@totalWidth+300px;
           height:100%;
+          top:0;
           left:0;
           right:0;
-          margin:auto;
-          padding:0;
+          bottom:0;
+          margin-left:auto;
+          margin-right:auto;
+          margin-top:0;
+          margin-bottom:0;
+          padding-left:150px;
+          padding-right:150px;
           position: absolute;
           background-color:rgba(0,0,0,0);
-          overflow: auto;
+          overflow-y: auto;
+          box-sizing: border-box;
           button.submit{
             float:right;
             background-color: transparent;
@@ -296,20 +317,17 @@ option.c8{.option-color(@c8)}
             border:0;
             &:hover{
               text-shadow : 0 0 5px @white;
-
             }
-            //opacity:0;
-            //width:0;
-            //height:0; //hide the submit button;
           }
         }
       }
     }
     .sp-modal.ng-hide-add{
-      display:block!important;
+      //display:block!important;
       opacity: 1;
     }
     .sp-modal.ng-hide-add-active{
+      display:block!important;
       opacity: 0;
     }
     .sp-modal.ng-hide-remove{
@@ -318,7 +336,7 @@ option.c8{.option-color(@c8)}
     }
     .sp-modal.ng-hide-remove-active{
       opacity: 1;
-      display:block!important;
+      //display:block!important;
     }
 
 //-Effects ===================================

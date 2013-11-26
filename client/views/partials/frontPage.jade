@@ -42,7 +42,8 @@ div.sp-modal(ng-show="viewCtrl.showRegisterForm")
             sp-input.c1(value="form.userName", type="text", icon="user", placeholder="请输入用户名")
             sp-input.c2(value="form.password", type="password", icon="flash", placeholder="请输入密码")
             sp-input.c2(value="form.passwordConfirm", type="password", icon="flash", placeholder="请确认密码")
-            sp-select.c3(value="form.password", icon="leaf", placeholder="请选择身份")
+            sp-select.c3(value="form.password", icon="leaf")
+                option.c3(value="") 请选择身份
                 option.c3(value="students") 学生
                 option.c4(value="teachers") 教师
                 option.c5(value="parents") 家长
