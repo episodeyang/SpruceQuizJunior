@@ -4,7 +4,6 @@ var _ = require('underscore')
     , check = require('validator').check
     , userRoles = require('../../client/js/rolesHelper').userRoles;
 
-
 // For initilizing Spruce database in MongoDB as some initial tests. Not needed if data is already in MongoDB
 // In the following order to address ObjectId dependency
 //    Material,
@@ -12,6 +11,8 @@ var _ = require('underscore')
 //    School,
 //    Section,
 //    Problem,
+//    MistakeTag,
+//    ProblemNote,
 //    Exam,
 //    Erratum,
 //    Student,
@@ -227,6 +228,61 @@ tempproblem.save();
 var p3_id = tempproblem._id;
 
 
+// Initialization of MistakeTag data
+var MistakeTagM = require('./SchemaModels').MistakeTag;
+
+var tempMistakeTag = new MistakeTagM({
+    title: "审题不清",
+    comment: "看题没看清"
+});
+tempMistakeTag.save();
+var mtt1_id = tempMistakeTag._id;
+
+tempMistakeTag = new MistakeTagM({
+    title: "概念模糊",
+    comment: "概念不清"
+});
+tempMistakeTag.save();
+var mtt2_id = tempMistakeTag._id;
+
+
+// Initialization of ProblemNote data
+var ProblemNoteM = require('./SchemaModels').ProblemNote;
+
+var tempProblemNote = new ProblemNoteM({
+    problemId: p1_id,
+    tagName: "东城区统测",
+    mainText: "二元一次不等式\\(A_x+B_y+C_z\\)",
+    mistakeTags: [mtt1_id, mtt2_id],
+    note: "审题不清，没有看到题干中对角度的要求",
+    lastUpdated: ""
+});
+tempProblemNote.save();
+var pn1_id = tempProblemNote._id;
+
+tempProblemNote = new ProblemNoteM({
+    problemId: p2_id,
+    tagName: "西城区第一次模拟",
+    mainText: "二元一次不等式\\(A_x+B_y+C_z\\)",
+    mistakeTags: [mtt1_id, mtt2_id],
+    note: "没有看到题干中对角度的要求",
+    lastUpdated: ""
+});
+tempProblemNote.save();
+var pn2_id = tempProblemNote._id;
+
+tempProblemNote = new ProblemNoteM({
+    problemId: p3_id,
+    tagName: "主城区第一次统测",
+    mainText: "二元一次不等式\\(A_x+B_y+C_z\\)",
+    mistakeTags: [mtt1_id, mtt2_id],
+    note: "审题不清",
+    lastUpdated: ""
+});
+tempProblemNote.save();
+var pn3_id = tempProblemNote._id;
+
+
 // Initialization of Exam data
 var ExamM = require('./SchemaModels').Exam;
 
@@ -265,7 +321,7 @@ var temperratum = new ErratumM({
     title: "语文",
     subject: "语文",
     url: "/errata",
-    problems: [p1_id, p2_id, p3_id],
+    problemNotes: [pn1_id, pn2_id, pn3_id],
     dateCreated: "",
     dateModified: ""
 });
@@ -276,7 +332,7 @@ temperratum = new ErratumM({
     title: "数学",
     subject: "数学",
     url: "/errata",
-    problems: [p1_id, p2_id, p3_id],
+    problemNotes: [pn1_id, pn2_id, pn3_id],
     dateCreated: "",
     dateModified: ""
 });
@@ -287,7 +343,7 @@ temperratum = new ErratumM({
     title: "英语",
     subject: "英语",
     url: "/errata",
-    problems: [p1_id, p2_id, p3_id],
+    problemNotes: [pn1_id, pn2_id, pn3_id],
     dateCreated: "",
     dateModified: ""
 });
@@ -309,6 +365,7 @@ var tempstudent = new StudentM({
     sections: [g1_id, g2_id],
     schools: [s1_id],
     exams: [e1_id],
+    mistakeTags: [mtt1_id, mtt2_id],
     errata: [ert1_id,ert2_id,ert3_id],
     comments: "big"
 });
@@ -327,6 +384,7 @@ tempstudent = new StudentM({
     sections: [g1_id, g3_id],
     schools: [s1_id],
     exams: [e1_id],
+    mistakeTags: [mtt1_id],
     errata: [ert1_id],
     comments: "little"
 });
@@ -345,6 +403,7 @@ tempstudent = new StudentM({
     sections: [g4_id],
     schools: [s2_id],
     exams: [e1_id],
+    mistakeTags: [mtt2_id],
     errata: [ert1_id],
     comments: ""
 });
