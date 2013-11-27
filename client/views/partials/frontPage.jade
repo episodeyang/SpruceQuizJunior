@@ -39,17 +39,24 @@ div.sp-modal(ng-show="viewCtrl.showRegisterForm")
         span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").icon-exit
         div.inner
             div.sp-up-cover
-            sp-input.c1(value="form.userName", type="text", icon="user", placeholder="请输入用户名")
-            sp-input.c2(value="form.password", type="password", icon="flash", placeholder="请输入密码")
-            sp-input.c2(value="form.passwordConfirm", type="password", icon="flash", placeholder="请确认密码")
-            sp-select.c3(value="form.role", icon="leaf")
-                option.c3(value="") 请选择身份
-                option.c3(value="students") 学生
-                option.c4(value="teachers") 教师
-                option.c5(value="parents") 家长
-            sp-input.c6(value="form.school", type="text", icon="home", placeholder="请输入学校")
-            sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="请输入姓名")
-            sp-input.c8(value="form.dateOfBirth", type="text", icon="heart", placeholder="请输入生日")
+            form.form-horizontal(ng-submit="register()", name="registerForm")
+                sp-input.c1(value="form.userName", type="text", icon="user", placeholder="请输入用户名")
+                sp-input.c2(value="form.password", type="password", icon="flash", placeholder="请输入密码")
+                sp-input.c2(value="form.passwordConfirm", type="password", icon="flash", placeholder="请确认密码")
+                sp-select.c3(value="form.role", icon="leaf" )
+                    option.c3(value="undefined") 请选择身份
+                        b &nbsp&nbsp&nbsp&#8744
+                    option.c3(value="students") 学生
+                    option.c4(value="teachers") 教师
+                    option.c5(value="parents") 家长
+                sp-input.c6(value="form.school", type="text", icon="home", placeholder="请输入学校")
+                sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="请输入姓名")
+                sp-input.c8(value="form.dateOfBirth", type="text", icon="heart", placeholder="请输入生日")
+                button.submit(type="submit", data-ng-disabled="registerForm.$invalid") 提交
+                    span.glyphicon.glyphicon-chevron-right
+                    span.glyphicon.glyphicon-chevron-right
+                .warining
+                    p.text-semi-white {{error}}
             div.sp-up-cover
 
 link(href='/css/loginWidget.css', rel="stylesheet")
