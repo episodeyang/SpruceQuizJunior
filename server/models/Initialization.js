@@ -367,7 +367,11 @@ var tempstudent = new StudentM({
     exams: [e1_id],
     mistakeTags: [mtt1_id, mtt2_id],
     errata: [ert1_id,ert2_id,ert3_id],
-    comments: "big"
+    comments: "big",
+    preferences: {
+        problemNoteListLimit: 20,
+        anotherPreference: ""
+    }
 });
 tempstudent.save();
 var stu1_id = tempstudent._id;
@@ -386,7 +390,11 @@ tempstudent = new StudentM({
     exams: [e1_id],
     mistakeTags: [mtt1_id],
     errata: [ert1_id],
-    comments: "little"
+    comments: "little",
+    preferences: {
+        problemNoteListLimit: 20,
+        anotherPreference: ""
+    }
 });
 tempstudent.save();
 var stu2_id = tempstudent._id;
@@ -405,7 +413,11 @@ tempstudent = new StudentM({
     exams: [e1_id],
     mistakeTags: [mtt2_id],
     errata: [ert1_id],
-    comments: ""
+    comments: "",
+    preferences: {
+        problemNoteListLimit: 20,
+        anotherPreference: ""
+    }
 });
 tempstudent.save();
 var stu3_id = tempstudent._id;

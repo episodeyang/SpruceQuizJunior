@@ -173,24 +173,28 @@ var routes = [
         accessLevel: accessLevels.superadmin
     },
     //Admin resource
+    //v0.1
     {
         path: '/api/admins/sections/:id',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.getSections],
         accessLevel: accessLevels.admin
     },
+    //v0.1
     {
         path: '/api/admins/sections/:id',
         httpMethod: 'POST',
         middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.createSections],
         accessLevel: accessLevels.admin
     },
+    //v0.1
     {
         path: '/api/admins/sections/:id',
         httpMethod: 'DELETE',
         middleware: [ensureAuthenticated, ensureAuthorized, AdminCtrl.removeSections],
         accessLevel: accessLevels.admin
     },
+    //v0.1
     {
         path: '/api/admins/sections/:id',
         httpMethod: 'PUT',
@@ -235,28 +239,39 @@ var routes = [
         accessLevel: accessLevels.superuser
     },
     //Student resources
+    //v0.1
     {
         path: '/api/students/errata/:id',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getErrata],
         accessLevel: accessLevels.loggedin
     },
+    //v0.1
     {
         path: '/api/students/errata/:id',
         httpMethod: 'POST',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.createErrata],
         accessLevel: accessLevels.loggedin
     },
+    //v0.1
     {
         path: '/api/students/errata/:id',
         httpMethod: 'DELETE',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.removeErrata],
         accessLevel: accessLevels.loggedin
     },
+    //v0.1
     {
         path: '/api/students/errata/:id',
         httpMethod: 'PUT',
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.updateErrata],
+        accessLevel: accessLevels.loggedin
+    },
+    //v0.1
+    {
+        path: '/api/students/errata/:eid/problemNotes/:id',
+        httpMethod: 'GET',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getProblemNotes],
         accessLevel: accessLevels.loggedin
     },
     {
