@@ -255,6 +255,7 @@ body{
       float: left;
       background-color: @Yellow;
       border: none;
+      position: fixed;
       &:hover{
         .box-shadow(0px 0px 15px @Yellow);
       ;
@@ -267,52 +268,21 @@ body{
         color: white;
       }
     }
-    #notice-container{
-      max-width: 500px;
-      height: 35em;
-      margin-top: 100px;
-      margin-bottom: 5px;
-      background-color: white;
-      padding: 1px 30px 20px 30px;
-      hr,h3,h4,p{
-        color: grey;
-      }
-      hr{
-        margin-top:0.8em;
-        margin-bottom:0.8em;
-      }
-      h3{
-        font-size: 1.5em;
-      }
-      h4{
-        color:@Blue;
-        font-size: 1em;
-        line-height: 1.1em;
-        margin-top: 0.8em;
-        margin-bottom: 1.1em;
-      }
-      p{
-        font-size: 1em;
-        line-height: 1.1em;
-        margin-top:0.8em;
-        margin-bottom: 0.8em;
-      }
-    }
     #padding{
       height: 60px;
       background-color: transparent;
-      width:500px;
+      width:100%;
       margin:0;
       h3{
         position: relative;
-        width: 440px;
-        right: -110px;
-        left: 110px;
+        width: 88%;
+        right: -22%;
+        left: 22%;
         float: left;
         #padding-right{
           height: 60px;
           background-color:transparent;
-          width: 50px;
+          width: 10%;
           position:relative;
           top:-18px;
           float: right;
@@ -345,12 +315,75 @@ body{
     display:block!important;
   }
 }
-
-#right-chevron{
-  width:0px;
-  margin-right: -40px;
-  bottom:0;right:0;
-  position: absolute;
-  color:white;
+#notice-box{
   background-color: white;
+  padding: 1px 30px 20px 30px;
+}
+form{
+  background-color: grey;
+}
+.middle-container{
+  max-width: 500px;
+//  height: 35em;
+  margin-top: 100px;
+  margin-bottom: 5px;
+  hr,h3,h4,p{
+    color: grey;
+  }
+  hr{
+    margin-top:0.8em;
+    margin-bottom:0.8em;
+  }
+  h3{
+    font-size: 1.5em;
+  }
+  h4{
+    color:@Blue;
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top: 0.8em;
+    margin-bottom: 1.1em;
+  }
+  p{
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top:0.8em;
+    margin-bottom: 0.8em;
+  }
+}
+.right-container{
+  position:relative;
+  left: 700px;
+  right:-700px;
+  top:-700px;
+  bottom:700px;
+  max-width: 500px;
+  //  height: 35em;
+  margin-top: 100px;
+  margin-bottom: 5px;
+  background-color: white;
+  padding: 1px 30px 20px 30px;
+  hr,h3,h4,p{
+    color: grey;
+  }
+  hr{
+    margin-top:0.8em;
+    margin-bottom:0.8em;
+  }
+  h3{
+    font-size: 1.5em;
+  }
+  h4{
+    color:@Blue;
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top: 0.8em;
+    margin-bottom: 1.1em;
+  }
+  p{
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top:0.8em;
+    margin-bottom: 0.8em;
+  }
 }
