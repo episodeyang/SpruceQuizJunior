@@ -174,7 +174,11 @@ var StudentSchema = new mongoose.Schema({
     errata: [
         { type: Schema.Types.ObjectId, ref: 'Erratum' }
     ],
-    comments: String
+    comments: String,
+    preferences: {
+        problemNoteListLimit: Number,
+        anotherPreference: String
+    }
 }, { collection: 'student' });
 
 var Student = mongoose.model('Student', StudentSchema);

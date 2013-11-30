@@ -45,7 +45,7 @@ angular.module('SpruceQuizApp')
                     $scope.title = "";
                 }
                 ,function(err){
-                    console.log(err)
+                    console.log(err);
                 }
             );
         };

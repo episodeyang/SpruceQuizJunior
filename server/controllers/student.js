@@ -7,10 +7,11 @@ var _ =           require('underscore')
     , TeacherM = require('../models/SchemaModels').Teacher
     , SectionM = require('../models/SchemaModels').Section
     , ErratumM = require('../models/SchemaModels').Erratum
-    , FeedM = require('../models/SchemaModels').Feed
+    , ProblemNoteM = require('../models/SchemaModels').ProblemNote
+    , FeedM = require('../models/SchemaModels').Feed;
 
 module.exports = {
-    getErrata: function (req, res) {
+    getErrata: function(req, res) {
         StudentM.findOne({ _id: req.user.userId }, function (err, aresult) {
             if(err || !aresult) {
                 res.send(404, "Student was not found or an error occurred");
@@ -57,8 +58,8 @@ module.exports = {
                             if (err) {
                                 res.send(404, "Update erratum failed.");
                             }else {
-                                res.send(200, "create success");
-                            };
+                                res.send(200, "create erratum success");
+                            }
                         });
                     }
                 });
@@ -82,8 +83,8 @@ module.exports = {
                             if (err) {
                                 res.send(404, "Update erratum failed.");
                             }else {
-                                res.send(200, "update success");
-                            };
+                                res.send(200, "update erratum success");
+                            }
                         });
                     }
                 });
@@ -112,8 +113,8 @@ module.exports = {
                                     if (err) {
                                         res.send(404, "Update erratum failed.");
                                     }else {
-                                        res.send(200, "update success");
-                                    };
+                                        res.send(200, "update erratum success");
+                                    }
                                 });
                             }
                         });
@@ -122,6 +123,44 @@ module.exports = {
             }
         });
     },
+
+    getProblemNotes: function(req, res) {
+        ErratumM.findOne({ _id: req.params.eid }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Erratum was not found or an error occurred");
+            } else if (req.params.id === "all") {
+                //var sortMetric = req.query.sort;
+                //console.log("limit" + req.query.problemNoteListLimit);
+                ProblemNoteM.find({ _id: { $in: aresult.problemNotes } }, null,
+                                  { sort: req.query.sort, //sort: {'_id': -1} //sort: sortMetric
+                                    limit: req.query.problemNoteListLimit},
+                                    function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "No problemNote was found or an error occurred");
+                    } else {
+                        //console.log(results);
+                        res.json(results);
+                    }
+                });
+            } else {
+                ProblemNoteM.findOne({ _id: req.params.id })
+                    .populate('problemId')
+                    .exec(function (err, results) {
+                        if(err || !results) {
+                            res.send(404, "ProblemNote was not found or an error occurred");
+                        } else if( aresult.problemNotes.indexOf(results._id) === -1 ) {
+                            console.log("Operation was not authorized.");
+                            res.send(404, "Operation was not authorized.");
+                        } else {
+                            //console.log(results);
+                            res.json(results);
+                        }
+                    });
+            }
+        });
+    },
+
+
     //old functions below
     getbyId: function(req, res) {
     	if(req.params.uuid === "all") {
