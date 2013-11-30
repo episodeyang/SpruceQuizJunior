@@ -5,17 +5,32 @@
 .centerDiv{
   position: absolute;
   top: 50;
-
 }
-//Layout =======================================
+//General Styling
 .absoluteCenter{
-  .vertical-center(600px, 120px);
+  .vertical-center(560px, 120px);
 }
 /* IE 7 and Below */
 :first-child+html .absoluteCenter,
 * html .absoluteCenter {
   /* Place code here to override all above values, and add IE friendly centering */
 }
+
+body{
+  overflow-y: hidden;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: fadeout(white,98%);
+  box-sizing: border-box;
+}
+::-webkit-scrollbar-thumb {
+  background-color: fadeout(white,80%);
+  z-index: +1;
+  &:hover{background-color: fadeout(white,40%);}
+}
+//Layout =======================================
+
 //General Styling
 
 body{

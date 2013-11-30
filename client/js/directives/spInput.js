@@ -37,7 +37,7 @@ spApp.directive('spSelect', function () {
         restrict: 'E',
         scope: {
             value: "=",
-            placeholder: "@",
+            //placeholder: "@",
             icon: "@"
         },
         transclude: true,
@@ -45,10 +45,23 @@ spApp.directive('spSelect', function () {
             '<div style="" class="">'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
             '<select ng-model="value" type="{{type}}" ng-transclude class="transcluded">'+
-                '<option value="test this" selected> {{placeholder}} </option>' +
             '</select>',
+        compile: function compile(tElement, tAttrs, transclude){
+            return{
+                pre: function preLink(scope, iElement, iAttrs, controllers){
+                    iElement.find('select').append('<option value="none" selected>'+scope.placeholder+'</option>');
+                },
+                post: function postLink(scope, iElement, iAttrs, controllers){
+                    console.log("placeholder value is"+iAttrs.placeholder);
+                    console.log("print all of the options"+iElement.find('select').children())
+                    //iElement.find('select').append('<option value="" selected=true>'+scope.placeholder+'</option>');
+                }
+            }
+        },
         link: function (scope, element, attrs) {
             console.log(attrs.value);
+            console.log("print options in link function: "+element.find('select').children());
+            scope.$apply();
         }
     }
 });
