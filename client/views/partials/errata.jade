@@ -62,20 +62,24 @@ div.background(style="background-color:grey;")
 div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
     //-, ng-click="viewCtrl.showLoginForm=false")
     //-.sp-modal.container
-    div#notice-container.absoluteCenter
+    .center-container
         button#back-btn(ng-click="viewCtrl.showNewProblemModal = false")
             .glyphicon.glyphicon-chevron-left
-        h3.text-center 如何添加题目，或提出问题
-        hr
-        p 迎来到错题夹子!
-        p 错题夹子的背后，是一个供大家分享题目的问答平台。在手动输入你的错题之前，先在这里输入题目的出处。如果这是一道中高考试题，很有可能这道题的题干和答案已经在我们的数据库里面了！
-        h4 公开分享的题目维基
-        p 错题夹子中每一道题目和题目的解答，都是像你这样的同学或者他们的老师共同编辑的结果。题目和解答对所有达到一定信用等级的用户开放编辑。这样的话不仅当你遇到新题的时候不用再重新输入，别的同学也可以给这道题目上传更好的解释和答案。
-        p 每天新上传的题目会在同班同学之间推送，保证最新的题目由大家共同编辑，去掉错误，事半功倍。
-        h4 个人保密的题目笔记和错误原因
-        p 你的错题本中除题目以外的内容属于你自己所有，不会和其他同学分享。这包括你每一道题目的错误原因和题目笔记等。请大胆使用！
-        h4 关于题目提出问题
-        p 如果题目的答案还不能让你明白，那么你可以在题目后面提出问题，让老师和同学帮你解答！
+        div#notice-container
+            h3.text-center 如何添加题目，或提出问题
+            hr
+            p 迎来到错题夹子!
+            p 错题夹子的背后，是一个供大家分享题目的问答平台。在手动输入你的错题之前，先在这里输入题目的出处。如果这是一道中高考试题，很有可能这道题的题干和答案已经在我们的数据库里面了！
+            h4 公开分享的题目维基
+            p 错题夹子中每一道题目和题目的解答，都是像你这样的同学或者他们的老师共同编辑的结果。题目和解答对所有达到一定信用等级的用户开放编辑。这样的话不仅当你遇到新题的时候不用再重新输入，别的同学也可以给这道题目上传更好的解释和答案。
+            p 每天新上传的题目会在同班同学之间推送，保证最新的题目由大家共同编辑，去掉错误，事半功倍。
+            h4 个人保密的题目笔记和错误原因
+            p 你的错题本中除题目以外的内容属于你自己所有，不会和其他同学分享。这包括你每一道题目的错误原因和题目笔记等。请大胆使用！
+            h4 关于题目提出问题
+            p 如果题目的答案还不能让你明白，那么你可以在题目后面提出问题，让老师和同学帮你解答！
+        div#padding
+            h3.text-right 开始添加题目
+                marquee#padding-right(behavior="loop", direction="right", scrollamount="6") &#155;&#155;&#155;
 
 
 link(href='/css/errataPage.css', rel="stylesheet")

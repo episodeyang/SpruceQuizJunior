@@ -15,6 +15,12 @@
 //General Styling
 body{
   color:white;
+  .container{
+    top:0;bottom:0;
+    left:0;right:0;
+    position:absolute;
+    overflow-y: auto;
+  }
   h1,h2,h3,h4,h5,p{
     font-family: MicrosoftYaHei, '微软雅黑', 'Hiragino Sans GB', "WenQuanYi Micro Hei", Arial, Tahoma, Helvetica, Georgia, STXihei, '华文黑体', Hei, 'Hiragina Kaku Gothic Pro', SimSun;
     font: FangSong;
@@ -231,80 +237,120 @@ body{
 //sp-modal
 .sp-modal{
   width:100%;height:100%;
-  position:absolute;bottom:0;
+  position:absolute;
+  top:0;bottom:0;
+  left:0;right:0;
   background-color:rgba(0,0,0,0.8);
   opacity:1;
   overflow-y: auto;
   z-index: +20;
   .transition(0.2s ease all);
-}
-.sp-modal.ng-hide-add{
-  display:block!important;
-  opacity: 1;
-}
-.sp-modal.ng-hide-add-active{
-  opacity: 0;
-}
-.sp-modal.ng-hide-remove{
-  display:block!important;
-  opacity: 0;
-}
-.sp-modal.ng-hide-remove-active{
-  opacity: 1;
-  display:block!important;
+  .center-container{
+    .vertical-center(500px,100%);
+    #back-btn{
+      width: 60px;
+      height: 60px;
+      margin-top: 100px;
+      margin-left: -70px;
+      float: left;
+      background-color: @Yellow;
+      border: none;
+      &:hover{
+        .box-shadow(0px 0px 15px @Yellow);
+      ;
+        -moz-box-sizing: box-shadow(0px 0px 15px @Yellow);;
+        box-sizing: box-shadow(0px 0px 15px @Yellow);;
+      }
+      div:first-child {
+        font-size:1.6em;
+        line-height: 1.6em;
+        color: white;
+      }
+    }
+    #notice-container{
+      max-width: 500px;
+      height: 35em;
+      margin-top: 100px;
+      margin-bottom: 5px;
+      background-color: white;
+      padding: 1px 30px 20px 30px;
+      hr,h3,h4,p{
+        color: grey;
+      }
+      hr{
+        margin-top:0.8em;
+        margin-bottom:0.8em;
+      }
+      h3{
+        font-size: 1.5em;
+      }
+      h4{
+        color:@Blue;
+        font-size: 1em;
+        line-height: 1.1em;
+        margin-top: 0.8em;
+        margin-bottom: 1.1em;
+      }
+      p{
+        font-size: 1em;
+        line-height: 1.1em;
+        margin-top:0.8em;
+        margin-bottom: 0.8em;
+      }
+    }
+    #padding{
+      height: 60px;
+      background-color: transparent;
+      width:500px;
+      margin:0;
+      h3{
+        position: relative;
+        width: 440px;
+        right: -110px;
+        left: 110px;
+        float: left;
+        #padding-right{
+          height: 60px;
+          background-color:transparent;
+          width: 50px;
+          position:relative;
+          top:-18px;
+          float: right;
+          font-size:2em;
+//          top:0px;
+//          right: -60px;
+//          left: 60px;
+          margin:0;
+        }
+        &:hover{
+          color: white;
+          text-shadow: 0 0 20px @white-moderate;
+        }
+      }
+    }
+  }
+  .sp-modal.ng-hide-add{
+    display:block!important;
+    opacity: 1;
+  }
+  .sp-modal.ng-hide-add-active{
+    opacity: 0;
+  }
+  .sp-modal.ng-hide-remove{
+    display:block!important;
+    opacity: 0;
+  }
+  .sp-modal.ng-hide-remove-active{
+    opacity: 1;
+    display:block!important;
+  }
 }
 
-#notice-container{
-  max-width: 500px;
-  height: 35em;
-  position: absolute;top:0;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  background-color: white;
-  padding: 0px 30px 20px 30px;
-
-  hr,h3,h4,p{
-    color: grey;
-  }
-  hr{
-    margin-top:0.8em;
-    margin-bottom:0.8em;
-  }
-  h3{
-    font-size: 1.5em;
-  }
-  h4{
-    color:@Blue;
-    font-size: 1em;
-    line-height: 1.1em;
-    margin-top: 0.8em;
-    margin-bottom: 1.1em;
-  }
-  p{
-    font-size: 1em;
-    line-height: 1.1em;
-    margin-top:0.8em;
-    margin-bottom: 0.8em;
-  }
-}
-#back-btn{
-  width: 60px;
-  height: 60px;
-  margin-left: -100px;
+#right-chevron{
+  width:0px;
+  margin-right: -40px;
+  bottom:0;right:0;
   position: absolute;
-  top: 0;
-  float: left;
-  background-color: @Yellow;
-  border: none;
-  &:hover{
-    .box-shadow(0px 0px 15px @Yellow);
-  ;
-    -moz-box-sizing: box-shadow(0px 0px 15px @Yellow);;
-    box-sizing: box-shadow(0px 0px 15px @Yellow);;
-  }
-  div:first-child {
-    font-size:1.6em;
-    line-height: 1.6em;
-    color: white;
-  }
+  color:white;
+  background-color: white;
 }
