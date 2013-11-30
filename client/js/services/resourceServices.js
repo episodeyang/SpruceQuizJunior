@@ -17,7 +17,7 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
                 list: {method: 'GET', params: {id: 'all'}, isArray: true},
                 create: {method: 'POST', params: {id: 'create'}}
             }),
-            onProblemNotes: $resource('/api/students/errata/:eid/problemNotes/:id', {eid: eid, id: '@_id'}, {
+            onProblemNotes: $resource('/api/students/errata/:eid/problemNotes/:id', {eid: '@eid', id: '@_id'}, {
                 list: {method: 'GET', params: {id: 'all'}, isArray: true}
                 //create: {method: 'POST', params: {id: 'create'}}
             }),
