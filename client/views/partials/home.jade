@@ -6,7 +6,7 @@ div.background(background-img="/img/collections.jpg")
     +navbar
     .row
         .hidden-xs.col-sm-3.col-md-2(style="text-align:center;")
-            img.img-circle(ph-img="130x130", style="margin-top:100%;margin-bottom:20px;margin-left:-15px;").border-circle
+            img.img-circle.border-circle(ph-img="130x130", style="margin-top:100%;margin-bottom:20px;margin-left:-15px;", ng-class="'border-circle '+ viewCtrl.panelState")
             h3 添加错题&nbsp
                 span.glyphicon.glyphicon-plus
             h3 杉景题库&nbsp
