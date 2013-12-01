@@ -58,7 +58,6 @@
   /* Prevent div from overflowing main window */
   max-width:100%;
   max-height:100%;
-  overflow: none;
 }
 
 // Sizing shortcuts
@@ -69,6 +68,65 @@
 .square(@size) {
   .size(@size; @size);
 }
+
+//Colors ======================================
+.tr-70{
+  opacity: 0.7;
+}
+@white:white;
+@white-moderate: fadeout(white,20%);
+@white-light: fadeout(white,50%);
+@white-faint: fadeout(white,80%);
+@Green-light: #bacf5e;
+@Blue: #70c2d0;
+@Pink: #e96262;
+@Orange-dense: #f2855c;
+@Yellow-dense: #E4AF62;
+@Yellow: #f9c940;
+@Green: #89c540;
+@Blue-light: #60c3b0;
+@Alarm: #f79838;
+
+@c1: @Green-light;
+@c2: @Blue;
+@c3: @Pink;
+@c4: @Orange-dense;
+@c5: @Yellow-dense;
+@c6: @Yellow;
+@c7: @Green;
+@c8: @Blue-light;
+.sp-input-style(@color){
+  div:first-child{background-color:@color;}
+  input{
+    color:@color;
+    .placeholder(@color);
+  }
+  .transcluded{
+    color:@color;
+  }
+}
+.c1{.sp-input-style(@c1);}
+.c2{.sp-input-style(@c2);}
+.c3{.sp-input-style(@c3);}
+.c4{.sp-input-style(@c4);}
+.c5{.sp-input-style(@c5);}
+.c6{.sp-input-style(@c6);}
+.c7{.sp-input-style(@c7);}
+.c8{.sp-input-style(@c8);}
+
+.option-color(@color){
+  color: @color;
+  background-color: white;
+  b{color:transparent;}
+}
+option.c1{.option-color(@c1)}
+option.c2{.option-color(@c2)}
+option.c3{.option-color(@c3)}
+option.c4{.option-color(@c4)}
+option.c5{.option-color(@c5)}
+option.c6{.option-color(@c6)}
+option.c7{.option-color(@c7)}
+option.c8{.option-color(@c8)}
 
 // Placeholder text
 .placeholder(@color: @input-color-placeholder) {

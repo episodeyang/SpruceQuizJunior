@@ -65,7 +65,7 @@ div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
     .center-container
         button#back-btn(ng-click="viewCtrl.showNewProblemModal = false")
             .glyphicon.glyphicon-chevron-left
-        #notice-box.middle-container(ng-hide='true')
+        #notice-box.middle-container(ng-show="viewCtrl.newProblemModalState=='notice'")
             h3.text-center 如何添加题目，或提出问题
             hr
             p 迎来到错题夹子!
@@ -77,28 +77,25 @@ div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
             p 你的错题本中除题目以外的内容属于你自己所有，不会和其他同学分享。这包括你每一道题目的错误原因和题目笔记等。请大胆使用！
             h4 关于题目提出问题
             p 如果题目的答案还不能让你明白，那么你可以在题目后面提出问题，让老师和同学帮你解答！
-        div#padding(ng-hide='true')
-            h3.text-right 开始添加题目
+        div#padding(ng-show="viewCtrl.newProblemModalState=='notice'")
+            h3.text-right(ng-click="viewCtrl.newProblemModalState='input'") 开始添加题目
                 marquee#padding-right(behavior="loop", direction="right", scrollamount="6") &#155;&#155;&#155;
 
-        form.middle-container(ng-submit="register()", name="problemInputForm")
-            sp-input.c1(value="form.userName", type="text", icon="user", placeholder="请输入用户名")
-            sp-input.c2(value="form.password", type="password", icon="flash", placeholder="请输入密码")
-            sp-input.c2(value="form.passwordConfirm", type="password", icon="flash", placeholder="请确认密码")
-            sp-select.c3(value="form.role", icon="leaf" )
-                option.c3(value="undefined") 请选择身份
+        form.middle-container(ng-submit="register()", name="problemInputForm",ng-show="viewCtrl.newProblemModalState=='input'")
+            sp-input.c1(value="form.userName", type="text", icon="search", placeholder="题目出处")
+            sp-select.c2(value="form.role", icon="leaf" )
+                option.c2(value="undefined") 题目类型
                     b &nbsp&nbsp&nbsp&#8744
-                option.c3(value="students") 学生
-                option.c4(value="teachers") 教师
-                option.c5(value="parents") 家长
-            sp-input.c6(value="form.school", type="text", icon="home", placeholder="请输入学校")
-            sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="请输入姓名")
-            sp-input.c8(value="form.dateOfBirth", type="text", icon="heart", placeholder="请输入生日")
-            button.submit(type="submit", data-ng-disabled="registerForm.$invalid") 提交
-                span.glyphicon.glyphicon-chevron-right
-                span.glyphicon.glyphicon-chevron-right
+                option.c3(value="teachers") 单项选择
+                option.c4(value="parents") 多项选择
+                option.c5(value="parents") 填空
+                option.c6(value="parents") 简答题
+            sp-input.c3(value="form.rawNameText", type="text", icon="font", placeholder="题干")
+            sp-input.c5(value="form.rawNameText", type="text", icon="font", placeholder="选择")
+            sp-input.c6(value="form.rawNameText", type="text", icon="font", placeholder="答案")
+            sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="解释")
+            button#submit.btn.btn-blue(type="submit", data-ng-disabled="registerForm.$invalid") 完成
             .warining
                 p.text-semi-white {{error}}
 
 link(href='/css/errataPage.css', rel="stylesheet")
-link(href='/css/loginWidget.css', rel="stylesheet")

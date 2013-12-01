@@ -47,7 +47,6 @@ body{
 @white-light: fadeout(white,50%);
 @white-faint: fadeout(white,80%);
 
-@Green: #bacf5e;
 @Blue: #70c2d0;
 @Alarm: #f79838;
 @Pink: #e96262;
@@ -123,7 +122,7 @@ body{
     .btn-color(#66cbe0);
   }
   .btn-green{
-    .btn-color(#a1c543)
+    .btn-color(@Green)
   }
   .btn-orange{
     .btn-color(#ebad2b)
@@ -137,7 +136,13 @@ body{
   .btn-earth{
     .btn-color(#cccc99)
   }
-
+#submit{
+  float:right;
+  height:60px;
+  width: 80px;
+  font-size:1.4em;
+  color: white;
+}
 
 //Images ======================================
   img.logo{
@@ -246,12 +251,15 @@ body{
   z-index: +20;
   .transition(0.2s ease all);
   .center-container{
-    .vertical-center(500px,100%);
+    overflow-y:auto;
+    overflow-x:hidden;
+    .vertical-center(640px,100%);
     #back-btn{
       width: 60px;
       height: 60px;
       margin-top: 100px;
-      margin-left: -70px;
+      margin-left: 0px;
+      margin-right:10px;
       float: left;
       background-color: @Yellow;
       border: none;
@@ -271,14 +279,18 @@ body{
     #padding{
       height: 60px;
       background-color: transparent;
-      width:100%;
-      margin:0;
+      width:87%;
+      margin-top: -0px;
+      margin-bottom: 20px;
       h3{
         position: relative;
         width: 88%;
-        right: -22%;
-        left: 22%;
+        right: -24%;
+        left: 24%;
         float: left;
+        z-index: 1;
+        margin-top:0;
+        margin-bottom:0;
         #padding-right{
           height: 60px;
           background-color:transparent;
@@ -287,9 +299,6 @@ body{
           top:-18px;
           float: right;
           font-size:2em;
-//          top:0px;
-//          right: -60px;
-//          left: 60px;
           margin:0;
         }
         &:hover{
@@ -320,13 +329,14 @@ body{
   padding: 1px 30px 20px 30px;
 }
 form{
-  background-color: grey;
+//  background-color: grey;
 }
 .middle-container{
   max-width: 500px;
 //  height: 35em;
   margin-top: 100px;
-  margin-bottom: 5px;
+  margin-bottom: 30px;
+  margin-left: 70px;
   hr,h3,h4,p{
     color: grey;
   }
@@ -385,5 +395,93 @@ form{
     line-height: 1.1em;
     margin-top:0.8em;
     margin-bottom: 0.8em;
+  }
+}
+@height: 60px;
+@inputWidth : 500px;
+sp-input{
+  height:@height;
+//  width:@totalWidth;
+  margin-bottom:20px;
+  display: block;
+  background-color: rgba(0,0,0,0);
+  clear:both;
+  position:relative;
+  div{
+    width:@height;
+    height:@height;
+    left:0;
+    top:0;
+    position: absolute;
+    border-radius: 0;
+    margin:0;
+    box-sizing: border-box;
+    span{
+      margin:@height/4 @height/3.6 @height/4;
+      width:@height/2;
+      height:@height/2;
+      font-size:@height/2.2;
+      position: relative;
+      bottom:0;
+      color:white;
+    }
+  }
+  input,.text-block-right{
+    height:@height;
+    left:0;
+    right:0;
+    position: absolute;
+    padding:@height/4;
+    margin-left:@height;
+    border:0;
+    background-color: white;
+    &:focus{
+    }
+  }
+}
+sp-select{
+  height:@height;
+//  max-width:@totalWidth;
+  margin-bottom:20px;
+  display: block;
+  background-color: rgba(0,0,0,0);
+  clear:both;
+  position:relative;
+  div:first-child{
+    width:@height;
+    height:@height;
+    left:0;
+    top:0;
+    position: absolute;
+    border-radius: 0;
+    margin:0;
+    box-sizing: border-box;
+    span{
+      margin:@height/4 @height/3.6 @height/4;
+      width:@height/2;
+      height:@height/2;
+      font-size:@height/2.2;
+      position: relative;
+      bottom:0;
+      color:white;
+    }
+  }
+  select.transcluded{
+    height:@height;
+    left:0;
+    right:0;
+    position: absolute;
+    padding:@height/4;
+    padding-right:0;
+    margin-left:@height;
+    border:0;
+    .border-radius(0px);
+    -webkit-appearance: none;  /*Removes default chrome and safari style*/
+    -moz-appearance: none;  /*Removes default style Firefox*/
+    background-color: white;
+    font-size: @height/3.7;
+    line-height: @height/2;
+    &:focus{
+    }
   }
 }

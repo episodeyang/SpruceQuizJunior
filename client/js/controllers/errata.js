@@ -8,6 +8,7 @@ angular.module('SpruceQuizApp')
     function($filter, $routeParams, $rootScope, $scope, Sections, Units, Materials, Students, Model, dataModel) {
         $scope.viewCtrl = {};
         $scope.viewCtrl.showNewProblemModal = false;
+        $scope.viewCtrl.newProblemModalState = 'notice';
         $scope.model = {};
         $scope.model.user =$rootScope.user;
         $scope.model.sections=[];

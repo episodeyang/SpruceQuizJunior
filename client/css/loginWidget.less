@@ -28,65 +28,6 @@ body{
   z-index: +1;
   &:hover{background-color: fadeout(white,40%);}
 }
-//Colors ======================================
-  .tr-70{
-      opacity: 0.7;
-  }
-  @white:white;
-  @white-moderate: fadeout(white,20%);
-  @white-light: fadeout(white,50%);
-  @white-faint: fadeout(white,80%);
-  @Green-light: #bacf5e;
-  @Blue: #70c2d0;
-  @Pink: #e96262;
-  @Orange-dense: #f2855c;
-  @Yellow-dense: #E4AF62;
-  @Yellow: #f9c940;
-  @Green: #89c540;
-  @Blue-light: #60c3b0;
-  @Alarm: #f79838;
-
-  @c1: @Green-light;
-  @c2: @Blue;
-  @c3: @Pink;
-  @c4: @Orange-dense;
-  @c5: @Yellow-dense;
-  @c6: @Yellow;
-  @c7: @Green;
-  @c8: @Blue-light;
-.sp-input-style(@color){
-  div:first-child{background-color:@color;}
-  input{
-    color:@color;
-    .placeholder(@color);
-  }
-  .transcluded{
-    color:@color;
-  }
-}
-.c1{.sp-input-style(@c1);}
-.c2{.sp-input-style(@c2);}
-.c3{.sp-input-style(@c3);}
-.c4{.sp-input-style(@c4);}
-.c5{.sp-input-style(@c5);}
-.c6{.sp-input-style(@c6);}
-.c7{.sp-input-style(@c7);}
-.c8{.sp-input-style(@c8);}
-
-.option-color(@color){
-  color: @color;
-  background-color: white;
-  b{color:transparent;}
-}
-option.c1{.option-color(@c1)}
-option.c2{.option-color(@c2)}
-option.c3{.option-color(@c3)}
-option.c4{.option-color(@c4)}
-option.c5{.option-color(@c5)}
-option.c6{.option-color(@c6)}
-option.c7{.option-color(@c7)}
-option.c8{.option-color(@c8)}
-
 //Typseting ===================================
   //Colors-------------------
     .bg-blue{
@@ -157,15 +98,18 @@ option.c8{.option-color(@c8)}
     @totalWidth : @inputWidth + @height;
     sp-input{
       height:@height;
-      width:@totalWidth;
+      //  width:@totalWidth;
       margin-bottom:20px;
       display: block;
       background-color: rgba(0,0,0,0);
       clear:both;
+      position:relative;
       div{
         width:@height;
         height:@height;
-        float:left;
+        left:0;
+        top:0;
+        position: absolute;
         border-radius: 0;
         margin:0;
         box-sizing: border-box;
@@ -180,28 +124,32 @@ option.c8{.option-color(@c8)}
         }
       }
       input,.text-block-right{
-          height:@height;
-          width:@inputWidth;
-          float: right;
-          position:relative;
-          padding:@height/4;
-          border:0;
-          background-color: white;
-          &:focus{
-          }
+        height:@height;
+        left:0;
+        right:0;
+        position: absolute;
+        padding:@height/4;
+        margin-left:@height;
+        border:0;
+        background-color: white;
+        &:focus{
         }
       }
+    }
     sp-select{
       height:@height;
-      width:@totalWidth;
+      //  max-width:@totalWidth;
       margin-bottom:20px;
       display: block;
       background-color: rgba(0,0,0,0);
       clear:both;
+      position:relative;
       div:first-child{
         width:@height;
         height:@height;
-        float:left;
+        left:0;
+        top:0;
+        position: absolute;
         border-radius: 0;
         margin:0;
         box-sizing: border-box;
@@ -213,15 +161,16 @@ option.c8{.option-color(@c8)}
           position: relative;
           bottom:0;
           color:white;
-            }
-          }
+        }
+      }
       select.transcluded{
         height:@height;
-        width:@inputWidth;
-        float: right;
-        position:relative;
+        left:0;
+        right:0;
+        position: absolute;
         padding:@height/4;
         padding-right:0;
+        margin-left:@height;
         border:0;
         .border-radius(0px);
         -webkit-appearance: none;  /*Removes default chrome and safari style*/
