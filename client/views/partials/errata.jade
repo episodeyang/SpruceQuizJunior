@@ -82,19 +82,19 @@ div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
                 marquee#padding-right(behavior="loop", direction="right", scrollamount="6") &#155;&#155;&#155;
 
         form.middle-container(ng-submit="register()", name="problemInputForm",ng-show="viewCtrl.newProblemModalState=='input'")
-            sp-input.c1(value="form.userName", type="text", icon="search", placeholder="题目出处")
-            sp-select.c2(value="form.role", icon="leaf" )
+            sp-input.c1(value="newProblemForm.search", type="text", icon="search", placeholder="题目出处")
+            sp-select.c2(value="newProblemForm.problemType", icon="tasks" )
                 option.c2(value="undefined") 题目类型
                     b &nbsp&nbsp&nbsp&#8744
-                option.c3(value="teachers") 单项选择
-                option.c4(value="parents") 多项选择
-                option.c5(value="parents") 填空
-                option.c6(value="parents") 简答题
-            sp-input.c3(value="form.rawNameText", type="text", icon="font", placeholder="题干")
-            sp-input.c5(value="form.rawNameText", type="text", icon="font", placeholder="选择")
-            sp-input.c6(value="form.rawNameText", type="text", icon="font", placeholder="答案")
-            sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="解释")
-            button#submit.btn.btn-blue(type="submit", data-ng-disabled="registerForm.$invalid") 完成
+                option.c3(value="singleChoice") 单项选择
+                option.c4(value="multipleChoice") 多项选择
+                option.c5(value="fillIn") 填空
+                option.c6(value="Essay") 简答题
+            sp-textarea.c3(value="newProblemForm.question", icon="plus", placeholder="题干",  ng-hide="newProblemForm.problemType =='undefined'")
+            //sp-input.c5(value="form.rawNameText", type="text", icon="font", placeholder="选择")
+            //sp-input.c6(value="form.rawNameText", type="text", icon="font", placeholder="答案")
+            //sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="解释")
+            button#submit.btn.btn-blue(type="submit", data-ng-disabled="newProblemForm.$invalid") 完成
             .warining
                 p.text-semi-white {{error}}
 

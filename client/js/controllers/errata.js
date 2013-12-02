@@ -92,6 +92,13 @@ angular.module('SpruceQuizApp')
             $scope.model.feeds.splice(index, 1);
             //console.log("print test");
         };
+
+/*        Problem input form code*/
+        $scope.newProblemForm = {
+            "problemType" : "undefined",
+        };
+
+
 }]);
 
 //ProblemCtrl.$inject = ['$scope', '$http'];

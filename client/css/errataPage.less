@@ -142,6 +142,7 @@ body{
   width: 80px;
   font-size:1.4em;
   color: white;
+  margin-bottom: 20px;
 }
 
 //Images ======================================
@@ -333,7 +334,6 @@ form{
 }
 .middle-container{
   max-width: 500px;
-//  height: 35em;
   margin-top: 100px;
   margin-bottom: 30px;
   margin-left: 70px;
@@ -399,14 +399,15 @@ form{
 }
 @height: 60px;
 @inputWidth : 500px;
-sp-input{
-  height:@height;
+sp-input,sp-textarea{
+  min-height:@height;
 //  width:@totalWidth;
   margin-bottom:20px;
   display: block;
   background-color: rgba(0,0,0,0);
   clear:both;
   position:relative;
+//  overflow:none;
   div{
     width:@height;
     height:@height;
@@ -426,10 +427,12 @@ sp-input{
       color:white;
     }
   }
-  input,.text-block-right{
+  input,textarea,.text-block-right{
     height:@height;
     left:0;
     right:0;
+    top:0;
+    bottom:0;
     position: absolute;
     padding:@height/4;
     margin-left:@height;
@@ -437,6 +440,15 @@ sp-input{
     background-color: white;
     &:focus{
     }
+  }
+  textarea{
+    resize: vertical;
+    min-height: @height;
+    word-wrap: break-word;
+	transition: 0.3s ease-out all;
+	-moz-transition: 0.05s;
+	-webkit-transition: 0.05s;
+	-o-transition: 0.05s;
   }
 }
 sp-select{

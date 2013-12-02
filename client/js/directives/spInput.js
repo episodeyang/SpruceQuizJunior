@@ -52,16 +52,108 @@ spApp.directive('spSelect', function () {
                     iElement.find('select').append('<option value="none" selected>'+scope.placeholder+'</option>');
                 },
                 post: function postLink(scope, iElement, iAttrs, controllers){
-                    console.log("placeholder value is"+iAttrs.placeholder);
-                    console.log("print all of the options"+iElement.find('select').children())
+//                    console.log("placeholder value is"+iAttrs.placeholder);
+//                    console.log("print all of the options"+iElement.find('select').children())
                     //iElement.find('select').append('<option value="" selected=true>'+scope.placeholder+'</option>');
                 }
-            }
+            };
         },
         link: function (scope, element, attrs) {
             console.log(attrs.value);
             console.log("print options in link function: "+element.find('select').children());
             scope.$apply();
         }
+    }
+});
+
+
+spApp.directive('spTextarea', function () {
+    return {
+        priority: -1,
+        restrict: 'E',
+        scope: {
+            value: "=",
+            placeholder: "@",
+            icon: "@"
+        },
+        transclude: true,
+        
+        template:
+            '<div style="" class="" >'+
+                '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
+            '<textarea auto-grow ng-model="value" type="{{type}}" ng-transclude class="transcluded"' +
+            'placeholder={{placeholder}} >'+
+            '</textarea>',
+
+        link: function (scope, element, attrs) {
+            var children = element.children();
+            var updateFunc = function(){
+                scope.height = children[1].style.height;
+                console.log("height is the following:", scope.height);
+                element.css('height',scope.height);
+            };
+            scope.$watch('value', function(oldVal, newVal){
+                if (newVal){
+                    updateFunc();
+                };
+            });
+        }
+    }
+});
+/*
+ * Copied from: https://gist.github.com/thomseddon/4703968
+ * Adapted from: http://code.google.com/p/gaequery/source/browse/trunk/src/static/scripts/jquery.autogrow-textarea.js
+ *
+ * Works nicely with the following styles:
+ * textarea {
+ *	resize: none;
+ *  word-wrap: break-word;
+ *	transition: 0.05s;
+ *	-moz-transition: 0.05s;
+ *	-webkit-transition: 0.05s;
+ *	-o-transition: 0.05s;
+ * }
+ *
+ * Usage: <textarea auto-grow></textarea>
+ */
+spApp.directive('autoGrow', function() {
+    return function(scope, element, attr){
+        var minHeight = element[0].offsetHeight,
+            paddingLeft = element.css('paddingLeft'),
+            paddingRight = element.css('paddingRight');
+
+        var $shadow = angular.element('<div></div>').css({
+            position: 'absolute',
+            top: -10000,
+            left: -10000,
+            width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0),
+            fontSize: element.css('fontSize'),
+            fontFamily: element.css('fontFamily'),
+            lineHeight: element.css('lineHeight'),
+            resize:     'none'
+        });
+        angular.element(document.body).append($shadow);
+
+        var update = function() {
+            var times = function(string, number) {
+                for (var i = 0, r = ''; i < number; i++) {
+                    r += string;
+                }
+                return r;
+            };
+
+            var val = element.val().replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/&/g, '&amp;')
+                .replace(/\n$/, '<br/>&nbsp;')
+                .replace(/\n/g, '<br/>')
+                .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
+            $shadow.html(val);
+
+            element.css('height', Math.max($shadow[0].offsetHeight + 20 /* the "threshold" */, minHeight) + 'px');
+        };
+
+        element.bind('keyup keydown keypress change', update);
+        update();
     }
 });
