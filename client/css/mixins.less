@@ -86,6 +86,7 @@
 @Green: #89c540;
 @Blue-light: #60c3b0;
 @Alarm: #f79838;
+@Purple-deep: #756bb0;
 
 @c1: @Green-light;
 @c2: @Blue;
@@ -95,6 +96,7 @@
 @c6: @Yellow;
 @c7: @Green;
 @c8: @Blue-light;
+@c9: @Purple-deep;
 .sp-input-style(@color){
   div:first-child{background-color:@color;}
   input,textarea{
@@ -113,6 +115,7 @@
 .c6{.sp-input-style(@c6);}
 .c7{.sp-input-style(@c7);}
 .c8{.sp-input-style(@c8);}
+.c9{.sp-input-style(@c9);}
 
 .option-color(@color){
   color: @color;
@@ -127,6 +130,7 @@ option.c5{.option-color(@c5)}
 option.c6{.option-color(@c6)}
 option.c7{.option-color(@c7)}
 option.c8{.option-color(@c8)}
+option.c9{.option-color(@c9)}
 
 // Placeholder text
 .placeholder(@color: @input-color-placeholder) {

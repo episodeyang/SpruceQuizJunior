@@ -329,8 +329,12 @@ body{
   background-color: white;
   padding: 1px 30px 20px 30px;
 }
-form{
-//  background-color: grey;
+#choices-box{
+  margin-left: 70px;
+  position:relative;
+  left:0;
+  right: 0;
+  margin-bottom:10px;
 }
 .middle-container{
   max-width: 500px;
@@ -397,9 +401,12 @@ form{
     margin-bottom: 0.8em;
   }
 }
+
+
+//==========directive css================
 @height: 60px;
 @inputWidth : 500px;
-sp-input,sp-textarea{
+sp-button,sp-input,sp-textarea{
   min-height:@height;
 //  width:@totalWidth;
   margin-bottom:20px;
@@ -434,7 +441,7 @@ sp-input,sp-textarea{
     top:0;
     bottom:0;
     position: absolute;
-    padding:@height/4;
+    padding:@height/3;
     margin-left:@height;
     border:0;
     background-color: white;

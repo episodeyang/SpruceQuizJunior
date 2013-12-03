@@ -91,11 +91,11 @@ div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
                 option.c5(value="fillIn") 填空
                 option.c6(value="Essay") 简答题
             sp-textarea.c3(value="newProblemForm.question", icon="question-sign", placeholder="题干",  ng-hide="newProblemForm.problemType =='undefined'")
-            sp-textarea.c4(value="newProblemForm.choices[index]", icon="plus", placeholder="选项{{index}}",  ng-hide="newProblemForm.choices[-1]!=='undefined'")
-            //sp-input.c5(value="form.rawNameText", type="text", icon="font", placeholder="选择")
-            //sp-input.c6(value="form.rawNameText", type="text", icon="font", placeholder="答案")
-            //sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="解释")
-            button#submit.btn.btn-blue(type="addChoice", data-ng-disabled="newProblemForm.choices.append('')") 添加选项
+            #choices-box
+                sp-textarea.c4(ng-repeat="choice in newProblemForm.choices track by $index", value="choice", icon="minus", placeholder="选项  {{$index}}", ng-hide="newProblemForm.problemType =='undefined'")
+                sp-button.c9(icon="plus", ng-click="newProblemForm.choices.push('')", ng-hide="newProblemForm.problemType =='undefined'")
+            sp-input.c5(value="form.solutions", type="text", icon="font", placeholder="答案", ng-hide="newProblemForm.problemType =='undefined'")
+            sp-input.c6(value="form.explanations", type="text", icon="font", placeholder="解释", ng-hide="newProblemForm.problemType =='undefined'")
             button#submit.btn.btn-blue(type="submit", data-ng-disabled="newProblemForm.$invalid") 完成
             .warining
                 p.text-semi-white {{error}}

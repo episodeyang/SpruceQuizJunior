@@ -12,6 +12,23 @@ spApp.directive('MetroQuare', function(){
     }
 });
 
+spApp.directive('spButton', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            value: "=",
+            type: "@",
+            placeholder: "@",
+            icon: "@"
+        },
+        template:
+            '<div style="" class="">'+
+                '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>',
+        link: function (scope, element, attrs) {
+            console.log(attrs.value);
+        }
+    }
+});
 spApp.directive('spInput', function () {
     return {
         restrict: 'E',
@@ -87,9 +104,11 @@ spApp.directive('spTextarea', function () {
             var children = element.children();
             var updateFunc = function(){
                 scope.height = children[1].style.height;
-                console.log("height is the following:", scope.height);
+//                console.log("height is the following:", scope.height);
                 element.css('height',scope.height);
             };
+
+            element.bind('keyup keydown keypress change', updateFunc);
             scope.$watch('value', function(oldVal, newVal){
                 if (newVal){
                     updateFunc();
@@ -121,13 +140,13 @@ spApp.directive('autoGrow', function() {
             paddingRight = element.css('paddingRight');
 
         var $shadow = angular.element('<div class="sp-input shadow"></div>').css({
-            position: 'absolute',
+            position: 'fixed',
             top: -100000000,
-            left: -10000,
+            left: -100000000,
             color: 'transparent',
             overflow: 'hidden',
             paddingTop: '10px',
-            paddingBottom: '30px',
+            paddingBottom: '40px',
             width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0),
             fontSize: element.css('fontSize'),
             fontFamily: element.css('fontFamily'),
