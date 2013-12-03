@@ -77,14 +77,12 @@ spApp.directive('spTextarea', function () {
             icon: "@"
         },
         transclude: true,
-        
         template:
             '<div style="" class="" >'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
             '<textarea auto-grow ng-model="value" type="{{type}}" ng-transclude class="transcluded"' +
             'placeholder={{placeholder}} >'+
             '</textarea>',
-
         link: function (scope, element, attrs) {
             var children = element.children();
             var updateFunc = function(){
@@ -122,10 +120,14 @@ spApp.directive('autoGrow', function() {
             paddingLeft = element.css('paddingLeft'),
             paddingRight = element.css('paddingRight');
 
-        var $shadow = angular.element('<div></div>').css({
+        var $shadow = angular.element('<div class="sp-input shadow"></div>').css({
             position: 'absolute',
-            top: -10000,
+            top: -100000000,
             left: -10000,
+            color: 'transparent',
+            overflow: 'hidden',
+            paddingTop: '10px',
+            paddingBottom: '30px',
             width: element[0].offsetWidth - parseInt(paddingLeft || 0) - parseInt(paddingRight || 0),
             fontSize: element.css('fontSize'),
             fontFamily: element.css('fontFamily'),
@@ -150,7 +152,7 @@ spApp.directive('autoGrow', function() {
                 .replace(/\s{2,}/g, function(space) { return times('&nbsp;', space.length - 1) + ' ' });
             $shadow.html(val);
 
-            element.css('height', Math.max($shadow[0].offsetHeight + 20 /* the "threshold" */, minHeight) + 'px');
+            element.css('height', Math.max($shadow[0].offsetHeight /* the "threshold" */, minHeight) + 'px');
         };
 
         element.bind('keyup keydown keypress change', update);

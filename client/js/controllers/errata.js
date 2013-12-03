@@ -95,7 +95,17 @@ angular.module('SpruceQuizApp')
 
 /*        Problem input form code*/
         $scope.newProblemForm = {
-            "problemType" : "undefined",
+            topLevel: "true",
+            problemType : "undefined",
+            choices : [''],
+            question: [""],
+            multimedia: ['image1.png'],
+            subproblems: [""],
+            solutions: ['',''], //security!
+            explanations:["",],
+            hints: [''],
+            hintRules: ['0','1',''],
+            lastUpdated: ''
         };
 
 

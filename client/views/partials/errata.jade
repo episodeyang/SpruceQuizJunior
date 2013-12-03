@@ -90,10 +90,12 @@ div.sp-modal(ng-show="viewCtrl.showNewProblemModal")
                 option.c4(value="multipleChoice") 多项选择
                 option.c5(value="fillIn") 填空
                 option.c6(value="Essay") 简答题
-            sp-textarea.c3(value="newProblemForm.question", icon="plus", placeholder="题干",  ng-hide="newProblemForm.problemType =='undefined'")
+            sp-textarea.c3(value="newProblemForm.question", icon="question-sign", placeholder="题干",  ng-hide="newProblemForm.problemType =='undefined'")
+            sp-textarea.c4(value="newProblemForm.choices[index]", icon="plus", placeholder="选项{{index}}",  ng-hide="newProblemForm.choices[-1]!=='undefined'")
             //sp-input.c5(value="form.rawNameText", type="text", icon="font", placeholder="选择")
             //sp-input.c6(value="form.rawNameText", type="text", icon="font", placeholder="答案")
             //sp-input.c7(value="form.rawNameText", type="text", icon="font", placeholder="解释")
+            button#submit.btn.btn-blue(type="addChoice", data-ng-disabled="newProblemForm.choices.append('')") 添加选项
             button#submit.btn.btn-blue(type="submit", data-ng-disabled="newProblemForm.$invalid") 完成
             .warining
                 p.text-semi-white {{error}}
