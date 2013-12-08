@@ -274,6 +274,27 @@ var routes = [
         middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.getProblemNotes],
         accessLevel: accessLevels.loggedin
     },
+    //v0.1
+    {
+        path: '/api/students/errata/:eid/problemNotes/:id',
+        httpMethod: 'POST',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.createProblemNotes],
+        accessLevel: accessLevels.loggedin
+    },
+    //v0.1
+    {
+        path: '/api/students/errata/:eid/problemNotes/:id',
+        httpMethod: 'PUT',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.updateProblemNotes],
+        accessLevel: accessLevels.loggedin
+    },
+    //v0.1
+    {
+        path: '/api/students/errata/:eid/problemNotes/:id',
+        httpMethod: 'DELETE',
+        middleware: [ensureAuthenticated, ensureAuthorized, StudentCtrl.removeProblemNotes],
+        accessLevel: accessLevels.loggedin
+    },
     {
         path: '/api/students/:uuid',
         httpMethod: 'GET',
