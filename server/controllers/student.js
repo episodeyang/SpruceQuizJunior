@@ -159,7 +159,90 @@ module.exports = {
             }
         });
     },
-
+    createProblemNotes: function(req, res) {
+        ErratumM.findOne({ _id: req.params.eid }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Erratum was not found or an error occurred");
+            } else {
+                delete req.body.eid;
+                var problemNote = new ProblemNoteM(req.body);
+                //console.log(problemNote);
+                problemNote.save(function (err) {
+                    if (err) {
+                        res.send(404, "Save problemNote failed.");
+                    }
+                    else {
+                        aresult.problemNotes.push(problemNote._id);
+                        ErratumM.update({ _id: req.params.eid }, {problemNotes: aresult.problemNotes}, function (err) {
+                            if (err) {
+                                res.send(404, "Update problemNote failed.");
+                            }else {
+                                res.send(200, "create problemNote success");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    },
+    updateProblemNotes: function(req, res) {
+        ErratumM.findOne({ _id: req.params.eid }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Erratum was not found or an error occurred");
+            } else {
+                ProblemNoteM.findOne({ _id: req.params.id }, function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "ProblemNote was not found or an error occurred");
+                    } else if( aresult.problemNotes.indexOf(results._id) === -1 ) {
+                        console.log("Operation was not authorized.");
+                        res.send(404, "Operation was not authorized.");
+                    } else {
+                        delete req.body.eid;
+                        delete req.body._id;
+                        ProblemNoteM.update({ _id: req.params.id }, req.body, function (err) {
+                            if (err) {
+                                res.send(404, "Update problemNote failed.");
+                            }else {
+                                res.send(200, "update problemNote success");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    },
+    removeProblemNotes: function(req, res) {
+        ErratumM.findOne({ _id: req.params.eid }, function (err, aresult) {
+            if(err || !aresult) {
+                res.send(404, "Erratum was not found or an error occurred");
+            } else {
+                ProblemNoteM.findOne({ _id: req.params.id }, function (err, results) {
+                    if(err || !results) {
+                        res.send(404, "ProblemNote was not found or an error occurred");
+                    } else if( aresult.problemNotes.indexOf(results._id) === -1 ) {
+                        console.log("Operation was not authorized.");
+                        res.send(404, "Operation was not authorized.");
+                    } else {
+                        ProblemNoteM.remove({ _id: req.params.id }, function (err) {
+                            if (err) {
+                                res.send(404, "Remove problemNote failed.");
+                            }
+                            else {
+                                aresult.problemNotes.remove(req.params.id);
+                                ErratumM.update({ _id: req.params.eid }, {problemNotes: aresult.problemNotes}, function (err) {
+                                    if (err) {
+                                        res.send(404, "Remove problemNote failed.");
+                                    }else {
+                                        res.send(200, "Remove problemNote success");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    },
 
     //old functions below
     getbyId: function(req, res) {
