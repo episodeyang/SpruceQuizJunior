@@ -20,7 +20,7 @@ div.background(background-img="/img/classroom.jpg")
 div.sp-modal(ng-show="viewCtrl.showLoginForm")
     //-, ng-click="viewCtrl.showLoginForm=false")
     .container
-        span.glyphicon.glyphicon-share-alt(ng-click="exitLogin()").icon-exit
+        span.glyphicon.glyphicon-share-alt(ng-click="exitLogin()").icon-exit.hidden-xs
         div.inner
             div.sp-up-cover
             form
@@ -34,7 +34,7 @@ div.sp-modal(ng-show="viewCtrl.showLoginForm")
 div.sp-modal(ng-show="viewCtrl.showRegisterForm")
     //-, ng-click="viewCtrl.showLoginForm=false")
     .container
-        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").icon-exit
+        span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").icon-exit.hidden-xs
         div.inner
             div.sp-up-cover
             form(ng-submit="register()", name="registerForm")
