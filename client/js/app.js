@@ -5,6 +5,12 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
 
         var access = rolesHelper.accessLevels;
 
+        $routeProvider.when('/frontPage',
+            {
+                templateUrl:    '/partials/frontPage',
+                controller:     'FrontPageCtrl',
+                access:         access.anon
+            });
         $routeProvider.when('/',
             {
                 templateUrl:    '/partials/home',
@@ -16,12 +22,6 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
                 templateUrl:    '/partials/errata',
                 controller:     'ErrataCtrl',
                 access:         access.loggedin
-            });
-        $routeProvider.when('/frontPage',
-            {
-                templateUrl:    '/partials/frontPage',
-                controller:     'LoginCtrl',
-                access:         access.anon
             });
         $routeProvider.when('/public/login',
             {
