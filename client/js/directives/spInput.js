@@ -40,11 +40,28 @@ spApp.directive('spInput', function () {
         },
         template:
             '<div style="" class="">'+
-                '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
-            '<input ng-model="value" type="{{type}}" style=""'+
-                'placeholder={{placeholder}} class="metro input"/>',
+                '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>' +
+            '<input ng-model="value" type="{{type}}" style=""' +
+                'placeholder={{placeholder}} class="metro input" ' +
+                'ng-focus="enterFocus()"' +
+                'ng-blur="leaveFocus()"' +
+                '>',
         link: function (scope, element, attrs) {
             console.log(attrs.value);
+            attrs.$addClass('pre-focus');
+            scope.enterFocus = function(){
+                attrs.$addClass('in-focus');
+                attrs.$removeClass('out-focus');
+                attrs.$removeClass('pre-focus');
+                attrs.$removeClass('fade');
+                element.next().addClass("fade");
+            };
+            scope.leaveFocus = function(){
+                attrs.$removeClass('in-focus');
+                attrs.$addClass('out-focus');
+                attrs.$removeClass('pre-focus');
+                attrs.$addClass('fade');
+            };
         }
     }
 });
@@ -61,12 +78,30 @@ spApp.directive('spSelect', function () {
         template:
             '<div style="" class="">'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
-            '<select ng-model="value" type="{{type}}" ng-transclude class="transcluded">'+
+            '<select ng-model="value" type="{{type}}" ng-transclude class="transcluded" '+
+                'ng-focus="enterFocus()"' +
+                'ng-blur="leaveFocus()"' +
+                '>'+
             '</select>',
-        compile: function compile(tElement, tAttrs, transclude){
+        compile: function compile(element, attrs, transclude){
             return{
-                pre: function preLink(scope, iElement, iAttrs, controllers){
-                    iElement.find('select').append('<option value="none" selected>'+scope.placeholder+'</option>');
+                pre: function preLink(scope, element, attrs, controllers){
+                    element.find('select').append('<option value="none" selected>'+scope.placeholder+'</option>');
+
+                    attrs.$addClass('pre-focus');
+                    scope.enterFocus = function(){
+                        attrs.$addClass('in-focus');
+                        attrs.$removeClass('out-focus');
+                        attrs.$removeClass('pre-focus');
+                        attrs.$removeClass('fade');
+                        element.next().addClass("fade");
+                    };
+                    scope.leaveFocus = function(){
+                        attrs.$removeClass('in-focus');
+                        attrs.$addClass('out-focus');
+                        attrs.$removeClass('pre-focus');
+                        attrs.$addClass('fade');
+                    };
                 },
                 post: function postLink(scope, iElement, iAttrs, controllers){
 //                    console.log("placeholder value is"+iAttrs.placeholder);
@@ -76,9 +111,6 @@ spApp.directive('spSelect', function () {
             };
         },
         link: function (scope, element, attrs) {
-            console.log(attrs.value);
-            console.log("print options in link function: "+element.find('select').children());
-            scope.$apply();
         }
     }
 });

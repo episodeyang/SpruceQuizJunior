@@ -99,7 +99,6 @@ body{
     sp-input{
       height:@height;
       //  width:@totalWidth;
-      margin-bottom:20px;
       display: block;
       background-color: rgba(0,0,0,0);
       clear:both;
@@ -139,7 +138,6 @@ body{
     sp-select{
       height:@height;
       //  max-width:@totalWidth;
-      margin-bottom:20px;
       display: block;
       background-color: rgba(0,0,0,0);
       clear:both;
@@ -182,8 +180,24 @@ body{
         }
       }
     }
-    .sp-checkbox{
-      height:70px;width:70px;
+    .fade{
+      opacity: 0.4;
+    }
+    sp-input, sp-select{
+      .transition(0.3s ease-out all);
+      margin-top:20px;
+    }
+    sp-input.pre-focus, sp-select.pre-focus{
+      margin-bottom:2000px;
+    }
+    sp-input.out-focus, sp-select.out-focus{
+      margin-bottom:20px;
+      display: block;
+    }
+    sp-input.in-focus, sp-select.in-focus{
+      margin-bottom:20px;
+      display:block;
+      opacity: 1;
     }
     .sp-button-small{
       height: 70px;
@@ -257,15 +271,19 @@ body{
           padding-right:150px;
           position: absolute;
           background-color:rgba(0,0,0,0);
-          overflow-y: auto;
+          overflow-y:auto;
           box-sizing: border-box;
           button.submit{
             float:right;
             background-color: transparent;
-            color: @white-light;
+            color: @white;
             border:0;
             &:hover{
               text-shadow : 0 0 5px @white;
+            }
+            &:focus{
+              text-shadow : 0 0 5px @white;
+              opacity: 1;
             }
           }
         }

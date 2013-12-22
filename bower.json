@@ -9,25 +9,24 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.0-rc.2",
-    "angular-route": "~1.2.0-rc.2",
-    "angular-resource": "~1.2.0-rc.2",
-    "angular-cookies": "~1.2.0-rc.2",
-    "angular-sanitize": "~1.2.0-rc.2",
-    "angular-ui": ">=0.4.0",
+    "angular": "1.2.4",
+    "angular-route": "1.2.4",
+    "angular-resource": "1.2.4",
+    "angular-cookies": "1.2.4",
+    "angular-sanitize": "1.2.4",
+    "angular-animate": "1.2.4",
+    "angular-scenario": "1.2.4",
+    "angular-mocks": "1.2.4",
     "underscore": ">=1.5.1",
-    "d3": "~3.2.8",
-    "nvd3": "~1.0.0-beta",
+    "d3": ">=3.3.13",
+    "nvd3": ">=1.1.14-beta",
     "angularjs-nvd3-directives": "https://github.com/cmaurer/angularjs-nvd3-directives.git",
-    "angular-bootstrap":"https://github.com/angular-ui/bootstrap.git#bootstrap3",
+    "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#bootstrap3",
     "angular-placeholders": "*",
-    "bootstrap": "~3.0.0",
-    "MathJax": "*",
-    "angular-animate": "~1.2.2"
+    "bootstrap": ">=3.0.0"
   },
   "devDependencies": {
-    "angular-mocks": "~1.0.7",
-    "angular-scenario": "~1.0.7"
+    "MathJax": "*"
   },
   "homepage": "https://github.com/episodeyang/SpruceQuizJunior",
   "authors": [
@@ -37,6 +36,6 @@
   "license": "private",
   "private": true,
   "resolutions": {
-    "angular": "~1.2.0-rc.2"
+    "angular": "1.2.4"
   }
 }
