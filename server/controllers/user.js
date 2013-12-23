@@ -1,5 +1,5 @@
 var _ =           require('underscore')
-    //, User =      require('../models/User.js')
+    //, User =      require('../models/_User.js')
     , UserM = require('../models/SchemaModels').User
     , userRoles = require('../../client/js/rolesHelper').userRoles;
 

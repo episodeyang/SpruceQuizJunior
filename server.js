@@ -1,4 +1,3 @@
-
 //require('nodetime').profile({
 //    accountKey: 'cb0835da7eb6304c00877ca11569df1ef72ebb10',
 //    appName: 'SpruceQuizJunior'
@@ -11,7 +10,6 @@ var express =       require('express')
     , http =        require('http')
     , mongoose =    require('mongoose')
     , passport =    require('passport');
-var lessMiddleware = require('less-middleware');
 var path =          require('path')
     , User =        require('./server/models/User.js');
     //, Material =     require('./server/models/Material.js')
@@ -24,8 +22,9 @@ var path =          require('path')
     //, Teacher =     require('./server/models/Teacher.js')
     //, Quiz  =     require('./server/models/Quiz.js')
     //, Feed  =     require('./server/models/Feed.js');
+var lessMiddleware = require('less-middleware');
 
-var app = express();
+var app = module.exports = express();
 
 mongoose.connect('mongodb://localhost/sprucedb', function(err) {
     if(InitializeSpruceDB) {
