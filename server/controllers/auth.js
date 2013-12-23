@@ -21,15 +21,19 @@ module.exports = {
             return res.send(400, err.message);
         }
 
-        User.addUser(req.body.username, req.body.password, req.body.role, function(err, user) {
-            if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
-            else if(err)                    return res.send(500);
+        User.addUser(req.body.username, req.body.password, req.body.role,
+            function(err, user) {
+                if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
+                else if(err)                    return res.send(500);
 
-            req.logIn(user, function(err) {
-                if(err)     { next(err); }
-                else        { res.json(200, { "role": user.role, "username": user.username, "id": user.userId }); }
-            });
-        });
+                console.log(req.body);
+
+                req.logIn(user, function(err) {
+                    if(err)     { next(err); }
+                    else        { res.json(200, { "role": user.role, "username": user.username, "id": user.userId }); }
+                });
+            }
+        );
     },
 
     login: function(req, res, next) {

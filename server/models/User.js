@@ -33,7 +33,26 @@ module.exports = {
                     });
                     var tempobject;
                     if(role === 2) {
-                        tempobject = new StudentM();
+                        tempobject = new StudentM({
+                            firstName: '',
+                            lastName: '' ,
+                            dateOfBirth: '',
+                            gender:'',
+                            email:'',
+                            phone:'',
+                            address:'',
+                            profilePic:'',
+                            sections: [],
+                            schools: [],
+                            exams: [],
+                            mistakeTags: [],
+                            errata: [],
+                            comments: '',
+                            preferences: {
+                                problemNoteListLimit: 1,
+                                anotherPreference: 'test reference'
+                            }
+                        });
                         tempobject.save();
                     } else if(role === 4) {
                         tempobject = new ParentM();

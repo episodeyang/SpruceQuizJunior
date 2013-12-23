@@ -17,6 +17,15 @@
             'superadmin'
         ],
 
+        schDict : {
+            student: "",
+            public: "",
+            parent: "",
+            teacher: "",
+            admin: "",
+            superadmin: ""
+        },
+
         /*
          Build out all the access levels you want referencing the roles listed above
          You can use the "*" symbol to represent access to all roles
@@ -31,7 +40,6 @@
         }
 
     };
-
 
     exports.userRoles = buildRoles(config.roles);
     exports.accessLevels = buildAccessLevels(config.accessLevels, exports.userRoles);

@@ -78,7 +78,7 @@ spApp.directive('spSelect', function () {
         template:
             '<div style="" class="">'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>'+
-            '<select ng-model="value" type="{{type}}" ng-transclude class="transcluded" '+
+            '<select ng-model="value" ng-transclude class="transcluded" '+
                 'ng-focus="enterFocus()"' +
                 'ng-blur="leaveFocus()"' +
                 '>'+
