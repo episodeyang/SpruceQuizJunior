@@ -18,11 +18,17 @@ var user2 = {
 };
 
 // admin account
-var admin = {
-    'username':'admin',
-    'role': { bitMask: 4, title: 'admin' },
+var student = {
+    'username':'student1',
+    'role': { bitMask: 2, title: 'student' },
     'id': '2',
-    'password':'123'
+    'password': '123'
+};
+// student account
+var student = {
+    'username':'student1',
+    'password': '123',
+    'rememberme': 'true'
 };
 
 describe('Server Integration Tests - ', function (done) {
@@ -32,27 +38,34 @@ describe('Server Integration Tests - ', function (done) {
     it('Homepage - Return a 200', function(done) {
         request(app).get('/').expect(200, done);
     });
-    it('Logout - Return a 200', function(done) {
-        request(app).post('/logout').expect(200, done);
+    it('Homepage - Return a 200', function(done) {
+        request(app).get('/frontPage').expect(200, done);
     });
-    it('As a Logout user, on /users - Return a 403', function(done) {
-        request(app).get('/users').expect(403, done);
+    it('Homepage - Return a 200', function(done) {
+        request(app).post('/login').send(student).expect(200, done);
     });
-    it('Register a new user(no role) - Return a 400', function(done) {
-        request(app).post('/register').send(user2).expect(400, done);
-    });
-    it('Register a new user - Return a 200', function(done) {
-        request(app).post('/register').send(user).expect(200, done);
-    });
-    it('As a normal user, on /users - Return a 403', function(done) {
-        passportStub.login(user); // login as user
-        request(app).get('/users').expect(403, done);
-    });
-    it('Login as Admin - Return a 200', function(done) {
-        request(app).post('/login').send(admin).expect(200, done);
-    });
-    it('As a Admin user, on /users - Return a 200', function(done) {
-        passportStub.login(admin); // login as admin
-        request(app).get('/users').expect(200, done);
-    });
+
+//    it('Logout - Return a 200', function(done) {
+//        request(app).post('/logout').expect(200, done);
+//    });
+//    it('As a Logout user, on /users - Return a 403', function(done) {
+//        request(app).get('/users').expect(403, done);
+//    });
+//    it('Register a new user(no role) - Return a 400', function(done) {
+//        request(app).post('/register').send(user2).expect(400, done);
+//    });
+//    it('Register a new user - Return a 200', function(done) {
+//        request(app).post('/register').send(user).expect(200, done);
+//    });
+//    it('As a normal user, on /users - Return a 403', function(done) {
+//        passportStub.login(user); // login as user
+//        request(app).get('/users').expect(403, done);
+//    });
+//    it('Login as Admin - Return a 200', function(done) {
+//        request(app).post('/login').send(admin).expect(200, done);
+//    });
+//    it('As a Admin user, on /users - Return a 200', function(done) {
+//        passportStub.login(admin); // login as admin
+//        request(app).get('/users').expect(200, done);
+//    });
 });
