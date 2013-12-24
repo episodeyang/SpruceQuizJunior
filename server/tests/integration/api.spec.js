@@ -2,20 +2,19 @@ var superagent = require('superagent')
 var expect = require('expect.js')
 
 describe('express rest api server', function(){
-    var id
+//    var id
+    student1 = { username: 'student1'
+        , password: '123'
+        , rememberme: 'true'
+    };
 
     it('post /login', function(done){
         superagent.post('http://localhost:8000/login')
-            .send({ name: 'student1'
-                , password: '123'
-                , rememberme: 'true'
-            })
+            .send(student1)
             .end(function(e,res){
-                // console.log(res.body)
-                expect(e).to.eql(null)
-//                expect(res.body.length).to.eql(1)
-//                expect(res.body[0]._id.length).to.eql(24)
-//                id = res.body[0]._id
+                expect(e).to.eql(null);
+                expect(res.statusCode).to.eql(200)
+                expect(res.body.username).to.eql(student1.username)
                 done()
             })
     })
