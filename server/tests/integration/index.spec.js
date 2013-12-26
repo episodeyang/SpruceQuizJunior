@@ -1,5 +1,7 @@
 var app = require('../../../server'),
     request = require('supertest'),
+    expect = require('expect.js'),
+    should = require('should'),
     passportStub = require('passport-stub');
 
 passportStub.install(app);
@@ -35,14 +37,44 @@ describe('Server Integration Tests - ', function (done) {
     afterEach(function() {
         passportStub.logout(); // logout after each test
     });
-    it('Homepage - Return a 200', function(done) {
+    it('/ - Return a 200', function(done) {
         request(app).get('/').expect(200, done);
     });
-    it('Homepage - Return a 200', function(done) {
+    it('/frontPage - Return a 200', function(done) {
         request(app).get('/frontPage').expect(200, done);
     });
-    it('Homepage - Return a 200', function(done) {
-        request(app).post('/login').send(student).expect(200, done);
+    it('/login - Return a 200 and a user object', function(done) {
+        request(app)
+            .post('/login')
+            .send(student)
+            .expect(200,
+                {
+                 role: 2,
+                 username: 'student1',
+                 id: '5292f0e8c66c90aa29000016'
+                }
+                , done)
+    });
+    it('/login - second way to check', function(done) {
+        request(app)
+            .post('/login')
+            .send(student)
+            .end(function (err, res){
+                if (err) return done(err);
+                "use strict";
+                res.body.role.should.equal(2);
+                done();
+            })
+    });
+    it('/login - third way to check', function(done) {
+        request(app)
+            .post('/login')
+            .send(student)
+            .end(function (err, res){
+                if (err) return done(err)
+                expect(res.body.username).to.eql(student1.username);
+                done();
+            });
     });
 
 //    it('Logout - Return a 200', function(done) {
