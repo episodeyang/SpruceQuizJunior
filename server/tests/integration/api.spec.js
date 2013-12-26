@@ -8,16 +8,16 @@ describe('express rest api server', function(){
         , rememberme: 'true'
     };
 
-    it('post /login', function(done){
-        superagent.post('http://localhost:8000/login')
-            .send(student1)
-            .end(function(e,res){
-                expect(e).to.eql(null);
-                expect(res.statusCode).to.eql(200)
-                expect(res.body.username).to.eql(student1.username)
-                done()
-            })
-    })
+//    it('post /login', function(done){
+//        superagent.post('http://localhost:8000/login')
+//            .send(student1)
+//            .end(function(e,res){
+//                expect(e).to.eql(null);
+//                expect(res.statusCode).to.eql(200)
+//                expect(res.body.username).to.eql(student1.username)
+//                done()
+//            })
+//    })
 
 //    it('retrieves an object', function(done){
 //        superagent.get('http://localhost:8000/collections/test/'+id)
