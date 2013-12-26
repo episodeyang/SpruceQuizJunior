@@ -34,6 +34,28 @@ describe('Server Integration Tests - ', function (done) {
                 done();
             })
     });
+    it('/register - Return a 20', function(done) {
+        request(app)
+            .post('/login')
+            .send(student)
+            .end(function (err, res){
+                if (err) return done(err);
+                "use strict";
+                res.body.role.should.equal(2);
+                done();
+            })
+    });
+    it('/register - Return a 404', function(done) {
+        request(app)
+            .post('/login')
+            .send(student)
+            .end(function (err, res){
+                if (err) return done(err);
+                "use strict";
+                res.body.role.should.equal(2);
+                done();
+            })
+    });
 });
 
 // =============== Example Code ===============

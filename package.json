@@ -33,6 +33,7 @@
     "passport-stub": "0.1.5",
     "grunt": "~0.4.1",
     "grunt-mocha-test": "~0.7.0",
-    "should": "~2.1.1"
+    "should": "~2.1.1",
+    "grunt-contrib-watch": "~0.5.3"
   }
 }
