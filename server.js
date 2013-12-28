@@ -4,7 +4,8 @@
 //});
 
 //comment
-var InitializeSpruceDB = false;
+var resetDB = ( process.env.RESETDB || false );
+
 
 var express =       require('express')
     , http =        require('http')
@@ -27,10 +28,11 @@ var lessMiddleware = require('less-middleware');
 var app = module.exports = express();
 
 mongoose.connect('mongodb://localhost/sprucedb', function(err) {
-    if(InitializeSpruceDB) {
+    if (resetDB == 'true' || resetDB == 'True') {
+        console.log(resetDB);
         mongoose.connection.db.dropDatabase(function(err){
             require('./server/models/Initialization.js');
-        console.log("reset database complete");
+            console.log("reset database complete");
         });
     }
 });

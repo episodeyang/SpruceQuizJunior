@@ -1,10 +1,14 @@
 var app = require('../../../server'),
+    express = require('express')
     request = require('supertest'),
     expect = require('expect.js'),
     should = require('should'),
     passportStub = require('passport-stub');
 
+app.use(express.bodyParser());
 passportStub.install(app);
+
+//request = request('http://localhost:8000')
 
 // student account
 var student = {
@@ -12,18 +16,38 @@ var student = {
     'password': '123',
     'rememberme': 'true'
 };
+var student2 = {
+    username: 'student1',
+    role: '2',
+    id: '5292f0e8c66c90aa29000020'
+};
+var admin = {
+    'username':'admin',
+    'password': '123',
+    'rememberme': 'true'
+};
 
-describe('Server Integration Tests - ', function (done) {
+describe('Server Authentication Tests - ', function (done) {
+    beforeEach(function() {
+        passportStub.logout(); // logout after each test
+    });
     afterEach(function() {
         passportStub.logout(); // logout after each test
     });
-    it('/ - Return a 200', function(done) {
+
+
+
+    it('/ - Return a 200. The root uri always return 200 and "index.html"', function(done) {
         request(app).get('/').expect(200, done);
     });
-    it('/frontPage - Return a 200', function(done) {
+    it('/frontPage - Return a 200 The root uri always return 200 and "index.html"', function(done) {
         request(app).get('/frontPage').expect(200, done);
     });
-    it('/login - second way to check', function(done) {
+    it('/user- Return a 200 The root uri always return 200 and "index.html"', function(done) {
+        request(app).get('/user').expect(200, done);
+    });
+
+    it('/login - student1', function(done) {
         request(app)
             .post('/login')
             .send(student)
@@ -31,31 +55,44 @@ describe('Server Integration Tests - ', function (done) {
                 if (err) return done(err);
                 "use strict";
                 res.body.role.should.equal(2);
+                res.body.should.have.property("id");
+                res.body.username.should.equal(student.username);
                 done();
             })
     });
-    it('/register - Return a 20', function(done) {
+    it('/login - admin', function(done) {
         request(app)
             .post('/login')
-            .send(student)
+            .send(admin)
             .end(function (err, res){
                 if (err) return done(err);
                 "use strict";
-                res.body.role.should.equal(2);
+                res.body.role.should.equal(16);
+                res.body.should.have.property("id");
+                res.body.username.should.equal(admin.username);
                 done();
             })
     });
-    it('/register - Return a 404', function(done) {
-        request(app)
-            .post('/login')
-            .send(student)
-            .end(function (err, res){
-                if (err) return done(err);
-                "use strict";
-                res.body.role.should.equal(2);
-                done();
-            })
+
+});
+describe('Server API Tests - ', function (done) {
+    beforeEach(function() {
+        passportStub.logout(); // logout after each test
     });
+    afterEach(function() {
+        passportStub.logout(); // logout after each test
+    });
+    it('/api/problems/all - return 401 when not logged in', function(done) {
+        request(app).get('/api/problems/all').expect(401, done);
+    });
+    it('/api/errata/all - return 200 when logged in', function(done) {
+        passportStub.login(student2); // login as user
+        request(app).get('/api/problems/all').expect(200, done);
+    });
+//    it('/api/problems/all - return 200 when logged in', function(done) {
+//        passportStub.login(admin); // login as admin
+//        request(app).get('/api/problems/all').expect(200, done);
+//    });
 });
 
 // =============== Example Code ===============

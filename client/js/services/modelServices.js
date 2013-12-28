@@ -59,15 +59,15 @@ angular.module('modelServices')
 
                 // Now retrieve Student information and assemble it with Model.user.
 
-                modelInstance.user.roleName =
+                modelInstance.user.roleTitle=
                     modelInstance.reverseRoleLookup(modelInstance.user.role, rolesHelper.userRoles);
 
                 console.log("testing the mapping");
-                console.log(modelInstance.user.roleName);
-                console.log(nameToResource[modelInstance.user.roleName]);
+                console.log(modelInstance.user.roleTitle);
+                console.log(nameToResource[modelInstance.user.roleTitle]);
                 // get basic data
                 try {
-                    modelInstance.userData = nameToResource[modelInstance.user.roleName].onSelf.get({
+                    modelInstance.userData = nameToResource[modelInstance.user.roleTitle].onSelf.get({
                         id: modelInstance.user.id
                     });
                 } catch (err){
@@ -128,8 +128,8 @@ angular.module('modelServices')
              * @param userParam
              */
             modelInstance.getSchools = function (userParam) {
-                if (modelInstance.user.roleName !== 'superadmin') {
-                    modelInstance.schools = nameToResource[modelInstance.user.roleName].onSchools.get({id: userParam.id});
+                if (modelInstance.user.roleTitle!== 'superadmin') {
+                    modelInstance.schools = nameToResource[modelInstance.user.roleTitle].onSchools.get({id: userParam.id});
                 } else {
                     // super admin
                     modelInstance.schools = Schools.onSchools.list();
@@ -163,10 +163,10 @@ angular.module('modelServices')
                 }
 
 
-                if (modelInstance.user.roleName !== ('superadmin' || 'admin')) {
-                    modelInstance.sections = nameToResource[modelInstance.user.roleName].onSections.get({id: userParam.id});
+                if (modelInstance.user.roleTitle!== ('superadmin' || 'admin')) {
+                    modelInstance.sections = nameToResource[ modelInstance.user.roleTitle ].onSections.get({id: userParam.id});
                 } else {
-                    if (modelInstance.user.roleName == 'admin') {
+                    if (modelInstance.user.roleTitle== 'admin') {
                         // get everything in the schools the admin controls
                         var schools = Admins.onSchools.get({id: userParam.id});
                         modelInstance.sections = getDataHelper('school', '', schools);

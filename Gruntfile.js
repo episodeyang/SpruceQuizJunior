@@ -16,6 +16,8 @@ module.exports = function(grunt) {
         },
         watch:{
             files:[ 'server/tests/**/**/*.js',
+                    'sever/**/*.js',
+                    'server/*.js',
                     '!node_module'    ],
             tasks:['mochaTest'],
             options: {

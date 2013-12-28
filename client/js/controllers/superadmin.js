@@ -7,7 +7,7 @@ spApp.controller('SuperAdminCtrl',
         function ($scope) {//, Students ,$rootScope, $scope, Sections, Units, Materials, Students) {
             // this object is to hold data for future tables
             $scope.userData = {
-                roleName:'admin',
+                roleTitle:'admin',
                 firstName:'歌',
                 lastName:'杨',
                 schools: [{schoolName: '北京景山学校'}],
