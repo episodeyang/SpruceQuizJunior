@@ -37,10 +37,10 @@ angular.module('SpruceQuizApp')
 
                 function updateCSS() {
                     if(userRole && accessLevel) {
-                        console.log('userRole');
-                        console.log(userRole);
-                        console.log('accessLevel');
-                        console.log(accessLevel);
+//                        console.log('userRole');
+//                        console.log(userRole);
+//                        console.log('accessLevel');
+//                        console.log(accessLevel);
                         if(!Auth.authorize(accessLevel, userRole))
                             element.css('display', 'none');
                         else

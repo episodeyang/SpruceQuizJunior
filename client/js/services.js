@@ -26,6 +26,9 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         modelInitializationCallBack();
     }
 
+    function changeUser(user) {
+        _.extend(currentUser, user);
+    };
     return {
 
         authorize: function(accessLevel, role) {
@@ -34,12 +37,9 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
             return accessLevel.bitMask & role.bitMask;
         },
         isLoggedIn: function(user) {
-//            console.log('checking if isLoggedIn');
             if(user === undefined){
                 user = currentUser;
             }
-
-//        return user.role.bitMask === userRoles.student.bitMask
             return user.role.bitMask === userRoles.student.bitMask || user.role.bitMask === userRoles.parent.bitMask || user.role.bitMask === userRoles.teacher.bitMask || user.role.bitMask === userRoles.admin.bitMask || user.role.bitMask === userRoles.superadmin.bitMask;
         },
         register: function (user, success, error) {
@@ -47,7 +47,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         login: function (user, success, error) {
             $http.post('/login', user).success(function (user) {
-                currentUser = user;
+                changeUser(user);
                 modelInitializationCallBack();
                 success(user);
             }).error(error);

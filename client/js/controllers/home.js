@@ -6,6 +6,8 @@ angular.module('SpruceQuizApp')
 ['$filter','$rootScope', '$scope', 'Auth', 'Sections','Units','Materials','Students','Model',
     function($filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
         $scope.user = Auth.user;
+        console.log('showing the user');
+        console.log($scope.user);
         $scope.userRoles = Auth.userRoles;
         $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
 
