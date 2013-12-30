@@ -26,9 +26,6 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         modelInitializationCallBack();
     }
 
-    function changeUser(user) {
-        _.extend(currentUser, user);
-    };
     return {
 
         authorize: function(accessLevel, role) {
@@ -47,7 +44,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         login: function (user, success, error) {
             $http.post('/login', user).success(function (user) {
-                changeUser(user);
+                _.extend(currentUser, user);
                 modelInitializationCallBack();
                 success(user);
             }).error(error);
