@@ -49,7 +49,7 @@ div.sp-modal(ng-show="viewCtrl.showRegisterForm")
                     option.c5(ng-value="{{userRoles.parent}}") 家长
                 sp-input.c6(value="registerForm.school", type="text", icon="home", placeholder="请输入学校")
                 sp-input.c7(value="registerForm.rawNameText", type="text", icon="font", placeholder="请输入姓名")
-                sp-input.c8(value="registerForm.dateOfBirth", type="text", icon="heart", placeholder="请输入生日")
+                sp-input.c8(value="registerForm.birthDayString", type="text", icon="heart", placeholder="请输入生日")
                 button.submit(ng-click='register()', type="submit") 提交
                 .warining
                     p.text-semi-white(ng-repeat="(errorType, error) in errors") {{error}}

@@ -68,6 +68,7 @@ describe('Server Authentication Tests - ', function (done) {
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.student.bitMask);
                 res.body.should.have.property("id");
                 res.body.username.should.equal(student.username);
+                studentUser = res.body;
                 done();
             })
     });
@@ -85,15 +86,22 @@ describe('Server Authentication Tests - ', function (done) {
             })
     });
     it('/register - admin', function(done) {
+        var newStudent = {
+            username: 'newStudent',
+            password: 'password',
+            role: userRoles.student,
+            schoolName: '北京景山学校',
+            firstName: 'Ge',
+            lastName: 'Yang',
+            birthDay: new Date(2013, 12, 1, 9, 0, 0)
+        };
         request(app)
-            .post('/login')
-            .send(admin)
+            .post('/register')
+            .send(newStudent)
             .end(function (err, res){
                 if (err) return done(err);
                 "use strict";
-                res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.admin.bitMask);
-                res.body.should.have.property("id");
-                res.body.username.should.equal(admin.username);
+
                 done();
             })
     });
@@ -110,7 +118,9 @@ describe('Server API Tests - ', function (done) {
         request(app).get('/api/problems/all').expect(401, done);
     });
     it('/api/errata/all - return 200 when logged in', function(done) {
-        passportStub.login(student2); // login as user
+        passportStub.login(studentUser); // login as user
+        console.log("studentUser object returned from the login");
+        console.log(studentUser);
         request(app).get('/api/problems/all').expect(200, done);
     });
 //    it('/api/problems/all - return 200 when logged in', function(done) {
