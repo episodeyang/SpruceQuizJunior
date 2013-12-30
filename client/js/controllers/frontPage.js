@@ -27,7 +27,7 @@ angular.module('SpruceQuizApp')
                         $location.path('/');
                     },
                     function(err) {
-                        $rootScope.error = "Failed to login";
+                        $rootScope.errors.login = "Failed to login";
                     });
             };
 
@@ -36,19 +36,33 @@ angular.module('SpruceQuizApp')
             };
 
             $scope.role = rolesHelper.userRoles.user;
+            $rootScope.errors = {};
             $scope.register = function() {
-                Auth.register({
-                        username: $scope.registerForm.username,
-                        password: $scope.registerForm.password,
-                        role: $scope.registerForm.role
-                    },
-                    function(res) {
-                        $rootScope.user = res;
-                        $location.path('/');
-                    },
-                    function(err) {
-                        $rootScope.error = err;
-                    });
+                if ($scope.registerForm.password !== $scope.registerForm.passwordConfirm){
+                    $rootScope.errors.password = '两次密码输入不相符。请再次输入密码。';
+                    console.log($rootScope.errors);
+                }
+                if ($scope.registerForm.role == null ){
+                    $rootScope.errors.role = '请定义用户身份。';
+                    console.log($rootScope.errors);
+
+                }
+                if (!$rootScope.err){
+                    console.log('sending registration data to /regist')
+                    Auth.register({
+                            username: $scope.registerForm.username,
+                            password: $scope.registerForm.password,
+                            role: $scope.registerForm.role
+                        },
+                        function(res) {
+                            $rootScope.user = res;
+                            $location.path('/');
+                        },
+                        function(err) {
+                            $rootScope.errors.server= err;
+                        }
+                    );
+                }
             };
 
         }]);

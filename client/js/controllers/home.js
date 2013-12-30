@@ -3,8 +3,12 @@
 
 angular.module('SpruceQuizApp')
 .controller('HomeCtrl',
-['$filter','$rootScope', '$scope', 'Sections','Units','Materials','Students','Model',
-    function($filter, $rootScope, $scope, Sections, Units, Materials, Students, Model) {
+['$filter','$rootScope', '$scope', 'Auth', 'Sections','Units','Materials','Students','Model',
+    function($filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
+        $scope.user = Auth.user;
+        $scope.userRoles = Auth.userRoles;
+        $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
+
         $scope.model = {}
         $scope.model.user =$rootScope.user
         $scope.model.sections=[]

@@ -54,20 +54,18 @@ angular.module('modelServices')
                 // this should assign all the fields in
                 modelInstance.user = $rootScope.user;
                 //rolesHelper needs no special importing since it's explosed via js exports
-                console.log($rootScope.user);
-                console.log(rolesHelper.userRoles);
+//                console.log('$rootScope.user'+$rootScope.user);
+//                console.log('rolesHelper.userRoles'+rolesHelper.userRoles);
 
                 // Now retrieve Student information and assemble it with Model.user.
+//                modelInstance.user.roleTitle=modelInstance.reverseRoleLookup(modelInstance.user.role, rolesHelper.userRoles);
 
-                modelInstance.user.roleTitle=
-                    modelInstance.reverseRoleLookup(modelInstance.user.role, rolesHelper.userRoles);
-
-                console.log("testing the mapping");
-                console.log(modelInstance.user.roleTitle);
-                console.log(nameToResource[modelInstance.user.roleTitle]);
+//                console.log("testing the mapping");
+//                console.log(modelInstance.user.roleTitle);
+//                console.log(nameToResource[modelInstance.user.roleTitle]);
                 // get basic data
-                try {
-                    modelInstance.userData = nameToResource[modelInstance.user.roleTitle].onSelf.get({
+                try {//TODO: this part of the code is sort of broken. Need to fix.
+                    modelInstance.userData = nameToResource[modelInstance.user.role.roleTitle]['onStudents'].get({
                         id: modelInstance.user.id
                     });
                 } catch (err){

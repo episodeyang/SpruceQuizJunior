@@ -3,7 +3,9 @@ var app = require('../../../server'),
     request = require('supertest'),
     expect = require('expect.js'),
     should = require('should'),
-    passportStub = require('passport-stub');
+    passportStub = require('passport-stub'),
+    userRoles = require('../../../client/js/rolesHelper.js').userRoles,
+    accessLevels = require('../../../client/js/rolesHelper.js').accessLevels;
 
 app.use(express.bodyParser());
 passportStub.install(app);
@@ -18,8 +20,17 @@ var student = {
 };
 var student2 = {
     username: 'student1',
+    role: userRoles.student,
+    id: '52c0ce02030a77a92000001b'
+};
+
+var student3 = {
+    username: 'student1',
+    password: 'passwordConfirm',
     role: '2',
-    id: '5292f0e8c66c90aa29000020'
+    school: '',
+    rawNamText: '',
+    dataOfBirth: ''
 };
 var admin = {
     'username':'admin',
@@ -54,7 +65,7 @@ describe('Server Authentication Tests - ', function (done) {
             .end(function (err, res){
                 if (err) return done(err);
                 "use strict";
-                res.body.role.should.equal(2);
+                res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.student.bitMask);
                 res.body.should.have.property("id");
                 res.body.username.should.equal(student.username);
                 done();
@@ -67,7 +78,20 @@ describe('Server Authentication Tests - ', function (done) {
             .end(function (err, res){
                 if (err) return done(err);
                 "use strict";
-                res.body.role.should.equal(16);
+                res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.admin.bitMask);
+                res.body.should.have.property("id");
+                res.body.username.should.equal(admin.username);
+                done();
+            })
+    });
+    it('/register - admin', function(done) {
+        request(app)
+            .post('/login')
+            .send(admin)
+            .end(function (err, res){
+                if (err) return done(err);
+                "use strict";
+                res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.admin.bitMask);
                 res.body.should.have.property("id");
                 res.body.username.should.equal(admin.username);
                 done();

@@ -7,7 +7,8 @@ sqApp.factory('_', function() {
 sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function($http, $rootScope, $cookieStore, Model){
 
     var accessLevels = rolesHelper.accessLevels
-        , userRoles = rolesHelper.userRoles;
+        , userRoles = rolesHelper.userRoles
+        , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
 
     function modelInitializationCallBack (){
         console.log('Model Initialization started');
@@ -19,52 +20,50 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         Model.destroy();
     };
 
-    $rootScope.user = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
     $cookieStore.remove('user');
 
-    if ($rootScope.user.id != '') {
+    if (currentUser.id != '') {
         modelInitializationCallBack();
     }
-    $rootScope.accessLevels = accessLevels;
-    $rootScope.userRoles = userRoles;
 
     return {
 
         authorize: function(accessLevel, role) {
-//            console.log('check if authorized');
             if(role === undefined)
-                role = $rootScope.user.role;
-            return accessLevel & role;
+                role = currentUser.role;
+            return accessLevel.bitMask & role.bitMask;
         },
         isLoggedIn: function(user) {
 //            console.log('checking if isLoggedIn');
             if(user === undefined){
-                user = $rootScope.user;
+                user = currentUser;
             }
 
-            return user.role === userRoles.student || user.role === userRoles.parent || user.role === userRoles.teacher || user.role === userRoles.admin || user.role === userRoles.superadmin;
+//        return user.role.bitMask === userRoles.student.bitMask
+            return user.role.bitMask === userRoles.student.bitMask || user.role.bitMask === userRoles.parent.bitMask || user.role.bitMask === userRoles.teacher.bitMask || user.role.bitMask === userRoles.admin.bitMask || user.role.bitMask === userRoles.superadmin.bitMask;
         },
         register: function (user, success, error) {
             $http.post('/register', user).success(success).error(error);
         },
         login: function (user, success, error) {
             $http.post('/login', user).success(function (user) {
-                $rootScope.user = user;
+                currentUser = user;
                 modelInitializationCallBack();
                 success(user);
             }).error(error);
         },
         logout: function (success, error) {
             $http.post('/logout').success(function () {
-                $rootScope.user.username = '';
-                $rootScope.user.role = userRoles.public;
-                $rootScope.user.id = '';
+                currentUser.username = '';
+                currentUser.role = userRoles.public;
+                currentUser.id = '';
                 modelDestroyCallBack();
                 success();
             }).error(error);
         },
         accessLevels: accessLevels,
-        userRoles: userRoles
+        userRoles: userRoles,
+        user: currentUser
     };
 
 }]);

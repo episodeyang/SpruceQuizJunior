@@ -52,55 +52,60 @@
      * @type {*}
      */
     function buildRoles(roles) {
-
         var bitMask = "01";
         var userRoles = {};
 
-        for (var role in roles) {
+        for (var index in roles) {
             var intCode = parseInt(bitMask, 2);
-            userRoles[roles[role]] = intCode;
+            userRoles[roles[index]] = {bitMask:intCode, title: roles[index] };
             bitMask = (intCode << 1 ).toString(2)
         }
 
         return userRoles;
-    }
+        console.log(userRoles);
+    };
 
     /*
      This method builds access level bit masks based on the accessLevelDeclaration parameter which must
      contain an array for each access level containing the allowed user roles.
      */
-    function buildAccessLevels(accessLevelDeclarations, userRoles) {
+    function buildAccessLevels(accessLevelDeclarations, userRoles){
 
         var accessLevels = {};
-        for (var level in accessLevelDeclarations) {
+        for(var level in accessLevelDeclarations){
 
-            if (typeof accessLevelDeclarations[level] == 'string') {
-                if (accessLevelDeclarations[level] == '*') {
+            if(typeof accessLevelDeclarations[level] == 'string'){
+                if(accessLevelDeclarations[level] == '*'){
 
                     var resultBitMask = '';
 
-                    for (var role in userRoles) {
+                    for( var role in userRoles){
                         resultBitMask += "1"
                     }
-                    accessLevels[level] = parseInt(resultBitMask, 2);
+                    //accessLevels[level] = parseInt(resultBitMask, 2);
+                    accessLevels[level] = {
+                        bitMask: parseInt(resultBitMask, 2),
+                        title: accessLevelDeclarations[level]
+                    };
                 }
                 else console.log("Access Control Error: Could not parse '" + accessLevelDeclarations[level] + "' as access definition for level '" + level + "'")
 
             }
             else {
 
-                var resultBitCode = 0;
-                for (var role in accessLevelDeclarations[level]) {
-
-                    if (userRoles.hasOwnProperty(accessLevelDeclarations[level][role]))
-                        resultBitCode = resultBitCode | userRoles[accessLevelDeclarations[level][role]]
+                var resultBitMask = 0;
+                for(var role in accessLevelDeclarations[level]){
+                    if(userRoles.hasOwnProperty(accessLevelDeclarations[level][role]))
+                        resultBitMask = resultBitMask | userRoles[accessLevelDeclarations[level][role]].bitMask
                     else console.log("Access Control Error: Could not find role '" + accessLevelDeclarations[level][role] + "' in registered roles while building access for '" + level + "'")
                 }
-                accessLevels[level] = resultBitCode;
+                accessLevels[level] = {
+                    bitMask: resultBitMask,
+                    title: accessLevelDeclarations[level][role]
+                };
             }
         }
 
         return accessLevels;
-    }
-
+    };
 })(typeof exports === 'undefined' ? this['rolesHelper'] = {} : exports);

@@ -25,7 +25,7 @@ spApp.directive('spButton', function () {
             '<div style="" class="">'+
                 '<span class="glyphicon glyphicon-{{icon}} metro"></span></div>',
         link: function (scope, element, attrs) {
-            console.log(attrs.value);
+//            console.log(attrs.value);
         }
     }
 });
@@ -47,7 +47,7 @@ spApp.directive('spInput', function () {
                 'ng-blur="leaveFocus()"' +
                 '>',
         link: function (scope, element, attrs) {
-            console.log(attrs.value);
+//            console.log(attrs.value);
             attrs.$addClass('pre-focus');
             scope.enterFocus = function(){
                 attrs.$addClass('in-focus');

@@ -230,7 +230,7 @@ var UserSchema = new mongoose.Schema({
         unique: true
     },
     password: String,
-    role: Number,
+    role: {title: String, bitMask: Number},
     userId: { type: Schema.Types.ObjectId }   //Note: not reference
 }, { collection: 'user' });
 
