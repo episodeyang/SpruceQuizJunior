@@ -72,7 +72,8 @@ describe('Server Authentication Tests - ', function (done) {
                 done();
             })
     });
-    it('/login - admin', function(done) {
+
+    it('/login - admin 200', function(done) {
         request(app)
             .post('/login')
             .send(admin)
@@ -85,26 +86,28 @@ describe('Server Authentication Tests - ', function (done) {
                 done();
             })
     });
-    it('/register - admin', function(done) {
-        var newStudent = {
-            username: 'newStudent',
-            password: 'password',
-            role: userRoles.student,
-            schoolName: '北京景山学校',
-            firstName: 'Ge',
-            lastName: 'Yang',
-            birthDay: new Date(2013, 12, 1, 9, 0, 0)
-        };
-        request(app)
-            .post('/register')
-            .send(newStudent)
-            .end(function (err, res){
-                if (err) return done(err);
-                "use strict";
-
-                done();
-            })
-    });
+//    it('/register - admin 200', function(done) {
+//        var newStudent = {
+//            username: 'newStudent',
+//            password: 'password',
+//            role: userRoles.student,
+//            params:{
+//                schoolName: '北京景山学校',
+//                firstName: 'Ge',
+//                lastName: 'Yang',
+//                birthDay: new Date(2013, 12, 1, 9, 0, 0)
+//            }
+//        };
+//        request(app)
+//            .post('/register')
+//            .send(newStudent)
+//            .expect(200, done);
+////            .end(function (err, res){
+////                if (err) return done(err);
+////                "use strict";
+////                done();
+////            })
+//    });
 
 });
 describe('Server API Tests - ', function (done) {

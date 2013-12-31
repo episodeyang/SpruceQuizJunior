@@ -39,13 +39,14 @@ div.sp-modal(ng-show="viewCtrl.showRegisterForm")
             div.sp-up-cover
             form(ng-submit="register()", name="registerForm")
                 sp-input.c1(value="registerForm.username", type="text", icon="user", placeholder="请输入用户名")
-                sp-input.c2(value="registerForm.password", type="password", icon="flash", placeholder="请输入密码")
-                sp-input.c2(value="registerForm.passwordConfirm", type="password", icon="flash", placeholder="请确认密码")
-                sp-select.c3(value="registerForm.role", icon="leaf" )
-                    option.c3(value="undefined") 请选择身份
+                sp-input.c2(value="registerForm.email", type="email", icon="envelope", placeholder="请输入邮箱地址")
+                sp-input.c3(value="registerForm.password", type="password", icon="flash", placeholder="请输入密码")
+                sp-input.c4(value="registerForm.passwordConfirm", type="password", icon="flash", placeholder="请再次输入密码以确认")
+                sp-select.c5(value="registerForm.role", icon="leaf" )
+                    option.c5(value="undefined") 请选择身份
                         b &nbsp&nbsp&nbsp&#8744
-                    option.c4(ng-value="{{userRoles.student}}")  学生
-                    option.c4(ng-value="{{userRoles.teacher}}") 教师
+                    option.c5(ng-value="{{userRoles.student}}")  学生
+                    option.c5(ng-value="{{userRoles.teacher}}") 教师
                     option.c5(ng-value="{{userRoles.parent}}") 家长
                 sp-input.c6(value="registerForm.school", type="text", icon="home", placeholder="请输入学校")
                 sp-input.c7(value="registerForm.rawNameText", type="text", icon="font", placeholder="请输入姓名")

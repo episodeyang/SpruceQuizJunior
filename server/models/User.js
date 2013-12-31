@@ -16,7 +16,7 @@ var UserM = require('./SchemaModels').User
     , TeacherM = require('./SchemaModels').Teacher;
 
 module.exports = {
-    addUser: function(username, password, role, callback) {
+    addUser: function(username, password, role, parames, callback) {
         UserM.findOne({ username: username }, function (err, duplicate) {
             if (err) {
                 console.log("An error occurred in checking User database.");
@@ -32,16 +32,16 @@ module.exports = {
                         userId:     null
                     });
                     var userObject;
-                    if(role === 2) {
+                    if (role.bitMask === 2) {
                         userObject = new StudentM({
                             firstName: '',
-                            lastName: '' ,
+                            lastName: '',
                             dateOfBirth: '',
-                            gender:'',
-                            email:'',
-                            phone:'',
-                            address:'',
-                            profilePic:'',
+                            gender: '',
+                            email: '',
+                            phone: '',
+                            address: '',
+                            profilePic: '',
                             sections: [],
                             schools: [],
                             exams: [],
@@ -53,23 +53,24 @@ module.exports = {
                                 anotherPreference: 'test reference'
                             }
                         });
-                        userObject.save();
-                    } else if(role === 4) {
+//                        userObject.save();
+                    } else if (role.bitMask=== 4) {
                         userObject = new ParentM();
                         userObject.save();
-                    } else if(role === 8) {
+                    } else if (role.bitMask=== 8) {
                         userObject = new TeacherM();
                         userObject.save();
-                    } else if(role === 16) {
+                    } else if (role.bitMask=== 16) {
                         userObject = new AdminM();
                         userObject.save();
-                    } else if(role === 32) {
+                    } else if (role.bitMask=== 32) {
                         userObject = new SuperadminM();
                         userObject.save();
                     } else {
                         console.log("Not a valid role number!");
+                        console.log(role);
                     }
-                    user.userId =userObject.id;
+                    //user.userId =userObject.id;
                     user.save(function (err) {
                         if (err) {
                             console.log("An error occurred in saving new user to database.");
@@ -94,7 +95,7 @@ module.exports = {
         //var stringArr = _.map(_.values(userRoles), function(val) { return val.toString() });
         var stringArr = [ '1', '2', '4', '8', '16', '32', '64'];
         //console.log(stringArr);
-        check(user.role, 'Invalid user role given').isIn(stringArr);
+        check(user.role.bitMask, 'Invalid user role given').isIn(stringArr);
     },
 
     localStrategy: new LocalStrategy(
@@ -116,6 +117,7 @@ module.exports = {
 
     serializeUser: function(user, done) {
         //console.log(user);
+        user.userId = user._id;//temp code, for debug reason, need to remove right away.
         done(null, user.userId);
     },
 

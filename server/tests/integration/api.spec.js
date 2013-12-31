@@ -1,24 +1,34 @@
 var superagent = require('superagent')
 var expect = require('expect.js')
 
-describe('express rest api server', function(){
+describe('express REST testing script', function(){
 //    var id
     student1 = { username: 'student1'
         , password: '123'
         , rememberme: 'true'
     };
 
-//    it('post /login', function(done){
-//        superagent.post('http://localhost:8000/login')
-//            .send(student1)
-//            .end(function(e,res){
-//                expect(e).to.eql(null);
-//                expect(res.statusCode).to.eql(200)
+    it('post /login', function(done){
+        var newStudent = {
+            username: 'newStudent',
+            password: 'password',
+            role: userRoles.student,
+            params:{
+                schoolName: '北京景山学校',
+                firstName: 'Ge',
+                lastName: 'Yang',
+                birthDay: new Date(2013, 12, 1, 9, 0, 0)
+            }
+        };
+        superagent.post('http://localhost:8000/register')
+            .send(newStudent)
+            .end(function(e,res){
+                expect(e).to.eql(null);
+                expect(res.statusCode).to.eql(200)
 //                expect(res.body.username).to.eql(student1.username)
-//                done()
-//            })
-//    })
-
+                done()
+            })
+    })
 //    it('retrieves an object', function(done){
 //        superagent.get('http://localhost:8000/collections/test/'+id)
 //            .end(function(e, res){
