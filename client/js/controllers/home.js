@@ -19,7 +19,7 @@ angular.module('SpruceQuizApp')
             });
             console.log('loaded data to Errata of student');
         }
-        loadErrata();
+//        loadErrata();
 
         $scope.viewCtrl={};
         $scope.viewCtrl.state = 'defaultView' ;
