@@ -463,8 +463,6 @@ var routes = [
                     username = req.user.username;
                     id = req.user.id;
                 }
-                console.log('looking at the response.user object');
-                console.log(res.user);
                 res.cookie('user', JSON.stringify({
                     'username': username,
                     'role': role,
