@@ -1,6 +1,6 @@
 'use strict';
-angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngResource','ngAnimate',
-        'ui.bootstrap', 'nvd3ChartDirectives','placeholders'])
+angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
+        'ui.bootstrap', 'nvd3ChartDirectives', 'placeholders'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         var access = rolesHelper.accessLevels;
@@ -63,7 +63,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             {
                 templateUrl:    '/partials/problems',
                 controller:     'ProblemCtrl',
-                access:         access.superuser
+                access:         access.loggedin
             });
         $routeProvider.when('/problems/edit',
             {
@@ -100,7 +100,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             function error(response) {
 
                 if(response.status === 401) {
-                    $location.path('/frontPage');
+                    $location.path('/');
                     return $q.reject(response);
                 }
                 else {
@@ -123,7 +123,9 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
                 if(Auth.isLoggedIn()) $location.path('/');
-                else                  $location.path('/frontPage');
+                else {
+                    $location.path('/frontPage');
+                }
             }
         });
 

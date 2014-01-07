@@ -118,11 +118,13 @@ module.exports = {
     serializeUser: function(user, done) {
         //console.log(user);
         user.userId = user._id;//temp code, for debug reason, need to remove right away.
-        done(null, user.userId);
+        done(null, user._id);
+//        done(null, user.userId);
     },
 
     deserializeUser: function(id, done) {
-        UserM.findOne({ userId: id }, function(err, user) {
+//        UserM.findOne({ userId: id }, function(err, user) {
+        UserM.findOne({ _id: id }, function(err, user) {
             if(user)    { done(null, user); }
             else        { done(null, false); }
         });

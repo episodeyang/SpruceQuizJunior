@@ -10,6 +10,10 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         , userRoles = rolesHelper.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
 
+    console.log('now lets print the user in the cookie')
+    console.log(document.cookie);
+    console.log(currentUser);
+
     function modelInitializationCallBack (){
         console.log('Model Initialization started');
         Model.init();
@@ -44,6 +48,8 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         login: function (user, success, error) {
             $http.post('/login', user).success(function (user) {
+                console.log('pring response of user');
+                console.log(user);
                 _.extend(currentUser, user);
                 modelInitializationCallBack();
                 success(user);
@@ -51,9 +57,11 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         logout: function (success, error) {
             $http.post('/logout').success(function () {
-                currentUser.username = '';
-                currentUser.role = userRoles.public;
-                currentUser.id = '';
+                _.extend(currentUser,{
+                    username: '',
+                    role: userRoles.public,
+                    id: ''
+                });
                 modelDestroyCallBack();
                 success();
             }).error(error);

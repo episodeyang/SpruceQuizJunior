@@ -10,7 +10,7 @@ angular.module('SpruceQuizApp')
                 $scope.viewCtrl.showLoginForm = false;
             };
 
-            $scope.rememberme = true;
+            $scope.loginForm.rememberMe = true;
             $scope.login = function() {
                 Auth.login({
                         username: $scope.loginForm.userName,
@@ -34,10 +34,10 @@ angular.module('SpruceQuizApp')
             $scope.viewCtrl.showRegisterForm = false;
             $scope.registerForm = {
                 username: '',
-                password: '',
-                role: {},
                 email: '',
                 schoolName: '',
+                password: '',
+                role: {},
                 firstName: '',
                 lastName: '',
                 dateOfBirth: '',

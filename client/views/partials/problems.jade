@@ -1,9 +1,10 @@
 include mixins/navbar
 include mixins/footer
-div.background
+div.background(background-img="/img/collections.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.sp-container
+.container
     +navbar
+    .row
     .container(style="width:900px;")
         h1 问题输入页面
         hr
@@ -11,8 +12,7 @@ div.background
             .span3
                 .row-fluid.span12
                     input(type="text", ng-model="expression", style="width:100%;")
-                .row-fluid.span12
-                    {{expression}}
+                .row-fluid.span12 {{expression}}
                     div(mathjax-bind="expression")
             .span6
                 .row-fluid(data-ng-repeat="problem in problems",style="padding: 20px; margin-bottom: 30px; border-radius: 5px; background-color:#f5f5f5;")
@@ -48,12 +48,9 @@ div.background
                     th 选择
             tbody
                 tr(data-ng-repeat="problem in problems")
-                    td
-                        {{ problem.id }}
-                    td
-                        {{ problem.question }}
-                    td
-                        {{ problem.choices}}
+                    td {{ problem.id }}
+                    td {{ problem.question }}
+                    td {{ problem.choices}}
 
         div(modal="viewVariables.editProblemModal")
             .modal-header
