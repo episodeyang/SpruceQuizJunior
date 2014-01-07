@@ -13,6 +13,12 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
             });
         $routeProvider.when('/',
             {
+                templateUrl:    '/partials/problems',
+                controller:     'ProblemCtrl',
+                access:         access.loggedin
+            });
+        $routeProvider.when('/home',
+            {
                 templateUrl:    '/partials/home',
                 controller:     'HomeCtrl',
                 access:         access.loggedin
