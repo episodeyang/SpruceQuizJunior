@@ -14,7 +14,7 @@ angular.module('SpruceQuizApp')
     };
     $rootScope.logout = function() {
         Auth.logout(function() {
-            $location.path('/frontPage');
+            $location.path('/login');
         }, function() {
             $rootScope.error = "Failed to logout";
         });

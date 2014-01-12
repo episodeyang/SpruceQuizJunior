@@ -31,8 +31,9 @@ angular.module('SpruceQuizApp')
 
 
             // Registration Form ====================
-            $scope.viewCtrl.showRegisterForm = false;
-            $scope.registerForm = {
+            $scope.viewCtrl.showRegistForm = false;
+            $scope.userRoles = Auth.userRoles;
+            $scope.registForm = {
                 username: '',
                 email: '',
                 schoolName: '',
@@ -44,7 +45,7 @@ angular.module('SpruceQuizApp')
                 gender: ''
             };
             $scope.exitRegister = function(){
-                $scope.viewCtrl.showRegisterForm = false;
+                $scope.viewCtrl.showRegistForm = false;
             };
 
             dateFormater = function(rawString){
@@ -63,43 +64,45 @@ angular.module('SpruceQuizApp')
                 else {return rawString;}
             };
 
-            $scope.$watch('registerForm.birthDayString', function(newValue, oldValue){
-                $scope.registerForm.birthDayString = dateFormater(newValue);
-                $scope.registerForm.dateOfBirth = new Date($scope.registerForm.birthDayString.split('_'))
+            $scope.$watch('registForm.birthDayString', function(newValue, oldValue){
+                $scope.registForm.birthDayString = dateFormater(newValue);
+                $scope.registForm.dateOfBirth = new Date($scope.registForm.birthDayString.split('_'))
             })
-            $scope.$watch('registerForm.nameRawText', function(newValue, oldValue){
-                $scope.registerForm.birthDayString = dateFormater(newValue);
-                $scope.registerForm.dateOfBirth = new Date($scope.registerForm.birthDayString.split('_'))
+            $scope.$watch('registForm.nameRawText', function(newValue, oldValue){
+                $scope.registForm.birthDayString = dateFormater(newValue);
+                $scope.registForm.dateOfBirth = new Date($scope.registForm.birthDayString.split('_'))
             })
 
             $scope.role = rolesHelper.userRoles.user;
             $rootScope.errors = {};
             $scope.register = function() {
-                if ($scope.registerForm.password !== $scope.registerForm.passwordConfirm){
+                if ($scope.registForm.password !== $scope.registForm.passwordConfirm){
                     $rootScope.errors.password = '两次密码输入不相符。请再次输入密码。';
                     console.log($rootScope.errors);
                 }
-                if ($scope.registerForm.role == null ){
+                if ($scope.registForm.role == null ){
                     $rootScope.errors.role = '请定义用户身份。';
                     console.log($rootScope.errors);
-                }
+                } else {
+                    $scope.registForm.role = Auth.userRoles[$scope.registForm.role];
+                };
                 if (!$rootScope.err){
                     console.log('sending registration data to /regist')
                     Auth.register({
-                            username: $scope.registerForm.username,
-                            password: $scope.registerForm.password,
-                            role: $scope.registerForm.role,
+                            username: $scope.registForm.username,
+                            password: $scope.registForm.password,
+                            role: $scope.registForm.role,
                             params: {
-                                email: $scope.registerForm.email,
-                                schoolName: $scope.registerForm.schoolName,
-                                firstName: $scope.registerForm.firstName,
-                                lastName: $scope.registerForm.lastName,
-                                dateOfBirth: $scope.registerForm.dateOfBirth,
+                                email: $scope.registForm.email,
+                                schoolName: $scope.registForm.schoolName,
+                                firstName: $scope.registForm.firstName,
+                                lastName: $scope.registForm.lastName,
+                                dateOfBirth: $scope.registForm.dateOfBirth,
                                 gender: 'male'
                             }
                         },
                         function(res) {
-                            $rootScope.user = res;
+                            console.log('now move to path "/"')
                             $location.path('/');
                         },
                         function(err) {

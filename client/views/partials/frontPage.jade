@@ -14,7 +14,7 @@ div.background(background-img="/img/classroom.jpg")
                 button.btn.btn-block.sp-btn-h120.bg-blue(ng-click="viewCtrl.showLoginForm=true")
                     p.sp-text-24 登录
             .col-xs-6.col-sm-5
-                button.btn.btn-block.sp-btn-h120.bg-yellow(ng-click="viewCtrl.showRegisterForm=true")
+                button.btn.btn-block.sp-btn-h120.bg-yellow(ng-click="viewCtrl.showRegistForm=true")
                     p.sp-text-24 注册
 
 div.sp-modal(ng-show="viewCtrl.showLoginForm")
@@ -31,26 +31,26 @@ div.sp-modal(ng-show="viewCtrl.showLoginForm")
                     p.text-semi-white {{error}}
 
 
-div.sp-modal(ng-show="viewCtrl.showRegisterForm")
+div.sp-modal(ng-show="viewCtrl.showRegistForm")
     //-, ng-click="viewCtrl.showLoginForm=false")
     .container
         span.glyphicon.glyphicon-share-alt(ng-click="exitRegister()").icon-exit.hidden-xs
         div.inner
             div.sp-up-cover
-            form(ng-submit="register()", name="registerForm")
-                sp-input.c1(value="registerForm.username", type="text", icon="user", placeholder="请输入用户名")
-                sp-input.c2(value="registerForm.email", type="email", icon="envelope", placeholder="请输入邮箱地址")
-                sp-input.c3(value="registerForm.password", type="password", icon="flash", placeholder="请输入密码")
-                sp-input.c4(value="registerForm.passwordConfirm", type="password", icon="flash", placeholder="请再次输入密码以确认")
-                sp-select.c5(value="registerForm.role", icon="leaf" )
+            form(ng-submit="register()", name="registForm")
+                sp-input.c1(value="registForm.username", type="text", icon="user", placeholder="请输入用户名")
+                sp-input.c2(value="registForm.email", type="email", icon="envelope", placeholder="请输入邮箱地址")
+                sp-input.c3(value="registForm.password", type="password", icon="flash", placeholder="请输入密码")
+                sp-input.c4(value="registForm.passwordConfirm", type="password", icon="flash", placeholder="请再次输入密码以确认")
+                sp-select.c5(value="registForm.role", icon="leaf" )
                     option.c5(value="undefined") 请选择身份
                         b &nbsp&nbsp&nbsp&#8744
-                    option.c5(ng-value="{{userRoles.student}}")  学生
-                    option.c5(ng-value="{{userRoles.teacher}}") 教师
-                    option.c5(ng-value="{{userRoles.parent}}") 家长
-                sp-input.c6(value="registerForm.school", type="text", icon="home", placeholder="请输入学校")
-                sp-input.c7(value="registerForm.rawNameText", type="text", icon="font", placeholder="请输入姓名")
-                sp-input.c8(value="registerForm.birthDayString", type="text", icon="heart", placeholder="请输入生日")
+                    option.c5(value="student")  学生
+                    option.c5(value="teacher") 教师
+                    option.c5(value="parent") 家长
+                sp-input.c6(value="registForm.school", type="text", icon="home", placeholder="请输入学校")
+                sp-input.c7(value="registForm.rawNameText", type="text", icon="font", placeholder="请输入姓名")
+                sp-input.c8(value="registForm.birthDayString", type="text", icon="heart", placeholder="请输入生日")
                 button.submit(ng-click='register()', type="submit") 提交
                 .warining
                     p.text-semi-white(ng-repeat="(errorType, error) in errors") {{error}}

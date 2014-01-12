@@ -10,7 +10,7 @@ describe('express REST testing script', function(){
 
     it('post /login', function(done){
         var newStudent = {
-            username: 'newStudent',
+            username: 'testStudent',
             password: 'password',
             role: userRoles.student,
             params:{
@@ -24,9 +24,9 @@ describe('express REST testing script', function(){
             .send(newStudent)
             .end(function(e,res){
                 expect(e).to.eql(null);
-                expect(res.statusCode).to.eql(200)
-//                expect(res.body.username).to.eql(student1.username)
-                done()
+                expect(res.statusCode).to.eql(200);
+//                console.log(res.body);
+                done();
             })
     })
 //    it('retrieves an object', function(done){

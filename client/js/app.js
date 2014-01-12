@@ -5,7 +5,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
 
         var access = rolesHelper.accessLevels;
 
-        $routeProvider.when('/frontPage',
+        $routeProvider.when('/login',
             {
                 templateUrl:    '/partials/frontPage',
                 controller:     'FrontPageCtrl',
@@ -98,28 +98,19 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
 
         $locationProvider.html5Mode(true);
 
-        var interceptor = ['$location', '$q', function($location, $q) {
-            function success(response) {
-                return response;
-            }
-
-            function error(response) {
-
-                if(response.status === 401) {
-                    $location.path('/');
-                    return $q.reject(response);
-                }
-                else {
-                    return $q.reject(response);
+        $httpProvider.interceptors.push(function($q, $location) {
+            return {
+                'responseError': function(response) {
+                    if(response.status === 401 || response.status === 403) {
+                        $location.path('/login');
+                        return $q.reject(response);
+                    }
+                    else {
+                        return $q.reject(response);
+                    }
                 }
             }
-
-            return function(promise) {
-                return promise.then(success, error);
-            }
-        }];
-
-        $httpProvider.responseInterceptors.push(interceptor);
+        });
 
     }])
 
@@ -128,9 +119,11 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
-                if(Auth.isLoggedIn()) $location.path('/');
+                if(Auth.isLoggedIn()) {
+                    $location.path('/');
+                }
                 else {
-                    $location.path('/frontPage');
+                    $location.path('/login');
                 }
             }
         });
