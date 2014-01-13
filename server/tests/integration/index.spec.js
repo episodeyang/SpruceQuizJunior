@@ -1,6 +1,8 @@
 var app = require('../../../server'),
-    express = require('express')
+    data = require('./test.data.js'),
+    express = require('express'),
     request = require('supertest'),
+    superagent = require('superagent'),
     expect = require('expect.js'),
     should = require('should'),
     passportStub = require('passport-stub'),
@@ -10,33 +12,7 @@ var app = require('../../../server'),
 app.use(express.bodyParser());
 passportStub.install(app);
 
-//request = request('http://localhost:8000')
-
-// student account
-var student = {
-    'username':'student1',
-    'password': '123',
-    'rememberme': 'true'
-};
-var student2 = {
-    username: 'student1',
-    role: userRoles.student,
-    id: '52c0ce02030a77a92000001b'
-};
-
-var student3 = {
-    username: 'student1',
-    password: 'passwordConfirm',
-    role: '2',
-    school: '',
-    rawNamText: '',
-    dataOfBirth: ''
-};
-var admin = {
-    'username':'admin',
-    'password': '123',
-    'rememberme': 'true'
-};
+var studentUser, adminUser;
 
 describe('Server Authentication Tests - ', function (done) {
     beforeEach(function() {
@@ -46,67 +22,51 @@ describe('Server Authentication Tests - ', function (done) {
         passportStub.logout(); // logout after each test
     });
 
-
-
     it('/ - Return a 200. The root uri always return 200 and "index.html"', function(done) {
         request(app).get('/').expect(200, done);
     });
     it('/frontPage - Return a 200 The root uri always return 200 and "index.html"', function(done) {
         request(app).get('/frontPage').expect(200, done);
     });
-    it('/user- Return a 200 The root uri always return 200 and "index.html"', function(done) {
+    it('/user - Return a 200 The root uri always return 200 and "index.html"', function(done) {
         request(app).get('/user').expect(200, done);
     });
-
-    it('/login - student1', function(done) {
+    it('/register - 200', function(done) {
+        request(app).post('/register').send(data.studentRegister).expect(200, done);
+    });
+    it('/login - student', function(done) {
         request(app)
             .post('/login')
-            .send(student)
+            .send(data.studentLogin)
             .end(function (err, res){
                 if (err) return done(err);
                 "use strict";
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.student.bitMask);
                 res.body.should.have.property("id");
-                res.body.username.should.equal(student.username);
+                res.body.username.should.equal(data.studentLogin.username);
                 studentUser = res.body;
                 done();
             })
     });
 
-    it('/login - admin 200', function(done) {
-        request(app)
-            .post('/login')
-            .send(admin)
-            .end(function (err, res){
-                if (err) return done(err);
-                "use strict";
-                res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.admin.bitMask);
-                res.body.should.have.property("id");
-                res.body.username.should.equal(admin.username);
-                done();
-            })
-    });
+//    it('/login - admin 200', function(done) {
+//        request(app)
+//            .post('/login')
+//            .send(admin)
+//            .end(function (err, res){
+//                if (err) return done(err);
+//                "use strict";
+//                res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.admin.bitMask);
+//                res.body.should.have.property("id");
+//                res.body.username.should.equal(admin.username);
+//                done();
+//            })
+//    });
 //    it('/register - admin 200', function(done) {
-//        var newStudent = {
-//            username: 'newStudent',
-//            password: 'password',
-//            role: userRoles.student,
-//            params:{
-//                schoolName: '北京景山学校',
-//                firstName: 'Ge',
-//                lastName: 'Yang',
-//                birthDay: new Date(2013, 12, 1, 9, 0, 0)
-//            }
-//        };
 //        request(app)
 //            .post('/register')
-//            .send(newStudent)
+//            .send(student)
 //            .expect(200, done);
-////            .end(function (err, res){
-////                if (err) return done(err);
-////                "use strict";
-////                done();
-////            })
 //    });
 
 });
