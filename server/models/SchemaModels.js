@@ -1,8 +1,12 @@
 'use strict';
 
+var _ = require('underscore');
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
+function capitalize(s) {
+    return s[0].toUpperCase() + s.slice(1);
+}
 var config_nest = {
     quizProblem: {
         problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
@@ -17,8 +21,10 @@ var config_nest = {
     }
 };
 
-var QuizProblemSchema = new mongoose.Schema(config_nest.quizProblem);
-var ExamProblemSchema = new mongoose.Schema(config_nest.examProblem);
+var subSchema = {};
+_.each(config_nest, function (schema, title) {
+    subSchema[capitalize(title)] = new mongoose.Schema(schema);
+});
 
 var config = {
     problem: {
@@ -57,7 +63,7 @@ var config = {
         quizDate: Date,
         quizTopics: Array,
         totalScore: Number,
-        quizProblems: [QuizProblemSchema]
+        quizProblems: [subSchema.quizProblem]
     },
     material: {
         materialName: String,
@@ -102,7 +108,7 @@ var config = {
         totalScore: Number,
         totalReceivedScore: Number,
         rank: Number,
-        examProblems: [ExamProblemSchema]
+        examProblems: [subSchema.ExamProblem]
     },
     erratum: {
         title: String,
@@ -175,11 +181,24 @@ var config = {
         },
         password: String,
         role: {title: String, bitMask: Number},
-        userId: { type: Schema.Types.ObjectId }   //Note: not reference
+        userId: { type: Schema.Types.ObjectId },   //Note: not reference
+        __methods__: {
+            validPassword: function (password) {
+                if (password === this.password) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
     },
     feed: {
-        userId: { type: Schema.Types.ObjectId },   //Note: not reference
-        groupId: { type: Schema.Types.ObjectId },   //Note: not reference
+        userId: {
+            type: Schema.Types.ObjectId
+        },   //Note: not reference
+        groupId: {
+            type: Schema.Types.ObjectId
+        },   //Note: not reference
         type: String,
         feedData: String,
         createdDate: Date,
@@ -187,102 +206,27 @@ var config = {
     }
 };
 
-//Problem schema
-var ProblemSchema = new mongoose.Schema(config.problem, { collection: 'problem' });
-var Problem = mongoose.model('Problem', ProblemSchema);
-
-//MistakeTag schema
-var MistakeTagSchema = new mongoose.Schema(config.mistakeTag, { collection: 'mistakeTag' });
-var MistakeTag = mongoose.model('MistakeTag', MistakeTagSchema);
-
-//ProblemNote schema
-var ProblemNoteSchema = new mongoose.Schema(config.problemNote, { collection: 'problemNote' });
-var ProblemNote = mongoose.model('ProblemNote', ProblemNoteSchema);
-
-//Quiz schema
-var QuizSchema = new mongoose.Schema(config.quiz, { collection: 'quiz' });
-var Quiz = mongoose.model('Quiz', QuizSchema);
-
-//Material schema
-var MaterialSchema = new mongoose.Schema(config.material, { collection: 'material' });
-var Material = mongoose.model('Material', MaterialSchema);
-
-//Unit schema
-var UnitSchema = new mongoose.Schema(config.unit, { collection: 'unit' });
-var Unit = mongoose.model('Unit', UnitSchema);
-
-//School schema
-var SchoolSchema = new mongoose.Schema(config.school, { collection: 'school' });
-var School = mongoose.model('School', SchoolSchema);
-
-//Section schema
-var SectionSchema = new mongoose.Schema(config.section, { collection: 'section' });
-var Section = mongoose.model('Section', SectionSchema);
-
-//Exam and sub-problem-object schema
-var ExamSchema = new mongoose.Schema(config.exam, { collection: 'exam' });
-var Exam = mongoose.model('Exam', ExamSchema);
-
-//Erratum schema
-var ErratumSchema = new mongoose.Schema(config.erratum, { collection: 'erratum' });
-var Erratum = mongoose.model('Erratum', ErratumSchema);
-
-//Student schema
-var StudentSchema = new mongoose.Schema(config.student, { collection: 'student' });
-var Student = mongoose.model('Student', StudentSchema);
-
-//Parent schema
-var ParentSchema = new mongoose.Schema(config.parent, { collection: 'parent' });
-var Parent = mongoose.model('Parent', ParentSchema);
-
-//Teacher schema
-var TeacherSchema = new mongoose.Schema(config.teacher, { collection: 'teacher' });
-var Teacher = mongoose.model('Teacher', TeacherSchema);
-
-//Admin schema
-var AdminSchema = new mongoose.Schema(config.admin, { collection: 'admin' });
-var Admin = mongoose.model('Admin', AdminSchema);
-
-//Superadmin schema
-var SuperadminSchema = new mongoose.Schema(config.superadmin, { collection: 'superadmin' });
-var Superadmin = mongoose.model('Superadmin', SuperadminSchema);
-
-//User schema
-var UserSchema = new mongoose.Schema(config.user, { collection: 'user' });
-UserSchema.methods.validPassword = function (password) {
-    if (password === this.password) {
-        return true;
+var Config = {};
+_.each(config, function (schema, title) {
+    if (!schema.__methods__) {
+        Config[capitalize(title)] = mongoose.model(
+            capitalize(title),
+            new mongoose.Schema(schema, {collection: title})
+        );
     } else {
-        return false;
-    }
-};
-var User = mongoose.model('User', UserSchema);
+        var tempSchema = schema,
+            methods = schema.__methods__;
+        delete tempSchema.__methods__;
+        Config[title + 'Schema'] = new mongoose.Schema(tempSchema, {collection: title}
+        );
+        _.each(methods, function (method, methodKey) {
+            Config[title + 'Schema'].methods[methodKey] = method;
+        });
+        Config[capitalize(title)] = mongoose.model(capitalize(title), Config[title + 'Schema']);
+    };
+});
+Config.__config = config;
+Config.__config_nest = config_nest;
 
-//Newsfeed schema
-var FeedSchema = new mongoose.Schema(config.feed, { collection: 'feed' });
-var Feed = mongoose.model('Feed', FeedSchema);
+module.exports = Config;
 
-//other schemas here
-
-//exports
-module.exports = {
-    _config: config,
-    _config_nest: config_nest,
-    Material: Material,
-    Unit: Unit,
-    Section: Section,
-    School: School,
-    Student: Student,
-    Parent: Parent,
-    Teacher: Teacher,
-    Admin: Admin,
-    Superadmin: Superadmin,
-    User: User,
-    MistakeTag: MistakeTag,
-    Problem: Problem,
-    ProblemNote: ProblemNote,
-    Exam: Exam,
-    Erratum: Erratum,
-    Quiz: Quiz,
-    Feed: Feed
-}
