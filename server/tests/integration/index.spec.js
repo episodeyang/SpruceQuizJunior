@@ -31,8 +31,11 @@ describe('Server Authentication Tests - ', function (done) {
     it('/user - Return a 200 The root uri always return 200 and "index.html"', function(done) {
         request(app).get('/user').expect(200, done);
     });
-    it('/register - 200', function(done) {
+    it('/register - 200 student', function(done) {
         request(app).post('/register').send(data.studentRegister).expect(200, done);
+    });
+    it('/register - 200 superadmin', function(done) {
+        request(app).post('/register').send(data.superadminRegister).expect(200, done);
     });
     it('/login - student', function(done) {
         request(app)

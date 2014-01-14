@@ -9,7 +9,7 @@ var _ = require('underscore')
 
 var data = {
     studentRegister: {
-        username: 'newStudent',
+        username: 'student',
         password: 'password',
         role: userRoles.student,
         params: {
@@ -20,9 +20,19 @@ var data = {
         }
     },
     studentLogin: {
-        username: 'newStudent',
+        username: 'student',
         password: 'password'
-    }
+    },
+    superadminRegister: {
+        username: 'superadmin',
+        password: 'password',
+        role: userRoles.superadmin,
+        params :{}
+    },
+    superadminLogin: {
+        username: 'superadmin',
+        password: 'password'
+    },
 };
 
 module.exports = data;

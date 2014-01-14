@@ -13,7 +13,8 @@ var check =           require('validator').check
 
 var UserM = require('./SchemaModels').User
     , StudentM = require('./SchemaModels').Student
-    , TeacherM = require('./SchemaModels').Teacher;
+    , TeacherM = require('./SchemaModels').Teacher
+    , SuperadminM= require('./SchemaModels').Superadmin;
 
 module.exports = {
     addUser: function(username, password, role, parames, callback) {
@@ -64,7 +65,7 @@ module.exports = {
                         userObject = new AdminM();
                         userObject.save();
                     } else if (role.bitMask=== 32) {
-                        userObject = new SuperadminM();
+                        userObject = new SuperadminM({superadminName: ''});
                         userObject.save();
                     } else {
                         console.log("Not a valid role number!");
