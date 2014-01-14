@@ -82,8 +82,8 @@ describe('Server API Tests - ', function (done) {
     });
     it('/api/errata/all - return 200 when logged in', function(done) {
         passportStub.login(studentUser); // login as user
-        console.log("studentUser object returned from the login");
-        console.log(studentUser);
+//        console.log("studentUser object returned from the login");
+//        console.log(studentUser);
         request(app).get('/api/problems/all').expect(200, done);
     });
 //    it('/api/problems/all - return 200 when logged in', function(done) {
