@@ -17,7 +17,7 @@ var UserM = require('./SchemaModels').User
     , SuperadminM= require('./SchemaModels').Superadmin;
 
 module.exports = {
-    addUser: function(username, password, role, parames, callback) {
+    addUser: function(username, password, role, params, callback) {
         UserM.findOne({ username: username }, function (err, duplicate) {
             if (err) {
                 console.log("An error occurred in checking User database.");
@@ -35,14 +35,9 @@ module.exports = {
                     var userObject;
                     if (role.bitMask === 2) {
                         userObject = new StudentM({
-                            firstName: '',
-                            lastName: '',
-                            dateOfBirth: '',
-                            gender: '',
-                            email: '',
-                            phone: '',
-                            address: '',
-                            profilePic: '',
+                            name: params.name,
+                            DOB: params.DOB,
+                            email: params.email,
                             sections: [],
                             schools: [],
                             exams: [],

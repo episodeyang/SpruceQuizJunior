@@ -95,10 +95,8 @@ angular.module('SpruceQuizApp')
                             params: {
                                 email: $scope.registForm.email,
                                 schoolName: $scope.registForm.schoolName,
-                                firstName: $scope.registForm.firstName,
-                                lastName: $scope.registForm.lastName,
-                                dateOfBirth: $scope.registForm.dateOfBirth,
-                                gender: 'male'
+                                name: $scope.registForm.name,
+                                DOB: $scope.registForm.dateOfBirth
                             }
                         },
                         function(res) {

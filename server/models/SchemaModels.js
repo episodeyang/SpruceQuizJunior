@@ -27,6 +27,73 @@ _.each(config_nest, function (schema, title) {
 });
 
 var config = {
+    user: {
+        username: {
+            type: String,
+            unique: true
+        },
+        password: String,
+        role: {title: String, bitMask: Number},
+        userId: { type: Schema.Types.ObjectId },   //Note: not reference
+        __methods__: {
+            validPassword: function (password) {
+                if (password === this.password) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    },
+    student: {
+        name: String,
+        DOB: Date,
+        email: String,
+        sections: [
+            { type: Schema.Types.ObjectId, ref: 'Section' }
+        ],
+        schools: [
+            { type: Schema.Types.ObjectId, ref: 'School' }
+        ],
+        exams: [
+            { type: Schema.Types.ObjectId, ref: 'Exam' }
+        ],
+        mistakeTags: [
+            { type: Schema.Types.ObjectId, ref: 'MistakeTag' }
+        ],
+        errata: [
+            { type: Schema.Types.ObjectId, ref: 'Erratum' }
+        ],
+        comments: String,
+        preferences: {
+            problemNoteListLimit: Number,
+            anotherPreference: String
+        }
+    },
+    parent: {
+        name: String,
+        studentIds: [
+            { type: Schema.Types.ObjectId, ref: 'Student' }
+        ]
+    },
+    teacher: {
+        teacherName: String,
+        sections: [
+            { type: Schema.Types.ObjectId, ref: 'Section' }
+        ],
+        schools: [
+            { type: Schema.Types.ObjectId, ref: 'School' }
+        ]
+    },
+    admin: {
+        name: String,
+        schools: [
+            { type: Schema.Types.ObjectId, ref: 'schools' }
+        ]
+    },
+    superadmin: {
+        name: String
+    },
     problem: {
         topLevel: Boolean,
         problemType: String,
@@ -119,78 +186,6 @@ var config = {
         ],
         dateCreated: Date,
         dateModified: Date
-    },
-    student: {
-        firstName: String,
-        lastName: String,
-        dateOfBirth: Date,
-        gender: String,
-        email: String,
-        phone: Array,
-        address: String,
-        profilePic: String,
-        sections: [
-            { type: Schema.Types.ObjectId, ref: 'Section' }
-        ],
-        schools: [
-            { type: Schema.Types.ObjectId, ref: 'School' }
-        ],
-        exams: [
-            { type: Schema.Types.ObjectId, ref: 'Exam' }
-        ],
-        mistakeTags: [
-            { type: Schema.Types.ObjectId, ref: 'MistakeTag' }
-        ],
-        errata: [
-            { type: Schema.Types.ObjectId, ref: 'Erratum' }
-        ],
-        comments: String,
-        preferences: {
-            problemNoteListLimit: Number,
-            anotherPreference: String
-        }
-    },
-    parent: {
-        parentName: String,
-        studentIds: [
-            { type: Schema.Types.ObjectId, ref: 'Student' }
-        ]
-    },
-    teacher: {
-        teacherName: String,
-        sections: [
-            { type: Schema.Types.ObjectId, ref: 'Section' }
-        ],
-        schools: [
-            { type: Schema.Types.ObjectId, ref: 'School' }
-        ]
-    },
-    admin: {
-        adminName: String,
-        schools: [
-            { type: Schema.Types.ObjectId, ref: 'schools' }
-        ]
-    },
-    superadmin: {
-        superadminName: String
-    },
-    user: {
-        username: {
-            type: String,
-            unique: true
-        },
-        password: String,
-        role: {title: String, bitMask: Number},
-        userId: { type: Schema.Types.ObjectId },   //Note: not reference
-        __methods__: {
-            validPassword: function (password) {
-                if (password === this.password) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
     },
     feed: {
         userId: {
