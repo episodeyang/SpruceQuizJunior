@@ -34,7 +34,11 @@ var config = {
         },
         password: String,
         role: {title: String, bitMask: Number},
-        userId: { type: Schema.Types.ObjectId },   //Note: not reference
+        student: { type: Schema.Types.ObjectId, ref: "Student"},
+        parent: { type: Schema.Types.ObjectId, ref: "Parent"},
+        teacher: { type: Schema.Types.ObjectId, ref: "Teacher" },
+        admin: { type: Schema.Types.ObjectId, ref: "Admin" },
+        superadmin: { type: Schema.Types.ObjectId, ref: "Superadmin" },
         __methods__: {
             validPassword: function (password) {
                 if (password === this.password) {
@@ -72,12 +76,14 @@ var config = {
     },
     parent: {
         name: String,
+        email: String,
         studentIds: [
             { type: Schema.Types.ObjectId, ref: 'Student' }
         ]
     },
     teacher: {
-        teacherName: String,
+        name: String,
+        email: String,
         sections: [
             { type: Schema.Types.ObjectId, ref: 'Section' }
         ],
@@ -87,6 +93,7 @@ var config = {
     },
     admin: {
         name: String,
+        email: String,
         schools: [
             { type: Schema.Types.ObjectId, ref: 'schools' }
         ]

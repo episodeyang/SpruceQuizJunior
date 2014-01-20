@@ -52,7 +52,7 @@ module.exports = {
                 }
 
                 if(req.body.rememberme) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-                res.json(200, { "role": user.role, "username": user.username, "id": user.userId });
+                res.json(200, { "role": user.role, "username": user.username, "id": user._id});
             });
         })(req, res, next);
     },
