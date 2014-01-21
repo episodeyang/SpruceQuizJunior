@@ -1,25 +1,33 @@
-var _ =           require('underscore')
-    , path =      require('path')
-    , passport =  require('passport')
-    , AuthCtrl =  require('./controllers/auth')
-    , UserCtrl =  require('./controllers/user')
-    , ProblemCtrl =  require('./controllers/problem')
-    , StudentCtrl =  require('./controllers/student')
-    , TeacherCtrl =  require('./controllers/teacher')
-    , AdminCtrl =  require('./controllers/admin')
-    , SuperadminCtrl =  require('./controllers/superadmin')
-    , SectionCtrl =  require('./controllers/section')
-    , SchoolCtrl =  require('./controllers/school')
-    , UnitCtrl =  require('./controllers/unit')
-    , MaterialCtrl =  require('./controllers/material')
-    , User =      require('./models/User.js')
+/**
+ * @fileOverview Server routing configurations
+ * @author Ge Yang
+ * @type {_|exports}
+ * @private
+ */
+var _ = require('underscore')
+    , path = require('path')
+    , passport = require('passport')
+    , AuthCtrl = require('./controllers/auth')
+    , UserCtrl = require('./controllers/user')
+    , ProblemCtrl = require('./controllers/problem')
+    , StudentCtrl = require('./controllers/student')
+    , TeacherCtrl = require('./controllers/teacher')
+    , AdminCtrl = require('./controllers/admin')
+    , SuperadminCtrl = require('./controllers/superadmin')
+    , SectionCtrl = require('./controllers/section')
+    , SchoolCtrl = require('./controllers/school')
+    , UnitCtrl = require('./controllers/unit')
+    , MaterialCtrl = require('./controllers/material')
+    , User = require('./models/User.js')
     , userRoles = require('../client/js/rolesHelper').userRoles
     , accessLevels = require('../client/js/rolesHelper').accessLevels;
 
-var routes = [
+/** @module Routes */
+/** @module Routes/api */
 
-    // Views
-     {
+var routes = [
+    /** @event module:Routes./patials/* */
+    {
         path: '/partials/*',
         httpMethod: 'GET',
         middleware: [function (req, res) {
@@ -28,6 +36,7 @@ var routes = [
         }],
         accessLevel: accessLevels.public
     },
+    /** @event module:Routes./js/mathJax/* */
     {   //Need to give more fine-grained control to the client side scripts,
         //so that not all client side scripts are exposed to anonymous users.
         path: '/js/mathJax/*',
@@ -38,6 +47,7 @@ var routes = [
         }],
         accessLevel: accessLevels.public
     },
+    /** @event module:Routes./js/* */
     {   //Need to give more fine-grained control to the client side scripts,
         //so that not all client side scripts are exposed to anonymous users.
         path: '/js/*',
@@ -112,18 +122,21 @@ var routes = [
 //    },
 
     // Local Auth
+    /** @event module:Routes/api./api/register:POST*/
     {
         path: '/register',
         httpMethod: 'POST',
         middleware: [AuthCtrl.register],
         accessLevel: accessLevels.public
     },
+    /** @event module:Routes/api./api/login:POST */
     {
         path: '/login',
         httpMethod: 'POST',
         middleware: [AuthCtrl.login],
         accessLevel: accessLevels.public
     },
+    /** @event module:Routes/api./api/logout:POST */
     {
         path: '/logout',
         httpMethod: 'POST',
@@ -132,15 +145,15 @@ var routes = [
     },
 
     // User resource
+    /** @event module:Routes/api./api/users:GET
+     * @todo <em>Obsolete</em> wait for removal.
+     */
     {
         path: '/users',
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
         accessLevel: accessLevels.superuser
     },
-
-    //APIs needed by client
-    //School resource
     {
         path: '/api/schools/:uuid',
         httpMethod: 'GET',
@@ -456,9 +469,9 @@ var routes = [
         path: '/*',
         httpMethod: 'GET',
         middleware: [
-            function(req, res) {
+            function (req, res) {
                 var role = userRoles.public, username = '', id = '';
-                if(req.user) {
+                if (req.user) {
                     role = req.user.role;
                     username = req.user.username;
                     id = req.user.id;
@@ -474,12 +487,12 @@ var routes = [
     }
 ];
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-    _.each(routes, function(route) {
+    _.each(routes, function (route) {
         var args = _.flatten([route.path, route.middleware]);
 
-        switch(route.httpMethod.toUpperCase()) {
+        switch (route.httpMethod.toUpperCase()) {
             case 'GET':
                 app.get.apply(app, args);
                 break;
@@ -500,16 +513,16 @@ module.exports = function(app) {
 }
 
 function ensureAuthenticated(req, res, next) {
-    if(req.isAuthenticated()) return next();
+    if (req.isAuthenticated()) return next();
     else                      return res.send(401);
 }
 
 function ensureAuthorized(req, res, next) {
-    if(!req.user) return res.send(401);
+    if (!req.user) return res.send(401);
 
     //console.log(req.user);
     var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;  //This look a bit fishy.
-    if(!(accessLevel.bitMask & req.user.role.bitMask)) return res.send(403);
+    if (!(accessLevel.bitMask & req.user.role.bitMask)) return res.send(403);
 
     return next();
 }

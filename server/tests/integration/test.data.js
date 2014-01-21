@@ -1,13 +1,26 @@
 /**
- * Created by ge on 1/12/14.
+ * @fileOverview Test data for the integrated server test.
+ * @author Ge Yang
+ * @type {_|exports}
+ * @private
  */
+
 'use strict'
 
+/** @ignore */
 var _ = require('underscore')
     , check = require('validator').check
     , userRoles = require('../../../client/js/rolesHelper').userRoles;
+/**
+ * @module Test
+ */
 
-var data = {
+/**
+ * API test data
+ * @namespace
+ */
+var testData = {
+    /** Student registration data */
     studentRegister: {
         username: 'student',
         password: 'password',
@@ -19,10 +32,12 @@ var data = {
             email: 'yangge1987@gmail.com'
         }
     },
+    /** Student login data */
     studentLogin: {
         username: 'student',
         password: 'password'
     },
+    /** superadmin registration data */
     superadminRegister: {
         username: 'superadmin',
         password: 'password',
@@ -34,11 +49,12 @@ var data = {
             email: 'ou.jieyu@gmail.com'
         }
     },
+    /** superadmin login data */
     superadminLogin: {
         username: 'superadmin',
         password: 'password'
     },
-
+    /** admin registration data */
     adminRegister: {
         username: 'admin',
         password: 'password',
@@ -50,10 +66,12 @@ var data = {
             email: 'xinwei.li@gmail.com'
         }
     },
+    /** admin login data*/
     adminLogin: {
         username: 'admin',
         password: 'password'
     },
+    /** teacher registration data*/
     teacherRegister: {
         username: 'teacher',
         password: 'password',
@@ -65,10 +83,12 @@ var data = {
             email: 'ouli@126.com'
         }
     },
+    /** teacher login data*/
     teacherLogin: {
         username: 'teacher',
         password: 'password'
     },
+    /** parent registration data*/
     parentRegister: {
         username: 'parent',
         password: 'password',
@@ -79,10 +99,11 @@ var data = {
             email: 'zhangli@126.com'
         }
     },
+    /** parent login data*/
     parentLogin: {
         username: 'parent',
         password: 'password'
     }
 };
 
-module.exports = data;
+module.exports = testData;

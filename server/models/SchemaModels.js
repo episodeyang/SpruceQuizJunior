@@ -1,5 +1,12 @@
-'use strict';
+/**
+ * @fileOverview MongoDB Schema Configurations
+ * @author Ge Yang
+ * @version 0.0.1
+ * @type {_|exports}
+ * @private
+ */
 
+'use strict';
 var _ = require('underscore');
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;

@@ -1,18 +1,27 @@
 {
-    "tags": {
-        "allowUnknownTags": true
-    },
-    "source": {
-        "include": ["./server","./client/js/services"],
-        "exclude": [],
-        "includePattern": ".+\\.js(doc)?$",
-        "excludePattern": "(^|\\/|\\\\)_"
-    },
-    "plugins": [],
-    "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": false
-    },
+	"tags"      : {
+		"allowUnknownTags" : true
+	},
+	"plugins"   : ["plugins/markdown"],
+	"templates" : {
+		"cleverLinks"     : true,
+		"monospaceLinks"  : false,
+		"default"         : {
+			"outputSourceFiles" : true
+		},
+		"systemName"      : "SpruceQuiz Server",
+		"footer"          : "",
+		"copyright"       : "SpruceLearning Copyright © 2013-2014 Ge Yang.",
+		"navType"         : "vertical",
+		"theme"           : "cerulean",
+		"linenums"        : true,
+		"collapseSymbols" : true,
+		"inverseNav"      : false
+	},
+	"markdown"  : {
+		"parser"   : "gfm",
+		"hardwrap" : true
+	},
     "opts": {
         "encoding": "utf8",
         "destination": "./docs/",

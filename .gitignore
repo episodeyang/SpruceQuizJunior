@@ -2,8 +2,11 @@
 *.swp
 .idea
 temp
+
 #Build Files
-docs
+doc
+out
+
 client/*/*.css
 
 

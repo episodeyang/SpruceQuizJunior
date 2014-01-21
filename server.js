@@ -1,3 +1,9 @@
+/**
+ * The API server for 学霸帮帮忙
+ * author: Ge Yang
+ * @type {*|boolean}
+ */
+
 //require('nodetime').profile({
 //    accountKey: 'cb0835da7eb6304c00877ca11569df1ef72ebb10',
 //    appName: 'SpruceQuizJunior'
@@ -5,7 +11,6 @@
 
 //comment
 var resetDB = ( process.env.RESETDB || false );
-
 
 var express =       require('express')
     , http =        require('http')
@@ -36,10 +41,7 @@ mongoose.connect('mongodb://localhost/sprucedb', function(err) {
         });
     }
 });
-/**
- * testing jsDoc
- * @param test
- */
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
