@@ -4,7 +4,7 @@
 temp
 
 #Build Files
-doc
+docs
 out
 
 client/*/*.css

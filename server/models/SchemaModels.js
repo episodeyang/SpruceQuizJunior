@@ -32,7 +32,10 @@ var subSchema = {};
 _.each(config_nest, function (schema, title) {
     subSchema[capitalize(title)] = new mongoose.Schema(schema);
 });
-
+/**
+ * @typedef schema {{name: string, lang: string}}
+ * @type {{schemaConfig: Object.<string, schema>}}
+ */
 var config = {
     user: {
         username: {

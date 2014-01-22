@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Integrated Server test
+ * @module Test
+ * @type {exports}
+ */
 var app = require('../../../server'),
     data = require('./test.data.js'),
     express = require('express'),

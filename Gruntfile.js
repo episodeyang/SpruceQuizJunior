@@ -4,6 +4,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-apidoc');
 
     grunt.initConfig({
 
@@ -53,9 +54,23 @@ module.exports = function (grunt) {
                     'server/README.md'
                 ],
                 options: {
-                    destination: 'doc',
+                    destination: 'docs/server/',
                     template: '../docstrap/template/',
                     config: 'jsDoc.conf.json'
+                }
+            }
+        },
+        apidoc: {
+            server: {
+                src: "server/",
+                dest: "docs/api/",
+                options: {
+                    debug: true,
+                    includeFilters: [ ".*\\.js$" ],
+                    excludeFilters: [ "node_modules/" ],
+                    marked: {
+                        gfm: true
+                    }
                 }
             }
         }

@@ -9,33 +9,22 @@
 //    appName: 'SpruceQuizJunior'
 //});
 
-//comment
 var resetDB = ( process.env.RESETDB || false );
 
-var express =       require('express')
-    , http =        require('http')
-    , mongoose =    require('mongoose')
-    , passport =    require('passport');
-var path =          require('path')
-    , User =        require('./server/models/User.js');
-    //, Material =     require('./server/models/Material.js')
-    //, Unit =     require('./server/models/Unit.js')
-    //, Section =     require('./server/models/Section.js')
-    //, School =     require('./server/models/School.js')
-    //, Problem =     require('./server/models/Problem.js')
-    //, Exam  =     require('./server/models/Exam.js')
-    //, Student =     require('./server/models/Student.js')
-    //, Teacher =     require('./server/models/Teacher.js')
-    //, Quiz  =     require('./server/models/Quiz.js')
-    //, Feed  =     require('./server/models/Feed.js');
+var express = require('express')
+    , http = require('http')
+    , mongoose = require('mongoose')
+    , passport = require('passport');
+var path = require('path')
+    , User = require('./server/models/User.js');
 var lessMiddleware = require('less-middleware');
 
 var app = module.exports = express();
 
-mongoose.connect('mongodb://localhost/sprucedb', function(err) {
+mongoose.connect('mongodb://localhost/sprucedb', function (err) {
     if (resetDB == 'true' || resetDB == 'True') {
         console.log(resetDB);
-        mongoose.connection.db.dropDatabase(function(err){
+        mongoose.connection.db.dropDatabase(function (err) {
 //            require('./server/models/Initialization.js');
             console.log("reset database complete");
         });
@@ -44,8 +33,8 @@ mongoose.connect('mongodb://localhost/sprucedb', function(err) {
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log('Connected to Spruce database');
+db.once('open', function callback() {
+    console.log('Connected to Spruce database');
 });
 
 app.set('views', __dirname + '/client/views');
@@ -76,6 +65,6 @@ passport.deserializeUser(User.deserializeUser);
 require('./server/routes.js')(app);
 
 app.set('port', process.env.PORT || 8000);
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });

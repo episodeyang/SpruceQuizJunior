@@ -24,7 +24,10 @@ var _ = require('underscore')
 
 /** @module Routes */
 /** @module Routes/api */
-
+/**
+ * @typedef route {{path: string, httpMethod: string}}
+ * @type {{route: Object.<string, route>}}
+ */
 var routes = [
     /** @event module:Routes./patials/* */
     {

@@ -1,5 +1,5 @@
 {
-  "name": "angular-client-side-auth",
+  "name": "SpruceQuizJunior",
   "version": "0.0.1",
   "dependencies": {
     "express": "*",
@@ -10,7 +10,8 @@
     "passport-local": "*",
     "underscore": "*",
     "validator": "~1.1.1",
-    "superagent": "~0.15.7"
+    "superagent": "~0.15.7",
+    "requirejs": "~2.1.10"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
     "should": "~2.1.1",
     "grunt-contrib-watch": "~0.5.3",
     "expect.js": "~0.2.0",
-    "grunt-jsdoc": "~0.5.1"
+    "grunt-jsdoc": "~0.5.1",
+    "apidoc": "~0.3.0",
+    "grunt-apidoc": "~0.3.0"
   }
 }

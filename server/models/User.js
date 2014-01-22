@@ -1,5 +1,9 @@
 'use strict';
-
+/**
+ * @fileOverview User Model
+ * @memberOf User
+ * @type {exports}
+ */
 var User
     , _ = require('underscore')
     , passport = require('passport')
@@ -127,7 +131,7 @@ module.exports = {
 
     serializeUser: function (user, done) {
         //console.log(user);
-//        user.userId = user._id;//temp code, for debug reason, need to remove right away.
+        user.userId = user._id;//temp code, for debug reason, need to remove right away.
         done(null, user._id);
 //        done(null, user.userId);
     },
