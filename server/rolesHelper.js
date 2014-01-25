@@ -62,7 +62,7 @@ define([], function () {
         }
 
         return userRoles;
-        console.log(userRoles);
+//        console.log(userRoles);
     };
 
     /**

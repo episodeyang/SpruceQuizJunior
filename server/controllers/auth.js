@@ -15,12 +15,10 @@ define(['passport', '../models/User'],
              * @returns {*}
              */
             register: function (req, res, next) {
-                console.log(req.body);
                 try {
                     User.validate(req.body);
                 }
                 catch (err) {
-                    console.log(err);
                     return res.send(400, err.message);
                 }
 
@@ -29,7 +27,6 @@ define(['passport', '../models/User'],
                         if (err === 'UserAlreadyExists') return res.send(403, "User already exists");
                         else if (err)                    return res.send(500);
 
-//                        console.log(req.body);
 
                         req.logIn(user, function (err) {
                             if (err) {

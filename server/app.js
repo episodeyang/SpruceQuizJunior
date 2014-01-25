@@ -1,9 +1,11 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middleware',
     './routes', './models/User'],
     function (module, express, http, mongoose, passport, path, lessMiddleware, routes, User) {
         "use strict";
-
-        var __dirname = module.uri.split('/').slice(0, -1).join('/') + '/';
 
         var resetDB = ( process.env.RESETDB || false );
 
@@ -24,6 +26,12 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
         db.once('open', function callback() {
             console.log('Connected to Spruce database');
         });
+        // Now setup view and stylesheet path and middlewares
+        if (module.uri) {
+            var __dirname = path.dirname(module.uri) + '/';
+        } else {
+            var __dirname = path.dirname(module.filename) + '/';
+        };
 
         app.set('views', __dirname + '../client/views');
         app.set('view engine', 'jade');
@@ -33,8 +41,6 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
         app.use(express.methodOverride());
         app.use(lessMiddleware({ src: __dirname + '../client', compress: true }));
         app.use(express.static(path.join(__dirname, '../client')));
-        console.log('the uri is');
-        console.log(module.uri);
         app.use(express.cookieSession(
             {
                 secret: process.env.COOKIE_SECRET || "Superdupersecret"

@@ -3,7 +3,9 @@
  * @module Test
  * @type {exports}
  */
-var app = require('../../../server'),
+require('amdefine/intercept');
+
+var app = require('../../app.js'),
     data = require('./test.data.js'),
     express = require('express'),
     request = require('supertest'),
@@ -139,10 +141,10 @@ describe('Server API Tests - ', function (done) {
 //        console.log(studentUser);
         request(app).get('/api/problems/all').expect(200, done);
     });
-//    it('/api/problems/all - return 200 when logged in', function(done) {
-//        passportStub.login(admin); // login as admin
-//        request(app).get('/api/problems/all').expect(200, done);
-//    });
+    it('/api/problems/all - return 200 when logged in', function(done) {
+        passportStub.login(admin); // login as admin
+        request(app).get('/api/problems/all').expect(200, done);
+    });
 });
 
 // =============== Example Code ===============
