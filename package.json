@@ -12,7 +12,8 @@
     "validator": "~1.1.1",
     "superagent": "~0.15.7",
     "requirejs": "~2.1.10",
-    "amdefine": "~0.1.0"
+    "amdefine": "~0.1.0",
+    "blanket": "~1.1.6"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,7 @@
   "devDependencies": {
     "sinon": "~1.7.2",
     "chai": "~1.6.1",
-    "mocha": "~1.10.0",
+    "mocha": ">1.10.0",
     "supertest": "0.8.0",
     "passport-stub": "0.1.5",
     "grunt": "~0.4.1",
