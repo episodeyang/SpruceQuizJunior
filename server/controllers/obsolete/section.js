@@ -1,11 +1,11 @@
 //Implementation of the APIs of Section
 var _ =           require('underscore')
-    , SectionM = require('../models/SchemaModels').Section
-    , StudentM = require('../models/SchemaModels').Student
-    , TeacherM = require('../models/SchemaModels').Teacher
-    , SchoolM = require('../models/SchemaModels').School
-    , UnitM = require('../models/SchemaModels').Unit
-    , FeedM = require('../models/SchemaModels').Feed;
+    , SectionM = require('../../models/SchemaModels').Section
+    , StudentM = require('../../models/SchemaModels').Student
+    , TeacherM = require('../../models/SchemaModels').Teacher
+    , SchoolM = require('../../models/SchemaModels').School
+    , UnitM = require('../../models/SchemaModels').Unit
+    , FeedM = require('../../models/SchemaModels').Feed;
 
 module.exports = {
 //	getbyId: function(req, res) {

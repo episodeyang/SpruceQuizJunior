@@ -1,7 +1,7 @@
 //Implementation of the APIs of Teacher
 var _ =           require('underscore')
-    , TeacherM = require('../models/SchemaModels').Teacher
-	, StudentM = require('../models/SchemaModels').Student
+    , TeacherM = require('../../models/SchemaModels').Teacher
+	, StudentM = require('../../models/SchemaModels').Student
 
 module.exports = {
     getbyId: function(req, res) {

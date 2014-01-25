@@ -1,7 +1,7 @@
 //Implementation of the APIs of Unit
 var _ =           require('underscore')
-    , UnitM = require('../models/SchemaModels').Unit
-    , MaterialM = require('../models/SchemaModels').Material
+    , UnitM = require('../../models/SchemaModels').Unit
+    , MaterialM = require('../../models/SchemaModels').Material
 
 module.exports = {
     getbyId: function(req, res) {

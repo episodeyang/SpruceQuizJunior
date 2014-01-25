@@ -14,6 +14,18 @@ module.exports = function (grunt) {
                     reporter: 'spec'
                 },
                 src: ['server/tests/**/*.js']
+            },
+            requirejs: {
+                src: 'server/tests/**/*.js',
+                options: {
+                    reporter: 'spec',
+                    rjsConfig: {
+                        baseUrl: "./",
+                        paths: {
+                            foo: "bar/v1.0"
+                        }
+                    }
+                }
             }
         },
         watch: {

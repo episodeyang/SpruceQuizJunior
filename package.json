@@ -11,7 +11,8 @@
     "underscore": "*",
     "validator": "~1.1.1",
     "superagent": "~0.15.7",
-    "requirejs": "~2.1.10"
+    "requirejs": "~2.1.10",
+    "amdefine": "~0.1.0"
   },
   "repository": {
     "type": "git",

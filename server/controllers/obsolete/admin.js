@@ -2,9 +2,9 @@
 
 //Implementation of the APIs of Admin
 var _ = require('underscore');
-var AdminM = require('../models/SchemaModels').Admin;
-var SectionM = require('../models/SchemaModels').Section;
-var SchoolM = require('../models/SchemaModels').School;
+var AdminM = require('../../models/SchemaModels').Admin;
+var SectionM = require('../../models/SchemaModels').Section;
+var SchoolM = require('../../models/SchemaModels').School;
 //, StudentM = require('../models/SchemaModels').Student
 
 module.exports = {

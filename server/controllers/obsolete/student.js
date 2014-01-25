@@ -2,13 +2,13 @@
 
 //Implementation of the APIs of Student
 var _ =           require('underscore')
-    , SchoolM = require('../models/SchemaModels').School
-    , StudentM = require('../models/SchemaModels').Student
-    , TeacherM = require('../models/SchemaModels').Teacher
-    , SectionM = require('../models/SchemaModels').Section
-    , ErratumM = require('../models/SchemaModels').Erratum
-    , ProblemNoteM = require('../models/SchemaModels').ProblemNote
-    , FeedM = require('../models/SchemaModels').Feed;
+    , SchoolM = require('../../models/SchemaModels').School
+    , StudentM = require('../../models/SchemaModels').Student
+    , TeacherM = require('../../models/SchemaModels').Teacher
+    , SectionM = require('../../models/SchemaModels').Section
+    , ErratumM = require('../../models/SchemaModels').Erratum
+    , ProblemNoteM = require('../../models/SchemaModels').ProblemNote
+    , FeedM = require('../../models/SchemaModels').Feed;
 
 module.exports = {
     getErrata: function(req, res) {

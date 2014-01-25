@@ -2,7 +2,7 @@ var _ = require('underscore')
     , passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy
     , check = require('validator').check
-    , userRoles = require('../../client/js/rolesHelper').userRoles;
+    , userRoles = require('../../../client/js/rolesHelper').userRoles;
 
 // For initilizing Spruce database in MongoDB as some initial tests. Not needed if data is already in MongoDB
 // In the following order to address ObjectId dependency
@@ -26,7 +26,7 @@ var _ = require('underscore')
 // Begin of temporary initilization
 
 // Initialization of Material data
-var MaterialM = require('./SchemaModels').Material;
+var MaterialM = require('./../SchemaModels').Material;
 
 var tempmaterial = new MaterialM({
     materialName: "三元一次方程简介",
@@ -69,7 +69,7 @@ var m3_id = tempmaterial._id;
 
 
 // Initialization of Unit data
-var UnitM = require('./SchemaModels').Unit;
+var UnitM = require('./../SchemaModels').Unit;
 
 var tempunit = new UnitM({
     unitTitle: "一元二次多项式",
@@ -117,7 +117,7 @@ var d4_id = tempunit._id;
 
 
 // Initialization of School data
-var SchoolM = require('./SchemaModels').School;
+var SchoolM = require('./../SchemaModels').School;
 
 var tempschool = new SchoolM({
     schoolName: "No.1 High School"
@@ -133,7 +133,7 @@ var s2_id = tempschool._id;
 
 
 // Initialization of Section data
-var SectionM = require('./SchemaModels').Section;
+var SectionM = require('./../SchemaModels').Section;
 
 var tempsection = new SectionM({
     sectionName: "三年级一班",
@@ -177,7 +177,7 @@ var g4_id = tempsection._id;
 
 
 // Initialization of Problem data
-var ProblemM = require('./SchemaModels').Problem;
+var ProblemM = require('./../SchemaModels').Problem;
 
 var tempproblem = new ProblemM({
     topLevel: "true",
@@ -229,7 +229,7 @@ var p3_id = tempproblem._id;
 
 
 // Initialization of MistakeTag data
-var MistakeTagM = require('./SchemaModels').MistakeTag;
+var MistakeTagM = require('./../SchemaModels').MistakeTag;
 
 var tempMistakeTag = new MistakeTagM({
     title: "审题不清",
@@ -247,7 +247,7 @@ var mtt2_id = tempMistakeTag._id;
 
 
 // Initialization of ProblemNote data
-var ProblemNoteM = require('./SchemaModels').ProblemNote;
+var ProblemNoteM = require('./../SchemaModels').ProblemNote;
 
 var tempProblemNote = new ProblemNoteM({
     problemId: p1_id,
@@ -284,7 +284,7 @@ var pn3_id = tempProblemNote._id;
 
 
 // Initialization of Exam data
-var ExamM = require('./SchemaModels').Exam;
+var ExamM = require('./../SchemaModels').Exam;
 
 var tempexam = new ExamM({
     examTitle: "Spring 2013 Mid-term Exam",
@@ -315,7 +315,7 @@ tempexam.save();
 var e1_id = tempexam._id;
 
 // Initialization of Erratum data
-var ErratumM = require('./SchemaModels').Erratum;
+var ErratumM = require('./../SchemaModels').Erratum;
 
 var temperratum = new ErratumM({
     title: "语文",
@@ -351,7 +351,7 @@ temperratum.save();
 var ert3_id = temperratum._id;
 
 // Initialization of Student data
-var StudentM = require('./SchemaModels').Student;
+var StudentM = require('./../SchemaModels').Student;
 
 var tempstudent = new StudentM({
     firstName: "Alice",
@@ -424,7 +424,7 @@ var stu3_id = tempstudent._id;
 
 
 // Initialization of Parent data
-var ParentM = require('./SchemaModels').Parent;
+var ParentM = require('./../SchemaModels').Parent;
 
 var tempparent = new ParentM({
     parentName: "parentA",
@@ -449,7 +449,7 @@ var prt3_id = tempparent._id;
 
 
 // Initialization of Teacher data
-var TeacherM = require('./SchemaModels').Teacher;
+var TeacherM = require('./../SchemaModels').Teacher;
 
 var tempteacher = new TeacherM({
     teacherName: "TeacherA",
@@ -468,7 +468,7 @@ tempteacher.save();
 var tchr2_id = tempteacher._id;
 
 // Initialization of Admin data
-var AdminM = require('./SchemaModels').Admin;
+var AdminM = require('./../SchemaModels').Admin;
 
 var tempadmin = new AdminM({
     adminName: "admin",
@@ -479,7 +479,7 @@ var a1_id = tempadmin._id;
 
 
 // Initialization of Superadmin data
-var SuperadminM = require('./SchemaModels').Superadmin;
+var SuperadminM = require('./../SchemaModels').Superadmin;
 
 var tempsuperadmin = new SuperadminM({
     superadminName: "superadmin"
@@ -489,7 +489,7 @@ var sa1_id = tempsuperadmin._id;
 
 
 // Initialization of User data
-var UserM = require('./SchemaModels').User;
+var UserM = require('./../SchemaModels').User;
 
 var tempuser = new UserM({
     username: "student1",
@@ -573,7 +573,7 @@ tempuser.save();
 
 
 // Initialization of Quiz data
-var QuizM = require('./SchemaModels').Quiz;
+var QuizM = require('./../SchemaModels').Quiz;
 
 var tempquiz = new QuizM({
     quizTitle: "Quiz template",
@@ -596,7 +596,7 @@ var q1_id = tempquiz._id;
 
 
 // Initialization of Feed data
-var FeedM = require('./SchemaModels').Feed;
+var FeedM = require('./../SchemaModels').Feed;
 
 var tempfeed = new FeedM({
     userId: stu1_id,
