@@ -7,15 +7,19 @@ spApp.controller('SuperAdminCtrl',
         function ($scope) {//, Students ,$rootScope, $scope, Sections, Units, Materials, Students) {
             // this object is to hold data for future tables
             $scope.userData = {
-                roleTitle:'admin',
-                firstName:'歌',
-                lastName:'杨',
-                schools: [{schoolName: '北京景山学校'}],
-                sections:[{
-                    sectionName: '三年级二班',
-                    sectionParent: null,
-                    sectionChildren:[]
-                }]
+                roleTitle: 'admin',
+                firstName: '歌',
+                lastName: '杨',
+                schools: [
+                    {schoolName: '北京景山学校'}
+                ],
+                sections: [
+                    {
+                        sectionName: '三年级二班',
+                        sectionParent: null,
+                        sectionChildren: []
+                    }
+                ]
             };
 //            $scope.data = {}; // initialized here and updated later when things are clicked.
 //            $scope.studentShowClicked = false;
@@ -93,3 +97,95 @@ spApp.controller('SuperAdminCtrl',
     ]
 );
 
+spApp.controller('DevelopmentCtrl',
+    ['$scope', '_', //'Students',//'$rootScope', '$scope', 'Sections', 'Units', 'Materials', 'Students',
+        function ($scope, _) {//, Students ,$rootScope, $scope, Sections, Units, Materials, Students) {
+            // this object is to hold data for future tables
+            var designConfig = {
+                frontEnd: {"title": "前端工作总表",
+                    "main": [
+                        {
+                            "name": "登录",
+                            fold: true,
+                            complete: true,
+                            url: '/img/ui_design/登录界面-01.png',
+                            children: [
+                                {name: '行为', description: '', complete: true},
+                                {name: '设计', complete: true, url: '/img/ui_design/登录界面-01.png'},
+                                {name: 'api', complete: true, children: [
+                                    {name: '测试', complete: true}
+                                ]},
+                                {name: '数据库', complete: true},
+                                {name: '网页', complete: true}
+                            ]
+                        },
+                        {   "name": "注册",
+                            fold:true,
+                            complete: true,
+                            url: '/img/ui_design/注册界面-01.png',
+                            children: [
+                                {name: '分类',
+                                    complete: true,
+                                    children: [
+                                        {name: '学生', complete: true},
+                                        {name: '教师', complete: true},
+                                        {name: '家长', complete: true}
+                                    ]},
+                                {name: '设计'},
+                                {name: 'api'},
+                                {name: '数据库'},
+                                {name: '网页'}
+                            ]},
+                        {
+                            "name": "搜索问题",
+                            fold: false,
+                            complete: false,
+                            url: '/img/ui_design/搜索问题-01.png'
+                        },
+                        {
+                            "name": "提问",
+                            fold: false,
+                            complete:false,
+                            url: '/img/ui_design/提问-01.png'
+                        },
+                        {
+                            "name": "问题页面",
+                            fold: false,
+                            complete:false,
+                            url: '/img/ui_design/问题页面-01.png'
+                        },
+                        {
+                            "name": "用户主页",
+                            fold: false,
+                            complete:false,
+                            url: '/img/ui_design/用户主页-01.png'
+                        }
+                    ]}
+
+            };
+            $scope.designConfig = designConfig;
+            $scope.inputModel = {};
+            $scope.inputModel.text = '';
+            function edit() {
+            };
+            function add() {
+                var newEntry = {
+                    name: $scope.inputModel.entryInput
+                };
+                $scope.designConfig.frontEnd.main.push(newEntry);
+                $scope.inputModel.textInput = '';
+            };
+            $scope.add = add;
+            $scope.edit = edit;
+
+            $scope.view = {};
+            $scope.view.imageUrl = 'default url is here'
+            $scope.hover = function (object) {
+                console.log('mouse hover triggered')
+                $scope.view.imageUrl = object.url;
+            }
+
+
+        }
+    ]
+);

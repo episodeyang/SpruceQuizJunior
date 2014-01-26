@@ -15,33 +15,33 @@ angular.module('SpruceQuizApp')
 //        }
 //    };
 //}])
-    .directive('accessLevel', ['Auth', function(Auth) {
+    .directive('accessLevel', ['Auth', function (Auth) {
         return {
             restrict: 'A',
-            link: function($scope, element, attrs) {
+            link: function ($scope, element, attrs) {
                 var prevDisp = element.css('display')
                     , userRole
-                    , accessLevel ;
+                    , accessLevel;
 
                 $scope.user = Auth.user;
-                $scope.$watch('user', function(user) {
-                    if(user.role !== 'undefined')
+                $scope.$watch('user', function (user) {
+                    if (user.role !== 'undefined')
                         userRole = user.role;
                     updateCSS();
                 }, true);
 
-                attrs.$observe('accessLevel', function(al) {
-                    if(al) accessLevel = $scope.$eval(al);
+                attrs.$observe('accessLevel', function (al) {
+                    if (al) accessLevel = $scope.$eval(al);
                     updateCSS();
                 });
 
                 function updateCSS() {
-                    if(userRole && accessLevel) {
+                    if (userRole && accessLevel) {
 //                        console.log('userRole');
 //                        console.log(userRole);
 //                        console.log('accessLevel');
 //                        console.log(accessLevel);
-                        if(!Auth.authorize(accessLevel, userRole))
+                        if (!Auth.authorize(accessLevel, userRole))
                             element.css('display', 'none');
                         else
                             element.css('display', prevDisp);
@@ -51,26 +51,26 @@ angular.module('SpruceQuizApp')
         };
     }]);
 angular.module('SpruceQuizApp')
-.directive('activeNav', ['$location', function(location) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var nestedA = element.find('a')[0];
-            var path = nestedA.href;
+    .directive('activeNav', ['$location', function (location) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var nestedA = element.find('a')[0];
+                var path = nestedA.href;
 
-            scope.location = location;
-            scope.$watch('location.absUrl()', function(newPath) {
-                if (path === newPath) {
-                    element.addClass('active');
-                } else {
-                    element.removeClass('active');
-                }
-            });
-        }
+                scope.location = location;
+                scope.$watch('location.absUrl()', function (newPath) {
+                    if (path === newPath) {
+                        element.addClass('active');
+                    } else {
+                        element.removeClass('active');
+                    }
+                });
+            }
 
-    };
+        };
 
-}]);
+    }]);
 
 
 //MathJax Directive
@@ -78,22 +78,22 @@ MathJax.Hub.Config({skipStartupTypeset: true});
 MathJax.Hub.Configured();
 
 angular.module('SpruceQuizApp')
-.directive("mathjaxBind", function() {
-    return {
-        restrict: "A",
-        controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
-            $scope.$watch($attrs.mathjaxBind, function(value) {
-                $element.text(value == undefined ? "" : value);
-                MathJax.Hub.Queue(["Typeset", MathJax.Hub, $element[0]]);
-            });
-        }]
-    };
-});
+    .directive("mathjaxBind", function () {
+        return {
+            restrict: "A",
+            controller: ["$scope", "$element", "$attrs", function ($scope, $element, $attrs) {
+                $scope.$watch($attrs.mathjaxBind, function (value) {
+                    $element.text(value == undefined ? "" : value);
+                    MathJax.Hub.Queue(["Typeset", MathJax.Hub, $element[0]]);
+                });
+            }]
+        };
+    });
 
 //UI Directive
 
 angular.module('SpruceQuizApp')
-    .directive('batJsonTree', function($compile) {
+    .directive('batJsonTree', function ($compile) {
         return {
             restrict: 'E',
             terminal: true,
@@ -155,6 +155,54 @@ angular.module('SpruceQuizApp')
                         element.html('<div>' + buildDom(newVal) + '</div>');
                     }
                 });
+            }
+        };
+    });
+
+angular.module('SpruceQuizApp')
+    .directive('jsonStringify', function () {
+        return {
+            restrict: 'A',
+            scope: {'data': '='},
+            link: function (scope, elem, attr, ctrl) {
+                scope.$watch('data', function (data) {
+                    scope.parsedText = JSON.stringify(data, undefined, '    ');
+                });
+            }
+        };
+    });
+angular.module('SpruceQuizApp')
+    .directive('textParser', function () {
+        return {
+            restrict: 'A',
+            scope: {'data': '=',
+            output: '='},
+            link: function (scope, elem, attr, ctrl) {
+                scope.$watch('data', function (data) {
+                    _.(newVal.split('\\n'), function (name) {
+                        json.push({'name': name});
+                    });
+                });
+            }
+        };
+    });
+angular.module('SpruceQuizApp')
+    .directive('jsonText', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModel) {
+                function into(input) {
+                    return JSON.parse(input);
+                }
+
+                function out(data) {
+                    return JSON.stringify(data, undefined, '    ');
+                }
+
+                ngModel.$parsers.push(into);
+                ngModel.$formatters.push(out);
+
             }
         };
     });

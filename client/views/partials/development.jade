@@ -1,0 +1,58 @@
+//
+   Created by Ge on 1/25/14.
+
+include mixins/navbar
+include mixins/footer
+div.background
+#cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+.sp-container
+    +navbar
+    .container
+        .row
+            tabset
+                tab(heading="前端工作总表")
+                    .row
+                        .col-xs-6
+                            h1 {{designConfig.frontEnd.title}}
+                            br
+                            .h1-ctn0(ng-repeat = "data in designConfig.frontEnd.main")
+                                input(type='checkbox', ng-model='data.complete')
+                                .h1-pill(ng-click='data.fold=!data.fold', ng-mouseenter='hover(data)')
+                                    p(ng-class='{strike: data.complete}')
+                                        span {{data.name}}
+                                        span(ng-show='data.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
+                                            span.glyphicon.glyphicon-chevron-down
+                                .progress
+                                    .progress-bar(style='width: 60%')
+
+                                div(ng-hide='data.fold')
+                                    .h1-ctn(ng-repeat = "child in data.children")
+                                        input(type='checkbox', ng-model='child.complete')
+                                        .h1-pill(ng-click='child.fold=!child.fold', ng-mouseenter='hover(child)')
+                                            p(ng-class='{strike:child.complete}') {{child.name}}
+                                                span(ng-show='child.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
+                                                    span.glyphicon.glyphicon-chevron-down
+                                        .progress
+                                            .progress-bar(style='width: 20%')
+                                        div(ng-hide='child.fold')
+                                            .h1-ctn(ng-repeat = "child in child.children")
+                                                input(type='checkbox', ng-model='child.complete')
+                                                .h1-pill
+                                                    p(ng-class='{strike:child.complete}') {{child.name}}
+                            li
+                                input(type='text', ng-model='inputModel.entryInput')
+                                button(ng-click='add()').btn.btn-success
+                                    span.glyphicon.glyphicon-plus
+                        .col-xs-6(text-parser, data='inputModel.text', output = 'json')
+                            //textarea.form-control(rows=20, ng-model='inputModel.text')
+                            //| {{json}}
+                            br
+                            tabset
+                                tab(heading='设计')
+                                    img.ui-img.img-rounded(ng-src='{{view.imageUrl}}')
+                                tab(heading='细节')
+
+
+                tab(heading="后台工作总表")
+        +footer
+link(href='/css/superadmin.css', rel="stylesheet")
