@@ -123,16 +123,31 @@ spApp.controller('DevelopmentCtrl',
                                 }
                             ]
                         },
+
                         {
-                            "name": "标题栏",
+                            "name": "UI components",
                             fold: true,
                             complete: false,
                             url: '/img/ui_design/标题栏收件栏和用户选项-01.png',
                             children: [
-                                {name: 'logo', complete: false},
-                                {name: '收件夹', complete: false},
-                                {name: '统计', complete: false},
-                                {name: '用户图标和得分', complete: false}
+                                {
+                                    "name": "标题栏",
+                                    fold: true,
+                                    complete: false,
+                                    url: '/img/ui_design/标题栏收件栏和用户选项-01.png',
+                                    children: [
+                                        {name: 'logo', complete: false},
+                                        {name: '收件夹', complete: false},
+                                        {name: '统计', complete: false},
+                                        {name: '用户图标和得分', complete: false}
+                                    ]
+                                },
+                                {
+                                    "name": "问题编辑模块",
+                                    fold: false,
+                                    complete: false,
+                                    url: '/img/ui_design/问题页面-01.png'
+                                }
                             ]
                         },
                         {
@@ -150,7 +165,8 @@ spApp.controller('DevelopmentCtrl',
                                         {name: '相关问题', complete: false}
                                     ]
                                 },
-                                {name: 'api', complete: false,
+                                {
+                                    name: 'api', complete: false,
                                     children: [
                                         {name: 'api/question/:id', complete: false},
                                         {name: 'api/user/:id', complete: false},
@@ -161,7 +177,12 @@ spApp.controller('DevelopmentCtrl',
                                 {name: '数据库', complete: false,
                                     children: [
                                         {   name: 'Question', complete: false,
-                                            description: ''
+                                            description: '',
+                                            punchCard: [
+                                                {   start: Date(2014, 01, 26, 12, 00, 00),
+                                                    end: Date(2014, 01, 26, 13, 12, 00)
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
