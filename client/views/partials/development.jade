@@ -15,14 +15,14 @@ div.background
                         .col-xs-6
                             h1 {{designConfig.frontEnd.title}}
                             br
-                            .h1-ctn0(ng-repeat = "data in designConfig.frontEnd.main")
+                            .h1-ctn0(ng-repeat = "data in designConfig.frontEnd.modules")
                                 input(type='checkbox', ng-model='data.complete')
                                 .h1-pill(ng-click='data.fold=!data.fold', ng-mouseenter='hover(data)')
                                     p(ng-class='{strike: data.complete}')
                                         span {{data.name}}
                                         span(ng-show='data.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
                                             span.glyphicon.glyphicon-chevron-down
-                                .progress
+                                .progress(ng-hide='data.complete')
                                     .progress-bar(style='width: 60%')
 
                                 div(ng-hide='data.fold')
@@ -32,12 +32,12 @@ div.background
                                             p(ng-class='{strike:child.complete}') {{child.name}}
                                                 span(ng-show='child.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
                                                     span.glyphicon.glyphicon-chevron-down
-                                        .progress
+                                        .progress(ng-hide='child.complete')
                                             .progress-bar(style='width: 20%')
                                         div(ng-hide='child.fold')
                                             .h1-ctn(ng-repeat = "child in child.children")
                                                 input(type='checkbox', ng-model='child.complete')
-                                                .h1-pill
+                                                .h1-pill(ng-mouseenter='hover(child)')
                                                     p(ng-class='{strike:child.complete}') {{child.name}}
                             li
                                 input(type='text', ng-model='inputModel.entryInput')
@@ -51,6 +51,7 @@ div.background
                                 tab(heading='设计')
                                     img.ui-img.img-rounded(ng-src='{{view.imageUrl}}')
                                 tab(heading='细节')
+                                    textarea.form-control(rows=20, name='description', ng-model='view.description')
 
 
                 tab(heading="后台工作总表")

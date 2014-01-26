@@ -12,7 +12,7 @@ module.exports = function (grunt) {
             test: {
                 options: {
 //                    reporter: 'spec'
-                    reporter: 'Spec',
+                    reporter: 'spec',
                     // Require blanket wrapper here to instrument other required
                     // files on the fly.
                     //

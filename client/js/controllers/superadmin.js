@@ -74,7 +74,7 @@ spApp.controller('SuperAdminCtrl',
 //            };
 //
 //            //$scope.listStudents = function () {
-//            $scope.studentShowClicked = true;
+//            $scope.studentShowClicked = false;
 //            $scope.data['student'] = {};
 //            Students.onStudents.list(function (results) {
 //                // the controller gets the data and puts in the correct data structure
@@ -103,64 +103,119 @@ spApp.controller('DevelopmentCtrl',
             // this object is to hold data for future tables
             var designConfig = {
                 frontEnd: {"title": "前端工作总表",
-                    "main": [
+                    "modules": [
                         {
-                            "name": "登录",
+                            "name": "登陆界面",
                             fold: true,
                             complete: true,
                             url: '/img/ui_design/登录界面-01.png',
                             children: [
-                                {name: '行为', description: '', complete: true},
-                                {name: '设计', complete: true, url: '/img/ui_design/登录界面-01.png'},
-                                {name: 'api', complete: true, children: [
-                                    {name: '测试', complete: true}
-                                ]},
-                                {name: '数据库', complete: true},
-                                {name: '网页', complete: true}
-                            ]
-                        },
-                        {   "name": "注册",
-                            fold:true,
-                            complete: true,
-                            url: '/img/ui_design/注册界面-01.png',
-                            children: [
-                                {name: '分类',
-                                    complete: true,
+                                {name: '登陆', description: '', complete: true,
+                                    url: '/img/ui_design/登录界面-01.png'
+                                },
+                                {name: '注册', complete: true,
+                                    url: '/img/ui_design/注册界面-01.png',
                                     children: [
                                         {name: '学生', complete: true},
                                         {name: '教师', complete: true},
                                         {name: '家长', complete: true}
-                                    ]},
-                                {name: '设计'},
-                                {name: 'api'},
-                                {name: '数据库'},
-                                {name: '网页'}
-                            ]},
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "标题栏",
+                            fold: true,
+                            complete: false,
+                            url: '/img/ui_design/标题栏收件栏和用户选项-01.png',
+                            children: [
+                                {name: 'logo', complete: false},
+                                {name: '收件夹', complete: false},
+                                {name: '统计', complete: false},
+                                {name: '用户图标和得分', complete: false}
+                            ]
+                        },
                         {
                             "name": "搜索问题",
                             fold: false,
                             complete: false,
-                            url: '/img/ui_design/搜索问题-01.png'
+                            url: '/img/ui_design/搜索问题-01.png',
+                            children: [
+                                {
+                                    name: '对象', complete: false,
+                                    children: [
+                                        {name: '问题', complete: false},
+                                        {name: '搜索关键词', complete: false},
+                                        {name: '标签', complete: false},
+                                        {name: '相关问题', complete: false}
+                                    ]
+                                },
+                                {name: 'api', complete: false,
+                                    children: [
+                                        {name: 'api/question/:id', complete: false},
+                                        {name: 'api/user/:id', complete: false},
+                                        {name: 'api/question/search?math+text+otherkeyword', complete: false},
+                                        {name: '', complete: false}
+                                    ]
+                                },
+                                {name: '数据库', complete: false,
+                                    children: [
+                                        {   name: 'Question', complete: false,
+                                            description: ''
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "name": "提问",
                             fold: false,
-                            complete:false,
+                            complete: false,
                             url: '/img/ui_design/提问-01.png'
                         },
                         {
                             "name": "问题页面",
                             fold: false,
-                            complete:false,
+                            complete: false,
                             url: '/img/ui_design/问题页面-01.png'
                         },
                         {
                             "name": "用户主页",
                             fold: false,
-                            complete:false,
+                            complete: false,
                             url: '/img/ui_design/用户主页-01.png'
+                        },
+                        {
+                            "name": "工具和事物",
+                            fold: true,
+                            complete: false,
+                            children: [
+                                {name: '文档', complete: false,
+                                    children: [
+                                        {name: 'jsDoc', complete: false},
+                                        {name: 'apidoc', complete: false},
+                                        {name: 'code coverage', complete: false}
+                                    ]
+                                },
+                                {name: 'grunt 测试', complete: false},
+                                {name: 'single line deployment', complete: false},
+                                {name: '', complete: false}
+                            ]
                         }
-                    ]}
+                    ],
+                    tags: [
+                        {name: '设计', url: '/img/ui_design/登录界面-01.png'},
+                        {name: 'api', children: [
+                            {name: '测试', complete: true}
+                        ]},
+                        {name: '数据库', complete: true},
+                        {name: '网页', complete: true}
+                    ],
+                    tasks: {
+
+                    }
+
+                }
 
             };
             $scope.designConfig = designConfig;
@@ -179,10 +234,12 @@ spApp.controller('DevelopmentCtrl',
             $scope.edit = edit;
 
             $scope.view = {};
-            $scope.view.imageUrl = '/img/ui_design/搜索问题-01.png'
+            $scope.view.imageUrl = '/img/ui_design/搜索问题-01.png';
+            $scope.view.description = 'Ta很懒，什么都没有留下...';
             $scope.hover = function (object) {
                 console.log('mouse hover triggered')
                 $scope.view.imageUrl = object.url;
+                $scope.view.description = object.description;
             }
 
 

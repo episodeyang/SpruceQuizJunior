@@ -111,6 +111,15 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         superadmin: {
             name: String
         },
+        question: {
+            problem: String,
+            title: Array,
+            text: Array,
+            figure: Array,
+            answers: Array,
+            explanations: Array,
+            lastUpdated: Date
+        },
         problem: {
             topLevel: Boolean,
             problemType: String,
