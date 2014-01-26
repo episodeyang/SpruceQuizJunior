@@ -179,7 +179,7 @@ spApp.controller('DevelopmentCtrl',
             $scope.edit = edit;
 
             $scope.view = {};
-            $scope.view.imageUrl = 'default url is here'
+            $scope.view.imageUrl = '/img/ui_design/搜索问题-01.png'
             $scope.hover = function (object) {
                 console.log('mouse hover triggered')
                 $scope.view.imageUrl = object.url;
