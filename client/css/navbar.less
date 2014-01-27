@@ -1,29 +1,52 @@
-nav{
+@import "elements.less";
+@import "mixins.less";
+@import "navbar.less";
+nav.navbar.navbar-inverse {
   width: 100%;
   background-color: #604830 !important;
   .container {
-    .navbar-header { a { padding-left:0px; } } }
+    .navbar-header {
+      a {
+//        padding-left: 0px;
+      }
+    }
+  }
   ul {
     li {
 
     }
   }
-  .nav-fixes {
-    height: 50px;
-    width: 100px;
-    //.border-radius(10px, 10px, 10px, 10px);
-    right: 200px;
-    top: 0px;
-    position: absolute;
-    small{
-      padding: 5px;
-    }
-  }
+  //  .nav-fixes {
+  //    height: 50px;
+  //    width: 100px;
+  //    //.border-radius(10px, 10px, 10px, 10px);
+  //    right: 200px;
+  //    top: 0px;
+  //    position: absolute;
+  //    small{
+  //      padding: 5px;
+  //    }
+  //  }
 }
-.navbar-collapse{
+
+.navbar-collapse {
   background-color: #604830;
   border-color: #604830;
 }
-.navbar-default .navbar-nav>li>a{
+
+.navbar-inverse, .navbar-nav > li > a {
   color: #ffffff !important;
 }
+
+// Somehow this doesn't work here.
+//@media (max-width: @screen-sm-min) {
+//  .navbar-header {
+//    margin-left: 0px;
+//  }
+//}
+//@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+//  .container {
+//    max-width: @screen-sm-max;
+//    width: 100%;
+//  }
+//}
