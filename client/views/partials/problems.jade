@@ -3,14 +3,42 @@ include mixins/footer
 link(href='/css/problems.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.container
-    +navbar
-    .row
-        .col-sm-1.col-xs-2
-            p(ph-txt='3s')
-        .col-sm-8.col-xs-10
-            p(ph-txt='3s')
-        .col-sm-3.col-sx-hide
-            p(ph-txt='3s')
++navbar
+.body
+    .container
+        .row
+            .col-sm-7.col-sm-offset-2.col-xs-9.col-xs-offset-3
+                ul.nav.nav-pills.pull-right
+                    li
+                        a 问题
+                    li
+                        a 分类
+                    li
+                        a 用户
+                    li
+                        a 待回答
+        .row
+            .col-sm-2.col-xs-3
+                ul.nav.nav-pills.nav-stacked
+                    li.active
+                        a.text-center 搜索
+                    li
+                        a.text-center 提问
+                    li
+                        a.text-center 所有问题
+            .col-sm-7.col-xs-9
+                .input-group
+                    input(type='text').form-control
+                    span.input-group-btn
+                        button.btn.btn-info(type='button') 搜索
+            .col-sm-3.hidden-xs
+                .panel.panel-info
+                    .panel-heading 相关标签
+                    .panel-body
+                        p(ph-txt='3s')
+                .panel.panel-info
+                    .panel-heading 相关问题
+                    .panel-body
+                        p(ph-txt='3s')
 
 

@@ -14,6 +14,7 @@
 
 body{
   overflow-y: hidden;
+  margin-top: 50px;
 }
 ::-webkit-scrollbar {
   width: 6px;
@@ -37,7 +38,15 @@ body{
 //    width: 640px;
 //  }
 //}
-
+.nav>li>a {
+  padding: 7px 15px;
+}
+.panel-heading {
+  padding: 7px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
 //Typseting ===================================
   //Colors-------------------
     .bg-blue{
@@ -71,13 +80,6 @@ body{
     }
 
 //Buttons ======================================
-  .btn{
-    border-radius: 0;
-    @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px darken(grey,30%);
-    .box-shadow(@shadow);
-    &:active{
-    }
-  }
 
 //Images ======================================
   img.logo{

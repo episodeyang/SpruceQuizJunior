@@ -270,8 +270,25 @@ spApp.controller('DevelopmentCtrl',
             $scope.punchCard = [
                 {
                     task: '页面框架',
-                    description: '',
+                    description: '页面body部分代码需要一些修改' +
+                        '目前已经实现的页面包括：' +
+                        '- 登陆页面 (frontPage)' +
+                        '- 问题页面 (problems)' +
+                        '- 开发页面 (development)' +
+                        '' +
+                        '其中，需要的less文件包括：' +
+                        '- index.less' +
+                        '- loginWidget.less' +
+                        '- superadmin.less' +
+                        '' +
+                        'Here, I wouls begin with the index.less file.',
                     start: new Date(2014, 1, 26, 10),
+                    end: new Date()
+                },
+                {
+                    task: 'navbar',
+                    description: '需要添加缩小后的链接',
+                    start: new Date(2014, 1, 27, 1, 30),
                     end: new Date()
                 }
 
