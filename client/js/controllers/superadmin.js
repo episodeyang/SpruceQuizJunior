@@ -282,13 +282,13 @@ spApp.controller('DevelopmentCtrl',
                         '- superadmin.less' +
                         '' +
                         'Here, I wouls begin with the index.less file.',
-                    start: new Date(2014, 1, 26, 10),
+                    start: new Date(2014, 0, 26, 10),
                     end: new Date()
                 },
                 {
                     task: 'navbar',
                     description: '需要添加缩小后的链接',
-                    start: new Date(2014, 1, 27, 1, 30),
+                    start: new Date(2014, 0, 27, 1, 30,0),
                     end: new Date()
                 }
 

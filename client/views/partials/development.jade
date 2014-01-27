@@ -5,73 +5,74 @@ include mixins/navbar
 include mixins/footer
 div.background
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.sp-container
+div
     +navbar
     .container
         .row
-            tabset
-                tab(heading="Punch Card")
-                    .row
-                        .col-xs-12
-                            h1 工作记录
-                            table.table.table-bordered
-                                tr
-                                    th 序号
-                                    th 任务
-                                    th 简介
-                                    th 时长
-                                    th 开始
-                                    th 结束
-                                tr(ng-repeat='entry in punchCard')
-                                    td {{$index}}
-                                    td {{entry.task}}
-                                    td {{entry.description}}
-                                    td {{entry.end-entry.start}}
-                                    td {{entry.start}}
-                                    td {{entry.end}}
-                tab(heading="前端工作总表")
-                    .row
-                        .col-xs-6
-                            h1 {{designConfig.frontEnd.title}}
-                            br
-                            .h1-ctn0(ng-repeat = "data in designConfig.frontEnd.modules")
-                                input(type='checkbox', ng-model='data.complete')
-                                .h1-pill(ng-click='data.fold=!data.fold', ng-mouseenter='hover(data)')
-                                    p(ng-class='{strike: data.complete}')
-                                        span {{data.name}}
-                                        span(ng-show='data.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
-                                            span.glyphicon.glyphicon-chevron-down
-                                .progress(ng-hide='data.complete')
-                                    .progress-bar(style='width: 60%')
+            .col-xs-12
+                tabset
+                    tab(heading="Punch Card")
+                        .row
+                            .col-xs-12
+                                h1 工作记录
+                                table.table.table-bordered
+                                    tr
+                                        th 序号
+                                        th 任务
+                                        th 简介
+                                        th 时长
+                                        th 开始
+                                        th 结束
+                                    tr(ng-repeat='entry in punchCard')
+                                        td {{$index}}
+                                        td {{entry.task}}
+                                        td {{entry.description}}
+                                        td {{entry.end-entry.start}}
+                                        td {{entry.start}}
+                                        td {{entry.end}}
+                    tab(heading="前端工作总表")
+                        .row
+                            .col-xs-6
+                                h1 {{designConfig.frontEnd.title}}
+                                br
+                                .h1-ctn0(ng-repeat = "data in designConfig.frontEnd.modules")
+                                    input(type='checkbox', ng-model='data.complete')
+                                    .h1-pill(ng-click='data.fold=!data.fold', ng-mouseenter='hover(data)')
+                                        p(ng-class='{strike: data.complete}')
+                                            span {{data.name}}
+                                            span(ng-show='data.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
+                                                span.glyphicon.glyphicon-chevron-down
+                                    .progress(ng-hide='data.complete')
+                                        .progress-bar(style='width: 60%')
 
-                                div(ng-hide='data.fold')
-                                    .h1-ctn(ng-repeat = "child in data.children")
-                                        input(type='checkbox', ng-model='child.complete')
-                                        .h1-pill(ng-click='child.fold=!child.fold', ng-mouseenter='hover(child)')
-                                            p(ng-class='{strike:child.complete}') {{child.name}}
-                                                span(ng-show='child.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
-                                                    span.glyphicon.glyphicon-chevron-down
-                                        .progress(ng-hide='child.complete')
-                                            .progress-bar(style='width: 20%')
-                                        div(ng-hide='child.fold')
-                                            .h1-ctn(ng-repeat = "child in child.children")
-                                                input(type='checkbox', ng-model='child.complete')
-                                                .h1-pill(ng-mouseenter='hover(child)')
-                                                    p(ng-class='{strike:child.complete}') {{child.name}}
-                            li
-                                input(type='text', ng-model='inputModel.entryInput')
-                                button(ng-click='add()').btn.btn-success
-                                    span.glyphicon.glyphicon-plus
-                        .col-xs-6(text-parser, data='inputModel.text', output = 'json')
-                            //textarea.form-control(rows=20, ng-model='inputModel.text')
-                            //| {{json}}
-                            br
-                            tabset
-                                tab(heading='设计')
-                                    img.ui-img.img-rounded(ng-src='{{view.imageUrl}}')
-                                tab(heading='细节')
-                                    textarea.form-control(rows=20, name='description', ng-model='view.description')
-                tab(heading="后台工作总表")
+                                    div(ng-hide='data.fold')
+                                        .h1-ctn(ng-repeat = "child in data.children")
+                                            input(type='checkbox', ng-model='child.complete')
+                                            .h1-pill(ng-click='child.fold=!child.fold', ng-mouseenter='hover(child)')
+                                                p(ng-class='{strike:child.complete}') {{child.name}}
+                                                    span(ng-show='child.fold') &nbsp&nbsp&nbsp&nbsp&nbsp
+                                                        span.glyphicon.glyphicon-chevron-down
+                                            .progress(ng-hide='child.complete')
+                                                .progress-bar(style='width: 20%')
+                                            div(ng-hide='child.fold')
+                                                .h1-ctn(ng-repeat = "child in child.children")
+                                                    input(type='checkbox', ng-model='child.complete')
+                                                    .h1-pill(ng-mouseenter='hover(child)')
+                                                        p(ng-class='{strike:child.complete}') {{child.name}}
+                                li
+                                    input(type='text', ng-model='inputModel.entryInput')
+                                    button(ng-click='add()').btn.btn-success
+                                        span.glyphicon.glyphicon-plus
+                            .col-xs-6(text-parser, data='inputModel.text', output = 'json')
+                                //textarea.form-control(rows=20, ng-model='inputModel.text')
+                                //| {{json}}
+                                br
+                                tabset
+                                    tab(heading='设计')
+                                        img.ui-img.img-rounded(ng-src='{{view.imageUrl}}')
+                                    tab(heading='细节')
+                                        textarea.form-control(rows=20, name='description', ng-model='view.description')
+                    tab(heading="后台工作总表")
 
         +footer
 link(href='/css/superadmin.css', rel="stylesheet")
