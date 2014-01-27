@@ -1,11 +1,16 @@
 include mixins/navbar
 include mixins/footer
+link(href='/css/problems.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .container
     +navbar
     .row
-        div
-            h1 this is some text
+        .col-sm-1.col-xs-2
+            p(ph-txt='3s')
+        .col-sm-8.col-xs-10
+            p(ph-txt='3s')
+        .col-sm-3.col-sx-hide
+            p(ph-txt='3s')
 
 

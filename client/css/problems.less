@@ -1,0 +1,320 @@
+@import "elements.less";
+@import "mixins.less";
+@import "variables.less";
+
+//General Styling
+.absoluteCenter{
+  .vertical-center(560px, 120px);
+}
+/* IE 7 and Below */
+:first-child+html .absoluteCenter,
+* html .absoluteCenter {
+  /* Place code here to override all above values, and add IE friendly centering */
+}
+
+body{
+  overflow-y: hidden;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: fadeout(white,98%);
+  box-sizing: border-box;
+}
+::-webkit-scrollbar-thumb {
+  background-color: fadeout(white,80%);
+  z-index: +1;
+  &:hover{background-color: fadeout(white,40%);}
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+  .container{
+    max-width: @screen-sm-max;
+    width: 100%;
+  }
+}
+//@media (max-width: 640px) {
+//  .container{
+//    width: 640px;
+//  }
+//}
+
+//Typseting ===================================
+  //Colors-------------------
+    .bg-blue{
+      background-color: #69cbe1;
+    }
+    .bg-yellow{
+      background-color: #ffcd33;
+    }
+    .text-semi-white{
+      color: fadeout(white,30%);
+    }
+    .text-white{
+      color: white;
+    }
+  //Font-size-----------------
+    .sp-text-24{
+      font-size: 3em;
+      color: white;
+    }
+
+    .sp-btn-h120 {
+      height: 100px;
+    }
+  //Headers-------------------
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      //font-family: MicrosoftYaHei,'微软雅黑','Hiragino Sans GB',"WenQuanYi Micro Hei",Arial, Tahoma,Helvetica,Georgia,STXihei,'华文黑体',Hei,'Hiragina Kaku Gothic Pro',SimSun;
+      margin-bottom: 0;
+    }
+    p{
+      margin-bottom:0;
+    }
+
+//Buttons ======================================
+  .btn{
+    border-radius: 0;
+    @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px darken(grey,30%);
+    .box-shadow(@shadow);
+    &:active{
+    }
+  }
+
+//Images ======================================
+  img.logo{
+    float: left;
+    margin-right:0.3em;
+    margin-top:-1px;
+    height: 1.0em;
+    top:0;bottom:0;
+  }
+  h3{
+    font-size: 1.7em;
+    margin:20px 0 20px 0;
+  }
+//PlaceHolders ===============================
+  .sp-up-cover{
+    position:relative;
+    top:0;
+    height:49%;
+    margin-top:-20%;
+    margin-bottom:-60%;
+    width:100%;
+    background-color: rgba(0,0,0,0);
+  }
+//Directives =================================
+  //metroCards
+    @height: 60px;
+    @inputWidth : 300px;
+    @totalWidth : @inputWidth + @height;
+    sp-input{
+      height:@height;
+      //  width:@totalWidth;
+      display: block;
+      background-color: rgba(0,0,0,0);
+      clear:both;
+      position:relative;
+      div{
+        width:@height;
+        height:@height;
+        left:0;
+        top:0;
+        position: absolute;
+        border-radius: 0;
+        margin:0;
+        box-sizing: border-box;
+        span{
+          margin:@height/4 @height/3.6 @height/4;
+          width:@height/2;
+          height:@height/2;
+          font-size:@height/2.2;
+          position: relative;
+          bottom:0;
+          color:white;
+        }
+      }
+      input,.text-block-right{
+        height:@height;
+        left:0;
+        right:0;
+        position: absolute;
+        padding:@height/4;
+        margin-left:@height;
+        border:0;
+        background-color: white;
+        &:focus{
+        }
+      }
+    }
+    sp-select{
+      height:@height;
+      //  max-width:@totalWidth;
+      display: block;
+      background-color: rgba(0,0,0,0);
+      clear:both;
+      position:relative;
+      div:first-child{
+        width:@height;
+        height:@height;
+        left:0;
+        top:0;
+        position: absolute;
+        border-radius: 0;
+        margin:0;
+        box-sizing: border-box;
+        span{
+          margin:@height/4 @height/3.6 @height/4;
+          width:@height/2;
+          height:@height/2;
+          font-size:@height/2.2;
+          position: relative;
+          bottom:0;
+          color:white;
+        }
+      }
+      select.transcluded{
+        height:@height;
+        left:0;
+        right:0;
+        position: absolute;
+        padding:@height/4;
+        padding-right:0;
+        margin-left:@height;
+        border:0;
+        .border-radius(0px);
+        -webkit-appearance: none;  /*Removes default chrome and safari style*/
+        -moz-appearance: none;  /*Removes default style Firefox*/
+        background-color: white;
+        font-size: @height/3.7;
+        line-height: @height/2;
+        &:focus{
+        }
+      }
+    }
+    .fade{
+      opacity: 0.6;
+    }
+    sp-input, sp-select{
+      .transition(0.3s ease-out all);
+      margin-top:20px;
+    }
+    sp-input.pre-focus, sp-select.pre-focus{
+      margin-bottom:2000px;
+    }
+    sp-input.out-focus, sp-select.out-focus{
+      margin-bottom:20px;
+      display: block;
+    }
+    sp-input.in-focus, sp-select.in-focus{
+      margin-bottom:20px;
+      display:block;
+      opacity: 1;
+    }
+    .sp-button-small{
+      height: 70px;
+      border-radius: 0;
+      min-width: 70px;
+      float: right;
+      background-color:#44ffff;
+      text-align: center middle;
+      color: fadeout(white,0.7);
+      &:hover{
+        color: fadeout(white,0.9);
+      }
+      &:active{
+        color:fadeout(white,1);
+      }
+      &:focus{
+        color:fadeout(white,1);
+      }
+      font-size:1.8em;
+
+
+    }
+    p.sp-button-text{
+      color:white;
+      width:70px;
+      height:35px;
+      margin:auto;
+      position:absolute;
+      left:0;right:0;
+      top:0;bottom:0;
+    }
+//sp-modal
+    .sp-modal{
+      width:100%;height:100%;
+      position:absolute;
+      top:0;
+      bottom:0;
+      background-color:rgba(0,0,0,0.8);
+      margin:0;
+      z-index: +20;
+      .transition(0.3s ease-out all);
+      span.icon-exit{
+        font-size:5em;
+        color:rgba(255,255,255,0.7);
+        margin:80px 20px 0;
+        position:absolute;
+        z-index: +20;
+        .reflect-verticle;
+        &:hover{ color: rgba(255,255,255,0.9); }
+        background-color: none;
+      }
+      .container{
+        height:100%;
+        max-width: 900px;
+        background-color:rgba(0,0,0,0);
+        position:absolute;
+        left:0;right:0;
+        box-sizing:border-box;
+        .inner{
+          width:@totalWidth+10px;
+          height:100%;
+          top:0;
+          left:0;
+          right:0;
+          bottom:0;
+          margin-left:auto;
+          margin-right:auto;
+          margin-top:0;
+          margin-bottom:0;
+          padding-left:5px;
+          padding-right:5px;
+          position: absolute;
+          background-color:rgba(0,0,0,0);
+          overflow-y:auto;
+          box-sizing: border-box;
+          button.submit{
+            float:right;
+            background-color: transparent;
+            color: @white;
+            border:0;
+            &:hover{
+              text-shadow : 0 0 5px @white;
+            }
+            &:focus{
+              text-shadow : 0 0 5px @white;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    .sp-modal.ng-hide-add{
+      //display:block!important;
+      opacity: 1;
+    }
+    .sp-modal.ng-hide-add-active{
+      display:block!important;
+      opacity: 0;
+    }
+    .sp-modal.ng-hide-remove{
+      display:block!important;
+      opacity: 0;
+    }
+    .sp-modal.ng-hide-remove-active{
+      opacity: 1;
+      //display:block!important;
+    }
+
+//-Effects ===================================
+

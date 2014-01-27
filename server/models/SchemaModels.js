@@ -115,10 +115,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             problem: String,
             title: Array,
             text: Array,
+            tags: Array,
             figure: Array,
             answers: Array,
-            explanations: Array,
-            lastUpdated: Date
+            updates: Array
         },
         problem: {
             topLevel: Boolean,

@@ -126,10 +126,16 @@ spApp.controller('DevelopmentCtrl',
 
                         {
                             "name": "UI components",
-                            fold: true,
+                            fold: false,
                             complete: false,
                             url: '/img/ui_design/标题栏收件栏和用户选项-01.png',
                             children: [
+                                {
+                                    "name": "页面框架",
+                                    fold: true,
+                                    complete: false,
+                                    url: ''
+                                },
                                 {
                                     "name": "标题栏",
                                     fold: true,
@@ -152,7 +158,7 @@ spApp.controller('DevelopmentCtrl',
                         },
                         {
                             "name": "搜索问题",
-                            fold: false,
+                            fold: true,
                             complete: false,
                             url: '/img/ui_design/搜索问题-01.png',
                             children: [
@@ -179,8 +185,16 @@ spApp.controller('DevelopmentCtrl',
                                         {   name: 'Question', complete: false,
                                             description: '',
                                             punchCard: [
-                                                {   start: Date(2014, 01, 26, 12, 00, 00),
-                                                    end: Date(2014, 01, 26, 13, 12, 00)
+                                                {   start: Date(2014, 1, 26, 12, 0, 0),
+                                                    end: Date(2014, 1, 26, 13, 12, 0)
+                                                }
+                                            ]
+                                        },
+                                        {   name: 'Tags', complete: false,
+                                            description: '',
+                                            punchCard: [
+                                                {   start: Date(2014, 1, 26, 12, 0, 0),
+                                                    end: Date(2014, 1, 26, 13, 12, 0)
                                                 }
                                             ]
                                         }
@@ -253,7 +267,15 @@ spApp.controller('DevelopmentCtrl',
             };
             $scope.add = add;
             $scope.edit = edit;
+            $scope.punchCard = [
+                {
+                    task: '页面框架',
+                    description: '',
+                    start: new Date(2014, 1, 26, 10),
+                    end: new Date()
+                }
 
+            ]
             $scope.view = {};
             $scope.view.imageUrl = '/img/ui_design/搜索问题-01.png';
             $scope.view.description = 'Ta很懒，什么都没有留下...';

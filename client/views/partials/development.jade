@@ -10,6 +10,25 @@ div.background
     .container
         .row
             tabset
+                tab(heading="Punch Card")
+                    .row
+                        .col-xs-12
+                            h1 工作记录
+                            table.table.table-bordered
+                                tr
+                                    th 序号
+                                    th 任务
+                                    th 简介
+                                    th 时长
+                                    th 开始
+                                    th 结束
+                                tr(ng-repeat='entry in punchCard')
+                                    td {{$index}}
+                                    td {{entry.task}}
+                                    td {{entry.description}}
+                                    td {{entry.end-entry.start}}
+                                    td {{entry.start}}
+                                    td {{entry.end}}
                 tab(heading="前端工作总表")
                     .row
                         .col-xs-6
@@ -52,8 +71,7 @@ div.background
                                     img.ui-img.img-rounded(ng-src='{{view.imageUrl}}')
                                 tab(heading='细节')
                                     textarea.form-control(rows=20, name='description', ng-model='view.description')
-
-
                 tab(heading="后台工作总表")
+
         +footer
 link(href='/css/superadmin.css', rel="stylesheet")
