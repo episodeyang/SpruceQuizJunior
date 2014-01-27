@@ -290,6 +290,12 @@ spApp.controller('DevelopmentCtrl',
                     description: '需要添加缩小后的链接',
                     start: new Date(2014, 0, 27, 1, 30,0),
                     end: new Date()
+                },
+                {
+                    task: 'ui routing',
+                    description: '考虑一下problems页面内部的views routing，可能需要用到angular-ui',
+                    start: new Date(2014, 0, 27, 1, 30,0),
+                    end: new Date()
                 }
 
             ]

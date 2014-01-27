@@ -18,24 +18,11 @@ mixin navbar
                 ul.nav.navbar-nav
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav,ng-hide='!isCollapsed')
                         a(href='/development', ng-click='isCollapsed=!isCollapsed') 开发
+                    li(data-access-level='{{ accessLevels.loggedin}}', active-nav,ng-hide='!isCollapsed')
+                        a(href="/", data-ng-click="logout()")
+                            | 登出
             .hidden-xs
                 ul.nav.navbar-nav
-                    li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                        a(href='/sections') 课程
-                    li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                        a(href='/admin') 学生管理
-                    li(data-access-level='{{ accessLevels.loggedin}}', active-nav).dropdown
-                        a.dropdown-toggle 问答
-                            span.caret
-                        ul.dropdown-menu
-                            li(data-access-level="{{accessLevels.superuser}}")
-                                a(href='/problems/edit') 编辑问题
-                            //-li
-                                a(href='/problems') 问题
-                                li
-                                    a(href='/quizzes') 测试
-                    li(data-access-level='{{ accessLevels.superuser }}', active-nav)
-                        a(href='/reports') 成绩和报告
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
                         a(href='/superadmin') 后台管理
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
