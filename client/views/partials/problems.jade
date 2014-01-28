@@ -41,10 +41,12 @@ div.background(background-img="/img/bg-brown.jpg")
                             button.btn.btn-success(type='button') 确定
                     form.editor(name = 'questionEditor')
                         div(ng-model='editor.text', medium-editor, options="{{editor.options}}")
-                    form.editor.hide
+                    button.btn.btn-link(ng-click='example()', ng-hide='editor.showHtml') 问题模板
+                    button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 代码
+                    button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
+                    button.btn.btn-success.pull-right(ng-hide='editor.showHtml') 提交问题
+                    form.editor(ng-show='editor.showHtml')
                         p {{editor.text}}
-                    button.btn.btn-link 问题模板
-                    button.btn.btn-success.pull-right 提交问题
 
 
 
