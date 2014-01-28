@@ -288,13 +288,13 @@ spApp.controller('DevelopmentCtrl',
                 {
                     task: 'navbar',
                     description: '需要添加缩小后的链接',
-                    start: new Date(2014, 0, 27, 1, 30,0),
+                    start: new Date(2014, 0, 27, 1, 30, 0),
                     end: new Date()
                 },
                 {
                     task: 'ui routing',
                     description: '考虑一下problems页面内部的views routing，可能需要用到angular-ui',
-                    start: new Date(2014, 0, 27, 1, 30,0),
+                    start: new Date(2014, 0, 27, 1, 30, 0),
                     end: new Date()
                 },
                 {
@@ -302,7 +302,14 @@ spApp.controller('DevelopmentCtrl',
                     description: '构建问题搜索和提问界面的结构，并开始写提问部分的代码。' +
                         'the controller code is structured as the following:' +
                         '    - viewState = ',
-                    start: new Date(2014, 0, 26, 15, 30,0),
+                    start: new Date(2014, 0, 26, 15, 30, 0),
+                    end: new Date()
+                },
+                {
+                    task: '问题样例数据结构',
+                    description: '准备问题样例，在下一个页面也会用到。' +
+                        ' ',
+                    start: new Date(2014, 0, 26, 15, 30, 0),
                     end: new Date()
                 }
 
