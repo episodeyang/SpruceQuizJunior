@@ -296,7 +296,16 @@ spApp.controller('DevelopmentCtrl',
                     description: '考虑一下problems页面内部的views routing，可能需要用到angular-ui',
                     start: new Date(2014, 0, 27, 1, 30,0),
                     end: new Date()
+                },
+                {
+                    task: '提问界面',
+                    description: '构建问题搜索和提问界面的结构，并开始写提问部分的代码。' +
+                        'the controller code is structured as the following:' +
+                        '    - viewState = ',
+                    start: new Date(2014, 0, 26, 15, 30,0),
+                    end: new Date()
                 }
+
 
             ]
             $scope.view = {};

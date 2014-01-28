@@ -172,21 +172,6 @@ angular.module('SpruceQuizApp')
         };
     });
 angular.module('SpruceQuizApp')
-    .directive('textParser', function () {
-        return {
-            restrict: 'A',
-            scope: {'data': '=',
-            output: '='},
-            link: function (scope, elem, attr, ctrl) {
-                scope.$watch('data', function (data) {
-                    _.(newVal.split('\\n'), function (name) {
-                        json.push({'name': name});
-                    });
-                });
-            }
-        };
-    });
-angular.module('SpruceQuizApp')
     .directive('jsonText', function () {
         return {
             restrict: 'A',

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
-        'ui.bootstrap', 'nvd3ChartDirectives', 'placeholders'])
+        'ui.bootstrap', 'nvd3ChartDirectives', 'placeholders','angular-medium-editor'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         var access = rolesHelper.accessLevels;

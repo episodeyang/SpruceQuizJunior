@@ -20,17 +20,35 @@ div.background(background-img="/img/bg-brown.jpg")
         .row
             .col-sm-2.col-xs-3
                 ul.nav.nav-pills.nav-stacked
-                    li.active
-                        a.text-center 搜索
-                    li
-                        a.text-center 提问
-                    li
+                    li(ng-class="{active: view.state=='search'}")
+                        a.text-center(ng-click="view.state='search'") 搜索
+                    li(ng-class="{active: view.state=='ask'}")
+                        a.text-center(ng-click="view.state='ask'") 提问
+                    li(ng-class="{active: view.state=='displayAll'}")
                         a.text-center 所有问题
             .col-sm-7.col-xs-9
-                .input-group
-                    input(type='text').form-control
-                    span.input-group-btn
-                        button.btn.btn-info(type='button') 搜索
+                div(ng-show="view.state=='search'")
+                    .input-group
+                        input(type='text').form-control
+                        span.input-group-btn
+                            button.btn.btn-info(type='button') 搜索
+                div(ng-show="view.state=='ask'")
+                    .input-group
+                        span.input-group-btn
+                            button.btn.btn-default(type='button') 标题
+                        input(type='text').form-control
+                        span.input-group-btn
+                            button.btn.btn-success(type='button') 确定
+                    form.editor(name = 'questionEditor')
+                        div(ng-model='editor.text', medium-editor, options="{{editor.options}}")
+                    form.editor.hide
+                        p {{editor.text}}
+                    button.btn.btn-link 问题模板
+                    button.btn.btn-success.pull-right 提交问题
+
+
+
+
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading 相关标签
