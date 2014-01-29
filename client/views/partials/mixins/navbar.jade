@@ -16,10 +16,10 @@ mixin navbar
             //.collapse.navbar-collapse.navbar-ex1-collapse
             .visible-xs(collapse='!isCollapsed')
                 ul.nav.navbar-nav
-                    li(data-access-level='{{ accessLevels.superadmin }}', active-nav,ng-hide='!isCollapsed')
+                    li(data-access-level='{{ accessLevels.superadmin }}', active-nav,ng-show='isCollapsed')
                         a(href='/development', ng-click='isCollapsed=!isCollapsed') 开发
-                    li(data-access-level='{{ accessLevels.loggedin}}', active-nav,ng-hide='!isCollapsed')
-                        a(href="/", data-ng-click="logout()")
+                    li(data-access-level='{{ accessLevels.loggedin}}', active-nav,ng-show='isCollapsed')
+                        a(data-ng-click="logout()")
                             | 登出
             .hidden-xs
                 ul.nav.navbar-nav

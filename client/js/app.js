@@ -1,6 +1,6 @@
 'use strict';
-angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
-        'ui.bootstrap', 'nvd3ChartDirectives', 'placeholders','angular-medium-editor'])
+angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
+        'ui.bootstrap', 'nvd3ChartDirectives', 'placeholders', 'angular-medium-editor'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
         var access = rolesHelper.accessLevels;
@@ -17,55 +17,55 @@ angular.module('SpruceQuizApp', ['ngCookies', 'modelServices', 'ngRoute', 'ngRes
                 controller: 'ProblemCtrl',
                 access: access.loggedin
             });
-        $routeProvider.when('/home',
-            {
-                templateUrl: '/partials/home',
-                controller: 'HomeCtrl',
-                access: access.loggedin
-            });
-        $routeProvider.when('/errata/:errataId',
-            {
-                templateUrl: '/partials/errata',
-                controller: 'ErrataCtrl',
-                access: access.loggedin
-            });
-        $routeProvider.when('/public/login',
-            {
-                templateUrl: '/partials/public/login',
-                controller: 'LoginCtrl',
-                access: access.anon
-            });
-        $routeProvider.when('/public/register',
-            {
-                templateUrl: '/partials/public/register',
-                controller: 'LoginCtrl',
-                access: access.anon
-            });
-        $routeProvider.when('/auth/twitter',
-            {
-                templateUrl: '/partials/register',
-                controller: 'RegisterCtrl',
-                access: access.anon
-            });
-        $routeProvider.when('/private',
-            {
-                templateUrl: '/partials/private',
-                controller: 'PrivateCtrl',
-                access: access.loggedin
-            });
-        $routeProvider.when('/admin',
-            {
-                templateUrl: '/partials/admin',
-                controller: 'AdminCtrl',
-                access: access.superuser
-            });
-        $routeProvider.when('/sections',
-            {
-                templateUrl: '/partials/sections',
-                controller: 'SectionCtrl',
-                access: access.loggedin
-            });
-        $routeProvider.when('/problems',
+//        $routeProvider.when('/home',
+//            {
+//                templateUrl: '/partials/home',
+//                controller: 'HomeCtrl',
+//                access: access.loggedin
+//            });
+//        $routeProvider.when('/errata/:errataId',
+//            {
+//                templateUrl: '/partials/errata',
+//                controller: 'ErrataCtrl',
+//                access: access.loggedin
+//            });
+//        $routeProvider.when('/public/login',
+//            {
+//                templateUrl: '/partials/public/login',
+//                controller: 'LoginCtrl',
+//                access: access.anon
+//            });
+//        $routeProvider.when('/public/register',
+//            {
+//                templateUrl: '/partials/public/register',
+//                controller: 'LoginCtrl',
+//                access: access.anon
+//            });
+//        $routeProvider.when('/auth/twitter',
+//            {
+//                templateUrl: '/partials/register',
+//                controller: 'RegisterCtrl',
+//                access: access.anon
+//            });
+//        $routeProvider.when('/private',
+//            {
+//                templateUrl: '/partials/private',
+//                controller: 'PrivateCtrl',
+//                access: access.loggedin
+//            });
+//        $routeProvider.when('/admin',
+//            {
+//                templateUrl: '/partials/admin',
+//                controller: 'AdminCtrl',
+//                access: access.superuser
+//            });
+//        $routeProvider.when('/sections',
+//            {
+//                templateUrl: '/partials/sections',
+//                controller: 'SectionCtrl',
+//                access: access.loggedin
+//            });
+        $routeProvider.when('/problems/:problemId',
             {
                 templateUrl: '/partials/problems',
                 controller: 'ProblemCtrl',

@@ -19,19 +19,39 @@ div.background(background-img="/img/bg-brown.jpg")
                         a 待回答
         .row
             .col-sm-2.col-xs-3
-                ul.nav.nav-pills.nav-stacked
+                ul.nav.nav-pills.nav-stacked(ng-hide="view.state=='problem'")
                     li(ng-class="{active: view.state=='search'}")
                         a.text-center(ng-click="view.state='search'") 搜索
                     li(ng-class="{active: view.state=='ask'}")
                         a.text-center(ng-click="view.state='ask'") 提问
                     li(ng-class="{active: view.state=='displayAll'}")
                         a.text-center 所有问题
+                //ul.nav.nav-pills.nav-stacked(ng-show="view.state=='problem'")
+                //    li
+                //        //-(ng-class="{active: view.state=='problem'}")
+                //        a.text-center 返回
             .col-sm-7.col-xs-9
                 div(ng-show="view.state=='search'")
                     .input-group
                         input(type='text').form-control
                         span.input-group-btn
                             button.btn.btn-info(type='button') 搜索
+                    .flow-container
+                        .row(ng-repeat-start="problem in problems")
+                            .col-lg-12
+                                h3 {{problem.title}}
+                        .row(ng-repeat-end)
+                            .col-lg-12
+                                form.editor
+                                    .row
+                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="problem.text")
+                                        .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
+                                            .rounded.blue.stat-box
+                                                h4.text-center 123
+                                                p.text-center.small 关注
+                                            .rounded.red.stat-box.appendix
+                                                p.text-center.small 3
+                                                p.text-center.small 回答
                 div(ng-show="view.state=='ask'")
                     .input-group
                         span.input-group-btn
@@ -39,7 +59,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         input(type='text').form-control
                         span.input-group-btn
                             button.btn.btn-success(type='button') 确定
-                    form.editor(name = 'questionEditor')
+                    form.editor.top-padding(name = 'questionEditor')
                         div(ng-model='editor.text', medium-editor, options="{{editor.options}}")
                     button.btn.btn-link(ng-click='example()', ng-hide='editor.showHtml') 问题模板
                     button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 代码
@@ -47,6 +67,40 @@ div.background(background-img="/img/bg-brown.jpg")
                     button.btn.btn-success.pull-right(ng-hide='editor.showHtml') 提交问题
                     form.editor(ng-show='editor.showHtml')
                         p {{editor.text}}
+                div(ng-show="view.state=='problem'")
+                    h3.title {{problem.title}}
+                    form.editor.top-padding
+                        .fixed-left
+                            .rounded.blue.vote-box
+                                p.text-center
+                                    span.up.glyphicon.glyphicon-chevron-up
+                                p.text-center 投票
+                                p.text-center
+                                    span.down.glyphicon.glyphicon-chevron-down
+                        div(ng-bind-html="problem.text")
+                    div(style='margin-top:-5px;margin-bottom:15px;')
+                        span.badge(ng-repeat-start='tag in problem.tags') {{tag}}
+                        span(ng-repeat-end) &nbsp&nbsp
+                    .row
+                        .col-xs-12
+                            a.right-spaced 编辑问题
+                            a.right-spaced 评论
+                            p.pull-right
+                                span {{problem.dateCreated}} 由
+                                a.blue.spaced {{problem.author.name}}
+                                span 创建
+                    hr
+                    h3 你的回答
+                    form.editor(name = 'answerEditor')
+                        div(ng-model='editor.text', medium-editor, options="{{editor.answerOptions}}")
+                    .row
+                        .col-xs-12
+                            button.btn.btn-success.pull-right() 提交解答
+                    .row
+                        .col-xs-12
+                            br
+
+
 
 
 
@@ -60,5 +114,4 @@ div.background(background-img="/img/bg-brown.jpg")
                     .panel-heading 相关问题
                     .panel-body
                         p(ph-txt='3s')
-
 
