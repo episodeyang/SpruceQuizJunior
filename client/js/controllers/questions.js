@@ -1,7 +1,7 @@
 'use strict';
 /* Controllers */
 angular.module('SpruceQuizApp')
-    .controller('ProblemCtrl',
+    .controller('QuestionCtrl',
         ['$routeParams', '$filter', '$rootScope', '$scope', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
             function ($routeParams, $filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
                 //Boiler Plate for authentication info
@@ -13,12 +13,12 @@ angular.module('SpruceQuizApp')
                 $scope.model.user = $rootScope.user;
                 $scope.model.sections = [];
                 $scope.Model = Model;
-                //function ProblemCtrl($scope, Problems)
+                //function QuestionCtrl($scope, Questions)
                 //$rootScope.error = "Temp warning";
                 $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
                 $scope.highlightField = "question";
 
-                $scope.problemTypes = ['multipleChoice', 'fillIn', 'OpenEnded'];
+                $scope.questionTypes = ['multipleChoice', 'fillIn', 'OpenEnded'];
 
                 $scope.view = {};
                 $scope.view.state = 'search'; //three states: search, ask, all-questions
@@ -46,12 +46,12 @@ angular.module('SpruceQuizApp')
                 };
 
                 $rootScope.$on("$locationChangeStart", function (event, next, current) {
-                    console.log($routeParams.problemId);
+                    console.log($routeParams.questionId);
                 });
 
-                if ($routeParams.problemId) {
-                    $scope.view.state = 'problem';
-                    $scope.problem = {
+                if ($routeParams.questionId) {
+                    $scope.view.state = 'question';
+                    $scope.question = {
                         title: '行程问题解法',
                         text: $scope.editor.example,
                         tags: ['三年级', '数学', '二元一次方程'],
@@ -70,7 +70,7 @@ angular.module('SpruceQuizApp')
                     };
                 }
 
-                $scope.problems = [
+                $scope.questions = [
                     {
                         title: '行程问题解法',
                         text: $scope.editor.example,
@@ -90,7 +90,6 @@ angular.module('SpruceQuizApp')
                         dateCreated: '一月三日'
                     }
                 ];
-                $scope.orderProp = 'lastupdated';
             }
         ]
     );

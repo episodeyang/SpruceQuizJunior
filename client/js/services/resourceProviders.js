@@ -1,14 +1,19 @@
 'use strict';
 
 angular.module('resourceProvider', ['ngResource', 'ngRoute'])
-    // need to change to onSelf or discuss with Lizhong
-    .factory('AuthUsers', function ($resource) {
+    .factory('Users', ['$resource', function ($resource) {
+//        var users = $resource('/api/users');
+//        var user = $resource('/api/user/:id', {id: '@id'});
         return {
+            list: $resource('/api/users'),
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
-                //list: {method:'GET', params:{uuid: 'all'}, isArray:true},
+                list: {method: 'GET', params: {uuid: 'all'}, isArray: true},
             })
         };
-    })
+    }])
+//    .factory('Questions', function ($resource) {
+//        return $resource('api/questions/:id');
+//    })
     .factory('Students', function ($resource) {
         return {
             onErrata: $resource('/api/students/errata/:id', {id: '@_id'}, {

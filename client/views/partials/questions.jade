@@ -1,6 +1,6 @@
 include mixins/navbar
 include mixins/footer
-link(href='/css/problems.css', rel="stylesheet")
+link(href='/css/questions.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body
@@ -19,16 +19,16 @@ div.background(background-img="/img/bg-brown.jpg")
                         a 待回答
         .row
             .col-sm-2.col-xs-3
-                ul.nav.nav-pills.nav-stacked(ng-hide="view.state=='problem'")
+                ul.nav.nav-pills.nav-stacked(ng-hide="view.state=='question'")
                     li(ng-class="{active: view.state=='search'}")
                         a.text-center(ng-click="view.state='search'") 搜索
                     li(ng-class="{active: view.state=='ask'}")
                         a.text-center(ng-click="view.state='ask'") 提问
                     li(ng-class="{active: view.state=='displayAll'}")
                         a.text-center 所有问题
-                //ul.nav.nav-pills.nav-stacked(ng-show="view.state=='problem'")
+                //ul.nav.nav-pills.nav-stacked(ng-show="view.state=='question'")
                 //    li
-                //        //-(ng-class="{active: view.state=='problem'}")
+                //        //-(ng-class="{active: view.state=='question'}")
                 //        a.text-center 返回
             .col-sm-7.col-xs-9
                 div(ng-show="view.state=='search'")
@@ -39,13 +39,13 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                                form.editor.top-padding(ng-repeat="problem in problems")
+                                form.editor.top-padding(ng-repeat="question in questions")
                                     .row
                                         .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
-                                            h4.no-margin {{problem.title}}
+                                            h4.no-margin {{question.title}}
                                             hr.low-margin
                                     .row
-                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="problem.text")
+                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="question.text")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
                                             .rounded.blue.stat-box
                                                 h4.no-bottom-margin.text-center 123
@@ -68,8 +68,8 @@ div.background(background-img="/img/bg-brown.jpg")
                     button.btn.btn-success.pull-right(ng-hide='editor.showHtml') 提交问题
                     form.editor(ng-show='editor.showHtml')
                         p {{editor.text}}
-                div(ng-show="view.state=='problem'")
-                    h3.title {{problem.title}}
+                div(ng-show="view.state=='question'")
+                    h3.title {{question.title}}
                     form.editor.top-padding
                         .fixed-left
                             .rounded.blue.vote-box
@@ -78,20 +78,20 @@ div.background(background-img="/img/bg-brown.jpg")
                                 p.text-center 投票
                                 p.text-center
                                     span.down.glyphicon.glyphicon-chevron-down
-                        div.editor-inner(ng-bind-html="problem.text")
+                        div.editor-inner(ng-bind-html="question.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
-                        span.badge(ng-repeat-start='tag in problem.tags') {{tag}}
+                        span.badge(ng-repeat-start='tag in question.tags') {{tag}}
                         span(ng-repeat-end) &nbsp&nbsp
                     .row
                         .col-xs-12
                             a.right-spaced 编辑问题
                             a.right-spaced 评论
                             p.pull-right
-                                span {{problem.dateCreated}} 由
-                                a.blue.spaced {{problem.author.name}}
+                                span {{question.dateCreated}} 由
+                                a.blue.spaced {{question.author.name}}
                                 span 创建
                     .row
-                        .col-xs-12(ng-repeat='comment in problem.comments')
+                        .col-xs-12(ng-repeat='comment in question.comments')
                             hr.low-margin
                             p.small
                                 span.badge.margin-right {{comment.votes}}
