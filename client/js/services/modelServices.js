@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('modelServices')
+angular.module('modelServices', ['resourceProvider'])
     .factory('Model', ['$rootScope', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
         'Schools', 'Sections', 'Units', 'Materials',
         /**

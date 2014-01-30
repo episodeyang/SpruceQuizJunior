@@ -37,21 +37,22 @@ div.background(background-img="/img/bg-brown.jpg")
                         span.input-group-btn
                             button.btn.btn-info(type='button') 搜索
                     .flow-container
-                        .row(ng-repeat-start="problem in problems")
+                        .row
                             .col-lg-12
-                                h3 {{problem.title}}
-                        .row(ng-repeat-end)
-                            .col-lg-12
-                                form.editor
+                                form.editor.top-padding(ng-repeat="problem in problems")
+                                    .row
+                                        .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
+                                            h4.no-margin {{problem.title}}
+                                            hr.low-margin
                                     .row
                                         div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="problem.text")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
                                             .rounded.blue.stat-box
-                                                h4.text-center 123
-                                                p.text-center.small 关注
+                                                h4.no-bottom-margin.text-center 123
+                                                p.no-top-margin.text-center.small 关注
                                             .rounded.red.stat-box.appendix
-                                                p.text-center.small 3
-                                                p.text-center.small 回答
+                                                p.no-bottom-margin.text-center.small 3
+                                                p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")
                     .input-group
                         span.input-group-btn
@@ -60,7 +61,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         span.input-group-btn
                             button.btn.btn-success(type='button') 确定
                     form.editor.top-padding(name = 'questionEditor')
-                        div(ng-model='editor.text', medium-editor, options="{{editor.options}}")
+                        div.editor-inner(ng-model='editor.text', medium-editor, options="{{editor.options}}")
                     button.btn.btn-link(ng-click='example()', ng-hide='editor.showHtml') 问题模板
                     button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 代码
                     button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
@@ -77,7 +78,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 p.text-center 投票
                                 p.text-center
                                     span.down.glyphicon.glyphicon-chevron-down
-                        div(ng-bind-html="problem.text")
+                        div.editor-inner(ng-bind-html="problem.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
                         span.badge(ng-repeat-start='tag in problem.tags') {{tag}}
                         span(ng-repeat-end) &nbsp&nbsp
@@ -89,10 +90,18 @@ div.background(background-img="/img/bg-brown.jpg")
                                 span {{problem.dateCreated}} 由
                                 a.blue.spaced {{problem.author.name}}
                                 span 创建
+                    .row
+                        .col-xs-12(ng-repeat='comment in problem.comments')
+                            hr.low-margin
+                            p.small
+                                span.badge.margin-right {{comment.votes}}
+                                span {{comment.text}}
+                                span &#8212&nbsp
+                                    a.blue {{comment.author}}
                     hr
                     h3 你的回答
                     form.editor(name = 'answerEditor')
-                        div(ng-model='editor.text', medium-editor, options="{{editor.answerOptions}}")
+                        div.editor-inner(ng-model='editor.text', medium-editor, options="{{editor.answerOptions}}")
                     .row
                         .col-xs-12
                             button.btn.btn-success.pull-right() 提交解答

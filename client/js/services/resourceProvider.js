@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('modelServices', ['ngResource', 'ngRoute'])
-
+angular.module('resourceProvider', ['ngResource', 'ngRoute'])
 
     // need to change to onSelf or discuss with Lizhong
     .factory('AuthUsers', function ($resource) {
@@ -41,8 +40,6 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
             })
         };
     })
-
-    //TODO: dummy
     .factory('Parents', function ($resource) {
         return {
             onMaterials: $resource('/api/materials/:uuid', {uuid: '@materialUUID'}, {
@@ -63,7 +60,6 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
             })
         };
     })
-
     .factory('Admins', function ($resource) {
         return {
 //            onTeachers: $resource('/api/teachers/:uuid', {uuid:'@userUUID'}, {
@@ -79,7 +75,6 @@ angular.module('modelServices', ['ngResource', 'ngRoute'])
             })
         };
     })
-    // Interface Code
     .factory('Superadmins', function ($resource) {
         return {
 //            onTeachers: $resource('/api/teachers/:uuid', {uuid:'@userUUID'}, {

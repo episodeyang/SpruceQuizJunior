@@ -19,11 +19,13 @@ body {
   overflow-y: hidden;
   margin-top: 50px;
 }
+
 .flow-container {
   overflow-y: auto;
   overflow-x: hidden;
-  margin:0;
+  margin: 0;
 }
+
 ::-webkit-scrollbar {
   width: 6px;
   background-color: fadeout(white, 98%);
@@ -61,46 +63,77 @@ ul.nav.nav-stacked > li > a {
   border-top-left-radius: 3px;
 }
 
-
 a {
   color: grey;
 }
+
 a.spaced {
   margin-left: 5px;
   margin-right: 5px;
 }
+
 a.right-spaced {
   margin-left: 0;
   margin-right: 10px;
 }
+
 a.blue {
   color: #34c6d7;
 }
+
 hr {
   border-top: 1px solid fadeout(#604830, 40%);
 }
+
 h3.title {
-  margin-top:0;
-  margin-bottom:-10px;
+  margin-top: 0;
+  margin-bottom: -10px;
 }
+
+h1.no-margin, h2.no-margin, h3.no-margin, h4.no-margin, h5.no-margin, h6.no-margin, hr.no-margin, p.no-margin {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1.no-top-margin, h2.no-top-margin, h3.no-top-margin, h4.no-top-margin, h5.no-top-margin, h6.no-top-margin, hr.no-top-margin, p.no-top-margin {
+  margin-top: 0;
+}
+
+h1.no-bottom-margin, h2.no-bottom-margin, h3.no-bottom-margin, h4.no-bottom-margin, h5.no-bottom-margin, h6.no-bottom-margin, hr.no-bottom-margin, p.no-bottom-margin {
+  margin-bottom: 0;
+}
+h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.low-margin, hr.low-margin, p.low-margin {
+  margin-top: 5;
+  margin-bottom: 5;
+}
+.margin-right {
+  margin-right: 8px;
+}
+.margin-left{
+  margin-left: 8px;
+}
+
 .top-padding {
   margin-top: 20px;
 }
+
 form.editor.concave {
   border-top: 1px solid fadeout(#604830, 40%);
 }
+
 form.editor.convex {
   border-bottom: 1px solid fadeout(#604830, 40%);
 }
+
 form.editor {
   min-height: 30%;
   background-color: white;
   padding: 15px;
   border-radius: 3px;
-  div:focus{
+  div:focus {
     outline: none;
   }
-  >div {
+  > div.editor-inner {
     min-height: 30%;
   }
 }
@@ -111,58 +144,65 @@ form.editor {
   left: -90px;
   width: 70px;
 }
+
 div.rounded.blue {
   border-radius: 10px;
   background-color: #9ce3ea;
 }
-div.rounded.green{
+
+div.rounded.green {
   border-radius: 10px;
   background-color: #9ee8aa;
 }
-div.rounded.red{
+
+div.rounded.red {
   border-radius: 10px;
   background-color: #f7b9b7;
 }
+
 .vote-box {
-  width:70px;
+  width: 70px;
   padding: 15px 0px;
   p {
     color: white;
     span.up {
       font-size: 35px;
-      left:1px;
-      right:2px;
+      left: 1px;
+      right: 2px;
     }
     span.down {
       font-size: 35px;
-      left:-2px;
-      right:-1px;
+      left: -2px;
+      right: -1px;
     }
   }
 }
+
 .stat-box-container {
   margin-left: 1.5%;
   margin-right: -1.5%;
-  position:relative;
+  position: relative;
   padding: 0;
 }
+
 .stat-box {
   padding: 6px 0px 4px 0px;
   z-index: 20;
-  position:relative;
-  p,h4 {
+  position: relative;
+  p, h4 {
     color: white;
-    margin-top:0;
+    margin-top: 0;
   }
 }
+
 .stat-box.appendix {
   padding: 15px 0px 5px 0px;
-  margin-top:-15px;
+  margin-top: -15px;
   z-index: 0;
-  position:relative;
-  p,h4 {
+  position: relative;
+  p, h4 {
     color: white;
-    margin-top:0;
+    margin-top: 0;
   }
 }
 
