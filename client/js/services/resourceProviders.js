@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('resourceProvider', ['ngResource', 'ngRoute'])
-
     // need to change to onSelf or discuss with Lizhong
     .factory('AuthUsers', function ($resource) {
         return {
@@ -104,7 +103,6 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             })
         };
     })
-
     .factory('Sections', function ($resource) {
         return {
             onSections: $resource('/api/sections/:id', {id: '@_id'}, {
@@ -145,7 +143,6 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             })
         };
     })
-
     .factory('Problems', function ($resource) {
         return {
             onProblems: $resource('/api/problems/:uuid', {uuid: '@problemUUID'}, {
