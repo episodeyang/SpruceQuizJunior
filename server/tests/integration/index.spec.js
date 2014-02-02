@@ -135,18 +135,6 @@ describe('Server API Tests - ', function (done) {
     afterEach(function () {
         passportStub.logout(); // logout after each test
     });
-//    it('GET:/api/questions - return 401 when not logged in', function (done) {
-//        request(app).get('/api/questions').expect(401, done);
-//    });
-//    it('/api/questions - return 401 when not logged in', function (done) {
-//        request(app).post('/api/questions').expect(401, done);
-//    });
-//    it('/api/questions - return 404 when not logged in', function (done) {
-//        request(app).put('/api/questions').expect(404, done);
-//    });
-//    it('/api/questions - return 404 when not logged in', function (done) {
-//        request(app).del('/api/questions').expect(404, done);
-//    });
     it('GET:/api/questions - return 401 when not logged in as student', function (done) {
         request(app).get('/api/questions').expect(401,done);
     });
@@ -161,18 +149,7 @@ describe('Server API Tests - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate).expect(201, done);
     });
-//    it('/api/questions - return 200 when logged in', function(done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).get('/api/questions').expect(200, done);
-//    });
-//    it('/api/questions/:id - return 200 when logged in', function(done) {
-//        passportStub.login(studentUser); // login as user
-////        console.log("studentUser object returned from the login");
-////        console.log(studentUser);
-//        request(app).get('/api/problems/all').expect(200, done);
-//    });
-})
-;
+});
 
 // =============== Example Code ===============
 //
