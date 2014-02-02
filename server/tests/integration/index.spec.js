@@ -12,7 +12,7 @@ var app = require('../../app.js'),
     superagent = require('superagent'),
     expect = require('expect.js'),
     should = require('should'),
-    passportStub = require('./lib/passport-stub.js'),//the modified version of passport-stub, for the newer interface.
+    passportStub = require('../../lib/passport-stub.js'),//the modified version of passport-stub, for the newer interface.
     userRoles = require('../../../client/js/rolesHelper.js').userRoles,
     accessLevels = require('../../../client/js/rolesHelper.js').accessLevels;
 
@@ -128,12 +128,6 @@ describe('Server Authentication Tests - ', function (done) {
 
 });
 
-//studentUser = {
-//    username: 'student',
-//    id: '52edc8591ea2a1c10b309f17',
-//    role: { title: 'student', bitMask: 2 }
-//}
-
 describe('Server API Tests - ', function (done) {
     beforeEach(function () {
         passportStub.logout(); // logout after each test
@@ -154,30 +148,18 @@ describe('Server API Tests - ', function (done) {
 //        request(app).del('/api/questions').expect(404, done);
 //    });
     it('GET:/api/questions - return 401 when not logged in as student', function (done) {
-//        passportStub.login(studentUser); // login as user
         request(app).get('/api/questions').expect(401,done);
-//            .end(function(err, res){
-//            "use strict";
-//            console.log(res.statusCode);
-//            done();
-//        });
     });
     it('GET:/api/questions - return 200 when logged in as student', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).get('/api/questions').expect(200,done);
-//            .end(function(err, res){
-//            "use strict";
-//            console.log(res.statusCode);
-//            done();
-//        });
+    });
+    it('POST:/api/questions - return 401 when not logged in as student', function (done) {
+        request(app).get('/api/questions').expect(401,done);
     });
     it('POST:/api/questions - return 201 when logged in as student', function (done) {
-//        passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions').send(data.questionCreate).end(function(err, res){
-            "use strict";
-            console.log(res.statusCode);
-            done();
-        });
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions').send(data.questionCreate).expect(201, done);
     });
 //    it('/api/questions - return 200 when logged in', function(done) {
 //        passportStub.login(studentUser); // login as user
