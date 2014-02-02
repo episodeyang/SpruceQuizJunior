@@ -12,7 +12,7 @@ var app = require('../../app.js'),
     superagent = require('superagent'),
     expect = require('expect.js'),
     should = require('should'),
-    passportStub = require('passport-stub'),
+    passportStub = require('passport-stub-js'),
     userRoles = require('../../../client/js/rolesHelper.js').userRoles,
     accessLevels = require('../../../client/js/rolesHelper.js').accessLevels;
 
@@ -22,56 +22,58 @@ passportStub.install(app);
 var studentUser, parentUser, teacherUser, adminUser, superadminUser;
 
 describe('Server Authentication Tests - ', function (done) {
-    beforeEach(function() {
+    beforeEach(function () {
         passportStub.logout(); // logout after each test
     });
-    afterEach(function() {
+    afterEach(function () {
         passportStub.logout(); // logout after each test
     });
 
-    it('/ - Return a 200. The root uri always return 200 and "index.html"', function(done) {
+    it('/ - Return a 200. The root uri always return 200 and "index.html"', function (done) {
         request(app).get('/').expect(200, done);
     });
-    it('/frontPage - Return a 200 The root uri always return 200 and "index.html"', function(done) {
+    it('/frontPage - Return a 200 The root uri always return 200 and "index.html"', function (done) {
         request(app).get('/frontPage').expect(200, done);
     });
-    it('/user - Return a 200 The root uri always return 200 and "index.html"', function(done) {
+    it('/user - Return a 200 The root uri always return 200 and "index.html"', function (done) {
         request(app).get('/user').expect(200, done);
     });
-    it('/register - 200 student', function(done) {
-        request(app).post('/register').send(data.studentRegister).expect(200, done);
+    it('/register - 200 ', function (done) {
+        request(app).post('/register').send(data.studentRegister).expect(201, done);
     });
-    it('/register - 200 parent', function(done) {
-        request(app).post('/register').send(data.parentRegister).expect(200, done);
+    it('/register - 200 parent', function (done) {
+        request(app).post('/register').send(data.parentRegister).expect(201, done);
     });
-    it('/register - 200 teacher', function(done) {
-        request(app).post('/register').send(data.teacherRegister).expect(200, done);
+    it('/register - 200 teacher', function (done) {
+        request(app).post('/register').send(data.teacherRegister).expect(201, done);
     });
-    it('/register - 200 admin', function(done) {
-        request(app).post('/register').send(data.adminRegister).expect(200, done);
+    it('/register - 200 admin', function (done) {
+        request(app).post('/register').send(data.adminRegister).expect(201, done);
     });
-    it('/register - 200 superadmin', function(done) {
-        request(app).post('/register').send(data.superadminRegister).expect(200, done);
+    it('/register - 200 superadmin', function (done) {
+        request(app).post('/register').send(data.superadminRegister).expect(201, done);
     });
-    it('/login - student', function(done) {
+    it('/login - student', function (done) {
         request(app)
             .post('/login')
             .send(data.studentLogin)
-            .end(function (err, res){
+            .end(function (err, res) {
                 if (err) return done(err);
                 "use strict";
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.student.bitMask);
                 res.body.should.have.property("id");
                 res.body.username.should.equal(data.studentLogin.username);
                 studentUser = res.body;
+                console.log('show student user object');
+                console.log(studentUser);
                 done();
             })
     });
-    it('/login - parent', function(done) {
+    it('/login - parent', function (done) {
         request(app)
             .post('/login')
             .send(data.parentLogin)
-            .end(function (err, res){
+            .end(function (err, res) {
                 if (err) return done(err);
                 "use strict";
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.parent.bitMask);
@@ -81,11 +83,11 @@ describe('Server Authentication Tests - ', function (done) {
                 done();
             })
     });
-    it('/login - teacher', function(done) {
+    it('/login - teacher', function (done) {
         request(app)
             .post('/login')
             .send(data.teacherLogin)
-            .end(function (err, res){
+            .end(function (err, res) {
                 if (err) return done(err);
                 "use strict";
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.teacher.bitMask);
@@ -95,11 +97,11 @@ describe('Server Authentication Tests - ', function (done) {
                 done();
             })
     });
-    it('/login - admin', function(done) {
+    it('/login - admin', function (done) {
         request(app)
             .post('/login')
             .send(data.adminLogin)
-            .end(function (err, res){
+            .end(function (err, res) {
                 if (err) return done(err);
                 "use strict";
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.admin.bitMask);
@@ -109,11 +111,11 @@ describe('Server Authentication Tests - ', function (done) {
                 done();
             })
     });
-    it('/login - superadmin', function(done) {
+    it('/login - superadmin', function (done) {
         request(app)
             .post('/login')
             .send(data.superadminLogin)
-            .end(function (err, res){
+            .end(function (err, res) {
                 if (err) return done(err);
                 "use strict";
                 res.body.role.bitMask.should.equal(require('../../../client/js/rolesHelper.js').userRoles.superadmin.bitMask);
@@ -125,27 +127,61 @@ describe('Server Authentication Tests - ', function (done) {
     });
 
 });
+
+//studentUser = {
+//    username: 'student',
+//    id: '52edc8591ea2a1c10b309f17',
+//    role: { title: 'student', bitMask: 2 }
+//}
+
 describe('Server API Tests - ', function (done) {
-    beforeEach(function() {
+    beforeEach(function () {
         passportStub.logout(); // logout after each test
     });
-    afterEach(function() {
+    afterEach(function () {
         passportStub.logout(); // logout after each test
     });
-    it('/api/problems/all - return 401 when not logged in', function(done) {
-        request(app).get('/api/problems/all').expect(401, done);
+//    it('GET:/api/questions - return 401 when not logged in', function (done) {
+//        request(app).get('/api/questions').expect(401, done);
+//    });
+//    it('/api/questions - return 401 when not logged in', function (done) {
+//        request(app).post('/api/questions').expect(401, done);
+//    });
+//    it('/api/questions - return 404 when not logged in', function (done) {
+//        request(app).put('/api/questions').expect(404, done);
+//    });
+//    it('/api/questions - return 404 when not logged in', function (done) {
+//        request(app).del('/api/questions').expect(404, done);
+//    });
+    it('GET:/api/questions - return 200 when logged in as student', function (done) {
+        console.log(studentUser);
+//        passportStub.login(studentUser); // login as user
+        request(app).get('/api/questions').end(function(err, res){
+            "use strict";
+            console.log(res.statusCode);
+            done();
+        });
     });
-    it('/api/errata/all - return 200 when logged in', function(done) {
-        passportStub.login(studentUser); // login as user
-//        console.log("studentUser object returned from the login");
-//        console.log(studentUser);
-        request(app).get('/api/problems/all').expect(200, done);
+    it('POST:/api/questions - return 201 when logged in as student', function (done) {
+//        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions').send(data.questionCreate).end(function(err, res){
+            "use strict";
+            console.log(res.statusCode);
+            done();
+        });
     });
-    it('/api/problems/all - return 200 when logged in', function(done) {
-        passportStub.login(admin); // login as admin
-        request(app).get('/api/problems/all').expect(200, done);
-    });
-});
+//    it('/api/questions - return 200 when logged in', function(done) {
+//        passportStub.login(studentUser); // login as user
+//        request(app).get('/api/questions').expect(200, done);
+//    });
+//    it('/api/questions/:id - return 200 when logged in', function(done) {
+//        passportStub.login(studentUser); // login as user
+////        console.log("studentUser object returned from the login");
+////        console.log(studentUser);
+//        request(app).get('/api/problems/all').expect(200, done);
+//    });
+})
+;
 
 // =============== Example Code ===============
 //

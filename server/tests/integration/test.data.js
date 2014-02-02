@@ -103,6 +103,19 @@ var testData = {
     parentLogin: {
         username: 'parent',
         password: 'password'
+    },
+
+
+    //question data
+    questionCreate: {
+        title: '行程问题解法',
+        text: 'some example text here',
+        tags: ['三年级', '数学', '二元一次方程'],
+        author: [
+            {
+                name: '王小一个'
+            }
+        ]
     }
 };
 

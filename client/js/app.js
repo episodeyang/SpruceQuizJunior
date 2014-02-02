@@ -65,35 +65,35 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 //                controller: 'SectionCtrl',
 //                access: access.loggedin
 //            });
-        $routeProvider.when('/problems/:questionId',
-            {
-                templateUrl: '/partials/questions',
-                controller: 'QuestionCtrl',
-                access: access.loggedin
-            });
-        $routeProvider.when('/reports',
-            {
-                templateUrl: '/partials/reports',
-                controller: 'ReportCtrl',
-                access: access.superuser
-            });
-        $routeProvider.when('/superadmin',
-            {
-                templateUrl: '/partials/superadmin',
-                controller: 'SuperAdminCtrl',
-                access: access.superadmin
-            });
-        $routeProvider.when('/development',
-            {
-                templateUrl: '/partials/development',
-                controller: 'DevelopmentCtrl',
-                access: access.superadmin
-            });
-        $routeProvider.when('/404',
-            {
-                templateUrl: '/partials/404',
-                access: access.all
-            });
+//        $routeProvider.when('/problems/:questionId',
+//            {
+//                templateUrl: '/partials/questions',
+//                controller: 'QuestionCtrl',
+//                access: access.loggedin
+//            });
+//        $routeProvider.when('/reports',
+//            {
+//                templateUrl: '/partials/reports',
+//                controller: 'ReportCtrl',
+//                access: access.superuser
+//            });
+//        $routeProvider.when('/superadmin',
+//            {
+//                templateUrl: '/partials/superadmin',
+//                controller: 'SuperAdminCtrl',
+//                access: access.superadmin
+//            });
+//        $routeProvider.when('/development',
+//            {
+//                templateUrl: '/partials/development',
+//                controller: 'DevelopmentCtrl',
+//                access: access.superadmin
+//            });
+//        $routeProvider.when('/404',
+//            {
+//                templateUrl: '/partials/404',
+//                access: access.all
+//            });
         $routeProvider.otherwise({redirectTo: '/404'});
 
         $locationProvider.html5Mode(true);

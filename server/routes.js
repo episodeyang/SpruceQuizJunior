@@ -5,28 +5,24 @@
  * @private
  */
 
-define(['underscore', 'path', 'passport', './controllers/auth', './controllers/user', './rolesHelper'],
-    function(_, path, passport, AuthCtrl, UserCtrl, rolesHelper){
+define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
+    './controllers/user', './controllers/question'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
 
-        function ensureAuthenticated(req, res, next) {
-            if (req.isAuthenticated()) return next();
-            else                      return res.send(401);
-        }
-
         function ensureAuthorized(req, res, next) {
-            if (!req.user) return res.send(401);
-
-            //console.log(req.user);
-            var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.public;  //This look a bit fishy.
-            if (!(accessLevel.bitMask & req.user.role.bitMask)) return res.send(403);
-
+            var role;
+            if(!req.user) role = userRoles.public;
+            else          role = req.user.role;
+            console.log(req.user);
+            var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.all;  //This look a bit fishy.
+            if (!(accessLevel.bitMask & role.bitMask)) return res.send(403);
             return next();
-        }
+        };
+
         var routes = [
-            /** @event module:Routes./patials/* */
             {
                 path: '/partials/*',
                 httpMethod: 'GET',
@@ -34,9 +30,8 @@ define(['underscore', 'path', 'passport', './controllers/auth', './controllers/u
                     var requestedView = path.join('./', req.url);
                     res.render(requestedView);
                 }],
-                accessLevel: accessLevels.public
+                accessLevel: accessLevels.all
             },
-            /** @event module:Routes./js/mathJax/* */
             {   //Need to give more fine-grained control to the client side scripts,
                 //so that not all client side scripts are exposed to anonymous users.
                 path: '/js/mathJax/*',
@@ -45,9 +40,8 @@ define(['underscore', 'path', 'passport', './controllers/auth', './controllers/u
                     var requestedView = path.join('./', req.url);
                     res.render(requestedView);
                 }],
-                accessLevel: accessLevels.public
+                accessLevel: accessLevels.all
             },
-            /** @event module:Routes./js/* */
             {   //Need to give more fine-grained control to the client side scripts,
                 //so that not all client side scripts are exposed to anonymous users.
                 path: '/js/*',
@@ -58,39 +52,61 @@ define(['underscore', 'path', 'passport', './controllers/auth', './controllers/u
                 }],
                 accessLevel: accessLevels.loggedin
             },
-
-            /** @event module:Routes/api./api/register:POST*/
             {
                 path: '/register',
                 httpMethod: 'POST',
                 middleware: [AuthCtrl.register],
-                accessLevel: accessLevels.public
+                accessLevel: accessLevels.all
             },
-            /** @event module:Routes/api./api/login:POST */
             {
                 path: '/login',
                 httpMethod: 'POST',
                 middleware: [AuthCtrl.login],
-                accessLevel: accessLevels.public
+                accessLevel: accessLevels.all
             },
-            /** @event module:Routes/api./api/logout:POST */
             {
                 path: '/logout',
                 httpMethod: 'POST',
                 middleware: [AuthCtrl.logout],
-                accessLevel: accessLevels.public
+                accessLevel: accessLevels.all
             },
-
-            // User resource
-            /** @event module:Routes/api./api/users:GET
-             * @todo <em>Obsolete</em> wait for removal.
-             */
             {
-                path: '/users',
+                path: '/api/questions',
                 httpMethod: 'GET',
-                middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
-                accessLevel: accessLevels.superuser
+                middleware: [QuestionCtrl.index],
+                accessLevel: accessLevels.all
             },
+            {
+                path: '/api/questions',
+                httpMethod: 'POST',
+                middleware: [QuestionCtrl.add],
+                accessLevel: accessLevels.all
+            },
+//            {
+//                path: '/api/questions/:id',
+//                httpMethod: 'GET',
+//                middleware: [ensureAuthenticated, ensureAuthorized, QuestionCtrl.findOne],
+//                accessLevel: accessLevels.loggedin
+//            },
+//            {
+//                path: '/api/questions/:id',
+//                httpMethod: 'POST',
+//                middleware: [ensureAuthenticated, ensureAuthorized, QuestionCtrl.update],
+//                accessLevel: accessLevels.loggedin
+//            },
+//            {
+//                path: '/api/questions/:id',
+//                httpMethod: 'DELETE',
+//                middleware: [ensureAuthenticated, ensureAuthorized, QuestionCtrl.removebyId],
+//                accessLevel: accessLevels.superuser
+//            },
+            // User resource
+//            {
+//                path: '/users',
+//                httpMethod: 'GET',
+//                middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
+//                accessLevel: accessLevels.superuser
+//            },
 //            {
 //                path: '/api/schools/:uuid',
 //                httpMethod: 'GET',
@@ -427,6 +443,7 @@ define(['underscore', 'path', 'passport', './controllers/auth', './controllers/u
         return function (app) {
 
             _.each(routes, function (route) {
+                route.middleware.unshift(ensureAuthorized);
                 var args = _.flatten([route.path, route.middleware]);
 
                 switch (route.httpMethod.toUpperCase()) {

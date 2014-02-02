@@ -18,8 +18,8 @@
         ],
 
         schDict : {
-            student: "",
             public: "",
+            student: "",
             parent: "",
             teacher: "",
             admin: "",

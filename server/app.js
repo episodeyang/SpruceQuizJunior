@@ -38,7 +38,8 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
         app.use(express.logger('dev'))
         app.use(express.cookieParser());
         app.use(express.bodyParser());
-        app.use(express.methodOverride());
+//        app.use(express.favicon());
+        app.use(express.methodOverride()); // Allows the use of HTTP 'DELETE' AND 'PUT' methods.
         app.use(lessMiddleware({ src: __dirname + '../client', compress: true }));
         app.use(express.static(path.join(__dirname, '../client')));
         app.use(express.cookieSession(

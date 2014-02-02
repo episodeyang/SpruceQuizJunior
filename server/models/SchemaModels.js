@@ -27,11 +27,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             studentAnswer: Array
         }
     };
-
     var subSchema = {};
     _.each(config_nest, function (schema, title) {
         subSchema[capitalize(title)] = new mongoose.Schema(schema);
     });
+
     /**
      * @typedef schema {{name: string, lang: string}}
      * @type {{schemaConfig: Object.<string, schema>}}
@@ -112,13 +112,12 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             name: String
         },
         question: {
-            problem: String,
-            title: Array,
-            text: Array,
+            title: String,
+            text: String,
+            authors: String,
             tags: Array,
-            figure: Array,
-            answers: Array,
-            updates: Array
+            comments: Array,
+            answers: Array
         },
         problem: {
             topLevel: Boolean,

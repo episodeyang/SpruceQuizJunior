@@ -27,16 +27,13 @@ define(['passport', '../models/User'],
                         if (err === 'UserAlreadyExists') return res.send(403, "User already exists");
                         else if (err)                    return res.send(500);
 
-
+                        // the passport custom callback
                         req.logIn(user, function (err) {
                             if (err) {
                                 next(err);
                             }
                             else {
-                                res.json(200, { "role": user.role, "username": user.username
-                                    //,"id": user.userId
-
-                                });
+                                res.json(201, { "role": user.role, "username": user.username, "id": user._id});
                             }
                         });
                     }
@@ -52,8 +49,6 @@ define(['passport', '../models/User'],
                     if (!user) {
                         return res.send(400);
                     }
-
-
                     req.logIn(user, function (err) {
                         if (err) {
                             return next(err);
