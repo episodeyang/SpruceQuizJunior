@@ -12,7 +12,7 @@ var app = require('../../app.js'),
     superagent = require('superagent'),
     expect = require('expect.js'),
     should = require('should'),
-    passportStub = require('passport-stub-js'),
+    passportStub = require('./lib/passport-stub.js'),//the modified version of passport-stub, for the newer interface.
     userRoles = require('../../../client/js/rolesHelper.js').userRoles,
     accessLevels = require('../../../client/js/rolesHelper.js').accessLevels;
 
@@ -153,14 +153,23 @@ describe('Server API Tests - ', function (done) {
 //    it('/api/questions - return 404 when not logged in', function (done) {
 //        request(app).del('/api/questions').expect(404, done);
 //    });
-    it('GET:/api/questions - return 200 when logged in as student', function (done) {
-        console.log(studentUser);
+    it('GET:/api/questions - return 401 when not logged in as student', function (done) {
 //        passportStub.login(studentUser); // login as user
-        request(app).get('/api/questions').end(function(err, res){
-            "use strict";
-            console.log(res.statusCode);
-            done();
-        });
+        request(app).get('/api/questions').expect(401,done);
+//            .end(function(err, res){
+//            "use strict";
+//            console.log(res.statusCode);
+//            done();
+//        });
+    });
+    it('GET:/api/questions - return 200 when logged in as student', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).get('/api/questions').expect(200,done);
+//            .end(function(err, res){
+//            "use strict";
+//            console.log(res.statusCode);
+//            done();
+//        });
     });
     it('POST:/api/questions - return 201 when logged in as student', function (done) {
 //        passportStub.login(studentUser); // login as user

@@ -125,9 +125,8 @@ define(['underscore', 'passport', 'passport-local', 'validator', '../rolesHelper
             ),
 
             serializeUser: function (user, done) {
-                user.userId = user._id;//temp code, for debug reason, need to remove right away.
-                done(null, user._id);
-//        done(null, user.userId);
+//                user.userId = user._id;//temp code, for debug reason, need to remove right away.
+                done(null, user.id);
             },
 
             deserializeUser: function (id, done) {

@@ -31,7 +31,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              */
             index: function (req, res) {
                 console.log('got request to /api/problems, processing now.');
-                console.log(req);
                 res.json(200, {'message': 'got it?'});
             },
             /**

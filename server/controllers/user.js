@@ -45,8 +45,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                         delete user.google;
                         delete user.linkedin;
                     });
-                    console.log('finding user');
-                    console.log(users)
                     res.json(users);
                 })
             },
