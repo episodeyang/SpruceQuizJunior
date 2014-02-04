@@ -31,7 +31,15 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              */
             index: function (req, res) {
                 console.log('got request to /api/problems, processing now.');
-                res.json(200, {'message': 'got it?'});
+                QuestionM.find({}, function(err, docs){
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err)}
+                    else {
+                        console.log(docs);
+                        return res.send(200, docs)
+                    };
+                })
             },
             /**
              * @api {post} /api/questions Create Question
@@ -39,19 +47,16 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              * @apiGroup Questions
              */
             add: function (req, res) {
-                res.json(201, {'message': 'created! success!'});
-//                QuestionM.create(req.body, function(err, results){
-//                    if (err) {
-//                        console.log(err)
-//                        return res.send(403, err)}
-//                    else {
-//                        console.log(results)
-//                        return res.send(200, results)
-//                    };
-//                })
-            }
-        };
-    });
+                QuestionM.create(req.body, function(err, results){
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err)}
+                    else {
+                        console.log(results);
+                        return res.send(201, results)
+                    };
+                })
+            },
 //            /**
 //             * @api {get} /api/questions/:id Retrieve Question
 //             * @apiName GetQuestion
@@ -89,3 +94,5 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
 //                    }
 //                });
 //            }
+        };
+    });
