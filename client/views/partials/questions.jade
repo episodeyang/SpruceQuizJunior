@@ -45,7 +45,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                             h4.no-margin {{question.title}}
                                             hr.low-margin
                                     .row
-                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="question.text.slice(0,200)")
+                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="question.text")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
                                             .rounded.blue.stat-box
                                                 h4.no-bottom-margin.text-center {{question.vote}}
