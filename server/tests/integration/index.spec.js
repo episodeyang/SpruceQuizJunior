@@ -138,9 +138,13 @@ describe('Server API Tests - ', function (done) {
     it('POST:/api/questions - return 401 when not logged in as student', function (done) {
         request(app).get('/api/questions').expect(401,done);
     });
+    var resQuestions = {};
     it('POST:/api/questions - return 201 when logged in as student', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions').send(data.questionCreate).expect(201, done);
+        request(app).post('/api/questions').send(data.questionCreate).expect(201).done(function(err, res){
+            "use strict";
+            resQuestions = res.body;
+        });
     });
     it('GET:/api/questions - return 401 when not logged in as student', function (done) {
         request(app).get('/api/questions').expect(401,done);
@@ -153,14 +157,14 @@ describe('Server API Tests - ', function (done) {
             done();
         });
     });
+    it('GET:/api/questions/:id - return 401 when not logged in as student', function (done) {
+        request(app).get('/api/questions/' + question.id).expect(401,done);
+    });
+    it('GET:/api/questions/:id - return 201 when logged in as student', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions' + question.id).expect(200, done);
+    });
     //TODO: The following tests are yet to be in place.
-//    it('GET:/api/questions/:id - return 401 when not logged in as student', function (done) {
-//        request(app).get('/api/questions').expect(401,done);
-//    });
-//    it('GET:/api/questions/:id - return 201 when logged in as student', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions').send(data.questionCreate).expect(201, done);
-//    });
 //    it('POST:/api/questions/:id - return 401 when not logged in as student', function (done) {
 //        request(app).get('/api/questions').expect(401,done);
 //    });

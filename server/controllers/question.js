@@ -11,7 +11,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
             /**
              *
              * @api {get} /api/questions Request Questions
-             * @apiName Question.index
+             * @apiName IndexQuestion
              * @apiGroup Questions
              * @apiParam {Number} id Users unique ID.
              * @apiSuccess {String} firstname Firstname of the User.
@@ -57,11 +57,11 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     };
                 })
             },
-//            /**
-//             * @api {get} /api/questions/:id Retrieve Question
-//             * @apiName GetQuestion
-//             * @apiGroup Questions
-//             */
+            /**
+             * @api {get} /api/questions/:id Retrieve Question
+             * @apiName GetQuestion
+             * @apiGroup Questions
+             */
 //            findOne: function (req, res) {
 //                var question;
 //                QuestionM.findById(req.params.id, 'title text authors tags comments answers', function(err, results){
@@ -72,20 +72,20 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
 //                    };
 //                })
 //            },
-//            /**
-//             * @api {post} /api/questions/:id Update Question
-//             * @apiName UpdateQuestion
-//             * @apiGroup Questions
-//             */
+            /**
+             * @api {post} /api/questions/:id Update Question
+             * @apiName UpdateQuestion
+             * @apiGroup Questions
+             */
 //            update: function (req, res) {
 //
 //                console.log('add ');
 //            },
-//            /**
-//             * @api {delete} /api/questions/:id Delete Question
-//             * @apiName DeleteQuestion
-//             * @apiGroup Questions
-//             */
+            /**
+             * @api {delete} /api/questions/:id Delete Question
+             * @apiName DeleteQuestion
+             * @apiGroup Questions
+             */
 //            removebyId: function (req, res) {
 //                console.log('add ');
 //                UserM.remove({ id: req.params.id }, function (err) {
