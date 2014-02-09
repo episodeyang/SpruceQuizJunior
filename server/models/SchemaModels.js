@@ -117,7 +117,21 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             authors: String,
             tags: Array,
             comments: Array,
-            answers: Array
+            answers: Array,
+            __virtuals__: {
+                idGet: function () { return this._id; }
+            },
+            __options__: {
+                toJSON: {
+                    getters: true,
+                    virtuals: true,
+                    transform: function (doc, rtn, options) { delete rtn._id; delete rtn.__v; }
+                },
+                toObject: {
+                    getters: true,
+                    virtuals: true
+                }
+            }
         },
         problem: {
             topLevel: Boolean,
@@ -227,28 +241,47 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
     };
 
     var Config = {};
+
     _.each(config, function (schema, title) {
-        if (!schema.__methods__) {
-            Config[capitalize(title)] = mongoose.model(
-                capitalize(title),
-                new mongoose.Schema(schema, {collection: title})
-            );
-        } else {
-            var tempSchema = schema,
-                methods = schema.__methods__;
-            delete tempSchema.__methods__;
-            Config[title + 'Schema'] = new mongoose.Schema(tempSchema, {collection: title}
-            );
+        if (schema.__methods__) {
+            var methods = schema.__methods__;
+            delete schema.__methods__;
+        }
+        if (schema.__virtuals__) {
+            var virtuals = schema.__virtuals__;
+            delete schema.__virtuals__;
+        }
+        if (schema.__options__) {
+            var options = schema.__options__;
+            delete schema.__options__;
+        }
+        Config[title + 'Schema'] = new mongoose.Schema(schema, {collection: title});
+        if (methods) {
             _.each(methods, function (method, methodKey) {
                 Config[title + 'Schema'].methods[methodKey] = method;
             });
-            Config[capitalize(title)] = mongoose.model(capitalize(title), Config[title + 'Schema']);
         }
-        ;
+        if (virtuals) {
+//            console.log('showing the virtuals of this schema: ' + title);
+//            console.log(virtuals);
+            _.each(virtuals, function (virtual, virtualKey) {
+                if (virtualKey.slice(-3) == 'Set') {
+                    Config[title + 'Schema'].virtual(virtualKey.slice(0, -3)).set(virtual);
+                } else {
+//                    console.log('showing the virtual key');
+//                    console.log(virtualKey.slice(0,-3));
+                    Config[title + 'Schema'].virtual(virtualKey.slice(0, -3)).get(virtual);
+                };
+            });
+        }
+        if (options) {
+            _.each(options, function (option, optionKey) {
+                Config[title + 'Schema'].set(optionKey, option);
+            });
+        }
+        Config[capitalize(title)] = mongoose.model(capitalize(title), Config[title + 'Schema']);
     });
     Config.__config = config;
     Config.__config_nest = config_nest;
     return Config;
 })
-
-

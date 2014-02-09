@@ -81,24 +81,24 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 middleware: [QuestionCtrl.add],
                 accessLevel: accessLevels.loggedin
             },
-//            {
-//                path: '/api/questions/:id',
-//                httpMethod: 'GET',
-//                middleware: [ensureAuthenticated, ensureAuthorized, QuestionCtrl.findOne],
-//                accessLevel: accessLevels.loggedin
-//            },
-//            {
-//                path: '/api/questions/:id',
-//                httpMethod: 'POST',
-//                middleware: [ensureAuthenticated, ensureAuthorized, QuestionCtrl.update],
-//                accessLevel: accessLevels.loggedin
-//            },
-//            {
-//                path: '/api/questions/:id',
-//                httpMethod: 'DELETE',
-//                middleware: [ensureAuthenticated, ensureAuthorized, QuestionCtrl.removebyId],
-//                accessLevel: accessLevels.superuser
-//            },
+            {
+                path: '/api/questions/:id',
+                httpMethod: 'GET',
+                middleware: [QuestionCtrl.findOne],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id',
+                httpMethod: 'POST',
+                middleware: [QuestionCtrl.update],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id',
+                httpMethod: 'DELETE',
+                middleware: [QuestionCtrl.removebyId],
+                accessLevel: accessLevels.loggedin
+            },
             // User resource
 //            {
 //                path: '/users',

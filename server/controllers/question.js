@@ -3,25 +3,34 @@
  * @module User
  * @type {exports}
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper'],
-    function (_, SchemaModels, rolesHelper) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
+    function (_, SchemaModels, rolesHelper, mongoose) {
         var QuestionM = SchemaModels.Question;
         var userRoles = rolesHelper.userRoles;
+        var ObjectId = mongoose.Types.ObjectId;
         return {
             /**
              *
-             * @api {get} /api/questions Request Questions
+             * @api {get} /api/questions Get Questions
              * @apiName IndexQuestion
              * @apiGroup Questions
-             * @apiParam {Number} id Users unique ID.
-             * @apiSuccess {String} firstname Firstname of the User.
-             * @apiSuccess {String} lastname  Lastname of the User.
+             * @apiSuccess {Array} list of all questions.
              * @apiSuccessExample Success-Response:
              *     HTTP/1.1 200 OK
-             *     {
-             *       "firstname": "John",
-             *       "lastname": "Doe"
-             *     }
+             *     [
+             *      { title: '行程问题解法',
+             *       text: 'some example text here',
+             *       answers: [],
+             *       comments: [],
+             *       tags: [ '三年级', '数学', '二元一次方程' ],
+             *       id: '52f6e14da7e331ff15fb4d13' },
+             *      { title: '行程问题解法',
+             *        text: 'some example text here',
+             *        answers: [],
+             *        comments: [],
+             *       tags: [ '三年级', '数学', '二元一次方程' ],
+             *       id: '52f6e5ff8021572716e3ee8f' },
+             *     ]
              * @apiError UserNotFound The id of the User was not found.
              * @apiErrorExample Error-Response:
              *     HTTP/1.1 404 Not Found
@@ -30,14 +39,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              *     }
              */
             index: function (req, res) {
-                console.log('got request to /api/problems, processing now.');
+//                console.log('got request to /api/problems, processing now.');
                 QuestionM.find({}, function(err, docs){
                     if (err) {
                         console.log(err);
-                        return res.send(500, err)}
-                    else {
-                        console.log(docs);
-                        return res.send(200, docs)
+                        return res.send(500, err);
+                    } else {
+                        return res.send(200, docs);
                     };
                 })
             },
@@ -47,52 +55,60 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              * @apiGroup Questions
              */
             add: function (req, res) {
-                QuestionM.create(req.body, function(err, results){
+                QuestionM.create(req.body, function (err, results) {
                     if (err) {
                         console.log(err);
-                        return res.send(500, err)}
-                    else {
-                        console.log(results);
-                        return res.send(201, results)
+                        return res.send(500, err);
                     };
                 })
+                    .then(function (question) {
+                        res.location(req.route.path + '/' + question.id);
+                        return res.send(201, question);
+                    });
             },
             /**
-             * @api {get} /api/questions/:id Retrieve Question
+             * @api {get} /api/questions/:id Get A Specific Question
              * @apiName GetQuestion
              * @apiGroup Questions
              */
-//            findOne: function (req, res) {
-//                var question;
-//                QuestionM.findById(req.params.id, 'title text authors tags comments answers', function(err, results){
-//                    if (err) {return res.send(403, err)}
-//                    else {
-//                        console.log(results)
-//                        return res.send(201, results)
-//                    };
-//                })
-//            },
+            findOne: function (req, res) {
+                if (!req.params.id) { return res.send(400); }
+                QuestionM.findById(req.params.id, 'id title text authors tags comments answers', function(err, results){
+                    if (err) {return res.send(403, err)}
+                    else {
+                        return res.send(200, results);
+                    };
+                })
+            },
             /**
              * @api {post} /api/questions/:id Update Question
              * @apiName UpdateQuestion
              * @apiGroup Questions
              */
-//            update: function (req, res) {
-//
-//                console.log('add ');
-//            },
+            update: function (req, res) {
+                if (!req.params.id) { return res.send(400); }
+                QuestionM.findByIdAndUpdate(
+                    ObjectId(req.params.id),
+                    req.body,
+                    {new: true},
+                    function(err, results){
+                        if (err) {return res.send(403, err)};
+                        return res.send(201, results);
+                });
+            },
             /**
              * @api {delete} /api/questions/:id Delete Question
              * @apiName DeleteQuestion
              * @apiGroup Questions
              */
-//            removebyId: function (req, res) {
-//                console.log('add ');
-//                UserM.remove({ id: req.params.id }, function (err) {
-//                    if (err) {
-//                        res.send(404, "Remove user failed.");
-//                    }
-//                });
-//            }
+            removebyId: function (req, res) {
+                if (!req.params.id) { return res.send(400); }
+                QuestionM.findByIdAndRemove(
+                    ObjectId(req.params.id),
+                    function(err, results){
+                        if (err) {return res.send(403, err)};
+                        return res.send(204);
+                    });
+            }
         };
     });

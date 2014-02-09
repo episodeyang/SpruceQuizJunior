@@ -37,6 +37,11 @@ var testData = {
         username: 'student',
         password: 'password'
     },
+    /** Student login data for passportStub*/
+    studentUser: {
+        username: 'student',
+        role: userRoles.student
+    },
     /** superadmin registration data */
     superadminRegister: {
         username: 'superadmin',
@@ -53,6 +58,11 @@ var testData = {
     superadminLogin: {
         username: 'superadmin',
         password: 'password'
+    },
+    /** superadmin login data for passportStub*/
+    superadminUser: {
+        username: 'superadmin',
+        role: userRoles.superadmin
     },
     /** admin registration data */
     adminRegister: {
@@ -71,6 +81,11 @@ var testData = {
         username: 'admin',
         password: 'password'
     },
+    /** admin login data for passportStub*/
+    adminUser: {
+        username: 'admin',
+        role: userRoles.admin
+    },
     /** teacher registration data*/
     teacherRegister: {
         username: 'teacher',
@@ -88,6 +103,11 @@ var testData = {
         username: 'teacher',
         password: 'password'
     },
+    /** teacher login data for passportStub*/
+    teacherUser: {
+        username: 'teacher',
+        role: userRoles.teacher
+    },
     /** parent registration data*/
     parentRegister: {
         username: 'parent',
@@ -103,6 +123,11 @@ var testData = {
     parentLogin: {
         username: 'parent',
         password: 'password'
+    },
+    /** parent login data for passportStub*/
+    parentUser: {
+        username: 'parent',
+        role: userRoles.parent
     },
 
 
