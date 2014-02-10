@@ -28,9 +28,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         postPrototype: {
             text: String,
-            author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
+            author: String, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateOfCreation: Date,
-            dateEdited: Date,
+            dateEdited: Date
         },
         answer: {
             text: String,
@@ -68,7 +68,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             var options = schema.__options__;
             delete schema.__options__;
         }
-        subSchema[capitalize(title)] = new mongoose.Schema(schema);
+        // create subdocument without the `_id` key
+        subSchema[capitalize(title)] = new mongoose.Schema(schema, {_id: false});
         if (methods) {
             _.each(methods, function (method, methodKey) {
                 subSchema[capitalize(title)].methods[methodKey] = method;
@@ -175,7 +176,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             authors: String,
             tags: Array,
             comments: [subSchema.PostPrototype],
-            answers: [subSchema.answer],
+            answers: [subSchema.Answer],
             __virtuals__: {
                 idGet: function () { return this._id; }
             },
