@@ -37,7 +37,7 @@ describe('Server API Tests - ', function (done) {
         request(app).get('/api/questions').expect(401, done);
     });
     var question = {};
-    it('create problem', function (done) {
+    it('create question', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate).expect(201).end(function (err, res) {
             question = res.body;
@@ -45,9 +45,9 @@ describe('Server API Tests - ', function (done) {
             done();
         });
     });
-    it('create another problem', function (done) {
+    it('create another question', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions').send(data.questionCreate).expect(201, done);
+        request(app).post('/api/questions').send(data.questionCreate2).expect(201, done);
     });
     it('needs to login to access', function (done) {
         request(app).get('/api/questions').expect(401, done);
