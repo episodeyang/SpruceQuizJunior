@@ -25,11 +25,69 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             weight: Number,
             receivedScore: Number,
             studentAnswer: Array
+        },
+        postPrototype: {
+            text: String,
+            author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
+            dateOfCreation: Date,
+            dateEdited: Date,
+        },
+        answer: {
+            text: String,
+            author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
+            dateOfCreation: Date,
+            dateEdited: Date,
+            upvote: Number,
+            downvote: Number,
+            __virtuals__: {
+                voteGet: function () { return this.upvote - this.downvote; }
+            },
+            __options__: {
+                toJSON: {
+                    getters: true,
+                    virtuals: true
+                },
+                toObject: {
+                    getters: true,
+                    virtuals: true
+                }
+            }
         }
     };
     var subSchema = {};
     _.each(config_nest, function (schema, title) {
+        if (schema.__methods__) {
+            var methods = schema.__methods__;
+            delete schema.__methods__;
+        }
+        if (schema.__virtuals__) {
+            var virtuals = schema.__virtuals__;
+            delete schema.__virtuals__;
+        }
+        if (schema.__options__) {
+            var options = schema.__options__;
+            delete schema.__options__;
+        }
         subSchema[capitalize(title)] = new mongoose.Schema(schema);
+        if (methods) {
+            _.each(methods, function (method, methodKey) {
+                subSchema[capitalize(title)].methods[methodKey] = method;
+            });
+        }
+        if (virtuals) {
+            _.each(virtuals, function (virtual, virtualKey) {
+                if (virtualKey.slice(-3) == 'Set') {
+                    subSchema[capitalize(title)].virtual(virtualKey.slice(0, -3)).set(virtual);
+                } else {
+                    subSchema[capitalize(title)].virtual(virtualKey.slice(0, -3)).get(virtual);
+                };
+            });
+        }
+        if (options) {
+            _.each(options, function (option, optionKey) {
+                subSchema[capitalize(title)].set(optionKey, option);
+            });
+        }
     });
 
     /**
@@ -116,8 +174,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             text: String,
             authors: String,
             tags: Array,
-            comments: Array,
-            answers: Array,
+            comments: [subSchema.PostPrototype],
+            answers: [subSchema.answer],
             __virtuals__: {
                 idGet: function () { return this._id; }
             },

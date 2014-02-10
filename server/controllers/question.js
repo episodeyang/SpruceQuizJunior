@@ -2,6 +2,15 @@
  * @fileOverview User Controller
  * @module User
  * @type {exports}
+ * This `QuestionCtrl` module takes care of question related operations, such as
+ *              question.index(),
+ *              question.add(:id),
+ *              question.findOne(:id, payload)
+ *              question.update(:id, payload)
+ *              question.remove(:id)
+ *              etc.,
+ *
+ *
  */
 define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
     function (_, SchemaModels, rolesHelper, mongoose) {

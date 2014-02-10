@@ -99,23 +99,22 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 middleware: [QuestionCtrl.removebyId],
                 accessLevel: accessLevels.loggedin
             },
-            // User resource
-//            {
-//                path: '/users',
-//                httpMethod: 'GET',
-//                middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
-//                accessLevel: accessLevels.superuser
-//            },
+            {
+                path: '/api/students',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
 //            {
 //                path: '/api/schools/:uuid',
 //                httpMethod: 'GET',
-//                middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getbyId],
+//                middleware: [SchoolCtrl.getbyId],
 //                accessLevel: accessLevels.loggedin
 //            },
 //            {
 //                path: '/api/schools/:uuid/teachers',
 //                httpMethod: 'GET',
-//                middleware: [ensureAuthenticated, ensureAuthorized, SchoolCtrl.getTeachers],
+//                middleware: [SchoolCtrl.getTeachers],
 //                accessLevel: accessLevels.loggedin
 //            },
 //            {

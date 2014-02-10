@@ -20,6 +20,7 @@ var _ = require('underscore')
  * @namespace
  */
 var testData = {
+// user, register, and login data
     /** Student registration data */
     studentRegister: {
         username: 'student',
@@ -129,18 +130,21 @@ var testData = {
         username: 'parent',
         role: userRoles.parent
     },
-
-
-    //question data
+//question data
     questionCreate: {
         title: '行程问题解法',
         text: 'some example text here',
-        tags: ['三年级', '数学', '二元一次方程'],
         author: [
             {
                 name: '王小一个'
             }
+        ],
+        tags: ['三年级', '数学', '二元一次方程'],
+        comments: [{text: '这个问题很有趣', author: 'authorName'}],
+        answers: [
+            {text: '这道题的解法应该是这样的：', author: 'authorName2', upvote: 0, downvote: 0 }
         ]
+
     }
 };
 

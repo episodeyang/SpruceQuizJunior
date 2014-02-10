@@ -2,6 +2,17 @@
  * @fileOverview User Controller
  * @module User
  * @type {exports}
+ * Registration and validation for authentication takes place in the
+ * Auth controller and User model.
+ * This `UserCtrl` module takes care of non-auth, API-related user
+ * operations, such as
+ *          user.index(),
+ *          user.remove(:id),
+ *          user.addSection(),
+ *          user.addSchool(),
+ *          user.addTutor(),
+ *          etc.,
+ * good luck coding!
  */
 define(['underscore', '../models/SchemaModels', '../rolesHelper'],
     function (_, SchemaModels, rolesHelper) {
@@ -34,17 +45,15 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              *       "error": "UserNotFound"
              *     }
              */
+                //This is mostly experimental, since no testing spec is in place yet.
             index: function (req, res) {
                 var users;
-                UserM.find(function (err, results) {
+                UserM.find({$where: "this.role.title == 'student'"}, function (err, results) {
                     users = results;
                     _.each(users, function (user) {
                         delete user.password;
-                        delete user.twitter;
-                        delete user.facebook;
-                        delete user.google;
-                        delete user.linkedin;
                     });
+                    console.log(users);
                     res.json(users);
                 })
             },
