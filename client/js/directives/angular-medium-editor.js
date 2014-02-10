@@ -10,15 +10,19 @@ angular.module('angular-medium-editor', []).directive('mediumEditor', function (
                 opts = angular.fromJson(iAttrs.options);
             }
             var placeholder = opts.placeholder || iAttrs.placeholder;
-            iElement.on('blur', function () {
+            //@TODO: NEED BUG FIX --
+            //      the placeholder does not hide upon keydown during Chinese input.
+            function Run () {
                 scope.$apply(function () {
-                    if (iElement.html() == '<p><br></p>') {
+                    if (iElement.html() === '<p><br></p>') {
                         opts.placeholder = placeholder;
                         var editor = new MediumEditor(iElement, opts);
-                    }
+                    };
                     ctrl.$setViewValue(iElement.html());
                 });
-            });
+            }
+            iElement.bind('keydown keyup mouseenter mouseleave', Run);
+            iElement.on('blur',    Run);
             ctrl.$render = function () {
                 if (!editor) {
                     if (!ctrl.$isEmpty(ctrl.$viewValue)) {

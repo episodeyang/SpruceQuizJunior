@@ -2,8 +2,6 @@
 
 angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     .factory('Users', ['$resource', function ($resource) {
-//        var users = $resource('/api/users');
-//        var user = $resource('/api/user/:id', {id: '@id'});
         return {
             list: $resource('/api/users'),
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
@@ -11,9 +9,20 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             })
         };
     }])
-//    .factory('Questions', function ($resource) {
-//        return $resource('api/questions/:id');
-//    })
+    //@todo: Need testing, just finished 2014/02/10
+    .factory('Questions', function ($resource) {
+        var Questions = $resource('/api/questions', {
+            create: {method: 'POST'}
+        });
+        var Question = $resource('/api/questions/:id', {id: '@id'});
+        return {
+            get: Question.get,
+            query: Questions.query,
+            create: Questions.create,
+            save: Question.save,
+            remove: Question.remove
+        };
+    })
     .factory('Students', function ($resource) {
         return {
             onErrata: $resource('/api/students/errata/:id', {id: '@_id'}, {

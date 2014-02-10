@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modelServices', ['resourceProvider'])
-    .factory('Model', ['$rootScope', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
+    .factory('Model', ['$rootScope', 'Users', 'Questions', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
         'Schools', 'Sections', 'Units', 'Materials',
         /**
          * model factory
@@ -16,7 +16,7 @@ angular.module('modelServices', ['resourceProvider'])
          * @author test
          * @param random
          */
-        function ($rootScope, Students, Parents, Teachers, Admins, Superadmins,
+        function ($rootScope, Users, Questions, Students, Parents, Teachers, Admins, Superadmins,
                   Schools, Sections, Units, Materials) {
             var modelInstance = {};
 
@@ -33,9 +33,8 @@ angular.module('modelServices', ['resourceProvider'])
                 'material': Materials
             };
 
-
-            // TODO: testing code, to be deleted
-            modelInstance.test = 1;
+            modelInstance.Users = Users;
+            modelInstance.Questions = Questions;
 
             /** Destroy the model instance
              *    place holder for now, to be called later by log out

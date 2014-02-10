@@ -65,12 +65,12 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 //                controller: 'SectionCtrl',
 //                access: access.loggedin
 //            });
-//        $routeProvider.when('/problems/:questionId',
-//            {
-//                templateUrl: '/partials/questions',
-//                controller: 'QuestionCtrl',
-//                access: access.loggedin
-//            });
+        $routeProvider.when('/questions/:questionId',
+            {
+                templateUrl: '/partials/questions',
+                controller: 'QuestionCtrl',
+                access: access.loggedin
+            });
 //        $routeProvider.when('/reports',
 //            {
 //                templateUrl: '/partials/reports',

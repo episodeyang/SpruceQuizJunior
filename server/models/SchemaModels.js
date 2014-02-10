@@ -177,8 +177,14 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             tags: Array,
             comments: [subSchema.PostPrototype],
             answers: [subSchema.Answer],
+            voteup: {type: Number, default: 0},
+            votedown: {type: Number, default: 0},
+            dateCreated: {type: Date, default: Date.now},
+            dateEdited: {type: Date, default: Date.now},
             __virtuals__: {
-                idGet: function () { return this._id; }
+                idGet: function () { return this._id; },
+                voteGet: function () { return this.voteup - this.votedown; },
+                nAnswersGet: function () { return _.size(this.answers); }
             },
             __options__: {
                 toJSON: {

@@ -117,24 +117,37 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
   margin-top: 20px;
 }
 
-form.editor.concave {
+.editor.concave {
   border-top: 1px solid fadeout(#604830, 40%);
 }
 
-form.editor.convex {
+.editor.convex {
   border-bottom: 1px solid fadeout(#604830, 40%);
 }
 
-form.editor {
-  min-height: 30%;
+.editor {
   background-color: white;
   padding: 15px;
   border-radius: 3px;
   div:focus {
     outline: none;
   }
+}
+a.editor {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+}
+.editor.large {
+  min-height: 30%;
   > div.editor-inner {
     min-height: 30%;
+  }
+}
+.editor.small{
+  min-height: 40px;
+  > div.editor-inner {
+    min-height: 40px;
   }
 }
 

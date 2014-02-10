@@ -3,7 +3,7 @@ include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.body
+.body(konami='debug.alert()')
     +navbar
     .container
         .row
@@ -39,7 +39,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                                form.editor.top-padding(ng-repeat="question in questions")
+                                a.editor.small.top-padding(ng-repeat="question in questions", ng-href="/questions/{{question.id}}")
                                     .row
                                         .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-margin {{question.title}}
@@ -48,26 +48,26 @@ div.background(background-img="/img/bg-brown.jpg")
                                         div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="question.text")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
                                             .rounded.blue.stat-box
-                                                h4.no-bottom-margin.text-center 123
+                                                h4.no-bottom-margin.text-center {{question.vote}}
                                                 p.no-top-margin.text-center.small 关注
-                                            .rounded.red.stat-box.appendix
-                                                p.no-bottom-margin.text-center.small 3
+                                            .rounded.stat-box.appendix(ng-class="{red:question.nAnswers < 1 , green: question.nAnswers >= 1}")
+                                                p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                                 p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")
                     .input-group
                         span.input-group-btn
                             button.btn.btn-default(type='button') 标题
-                        input(type='text').form-control
-                        span.input-group-btn
-                            button.btn.btn-success(type='button') 确定
-                    form.editor.top-padding(name = 'questionEditor')
-                        div.editor-inner(ng-model='editor.text', medium-editor, options="{{editor.options}}")
+                        input(type='text', ng-model="editor.data.title").form-control
+                        //-span.input-group-btn
+                        //-    button.btn.btn-success(type='button') 确定
+                    form.editor.large.top-padding(name = 'questionEditor')
+                        div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                     button.btn.btn-link(ng-click='example()', ng-hide='editor.showHtml') 问题模板
                     button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 代码
                     button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
                     button.btn.btn-success.pull-right(ng-hide='editor.showHtml') 提交问题
                     form.editor(ng-show='editor.showHtml')
-                        p {{editor.text}}
+                        p {{editor.data.text}}
                 div(ng-show="view.state=='question'")
                     h3.title {{question.title}}
                     form.editor.top-padding
@@ -100,7 +100,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                     a.blue {{comment.author}}
                     hr
                     h3 你的回答
-                    form.editor(name = 'answerEditor')
+                    form.editor.large(name = 'answerEditor')
                         div.editor-inner(ng-model='editor.text', medium-editor, options="{{editor.answerOptions}}")
                     .row
                         .col-xs-12
