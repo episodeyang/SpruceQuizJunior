@@ -236,8 +236,10 @@ angular.module('modelServices', ['resourceProvider'])
             /**
              * Utilities
              */
-            modelInstance.closeHtml = function(string) {
-
+            modelInstance.stripHtml = function(string, maxLength) {
+                if (!maxLength) { var maxLength = 300 }
+                string = string.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi," ");
+                return string.slice(0, maxLength);
             }
             return modelInstance;
         }

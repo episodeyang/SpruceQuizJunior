@@ -21,11 +21,9 @@ div.background(background-img="/img/bg-brown.jpg")
             .col-sm-2.col-xs-3
                 ul.nav.nav-pills.nav-stacked(ng-hide="view.state=='question'")
                     li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'") 搜索
+                        a.text-center(ng-click="view.state='search'") 所有问题
                     li(ng-class="{active: view.state=='ask'}")
                         a.text-center(ng-click="view.state='ask'") 提问
-                    li(ng-class="{active: view.state=='displayAll'}")
-                        a.text-center 所有问题
                 //ul.nav.nav-pills.nav-stacked(ng-show="view.state=='question'")
                 //    li
                 //        //-(ng-class="{active: view.state=='question'}")
@@ -40,12 +38,16 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row
                             .col-lg-12
                                 a.editor.small.top-padding(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
-                                    .row
+                                    //-.row
                                         .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-margin {{question.title}}
                                             hr.low-margin
                                     .row
-                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2(ng-bind-html="question.text")
+                                        div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
+                                            p.bottom-margin
+                                                b {{question.title}}
+                                            //hr.low-margin
+                                            div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
                                             .rounded.blue.stat-box
                                                 h4.no-bottom-margin.text-center {{question.vote}}
