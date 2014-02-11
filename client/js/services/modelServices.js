@@ -237,7 +237,7 @@ angular.module('modelServices', ['resourceProvider'])
              * Utilities
              */
             modelInstance.closeHtml = function(string) {
-                
+
             }
             return modelInstance;
         }
