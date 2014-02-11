@@ -39,6 +39,7 @@
   "private": true,
   "resolutions": {
     "d3": ">=3.3.13",
-    "medium-editor": "master"
+    "medium-editor": "master",
+    "angular": "1.2.13-build.2248+sha.b6ab826"
   }
 }
