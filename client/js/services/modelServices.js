@@ -53,19 +53,7 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.init = function (user) {
                 console.log('model initialized')
                 modelInstance.user = user;
-                console.log(modelInstance.user)
-                //rolesHelper needs no special importing since it's explosed via js exports
-                // Now retrieve Student information and assemble it with Model.user.
-//                modelInstance.user.roleTitle=modelInstance.reverseRoleLookup(modelInstance.user.role, rolesHelper.userRoles);
-
-                // get basic data
-                try {//TODO: this part of the code is sort of broken. Need to fix.
-                    modelInstance.userData = nameToResource[modelInstance.user.role.roleTitle]['onStudents'].get({
-                        id: modelInstance.user.id
-                    });
-                } catch (err){
-                    console.log(err.message);
-                }
+//                console.log(modelInstance.user)
             };
 
             /** helper function that gets the role string by looking up the object defined for the roles
@@ -245,6 +233,12 @@ angular.module('modelServices', ['resourceProvider'])
             //TODO: Model.problems<= This is the school object for general use.
             //TODO: Model.onExams()
 
+            /**
+             * Utilities
+             */
+            modelInstance.closeHtml = function(string) {
+                
+            }
             return modelInstance;
         }
 
