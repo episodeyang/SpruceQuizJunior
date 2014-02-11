@@ -2,8 +2,8 @@
 /* Controllers */
 angular.module('SpruceQuizApp')
     .controller('QuestionCtrl',
-        ['$routeParams', '$filter', '$rootScope', '$scope', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
-            function ($routeParams, $filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
+        ['$routeParams', '$location', '$filter', '$rootScope', '$scope', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
+            function ($routeParams, $location, $filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
                 //Boiler Plate for authentication info
                 $scope.user = Auth.user;
                 $scope.userRoles = Auth.userRoles;
@@ -14,15 +14,10 @@ angular.module('SpruceQuizApp')
                         alert('konami code success');
                     }
                 }
-                $scope.model = {};
-                $scope.model.user = $rootScope.user;
-                $scope.model.sections = [];
+
                 $scope.Model = Model;
 
                 $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
-                $scope.highlightField = "question";
-
-                $scope.questionTypes = ['multipleChoice', 'fillIn', 'OpenEnded'];
 
                 $scope.view = {};
                 $scope.view.state = 'search'; //three states: search, ask, all-questions
@@ -30,8 +25,8 @@ angular.module('SpruceQuizApp')
                 $scope.editor.data = {
                     title: "",
                     text:'',
-                    author: $scope.model.user
-                }
+                    author: $scope.Model.user
+                },
                 $scope.editor.options = {
                     buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'superscript', 'subscript', 'strikethrough', ' unorderedlist', 'orderedlist', 'pre', 'image'],
                     placeholder: "请在这里输入你的问题。" +
@@ -53,58 +48,26 @@ angular.module('SpruceQuizApp')
                     $scope.editor.showHtml = !$scope.editor.showHtml;
                 };
 
-                $rootScope.$on("$locationChangeStart", function (event, next, current) {
-                    console.log($routeParams.questionId);
-                });
-
                 if ($routeParams.questionId) {
                     $scope.view.state = 'question';
-                    $scope.question = {
-                        title: '行程问题解法',
-                        text: $scope.editor.example,
-                        tags: ['三年级', '数学', '二元一次方程'],
-                        author: {
-                            name: '王小一个'
-                        },
-                        dateCreated: '一月三日',
-                        comments: [
-                            {
-                                author: '王小一个',
-                                text: '这位同学提供的答案实际上解释的已经非常清楚了。你应该努力重新再看一看。',
-                                voters: ['nate', 'ge', 'olivia'],
-                                votes: 5
-                            }
-                        ]
+                    Model.getQuestion($routeParams.questionId);
+                };
+
+                Model.queryQuestions();
+
+                $scope.editor.submit = function() {
+                    if ($scope.editor.data.title.length < 20) {
+                        return $rootScope.error = "标题太短了，这样会降低别人回答你的问题的几率。再重新考虑一下吧！";
                     };
-                }
-
-//                $scope.questions = [
-//                    {
-//                        title: '行程问题解法',
-//                        text: $scope.editor.example,
-//                        tags: ['三年级', '数学', '二元一次方程'],
-//                        author: {
-//                            name: '王小一个',
-//                        },
-//                        dateCreated: '一月三日'
-//                    },
-//                    {
-//                        title: '行程问题解法',
-//                        text: $scope.editor.example,
-//                        tags: ['三年级', '数学', '二元一次方程'],
-//                        author: {
-//                            name: '王小一个',
-//                        },
-//                        dateCreated: '一月三日'
-//                    }
-//                ];
-                Model.Questions.query(function(results){
-                    $scope.questions = results;
-//                    alert('just loaded the questions!');
-                }, function(errors){
-                    alert('error loading the questions!');
-                })
-
+                    if ($scope.editor.data.text.length < 100) {
+                        return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
+                    }
+                    Model.createQuestion($scope.editor.data
+                        , function(){
+                            $rootScope.error = '';
+                            $location.path('/questions/'+Model.question.id);
+                        });
+                };
             }
         ]
     );

@@ -64,7 +64,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             add: function (req, res) {
-                QuestionM.create(req.body, function (err, results) {
+                var question = req.body;
+                question.dateCreated = Date.now();
+                QuestionM.create(question, function (err, results) {
                     if (err) {
                         console.log(err);
                         return res.send(500, err);
@@ -82,7 +84,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             findOne: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
-                QuestionM.findById(req.params.id, 'id title text authors tags comments answers', function(err, results){
+                QuestionM.findById(req.params.id, 'id title text author tags comments answers', function(err, results){
                     if (err) {return res.send(403, err)}
                     else {
                         return res.send(200, results);

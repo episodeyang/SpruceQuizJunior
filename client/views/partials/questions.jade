@@ -39,7 +39,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                                a.editor.small.top-padding(ng-repeat="question in questions", ng-href="/questions/{{question.id}}")
+                                a.editor.small.top-padding(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
                                     .row
                                         .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-margin {{question.title}}
@@ -65,11 +65,11 @@ div.background(background-img="/img/bg-brown.jpg")
                     button.btn.btn-link(ng-click='example()', ng-hide='editor.showHtml') 问题模板
                     button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 代码
                     button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
-                    button.btn.btn-success.pull-right(ng-hide='editor.showHtml') 提交问题
+                    button.btn.btn-success.pull-right(ng-hide='editor.showHtml', ng-click='editor.submit()') 提交问题
                     form.editor(ng-show='editor.showHtml')
                         p {{editor.data.text}}
                 div(ng-show="view.state=='question'")
-                    h3.title {{question.title}}
+                    h3.title {{Model.question.title}}
                     form.editor.top-padding
                         .fixed-left
                             .rounded.blue.vote-box
@@ -78,20 +78,20 @@ div.background(background-img="/img/bg-brown.jpg")
                                 p.text-center 投票
                                 p.text-center
                                     span.down.glyphicon.glyphicon-chevron-down
-                        div.editor-inner(ng-bind-html="question.text")
+                        div.editor-inner(ng-bind-html="Model.question.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
-                        span.badge(ng-repeat-start='tag in question.tags') {{tag}}
+                        span.badge(ng-repeat-start='tag in Model.question.tags') {{tag}}
                         span(ng-repeat-end) &nbsp&nbsp
                     .row
                         .col-xs-12
                             a.right-spaced 编辑问题
                             a.right-spaced 评论
                             p.pull-right
-                                span {{question.dateCreated}} 由
-                                a.blue.spaced {{question.author.name}}
+                                span {{Model.question.dateCreated}} 由
+                                a.blue.spaced(ng-href="/users/{{Model.question.author.username}}") {{ Model.question.author.name || Model.question.author.username }}
                                 span 创建
                     .row
-                        .col-xs-12(ng-repeat='comment in question.comments')
+                        .col-xs-12(ng-repeat='comment in Model.question.comments')
                             hr.low-margin
                             p.small
                                 span.badge.margin-right {{comment.votes}}

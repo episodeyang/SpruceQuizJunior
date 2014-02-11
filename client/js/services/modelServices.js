@@ -43,25 +43,21 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.destroy = function() {
                 // do nothing
             }
-            /** init function will initialize some of the most basic and commonly assessed components
-             *      that are needed by the UI
+            /**
+             * @alias Model.init()
+             * init function will initialize some of the most basic and commonly assessed components
+             * that are needed by the UI
              * note that some fields will be over written and some may not be written depending on
-             *      the user role and specific user settings
+             * the user role and specific user settings
              */
-            modelInstance.init = function () {
-
-                // this should assign all the fields in
-                modelInstance.user = $rootScope.user;
+            modelInstance.init = function (user) {
+                console.log('model initialized')
+                modelInstance.user = user;
+                console.log(modelInstance.user)
                 //rolesHelper needs no special importing since it's explosed via js exports
-//                console.log('$rootScope.user'+$rootScope.user);
-//                console.log('rolesHelper.userRoles'+rolesHelper.userRoles);
-
                 // Now retrieve Student information and assemble it with Model.user.
 //                modelInstance.user.roleTitle=modelInstance.reverseRoleLookup(modelInstance.user.role, rolesHelper.userRoles);
 
-//                console.log("testing the mapping");
-//                console.log(modelInstance.user.roleTitle);
-//                console.log(nameToResource[modelInstance.user.roleTitle]);
                 // get basic data
                 try {//TODO: this part of the code is sort of broken. Need to fix.
                     modelInstance.userData = nameToResource[modelInstance.user.role.roleTitle]['onStudents'].get({
@@ -69,7 +65,6 @@ angular.module('modelServices', ['resourceProvider'])
                     });
                 } catch (err){
                     console.log(err.message);
-
                 }
             };
 
@@ -109,11 +104,42 @@ angular.module('modelServices', ['resourceProvider'])
                 return sections;
             }
 
+            modelInstance.question = {};
+            modelInstance.questions = [];
+            modelInstance.getQuestion = function(id) {
+                Questions.get( {id:id}, function(question){
+                    modelInstance.question = question;
+                }, function(err){ $rootScope.error = err; } );
+            };
+            modelInstance.queryQuestions = function() {
+                Questions.query(function(questions){
+                    modelInstance.questions = questions;
+                }, function(err){ $rootScope.error = err; } );
+            };
+            modelInstance.createQuestion = function(question, success, error) {
+                Questions.create(question, function(question){
+                    modelInstance.question = question;
+                    success();
+                }, function(err){
+                    $rootScope.error = err;
+                    error();
+                } );
+            };
+            modelInstance.saveQuestion = function(question) {
+                Questions.save(question, function(question){
+                    modelInstance.question = question;
+                }, function(err){ $rootScope.error = err; } );
+            };
+            modelInstance.removeQuestion = function(question) {
+                Questions.remove(question, function(result){
+                    console.log('removal success');
+                }, function(err){ $rootScope.error = err; } );
+            };
+
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
             // TODO: need to understand the undefined case better.
             //      handle input cases of :
             //          model == undefined => model = Model.user
-
             /**
              * this one gets the school based on the user object passed in
              *      note that this doesn't have to be the same as the user object which gives
@@ -145,6 +171,8 @@ angular.module('modelServices', ['resourceProvider'])
              *    subjectList.idList is a list of IDs to be looked up
              * @param userData
              */
+
+
             modelInstance.getSections = function (userParam, subjectList) {
 
                 /*

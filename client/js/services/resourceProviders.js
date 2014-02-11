@@ -11,7 +11,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     }])
     //@todo: Need testing, just finished 2014/02/10
     .factory('Questions', function ($resource) {
-        var Questions = $resource('/api/questions', {
+        var Questions = $resource('/api/questions', {}, {
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});

@@ -10,20 +10,18 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         , userRoles = rolesHelper.userRoles
         , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
 
-    function modelInitializationCallBack (){
+    function modelInitializationCallBack(user) {
 //        console.log('Model Initialization started');
-        Model.init();
-    };
-
-    function modelDestroyCallBack (){
+        Model.init(user);
+    }
+    function modelDestroyCallBack() {
 //        console.log('Model Destroy started');
         Model.destroy();
-    };
-
+    }
     $cookieStore.remove('user');
 
     if (currentUser.id != '') {
-        modelInitializationCallBack();
+        modelInitializationCallBack(currentUser);
     }
 
     return {
@@ -42,14 +40,14 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         register: function (user, success, error) {
             $http.post('/register', user).success(function (user) {
                 _.extend(currentUser, user);
-                modelInitializationCallBack();
+                modelInitializationCallBack(currentUser);
                 success(user);
             }).error(error);
         },
         login: function (user, success, error) {
             $http.post('/login', user).success(function (user) {
                 _.extend(currentUser, user);
-                modelInitializationCallBack();
+                modelInitializationCallBack(currentUser);
                 success(user);
             }).error(error);
         },

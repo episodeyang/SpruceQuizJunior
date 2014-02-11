@@ -52,6 +52,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     virtuals: true
                 }
             }
+        },
+        user: {
+            username: String,
+            name: String
         }
     };
     var subSchema = {};
@@ -173,7 +177,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         question: {
             title: String,
             text: String,
-            authors: String,
+            author: config_nest.user, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
             tags: Array,
             comments: [subSchema.PostPrototype],
             answers: [subSchema.Answer],
