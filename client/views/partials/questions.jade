@@ -74,7 +74,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     h3.title {{Model.question.title}}
                     form.editor.top-padding
                         .fixed-left
-                            .rounded.blue.vote-box
+                            .rounded.grey.vote-box
                                 p.text-center
                                     span.up.glyphicon.glyphicon-chevron-up
                                 p.text-center 投票
@@ -100,6 +100,36 @@ div.background(background-img="/img/bg-brown.jpg")
                                 span {{comment.text}}
                                 span &#8212&nbsp
                                     a.blue {{comment.author}}
+                    br
+                    h3(ng-show="Model.question.nAnswers")
+                        b 大家的回答
+
+                    form.editor.top-padding(ng-repeat-start="answer in Model.question.answers")
+                        .fixed-left
+                            .rounded.grey.vote-box
+                                p.text-center
+                                    span.up.glyphicon.glyphicon-chevron-up
+                                p.text-center 投票
+                                p.text-center
+                                    span.down.glyphicon.glyphicon-chevron-down
+                        div.editor-inner(ng-bind-html="answer.text")
+                    .row
+                        .col-xs-12
+                            a.right-spaced 编辑回答
+                            a.right-spaced 评论
+                            p.pull-right
+                                span {{answer.dateCreated}} 由
+                                a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username }}
+                                span 创建
+                    .row(ng-repeat-end)
+                        .col-xs-12(ng-repeat='comment in answer.comments')
+                            hr.low-margin
+                            p.small
+                                span.badge.margin-right {{comment.votes}}
+                                span {{comment.text}}
+                                span &#8212&nbsp
+                                    a.blue {{comment.author}}
+
                     hr
                     h3 你的回答
                     form.editor.large(name = 'answerEditor')

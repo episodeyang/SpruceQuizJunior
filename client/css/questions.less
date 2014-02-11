@@ -140,6 +140,7 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
 }
 
 .editor {
+  position:relative;
   background-color: white;
   padding: 15px;
   border-radius: 3px;
@@ -167,24 +168,17 @@ a.editor {
 
 .fixed-left {
   position: absolute;
-  top: 37px;
+  top: 0;
   left: -90px;
   width: 70px;
 }
 
-div.rounded.blue {
+.blue { background-color: #9ce3ea; }
+.green{ background-color: #9ee8aa; }
+.red { background-color: #f7b9b7; }
+.grey { background-color: #d4d4d4; }
+div.rounded {
   border-radius: 10px;
-  background-color: #9ce3ea;
-}
-
-div.rounded.green {
-  border-radius: 10px;
-  background-color: #9ee8aa;
-}
-
-div.rounded.red {
-  border-radius: 10px;
-  background-color: #f7b9b7;
 }
 
 .vote-box {
