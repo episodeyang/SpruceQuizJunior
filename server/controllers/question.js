@@ -65,7 +65,14 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             add: function (req, res) {
                 var question = req.body;
-                question.dateCreated = Date.now();
+                if (req.user.role.title != 'superadmin') {
+                    question.dateCreated = Date.now();
+                    delete question.voteup;
+                    delete question.votedown;
+                    delete question.comments;
+                    delete question.answers;
+                    question.author = { username: req.user.username };
+                }
                 QuestionM.create(question, function (err, results) {
                     if (err) {
                         console.log(err);
@@ -98,14 +105,60 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             update: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
-                QuestionM.findByIdAndUpdate(
-                    ObjectId(req.params.id),
-                    req.body,
-                    {new: true},
-                    function(err, results){
-                        if (err) {return res.send(403, err)};
-                        return res.send(201, results);
-                });
+                if (req.body.voteup === 'true') {
+                    delete req.body.voteup;
+                    QuestionM.findById(
+                        req.params.id,
+                        'voteup votedown',
+                        function(err, question) {
+                            question.voteup.push(req.user.username);
+                            question.votedown = _.reject(question.votedown, function(elm) { return elm == req.user.username })
+                            question.save(function(err, result, n) {
+                                q = {
+                                    voteup: result.voteup,
+                                    votedown: result.votedown
+                                };
+                                console.log(q)
+                                if (err) { return res.send(500, err); }
+                                else {
+                                    return res.send(200, q );
+                                };
+                            });
+                        }
+                    )
+                }
+                else if (req.body.votedown === 'true') {
+                    delete req.body.votedown;
+                    QuestionM.findById(
+                        req.params.id,
+                        'voteup votedown',
+                        function(err, question) {
+                            question.votedown.push(req.user.username);
+                            question.voteup = _.reject(question.voteup, function(elm) { return elm ==req.user.username })
+                            question.save(function(err, result, n) {
+                                var q = {
+                                    voteup: result.voteup,
+                                    votedown: result.votedown
+                                };
+                                console.log(q)
+                                if (err) { return res.send(500, err); }
+                                else {
+                                    return res.send(200, q );
+                                };
+                            });
+                        }
+                    )
+                }
+                else {
+                    QuestionM.findByIdAndUpdate(
+                        ObjectId(req.params.id),
+                        req.body,
+                        {new: true},
+                        function(err, results){
+                            if (err) {return res.send(403, err)};
+                            return res.send(201, results);
+                        });
+                }
             },
             /**
              * @api {delete} /api/questions/:id Delete Question

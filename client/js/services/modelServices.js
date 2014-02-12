@@ -115,7 +115,7 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.saveQuestion = function(question) {
                 Questions.save(question, function(question){
-                    modelInstance.question = question;
+                    _.extend(modelInstance.question, question);
                 }, function(err){ $rootScope.error = err; } );
             };
             modelInstance.removeQuestion = function(question) {
@@ -123,6 +123,21 @@ angular.module('modelServices', ['resourceProvider'])
                     console.log('removal success');
                 }, function(err){ $rootScope.error = err; } );
             };
+
+            modelInstance.voteup = function(question) {
+                var q = {
+                    id: question.id,
+                    voteup: 'true'
+                }
+                modelInstance.saveQuestion(q);
+            }
+            modelInstance.votedown = function(question) {
+                var q = {
+                    id: question.id,
+                    votedown: 'true'
+                }
+                modelInstance.saveQuestion(q);
+            }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
             // TODO: need to understand the undefined case better.
@@ -237,6 +252,7 @@ angular.module('modelServices', ['resourceProvider'])
              * Utilities
              */
             modelInstance.stripHtml = function(string, maxLength) {
+                if (!string) { return null; }
                 if (!maxLength) { var maxLength = 300 }
                 string = string.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi," ");
                 return string.slice(0, maxLength);

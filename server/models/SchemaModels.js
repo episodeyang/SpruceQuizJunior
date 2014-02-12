@@ -181,13 +181,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             tags: Array,
             comments: [subSchema.PostPrototype],
             answers: [subSchema.Answer],
-            voteup: {type: Number, default: 0},
-            votedown: {type: Number, default: 0},
+            voteup: { type: [String], 'default': []},
+            votedown: { type: [String], 'default': []},
             dateCreated: {type: Date, default: Date.now},
             dateEdited: {type: Date, default: Date.now},
             __virtuals__: {
                 idGet: function () { return this._id; },
-                voteGet: function () { return this.voteup - this.votedown; },
+                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" },
                 nAnswersGet: function () { return _.size(this.answers); }
             },
             __options__: {

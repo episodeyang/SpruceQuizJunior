@@ -60,15 +60,15 @@ div.background(background-img="/img/bg-brown.jpg")
                         span.input-group-btn
                             button.btn.btn-default(type='button') 标题
                         input(type='text', ng-model="editor.data.title").form-control
-                        //-span.input-group-btn
-                        //-    button.btn.btn-success(type='button') 确定
-                    form.editor.large.top-padding(name = 'questionEditor')
+                    form.editor.tall.top-padding(name = 'questionEditor')
                         div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
-                    button.btn.btn-link(ng-click='example()', ng-hide='editor.showHtml') 问题模板
-                    button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 代码
-                    button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
-                    button.btn.btn-success.pull-right(ng-hide='editor.showHtml', ng-click='editor.submit()') 提交问题
-                    form.editor(ng-show='editor.showHtml')
+                    .row
+                        .col-xs-12
+                            button.btn.btn-link(ng-click='example()') 问题模板
+                            button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 文本代码
+                            button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
+                            button.btn.btn-success.pull-right(ng-hide='editor.showHtml', ng-click='editor.submit()') 提交问题
+                    form.editor.tall(ng-show='editor.showHtml')
                         p {{editor.data.text}}
                 div(ng-show="view.state=='question'")
                     h3.title {{Model.question.title}}
@@ -76,11 +76,11 @@ div.background(background-img="/img/bg-brown.jpg")
                         .fixed-left
                             .rounded.bg-grey.transparent.vote-box
                                 p.text-center
-                                    a(ng-href="")
+                                    a(ng-click='Model.voteup(question)')
                                         span.up.glyphicon.glyphicon-chevron-up
-                                p.text-center 投票
+                                h3.text-center.no-margin {{Model.question.vote}}
                                 p.text-center(ng-href="")
-                                    a(ng-href="")
+                                    a(ng-click='Model.votedown(question)')
                                         span.down.glyphicon.glyphicon-chevron-down
                         div.editor-inner(ng-bind-html="Model.question.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
@@ -110,11 +110,11 @@ div.background(background-img="/img/bg-brown.jpg")
                         .fixed-left
                             .rounded.grey.transparent.vote-box
                                 p.text-center
-                                    a(ng-href="")
+                                    a(ng-click='answer.downvote()')
                                         span.up.glyphicon.glyphicon-chevron-up
-                                p.text-center 投票
+                                h3.text-center {{answer.vote}}
                                 p.text-center
-                                    a(ng-href="")
+                                    a(ng-click='answer.downvote()')
                                         span.down.glyphicon.glyphicon-chevron-down
                         div.editor-inner(ng-bind-html="answer.text")
                     .row
@@ -137,7 +137,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     //hr
                     br
                     h3 你的回答
-                    form.editor.large(name = 'answerEditor')
+                    form.editor.short(name = 'answerEditor')
                         div.editor-inner(ng-model='editor.text', medium-editor, options="{{editor.answerOptions}}")
                     .row
                         .col-xs-12

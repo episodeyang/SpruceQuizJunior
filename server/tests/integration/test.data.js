@@ -153,6 +153,8 @@ var testData = {
             username: 'thelittleone'
         },
         tags: ['三年级', '数学', '二元一次方程'],
+        voteup: ['王小一个'],
+        votedown: ['陈理中'],
         comments: [{text: '这个问题很有趣', author: 'authorName'}],
         answers: [
             {text: '这道题的解法应该是这样的：', author: 'authorName2', upvote: 0, downvote: 0 }

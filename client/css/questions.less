@@ -153,13 +153,13 @@ a.editor {
   box-sizing: border-box;
   margin-bottom: 1em;
 }
-.editor.large {
+.editor.tall{
   min-height: 30%;
   > div.editor-inner {
     min-height: 30%;
   }
 }
-.editor.small{
+.editor.short{
   min-height: 40px;
   > div.editor-inner {
     min-height: 40px;
@@ -185,17 +185,19 @@ div.rounded {
 .vote-box {
   width: 100%;
   padding: 0px;
-  p {
+  p,h1,h2,h3,h4,h5 {
     color: grey;
     width: 100%;
-    margin: 0 0 5px;
+    margin: 0 0 0 0;
     span.up {
-      font-size: 25px;
+      margin-bottom: 3px;
+      font-size: 18px;
       left: 0.5px;
       right: 1px;
     }
     span.down {
-      font-size: 25px;
+      margin: 0;
+      font-size: 18px;
       left: -1px;
       right: -0.5px;
     }

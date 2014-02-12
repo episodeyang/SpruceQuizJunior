@@ -24,7 +24,7 @@ var studentUser = data.studentUser,
     parentUser = data.parentUser,
     teacherUser = data.teacherUser,
     adminUser = data.adminUser,
-    superadminUser = superadminUser;
+    superadminUser = data.superadminUser;
 
 describe('Server API Tests - ', function (done) {
     beforeEach(function () {
@@ -37,6 +37,7 @@ describe('Server API Tests - ', function (done) {
         request(app).get('/api/questions').expect(401, done);
     });
     var question = {};
+    var question2 = {};
     it('create question', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate).expect(201).end(function (err, res) {
@@ -46,7 +47,15 @@ describe('Server API Tests - ', function (done) {
         });
     });
     it('create another question', function (done) {
-        passportStub.login(studentUser); // login as user
+        passportStub.login(superadminUser); // login as user
+        request(app).post('/api/questions').send(data.questionCreate2).expect(201).end(function (err, res) {
+            question2 = res.body;
+            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
+            done();
+        });
+    });
+    it('create question as superadmin', function (done) {
+        passportStub.login(superadminUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate2).expect(201, done);
     });
     it('needs to login to access', function (done) {
@@ -78,6 +87,20 @@ describe('Server API Tests - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question.id).send({title: 'updatedTitle'}).expect(201).end(function (err, res){
             res.body.title.should.eql('updatedTitle');
+            done();
+        });
+    });
+    it('upvote the question2', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
+            res.body.voteup.should.containDeep([studentUser.username]);
+            done();
+        });
+    });
+    it('downvote the question2', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions/' + question2.id).send({votedown: 'true'}).expect(201).end(function (err, res){
+            res.body.votedown.should.containDeep([studentUser.username]);
             done();
         });
     });
