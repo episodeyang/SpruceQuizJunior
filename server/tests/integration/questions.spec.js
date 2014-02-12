@@ -104,6 +104,17 @@ describe('Server API Tests - ', function (done) {
             done();
         });
     });
+    it('upvote the question2 again', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201, done);
+    });
+    it('remove upvote from question2', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
+            res.body.voteup.should.not.containEql(studentUser.username);
+            done();
+        });
+    });
     it('needs to login to delete', function (done) {
         request(app).del('/api/questions/' + question.id).expect(401, done);
     });

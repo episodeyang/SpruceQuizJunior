@@ -114,8 +114,8 @@ angular.module('modelServices', ['resourceProvider'])
                 } );
             };
             modelInstance.saveQuestion = function(question) {
-                Questions.save(question, function(question){
-                    _.extend(modelInstance.question, question);
+                Questions.save(question, function(q){
+                    _.extend(modelInstance.question, q);
                 }, function(err){ $rootScope.error = err; } );
             };
             modelInstance.removeQuestion = function(question) {

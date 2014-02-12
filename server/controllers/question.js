@@ -91,7 +91,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             findOne: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
-                QuestionM.findById(req.params.id, 'id title text author tags comments answers', function(err, results){
+                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers', function(err, results){
                     if (err) {return res.send(403, err)}
                     else {
                         return res.send(200, results);
@@ -105,51 +105,62 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             update: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
-                if (req.body.voteup === 'true') {
-                    delete req.body.voteup;
-                    QuestionM.findById(
-                        req.params.id,
-                        'voteup votedown',
-                        function(err, question) {
-                            question.voteup.push(req.user.username);
-                            question.votedown = _.reject(question.votedown, function(elm) { return elm == req.user.username })
-                            question.save(function(err, result, n) {
-                                q = {
-                                    voteup: result.voteup,
-                                    votedown: result.votedown
-                                };
-                                console.log(q)
-                                if (err) { return res.send(500, err); }
-                                else {
-                                    return res.send(200, q );
-                                };
-                            });
-                        }
-                    )
-                }
-                else if (req.body.votedown === 'true') {
-                    delete req.body.votedown;
-                    QuestionM.findById(
-                        req.params.id,
-                        'voteup votedown',
-                        function(err, question) {
-                            question.votedown.push(req.user.username);
-                            question.voteup = _.reject(question.voteup, function(elm) { return elm ==req.user.username })
-                            question.save(function(err, result, n) {
-                                var q = {
-                                    voteup: result.voteup,
-                                    votedown: result.votedown
-                                };
-                                console.log(q)
-                                if (err) { return res.send(500, err); }
-                                else {
-                                    return res.send(200, q );
-                                };
-                            });
-                        }
-                    )
-                }
-                else {
+                if (req.body.voteup || req.body.votedown ) {
+                    if (req.body.voteup !== 'true' && req.body.votedown !== 'true' ) {
+                        return res.send(401);
+                    } else {
+                        QuestionM.findById(
+                            req.params.id,
+                            'voteup votedown vote',
+                            function(err, question) {
+                                if (req.body.voteup === 'true') {
+                                    if (_.contains(question.voteup, req.user.username)) {
+                                        question.votedown = _.reject(question.votedown, function (elm) {
+                                            return elm == req.user.username;
+                                        });
+                                        question.voteup = _.reject(question.voteup, function (elm) {
+                                            return elm == req.user.username;
+                                        });
+                                    } else {
+                                        question.votedown = _.reject(question.votedown, function (elm) {
+                                            return elm == req.user.username;
+                                        });
+                                        question.voteup.push(req.user.username);
+                                    }
+                                }
+                                if (req.body.votedown === 'true') {
+                                    if (_.contains(question.votedown, req.user.username)) {
+                                        question.votedown = _.reject(question.votedown, function (elm) {
+                                            return elm == req.user.username;
+                                        });
+                                        question.voteup = _.reject(question.voteup, function (elm) {
+                                            return elm == req.user.username;
+                                        });
+                                    } else {
+                                        question.voteup = _.reject(question.voteup, function (elm) {
+                                            return elm == req.user.username;
+                                        });
+                                        question.votedown.push(req.user.username);
+                                    }
+                                }
+
+                                question.save(function (err, result, n) {
+                                    var q = {
+                                        voteup: result.voteup,
+                                        votedown: result.votedown,
+                                        vote: result.vote
+                                    };
+                                    if (err) { return res.send(500, err); }
+                                    else {
+                                        return res.send(201, q );
+                                    };
+                                });
+                            }
+                        )
+
+
+                    }
+                } else {
                     QuestionM.findByIdAndUpdate(
                         ObjectId(req.params.id),
                         req.body,
