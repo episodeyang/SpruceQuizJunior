@@ -115,36 +115,64 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                             function(err, question) {
                                 if (req.body.voteup === 'true') {
                                     if (_.contains(question.voteup, req.user.username)) {
-                                        question.votedown = _.reject(question.votedown, function (elm) {
-                                            return elm == req.user.username;
-                                        });
-                                        question.voteup = _.reject(question.voteup, function (elm) {
-                                            return elm == req.user.username;
-                                        });
+                                        var update = {
+                                            $pull: {
+                                                votedown: req.user.username,
+                                                voteup: req.user.username
+                                            }
+                                        };
+//                                        question.votedown = _.reject(question.votedown, function (elm) {
+//                                            return elm == req.user.username;
+//                                        });
+//                                        question.voteup = _.reject(question.voteup, function (elm) {
+//                                            return elm == req.user.username;
+//                                        });
                                     } else {
-                                        question.votedown = _.reject(question.votedown, function (elm) {
-                                            return elm == req.user.username;
-                                        });
-                                        question.voteup.push(req.user.username);
+                                        var update = {
+                                            $pull: {
+                                                votedown: req.user.username
+                                            },
+                                            $push: {
+                                                voteup: req.user.username
+                                            }
+                                        };
+//                                        question.votedown = _.reject(question.votedown, function (elm) {
+//                                            return elm == req.user.username;
+//                                        });
+//                                        question.voteup.push(req.user.username);
                                     }
                                 }
                                 if (req.body.votedown === 'true') {
                                     if (_.contains(question.votedown, req.user.username)) {
-                                        question.votedown = _.reject(question.votedown, function (elm) {
-                                            return elm == req.user.username;
-                                        });
-                                        question.voteup = _.reject(question.voteup, function (elm) {
-                                            return elm == req.user.username;
-                                        });
+                                        var update = {
+                                            $pull: {
+                                                votedown: req.user.username,
+                                                voteup: req.user.username
+                                            }
+                                        };
+//                                        question.votedown = _.reject(question.votedown, function (elm) {
+//                                            return elm == req.user.username;
+//                                        });
+//                                        question.voteup = _.reject(question.voteup, function (elm) {
+//                                            return elm == req.user.username;
+//                                        });
                                     } else {
-                                        question.voteup = _.reject(question.voteup, function (elm) {
-                                            return elm == req.user.username;
-                                        });
-                                        question.votedown.push(req.user.username);
+                                        var update = {
+                                            $pull: {
+                                                voteup: req.user.username
+                                            },
+                                            $push: {
+                                                votedown: req.user.username
+                                            }
+                                        };
+//                                        question.voteup = _.reject(question.voteup, function (elm) {
+//                                            return elm == req.user.username;
+//                                        });
+//                                        question.votedown.push(req.user.username);
                                     }
                                 }
 
-                                question.save(function (err, result, n) {
+                                QuestionM.findByIdAndUpdate(req.params.id, update, {select: 'vote voteup votedown'}, function (err, result, n) {
                                     var q = {
                                         voteup: result.voteup,
                                         votedown: result.votedown,
@@ -157,8 +185,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                                 });
                             }
                         )
-
-
                     }
                 } else {
                     QuestionM.findByIdAndUpdate(
