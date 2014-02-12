@@ -3,4 +3,4 @@ git pull
 sh init.sh
 mongo sprucedb --eval 'db.dropDatabase();'
 grunt test
-nohup node server.js
+PORT=8080 nohup node server.js
