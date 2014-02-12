@@ -85,16 +85,16 @@ body{
   .sp-up-cover{
     position:relative;
     top:0;
-    height:49%;
-    margin-top:-20%;
-    margin-bottom:-60%;
+    height:40%;
+    margin-top: 0%;
+    margin-bottom: -60px;
     width:100%;
     background-color: rgba(0,0,0,0);
   }
 //Directives =================================
   //metroCards
     @height: 60px;
-    @inputWidth : 300px;
+    @inputWidth : 230px;
     @totalWidth : @inputWidth + @height;
     sp-input{
       height:@height;
@@ -123,6 +123,7 @@ body{
         }
       }
       input,.text-block-right{
+        width: @inputWidth;
         height:@height;
         left:0;
         right:0;
@@ -162,6 +163,7 @@ body{
         }
       }
       select.transcluded{
+        width: @inputWidth;
         height:@height;
         left:0;
         right:0;
