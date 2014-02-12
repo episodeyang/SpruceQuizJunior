@@ -49,7 +49,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                             //hr.low-margin
                                             div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
-                                            .rounded.bg-blue.stat-box(ng-class="{'bg-red':question.vote < 0 , 'bg-green': question.vote > 0 }")
+                                            .rounded.bg-blue.stat-box(ng-class="{'bg-red':question.vote < 0 , 'bg-blue': question.vote > 0 }")
                                                 h4.no-bottom-margin.text-center {{question.vote}}
                                                 p.no-top-margin.text-center.small 投票
                                             .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
@@ -77,11 +77,11 @@ div.background(background-img="/img/bg-brown.jpg")
                             .rounded.bg-grey.transparent.vote-box
                                 p.text-center
                                     a(ng-click='Model.voteup(Model.question)')
-                                        span.up.glyphicon.glyphicon-chevron-up
+                                        span.up.glyphicon.glyphicon-chevron-up(ng-class='{glow: Model.question.votedup}')
                                 h3.text-center.no-margin {{Model.question.vote}}
-                                p.text-center(ng-href="")
+                                p.text-center
                                     a(ng-click='Model.votedown(Model.question)')
-                                        span.down.glyphicon.glyphicon-chevron-down
+                                        span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: Model.question.voteddown}')
                         div.editor-inner(ng-bind-html="Model.question.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
                         a.badge(ng-repeat-start='tag in Model.question.tags') {{tag}}

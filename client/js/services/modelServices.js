@@ -94,9 +94,15 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.question = {};
             modelInstance.questions = [];
+
+            modelInstance.getVoteStatus = function(){
+                modelInstance.question.votedup = _.contains(modelInstance.question.voteup, modelInstance.user.username)
+                modelInstance.question.voteddown = _.contains(modelInstance.question.votedown, modelInstance.user.username)
+            };
             modelInstance.getQuestion = function(id) {
                 Questions.get( {id:id}, function(question){
                     modelInstance.question = question;
+                    modelInstance.getVoteStatus();
                 }, function(err){ $rootScope.error = err; } );
             };
             modelInstance.queryQuestions = function() {
@@ -113,9 +119,10 @@ angular.module('modelServices', ['resourceProvider'])
                     error();
                 } );
             };
-            modelInstance.saveQuestion = function(question) {
+            modelInstance.saveQuestion = function(question, callback) {
                 Questions.save(question, function(q){
                     _.extend(modelInstance.question, q);
+                    callback();
                 }, function(err){ $rootScope.error = err; } );
             };
             modelInstance.removeQuestion = function(question) {
@@ -129,14 +136,14 @@ angular.module('modelServices', ['resourceProvider'])
                     id: question.id,
                     voteup: 'true'
                 }
-                modelInstance.saveQuestion(q);
+                modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
             }
             modelInstance.votedown = function(question) {
                 var q = {
                     id: question.id,
                     votedown: 'true'
                 }
-                modelInstance.saveQuestion(q);
+                modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
             }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};

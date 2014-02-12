@@ -73,6 +73,14 @@
 .tr-70{
   opacity: 0.7;
 }
+
+.outer-glow(@color){
+  .box-shadow(0px 0px 15px 5px @color);
+}
+.text-outer-glow(@color){
+  text-shadow: 0px 0px 15px @color;
+}
+
 @white:white;
 @white-moderate: fadeout(white,20%);
 @white-light: fadeout(white,50%);
