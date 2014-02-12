@@ -49,10 +49,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                             //hr.low-margin
                                             div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
-                                            .rounded.bg-blue.stat-box
+                                            .rounded.bg-blue.stat-box(ng-class="{'bg-red':question.vote < 0 , 'bg-green': question.vote > 0 }")
                                                 h4.no-bottom-margin.text-center {{question.vote}}
-                                                p.no-top-margin.text-center.small 关注
-                                            .rounded.stat-box.appendix(ng-class="{'bg-red':question.nAnswers < 1 , 'bg-green': question.nAnswers >= 1}")
+                                                p.no-top-margin.text-center.small 投票
+                                            .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
                                                 p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                                 p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")

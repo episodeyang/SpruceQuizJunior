@@ -93,14 +93,14 @@ describe('Server API Tests - ', function (done) {
     it('upvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
-            res.body.voteup.should.containDeep([studentUser.username]);
+            res.body.voteup.should.containEql(studentUser.username);
             done();
         });
     });
     it('downvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question2.id).send({votedown: 'true'}).expect(201).end(function (err, res){
-            res.body.votedown.should.containDeep([studentUser.username]);
+            res.body.votedown.should.containEql(studentUser.username);
             done();
         });
     });
