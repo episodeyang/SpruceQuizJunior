@@ -49,10 +49,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                             //hr.low-margin
                                             div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
                                         .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
-                                            .rounded.blue.stat-box
+                                            .rounded.bg-blue.stat-box
                                                 h4.no-bottom-margin.text-center {{question.vote}}
                                                 p.no-top-margin.text-center.small 关注
-                                            .rounded.stat-box.appendix(ng-class="{red:question.nAnswers < 1 , green: question.nAnswers >= 1}")
+                                            .rounded.stat-box.appendix(ng-class="{'bg-red':question.nAnswers < 1 , 'bg-green': question.nAnswers >= 1}")
                                                 p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                                 p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")
@@ -74,20 +74,22 @@ div.background(background-img="/img/bg-brown.jpg")
                     h3.title {{Model.question.title}}
                     form.editor.top-padding
                         .fixed-left
-                            .rounded.grey.vote-box
+                            .rounded.bg-grey.transparent.vote-box
                                 p.text-center
-                                    span.up.glyphicon.glyphicon-chevron-up
+                                    a(ng-href="")
+                                        span.up.glyphicon.glyphicon-chevron-up
                                 p.text-center 投票
-                                p.text-center
-                                    span.down.glyphicon.glyphicon-chevron-down
+                                p.text-center(ng-href="")
+                                    a(ng-href="")
+                                        span.down.glyphicon.glyphicon-chevron-down
                         div.editor-inner(ng-bind-html="Model.question.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
                         a.badge(ng-repeat-start='tag in Model.question.tags') {{tag}}
                         span(ng-repeat-end) &nbsp&nbsp
                     .row
                         .col-xs-12
-                            a.right-spaced 编辑问题
-                            a.right-spaced 评论
+                            a.right-spaced.small 编辑问题
+                            a.right-spaced.small 评论
                             p.pull-right
                                 span {{Model.question.dateCreated}} 由
                                 a.blue.spaced(ng-href="/users/{{Model.question.author.username}}") {{ Model.question.author.name || Model.question.author.username }}
@@ -106,20 +108,22 @@ div.background(background-img="/img/bg-brown.jpg")
 
                     form.editor.top-padding(ng-repeat-start="answer in Model.question.answers")
                         .fixed-left
-                            .rounded.grey.vote-box
+                            .rounded.grey.transparent.vote-box
                                 p.text-center
-                                    span.up.glyphicon.glyphicon-chevron-up
+                                    a(ng-href="")
+                                        span.up.glyphicon.glyphicon-chevron-up
                                 p.text-center 投票
                                 p.text-center
-                                    span.down.glyphicon.glyphicon-chevron-down
+                                    a(ng-href="")
+                                        span.down.glyphicon.glyphicon-chevron-down
                         div.editor-inner(ng-bind-html="answer.text")
                     .row
                         .col-xs-12
-                            a.right-spaced 编辑回答
-                            a.right-spaced 评论
+                            a.right-spaced.small 编辑回答
+                            a.right-spaced.small 评论
                             p.pull-right
                                 span {{answer.dateCreated}} 由
-                                a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username }}
+                                a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
                                 span 创建
                     .row(ng-repeat-end)
                         .col-xs-12(ng-repeat='comment in answer.comments')
@@ -130,7 +134,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                 span &#8212&nbsp
                                     a.blue {{comment.author}}
 
-                    hr
+                    //hr
+                    br
                     h3 你的回答
                     form.editor.large(name = 'answerEditor')
                         div.editor-inner(ng-model='editor.text', medium-editor, options="{{editor.answerOptions}}")
