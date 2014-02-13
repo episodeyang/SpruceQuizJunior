@@ -70,7 +70,7 @@ angular.module('SpruceQuizApp')
 
                 $scope.editor.submit = function() {
                     if ($scope.editor.data.title.length < 10) {
-                        return $rootScope.error = "标题没有讲明白，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
+                        return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
                     };
                     if ($scope.editor.data.text.length < 100) {
                         return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
