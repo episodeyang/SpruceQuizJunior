@@ -37,7 +37,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                                a.editor.small.top-padding(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
+                                a.editor.small.top-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
                                     //-.row
                                         .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-margin {{question.title}}
@@ -56,12 +56,16 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                                 p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")
-                    .input-group
-                        span.input-group-btn
-                            button.btn.btn-default(type='button') 标题
-                        input(type='text', ng-model="editor.data.title").form-control
-                    form.editor.tall.top-padding(name = 'questionEditor')
+                    //.input-group
+                    //    span.input-group-btn
+                    //        button.btn.btn-default(type='button') 标题
+                    input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
+                    form.editor.tall.top-margin(name = 'questionEditor')
                         div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+                    div.bottom-margin.top-margin
+                        a.badge(ng-repeat-start='tag in editor.data.tags track by $index') {{tag}}
+                        span(ng-repeat-end) &nbsp&nbsp
+                    input(type='text', placeholder="问题标签", ng-model="editor.tagText").form-control.bottom-margin
                     .row
                         .col-xs-12
                             button.btn.btn-link(ng-click='example()') 问题模板
@@ -71,8 +75,8 @@ div.background(background-img="/img/bg-brown.jpg")
                     form.editor.tall(ng-show='editor.showHtml')
                         p {{editor.data.text}}
                 div(ng-show="view.state=='question'")
-                    h3.title {{Model.question.title}}
-                    form.editor.top-padding
+                    h3.title.bottom-margin {{Model.question.title}}
+                    form.editor.top-margin
                         .fixed-left
                             .rounded.bg-grey.transparent.vote-box
                                 p.text-center
@@ -84,7 +88,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: Model.question.voteddown}')
                         div.editor-inner(ng-bind-html="Model.question.text")
                     div(style='margin-top:-5px;margin-bottom:15px;')
-                        a.badge(ng-repeat-start='tag in Model.question.tags') {{tag}}
+                        a.badge(ng-repeat-start='tag in Model.question.tags track by $index') {{tag}}
                         span(ng-repeat-end) &nbsp&nbsp
                     .row
                         .col-xs-12
@@ -106,7 +110,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     h3(ng-show="Model.question.nAnswers")
                         b 大家的回答
 
-                    form.editor.top-padding(ng-repeat-start="answer in Model.question.answers")
+                    form.editor.top-margin(ng-repeat-start="answer in Model.question.answers")
                         .fixed-left
                             .rounded.grey.transparent.vote-box
                                 p.text-center

@@ -21,11 +21,12 @@ angular.module('SpruceQuizApp')
 
                 $scope.view = {};
                 $scope.view.state = 'search'; //three states: search, ask, all-questions
-                $scope.editor = {};
+                $scope.editor = { tagText: "" };
                 $scope.editor.data = {
                     title: "",
-                    text:'',
-                    author: $scope.Model.user
+                    text: '',
+                    author: $scope.Model.user,
+                    tags: []
                 },
                 $scope.editor.options = {
                     buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'superscript', 'subscript', 'strikethrough', ' unorderedlist', 'orderedlist', 'pre', 'image'],
@@ -47,6 +48,14 @@ angular.module('SpruceQuizApp')
                 $scope.toggleHtml = function () {
                     $scope.editor.showHtml = !$scope.editor.showHtml;
                 };
+
+                $scope.$watch('editor.tagText', function(newVal){
+                    if (newVal.length === 0) { return null ; }
+                    if (newVal.slice(-1) === "," || newVal.slice(-1) === "，") {
+                        $scope.editor.data.tags.push(newVal.slice(0,-1));
+                        $scope.editor.tagText = '';
+                    }
+                });
 
                 if ($routeParams.questionId) {
                     $scope.view.state = 'question';
