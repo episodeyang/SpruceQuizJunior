@@ -14,13 +14,17 @@ angular.module('SpruceQuizApp')
                         alert('konami code success');
                     }
                 }
+                $rootScope.errorClear = function(){
+                    $rootScope.error = null;
+                }
 
                 $scope.Model = Model;
 
                 $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
 
-                $scope.view = {};
-                $scope.view.state = 'search'; //three states: search, ask, all-questions
+                $scope.view = {
+                    state: 'search'//three states: search, ask, all-questions
+                }
                 $scope.editor = { tagText: "" };
                 $scope.editor.data = {
                     title: "",
@@ -65,8 +69,8 @@ angular.module('SpruceQuizApp')
                 Model.queryQuestions();
 
                 $scope.editor.submit = function() {
-                    if ($scope.editor.data.title.length < 20) {
-                        return $rootScope.error = "标题太短了，这样会降低别人回答你的问题的几率。再重新考虑一下吧！";
+                    if ($scope.editor.data.title.length < 10) {
+                        return $rootScope.error = "标题没有讲明白，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
                     };
                     if ($scope.editor.data.text.length < 100) {
                         return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"

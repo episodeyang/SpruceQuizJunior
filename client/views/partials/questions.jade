@@ -5,6 +5,11 @@ div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
     +navbar
+    .alert-box(ng-show='error', ng-click="errorClear()")
+        p.title {{error.title || error}}
+            a.pull-right.small(ng-show="error.details", ng-click="view.error.show=show") 细节
+        .details(ng-hide='view.error.show')
+            p {{error.details}}
     .container
         .row
             .col-sm-7.col-sm-offset-2.col-xs-12
