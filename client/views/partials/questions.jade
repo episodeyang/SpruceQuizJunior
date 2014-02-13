@@ -7,7 +7,7 @@ div.background(background-img="/img/bg-brown.jpg")
     +navbar
     .container
         .row
-            .col-sm-7.col-sm-offset-2.col-xs-9.col-xs-offset-3
+            .col-sm-7.col-sm-offset-2.col-xs-12
                 ul.nav.nav-pills.pull-right
                     li
                         a(href='/') 问题
@@ -37,14 +37,14 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                                a.editor.small.top-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
+                                a.editor.short.top-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
                                     //-.row
                                         .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-margin {{question.title}}
                                             hr.low-margin
                                     .row
                                         div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
-                                            p.bottom-margin
+                                            h4.no-top-margin.bottom-margin
                                                 b {{question.title}}
                                             //hr.low-margin
                                             div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
