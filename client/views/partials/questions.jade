@@ -24,7 +24,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         a 待回答
         .row
             .col-sm-2.col-xs-3
-                ul.nav.nav-pills.nav-stacked(ng-hide="view.state=='question'")
+                ul.nav.nav-pills.nav-stacked(ng-hide="view.state.split('.')[0] === 'question'")
                     li(ng-class="{active: view.state=='search'}")
                         a.text-center(ng-click="view.state='search'") 所有问题
                     li(ng-class="{active: view.state=='ask'}")
@@ -80,24 +80,26 @@ div.background(background-img="/img/bg-brown.jpg")
                     form.editor.tall(ng-show='editor.showHtml')
                         p {{editor.data.text}}
                 div(ng-show="view.state.split('.')[0]=='question'")
-                    div(ng-show="view.state=='question.edit'")
+                    div(ng-show="view.state ==='question.edit'")
                         input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                         form.editor.tall.top-margin(name = 'questionEditor')
                             div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+
                         div.bottom-margin.top-margin
-                            a.badge(ng-repeat-start='tag in editor.data.tags track by $index') {{tag}}
-                            span(ng-repeat-end) &nbsp&nbsp
+                            .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
+                                span.white {{tag}} &nbsp
+                                a.white(ng-click='Model.question.tags.splice($index, 1)') &times
                         input(type='text', placeholder="问题标签", ng-model="editor.tagText").form-control.bottom-margin
                         .row
                             .col-xs-12
                                 button.btn.btn-link(ng-click='example()') 问题模板
                                 button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 文本代码
                                 button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
-                                button.btn.btn-info.pull-right(ng-hide='editor.showHtml', ng-click='editor.submit()') 确定修改
-                                button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.submit()') 删除
+                                button.btn.btn-info.pull-right(ng-hide='editor.showHtml', ng-click='editor.update()') 确定修改
+                                button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.cancel()') 删除
                         form.editor.tall(ng-show='editor.showHtml')
                             p {{editor.data.text}}
-                    div(ng-show="view.state=='question'")
+                    div(ng-show="view.state==='question'")
                         h3.title.bottom-margin {{Model.question.title}}
                         form.editor.top-margin
                             .fixed-left
@@ -110,12 +112,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                         a(ng-click='Model.votedown(Model.question)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: Model.question.voteddown}')
                             div.editor-inner(ng-bind-html="Model.question.text")
-                        div(style='margin-top:-5px;margin-bottom:15px;')
-                            a.badge(ng-repeat-start='tag in Model.question.tags track by $index') {{tag}}
-                            span(ng-repeat-end) &nbsp&nbsp
+                        div.bottom-margin.top-margin
+                            a.badge(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
                         .row
                             .col-xs-12
-                                a.right-spaced.small(ng-click="view.state = 'question.edit'; editor.data = Model.question") 编辑问题
+                                a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题
                                 a.right-spaced.small 评论
                                 p.pull-right
                                     span {{Model.question.dateCreated}} 由
@@ -172,12 +173,6 @@ div.background(background-img="/img/bg-brown.jpg")
                     .row
                         .col-xs-12
                             br
-
-
-
-
-
-
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading 相关标签

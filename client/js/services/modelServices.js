@@ -113,17 +113,20 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.createQuestion = function(question, success, error) {
                 Questions.create(question, function(question){
                     modelInstance.question = question;
-                    success();
+                    if (success) { success() };
                 }, function(err){
                     $rootScope.error = err;
-                    error();
+                    if (error) { error() };
                 } );
             };
-            modelInstance.saveQuestion = function(question, callback) {
+            modelInstance.saveQuestion = function(question, success, error) {
                 Questions.save(question, function(q){
                     _.extend(modelInstance.question, q);
-                    callback();
-                }, function(err){ $rootScope.error = err; } );
+                    if (success) { success() };
+                }, function(err){
+                    $rootScope.error = err;
+                    if (error) { error() };
+                } );
             };
             modelInstance.removeQuestion = function(question) {
                 Questions.remove(question, function(result){

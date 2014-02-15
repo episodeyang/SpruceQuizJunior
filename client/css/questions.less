@@ -97,8 +97,19 @@ ul.nav.nav-stacked > li > a {
 
 a {
   color: grey;
+  cursor: pointer;
 }
 
+a.white {
+  color: fade(white, 80%);
+  &:hover {
+    color: white;
+    text-decoration: none;
+    
+  }
+  cursor: pointer;
+
+}
 a.spaced {
   margin-left: 5px;
   margin-right: 5px;
@@ -214,6 +225,7 @@ a.editor {
 .bg-red { background-color: #f7b9b7; }
 .bg-grey { background-color: #d4d4d4; }
 .bg-grey.transparent { background-color: fade(#d4d4d4, 0%); }
+
 div.rounded {
   border-radius: 10px;
 }

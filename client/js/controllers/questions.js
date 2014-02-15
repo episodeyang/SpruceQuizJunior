@@ -68,18 +68,49 @@ angular.module('SpruceQuizApp')
 
                 Model.queryQuestions();
 
-                $scope.editor.submit = function() {
-                    if ($scope.editor.data.title.length < 10) {
+                var validator = function(data) {
+                    if (data.title.length < 10) {
                         return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
                     };
-                    if ($scope.editor.data.text.length < 100) {
+                    if (data.text.length < 100) {
                         return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
                     }
-                    Model.createQuestion($scope.editor.data
-                        , function(){
-                            $rootScope.error = '';
-                            $location.path('/questions/'+Model.question.id);
-                        });
+                };
+
+                $scope.editor.submit = function() {
+                    validator($scope.editor.data);
+                    if (!$rootScope.error) {
+                        Model.createQuestion(
+                            $scope.editor.data,
+                            function(){
+                                $rootScope.error = '';
+                                $location.path('/questions/'+Model.question.id);
+                            }
+                        );
+                    }
+                };
+                $scope.editor.update = function () {
+                    validator($scope.editor.data);
+                    if (!$rootScope.error) {
+                        Model.saveQuestion(
+                            $scope.editor.data,
+                            function () {
+                                $rootScope.error = '';
+                                $scope.view.state = 'question';
+                            },
+                            function () {
+                                console.log('there is an error!!')
+                            }
+                        );
+                    }
+                };
+                $scope.editor.cancel = function () {
+                    $scope.view.state = 'question';
+                    $scope.editor.data = {};
+                };
+                $scope.editor.showEditView = function () {
+                    $scope.view.state = 'question.edit';
+                    $scope.editor.data = Model.question
                 };
             }
         ]
