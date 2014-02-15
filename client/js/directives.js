@@ -69,7 +69,15 @@ angular.module('SpruceQuizApp')
             }
 
         };
+    }])
+    .directive('activeCtrl', ['$location', function (location) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
 
+            }
+
+        };
     }]);
 
 

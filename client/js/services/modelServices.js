@@ -120,6 +120,7 @@ angular.module('modelServices', ['resourceProvider'])
                 } );
             };
             modelInstance.saveQuestion = function(question, success, error) {
+                if (question.id) {$rootScope.error = "udpate does not have object id."}
                 Questions.save(question, function(q){
                     _.extend(modelInstance.question, q);
                     if (success) { success() };

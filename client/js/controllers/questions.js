@@ -89,17 +89,25 @@ angular.module('SpruceQuizApp')
                         );
                     }
                 };
-                $scope.editor.update = function () {
-                    validator($scope.editor.data);
+                $scope.editor.updateQuestion = function () {
+                    var update = {
+                        id: $scope.editor.data.id,
+                        title: $scope.editor.data.title,
+                        text: $scope.editor.data.text,
+                        tags: $scope.editor.data.tags
+                    }
+                    validator(update);
                     if (!$rootScope.error) {
                         Model.saveQuestion(
-                            $scope.editor.data,
+                            update,
                             function () {
                                 $rootScope.error = '';
                                 $scope.view.state = 'question';
                             },
                             function () {
-                                console.log('there is an error!!')
+                                if (!$rootScope.error) {
+                                    $rootScope.error = "server error, please refresh"
+                                }
                             }
                         );
                     }

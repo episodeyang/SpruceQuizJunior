@@ -107,7 +107,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 if (!req.params.id) { return res.send(400); }
                 if (req.body.voteup || req.body.votedown ) {
                     if (req.body.voteup !== 'true' && req.body.votedown !== 'true' ) {
-                        return res.send(401);
+                        return res.send(403, 'votingContractError');
                     } else {
                         QuestionM.findById(
                             req.params.id,
@@ -121,12 +121,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                                                 voteup: req.user.username
                                             }
                                         };
-//                                        question.votedown = _.reject(question.votedown, function (elm) {
-//                                            return elm == req.user.username;
-//                                        });
-//                                        question.voteup = _.reject(question.voteup, function (elm) {
-//                                            return elm == req.user.username;
-//                                        });
                                     } else {
                                         var update = {
                                             $pull: {
@@ -136,10 +130,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                                                 voteup: req.user.username
                                             }
                                         };
-//                                        question.votedown = _.reject(question.votedown, function (elm) {
-//                                            return elm == req.user.username;
-//                                        });
-//                                        question.voteup.push(req.user.username);
                                     }
                                 }
                                 if (req.body.votedown === 'true') {
@@ -150,12 +140,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                                                 voteup: req.user.username
                                             }
                                         };
-//                                        question.votedown = _.reject(question.votedown, function (elm) {
-//                                            return elm == req.user.username;
-//                                        });
-//                                        question.voteup = _.reject(question.voteup, function (elm) {
-//                                            return elm == req.user.username;
-//                                        });
                                     } else {
                                         var update = {
                                             $pull: {
@@ -165,10 +149,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                                                 votedown: req.user.username
                                             }
                                         };
-//                                        question.voteup = _.reject(question.voteup, function (elm) {
-//                                            return elm == req.user.username;
-//                                        });
-//                                        question.votedown.push(req.user.username);
                                     }
                                 }
 
@@ -187,13 +167,30 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         )
                     }
                 } else {
+                    var update = {};
+                    var fieldString = '';
+                    if (req.body.title) {
+                        update.title = req.body.title;
+                        fieldString += 'title ';
+                    }
+                    if (req.body.text) {
+                        update.text = req.body.text;
+                        fieldString += 'text ';
+                    }
+                    if (req.body.tags) {
+                        update.tags = req.body.tags;
+                        fieldString += 'tags ';
+                    }
                     QuestionM.findByIdAndUpdate(
-                        ObjectId(req.params.id),
-                        req.body,
-                        {new: true},
-                        function(err, results){
-                            if (err) {return res.send(403, err)};
-                            return res.send(201, results);
+                        req.params.id,
+                        update,
+                        {select: fieldString},
+                        function (err, result, n) {
+                            if (err) {
+                                return res.send(500, err);
+                            } else {
+                                return res.send(201, result);
+                            };
                         });
                 }
             },

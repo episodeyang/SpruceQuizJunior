@@ -83,12 +83,33 @@ describe('Server API Tests - ', function (done) {
     it('needs to login to access', function (done) {
         request(app).post('/api/questions/' + question.id).expect(401, done);
     });
-    it('update question by Id', function (done) {
+    it('update question title by Id', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question.id).send({title: 'updatedTitle'}).expect(201).end(function (err, res){
             res.body.title.should.eql('updatedTitle');
             done();
         });
+    });
+    it('update question text by Id', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions/' + question.id).send({text: 'updatedText'}).expect(201).end(function (err, res){
+            res.body.text.should.eql('updatedText');
+            done();
+        });
+    });
+    it('update question tags by Id', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions/' + question.id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res){
+            res.body.tags.should.eql(['updated tag 1', 'updated tag 2', 'updated tag 3']);
+            done();
+        });
+    });
+    it('needs to login to delete', function (done) {
+        request(app).del('/api/questions/' + question.id).expect(401, done);
+    });
+    it('delete question by Id', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).del('/api/questions/' + question.id).expect(204, done);
     });
     it('upvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
@@ -114,13 +135,6 @@ describe('Server API Tests - ', function (done) {
             res.body.voteup.should.not.containEql(studentUser.username);
             done();
         });
-    });
-    it('needs to login to delete', function (done) {
-        request(app).del('/api/questions/' + question.id).expect(401, done);
-    });
-    it('update question by Id', function (done) {
-        passportStub.login(studentUser); // login as user
-        request(app).del('/api/questions/' + question.id).send({title: 'updatedTitle'}).expect(204, done);
     });
 });
 
