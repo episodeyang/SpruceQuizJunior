@@ -15,12 +15,16 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});
+        var Answers = $resource('/api/questions/:id/answers', {id: '@id'}, {
+            create: {method: 'POST'}
+        });
         return {
             get: Question.get,
             query: Questions.query,
             create: Questions.create,
             save: Question.save,
-            remove: Question.remove
+            remove: Question.remove,
+            addAnswer: Answers.create
         };
     })
     .factory('Students', function ($resource) {

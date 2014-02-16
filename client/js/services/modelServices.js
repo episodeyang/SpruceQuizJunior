@@ -111,12 +111,12 @@ angular.module('modelServices', ['resourceProvider'])
                 }, function(err){ $rootScope.error = err; } );
             };
             modelInstance.createQuestion = function(question, success, error) {
-                Questions.create(question, function(question){
-                    modelInstance.question = question;
-                    if (success) { success() };
+                Questions.create(question, function(result){
+                    modelInstance.question = result;
+                    if (success) { success(result); };
                 }, function(err){
                     $rootScope.error = err;
-                    if (error) { error() };
+                    if (error) { error(err); };
                 } );
             };
             modelInstance.saveQuestion = function(question, success, error) {
@@ -149,12 +149,21 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
             }
-            modelInstance.addAnswer = function(answer) {
+            modelInstance.addAnswer = function(text, success, error) {
                 var ans = {
-                    id: question.id,
-                    answer: answer
-                }
-                modelInstance.saveQuestion(ans);
+                    id: modelInstance.question.id,
+                    text: text
+                };
+                Questions.addAnswer(
+                    ans,
+                    function(results){
+                        modelInstance.question.answers = results.answers;
+                        if (success) { success(results); }
+                    }, function(err) {
+                        $rootScope.error = err;
+                        if (error) { error(err); };
+                    }
+                );
             }
             modelInstance.deleteAnswer = function(answer) {
                 var q = {

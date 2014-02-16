@@ -31,15 +31,10 @@ angular.module('SpruceQuizApp')
                     text: '',
                     author: $scope.Model.user,
                     tags: []
-                },
+                };
                 $scope.editor.options = {
                     buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'superscript', 'subscript', 'strikethrough', ' unorderedlist', 'orderedlist', 'pre', 'image'],
                     placeholder: "请在这里输入你的问题。" +
-                        "如需修改文字风格，请高亮文字。风格编辑工具会自动显示。"
-                };
-                $scope.editor.answerOptions = {
-                    buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'superscript', 'subscript', 'strikethrough', ' unorderedlist', 'orderedlist', 'pre', 'image'],
-                    placeholder: "请在这里输入你的解答。" +
                         "如需修改文字风格，请高亮文字。风格编辑工具会自动显示。"
                 };
 
@@ -121,9 +116,20 @@ angular.module('SpruceQuizApp')
                     $scope.editor.data = Model.question
                 };
 
+                $scope.answerEditor = {text: ''}
+                $scope.answerEditor.options = {
+                    buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'superscript', 'subscript', 'strikethrough', ' unorderedlist', 'orderedlist', 'pre', 'image'],
+                    placeholder: "请在这里输入你的解答。" +
+                        "如需修改文字风格，请高亮文字。风格编辑工具会自动显示。"
+                };
                 $scope.addAnswer = function () {
                     Model.addAnswer(
-
+                        $scope.answerEditor.text,
+                        function(result) { $scope.answerEditor.text = ''; },
+                        function(err) {
+                            console.log ("there is an error");
+                            $rootScope.error = err
+                        }
                     )
                 }
             }

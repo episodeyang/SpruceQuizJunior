@@ -220,7 +220,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 }
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
-                    {answers: answer},
+                    {$push: {answers: answer}},
                     {select: "answers"},
                     function(err, result){
                         if (err) {return res.send(403, err)};
