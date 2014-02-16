@@ -91,7 +91,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             findOne: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
-                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers', function(err, results){
+                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers dateEdited dateCreated', function(err, results){
                     if (err) {return res.send(403, err)}
                     else {
                         return res.send(200, results);
@@ -182,7 +182,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         fieldString += 'tags ';
                     }
                     if (fieldString.length > 0) {
-                        update.dateEdited = Date.now();
+//                        $currentDate setting will be in mongoDB v2.6 upcoming release.
+//                        update.$currentDate = {dateEdited: true};
+                        update.dateEdited = new Date();
                         fieldString += 'dateEdited';
                     }
                     QuestionM.findByIdAndUpdate(

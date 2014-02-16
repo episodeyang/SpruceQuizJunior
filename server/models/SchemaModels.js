@@ -35,7 +35,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         answer: {
             text: String,
             author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
-            dateOfCreation: {type: Date, default: Date.now},
+            dateCreated: {type: Date, default: Date.now},
             dateEdited: {type: Date, default: Date.now},
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},

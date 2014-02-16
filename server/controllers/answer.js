@@ -29,7 +29,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     id: req.params.id,
                     text: req.body.text,
                     author: req.user.username
-//                    dateOfCreation: Date.now()
                 }
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
@@ -49,7 +48,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 if (!req.params.id || !req.params.answerId) { return res.send(400); }
                 QuestionM.findOneAndUpdate(
                     {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) },
-                    {$set: {'answers.$.text': req.body.text, "answer.$.dateEdited": Date.now()}},
+//                    New $currentDate applicable at mongodb v2.6 upcoming release.
+//                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answer.$.dateEdited": true}},
+                    {$set: {'answers.$.text': req.body.text, "answer.$.dateEdited": new Date()}},
                     {select: 'answers' },
                     function (err, result) {
                         if (err) {
