@@ -207,6 +207,25 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         if (err) {return res.send(403, err)};
                         return res.send(204);
                     });
+            },
+            addAnswer: function (req, res) {
+                "use strict";
+                console.log('this is running. this is running.');
+                if (!req.params.id) { return res.send(400); }
+                var answer = {
+                    id: req.params.id,
+                    text: req.body.text,
+                    author: req.user.username
+//                    dateOfCreation: Date.now()
+                }
+                QuestionM.findByIdAndUpdate(
+                    req.params.id,
+                    {answers: answer},
+                    {select: "answers"},
+                    function(err, result){
+                        if (err) {return res.send(403, err)};
+                        return res.send(201, result);
+                    });
             }
         };
     });

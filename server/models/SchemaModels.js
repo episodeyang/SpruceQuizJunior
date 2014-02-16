@@ -35,12 +35,12 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         answer: {
             text: String,
             author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
-            dateOfCreation: Date,
-            dateEdited: Date,
-            upvote: Number,
-            downvote: Number,
+            dateOfCreation: {type: Date, default: Date.now},
+            dateEdited: {type: Date, default: Date.now},
+            voteup: { type: [String], 'default': []},
+            votedown: { type: [String], 'default': []},
             __virtuals__: {
-                voteGet: function () { return this.upvote - this.downvote; }
+                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" }
             },
             __options__: {
                 toJSON: {

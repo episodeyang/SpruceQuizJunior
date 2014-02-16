@@ -149,6 +149,22 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
             }
+            modelInstance.addAnswer = function(answer) {
+                var ans = {
+                    id: question.id,
+                    answer: answer
+                }
+                modelInstance.saveQuestion(ans);
+            }
+            modelInstance.deleteAnswer = function(answer) {
+                var q = {
+                    id: question.id,
+                    answer: {
+                        $push: {}
+                    }
+                }
+                modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
+            }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
             // TODO: need to understand the undefined case better.

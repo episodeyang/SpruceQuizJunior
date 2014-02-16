@@ -120,6 +120,12 @@ angular.module('SpruceQuizApp')
                     $scope.view.state = 'question.edit';
                     $scope.editor.data = Model.question
                 };
+
+                $scope.addAnswer = function () {
+                    Model.addAnswer(
+
+                    )
+                }
             }
         ]
     );

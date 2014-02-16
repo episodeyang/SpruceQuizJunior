@@ -100,6 +100,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
+                path: '/api/questions/:id/answers',
+                httpMethod: 'POST',
+                middleware: [QuestionCtrl.addAnswer],
+                accessLevel: accessLevels.loggedin
+            },
+            {
                 path: '/api/students',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.index],

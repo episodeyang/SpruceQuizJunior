@@ -26,7 +26,7 @@ var studentUser = data.studentUser,
     adminUser = data.adminUser,
     superadminUser = data.superadminUser;
 
-describe('Server API Tests - ', function (done) {
+describe('Question API test - ', function (done) {
     beforeEach(function () {
         passportStub.logout(); // logout after each test
     });
@@ -138,6 +138,35 @@ describe('Server API Tests - ', function (done) {
     });
 });
 
+describe('Answer API test - ', function (done) {
+    var questions = [];
+    beforeEach(function () {
+        passportStub.logout(); // logout before each test
+    });
+    afterEach(function () {
+        passportStub.logout(); // logout after each test
+    });
+    it('create question', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/questions').send(data.questionCreate).expect(201).end(function (err, res) {
+            question = res.body;
+            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
+            done();
+        });
+    });
+    it('add answer to question', function (done) {
+        passportStub.login(studentUser);
+        request(app).post('/api/questions/' + question.id + '/answers')
+            .send(
+                {text: '我是一个有趣的答案。你看得到我吗？'}
+            )
+            .expect(201).end(function (err, res){
+//                res.body.should.containEql(studentUser.username);
+                done();
+             });
+    });
+
+});
 // =============== Example Code ===============
 //
 //    it('/login - Return a 200 and a user object', function(done) {
