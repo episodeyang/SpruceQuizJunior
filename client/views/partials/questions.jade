@@ -120,7 +120,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题
                                 a.right-spaced.small 评论
                                 p.pull-right
-                                    span {{Model.question.dateCreated}} 由
+                                    span {{Model.question.dateCreated | date:yy-MM-dd }} 由
                                     a.blue.spaced(ng-href="/users/{{Model.question.author.username}}") {{ Model.question.author.name || Model.question.author.username }}
                                     span 创建
                     .row
@@ -161,11 +161,11 @@ div.background(background-img="/img/bg-brown.jpg")
                             a.right-spaced.small 评论
                             a.right-spaced.small(ng-show="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
                             p.pull-right
-                                span {{ answer.dateCreated }} 由
+                                span {{ answer.dateCreated | date:yy-MM-dd }} 由
                                 a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
                                 span 创建
                             p.pull-right(ng-show='answer.dateEdited')
-                                span {{ answer.dateEdited }} 由
+                                span {{ answer.dateEdited | date:yy-MM-dd }} 由
                                 a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
                                 span 修改
                     .row(ng-repeat-end)
