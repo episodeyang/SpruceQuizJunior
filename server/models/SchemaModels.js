@@ -36,7 +36,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             text: String,
             author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
             dateCreated: {type: Date, default: Date.now},
-            dateEdited: {type: Date, default: Date.now},
+            dateEdited: {type: Date},
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},
             __virtuals__: {
@@ -184,8 +184,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             answers: [subSchema.Answer],
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},
-            dateCreated: {type: Date, default: Date.now},
-            dateEdited: {type: Date, default: Date.now},
+            dateCreated: { type: Date, default: Date.now },
+            dateEdited: { type: Date },
             __virtuals__: {
                 idGet: function () { return this._id; },
                 voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" },

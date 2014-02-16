@@ -50,9 +50,10 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) },
 //                    New $currentDate applicable at mongodb v2.6 upcoming release.
 //                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answer.$.dateEdited": true}},
-                    {$set: {'answers.$.text': req.body.text, "answer.$.dateEdited": new Date()}},
+                    {$set: {'answers.$.text': req.body.text, 'answer.$.dateEdited': new Date() }},
                     {select: 'answers' },
                     function (err, result) {
+                        console.log(result);
                         if (err) {
                             return res.send(500, err);
                         } else {

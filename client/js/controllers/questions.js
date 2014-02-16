@@ -126,7 +126,7 @@ angular.module('SpruceQuizApp')
                 $scope.addAnswer = function () {
                     Model.addAnswer(
                         $scope.answerEditor.data,
-                        function(result) { $scope.answerEditor.text = ''; }
+                        function(result) { $scope.answerEditor.data = {}; }
                     )
                 }
                 $scope.editAnswer = function(answer) {
@@ -138,17 +138,23 @@ angular.module('SpruceQuizApp')
                     Model.updateAnswer(
                         $scope.answerEditor.data,
                         function(result) {
-                            $scope.answerEditor.text = '';
+                            console.log('I just did this!')
+                            $scope.answerEditor.data = {};
                             $scope.view.answerEdit = false;
                             delete answer.viewEdit;
                         }
                     )
                 }
+                $scope.cancelUpdateAnswer = function (answer) {
+                    $scope.answerEditor.data = {};
+                    delete answer.viewEdit;
+                    delete $scope.view.answerEdit;
+                }
                 $scope.removeAnswer = function (answer) {
                     console.log('removing this answer')
                     Model.removeAnswer(
                         answer,
-                        function(result) { $scope.answerEditor.text = ''; }
+                        function(result) { $scope.answerEditor.data = {}; }
                     )
                 }
             }
