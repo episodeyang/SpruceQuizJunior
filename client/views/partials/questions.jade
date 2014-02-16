@@ -97,7 +97,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 文本代码
                                 button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
                                 button.btn.btn-info.pull-right(active-ctrl, ng-hide='editor.showHtml', ng-click='editor.updateQuestion()') 确定修改
-                                button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.cancel()') 删除
+                                button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.cancel()') 取消
                         form.editor.tall(ng-show='editor.showHtml')
                             p {{editor.data.text}}
                     div(ng-show="view.state==='question'")
@@ -152,7 +152,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
                         .row
                             .col-xs-12
-                                button.btn.btn-success.pull-right(ng-click='updateAnswer(answer)') 修改
+                                button.btn.btn-info.pull-right(ng-click='updateAnswer(answer)') 修改
                                 button.btn.btn-danger.pull-right.right-margin(ng-click='cancelUpdateAnswer(answer)') 取消
                         hr
                     .row(ng-hide='answer.viewEdit')
