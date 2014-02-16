@@ -6,8 +6,8 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user', './controllers/question'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl) {
+    './controllers/user', './controllers/question', './controllers/answer'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -96,13 +96,25 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             {
                 path: '/api/questions/:id',
                 httpMethod: 'DELETE',
-                middleware: [QuestionCtrl.removebyId],
+                middleware: [QuestionCtrl.removeById],
                 accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/questions/:id/answers',
                 httpMethod: 'POST',
-                middleware: [QuestionCtrl.addAnswer],
+                middleware: [AnswerCtrl.add],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId',
+                httpMethod: 'POST',
+                middleware: [AnswerCtrl.update],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId',
+                httpMethod: 'DELETE',
+                middleware: [AnswerCtrl.removeById],
                 accessLevel: accessLevels.loggedin
             },
             {

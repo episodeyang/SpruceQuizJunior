@@ -73,7 +73,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             delete schema.__options__;
         }
         // create subdocument without the `_id` key
-        subSchema[capitalize(title)] = new mongoose.Schema(schema, {_id: false});
+        subSchema[capitalize(title)] = new mongoose.Schema(schema);//, {_id: false});
         if (methods) {
             _.each(methods, function (method, methodKey) {
                 subSchema[capitalize(title)].methods[methodKey] = method;

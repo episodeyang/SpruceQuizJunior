@@ -181,6 +181,10 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         update.tags = req.body.tags;
                         fieldString += 'tags ';
                     }
+                    if (fieldString.length > 0) {
+                        update.dateEdited = Date.now();
+                        fieldString += 'dateEdited';
+                    }
                     QuestionM.findByIdAndUpdate(
                         req.params.id,
                         update,
@@ -199,32 +203,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiName DeleteQuestion
              * @apiGroup Questions
              */
-            removebyId: function (req, res) {
+            removeById: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
                 QuestionM.findByIdAndRemove(
                     ObjectId(req.params.id),
                     function(err, results){
                         if (err) {return res.send(403, err)};
                         return res.send(204);
-                    });
-            },
-            addAnswer: function (req, res) {
-                "use strict";
-                console.log('this is running. this is running.');
-                if (!req.params.id) { return res.send(400); }
-                var answer = {
-                    id: req.params.id,
-                    text: req.body.text,
-                    author: req.user.username
-//                    dateOfCreation: Date.now()
-                }
-                QuestionM.findByIdAndUpdate(
-                    req.params.id,
-                    {$push: {answers: answer}},
-                    {select: "answers"},
-                    function(err, result){
-                        if (err) {return res.send(403, err)};
-                        return res.send(201, result);
                     });
             }
         };
