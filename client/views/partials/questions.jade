@@ -135,7 +135,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     h3(ng-show="Model.question.nAnswers")
                         b 大家的回答
 
-                    form.editor.top-margin(ng-repeat-start="answer in Model.question.answers")
+                    form.editor.top-margin(id="{{answer.id}}", ng-repeat-start="answer in Model.question.answers", ng-hide="view.answerEdit")
                         .fixed-left
                             .rounded.grey.transparent.vote-box
                                 p.text-center
@@ -146,10 +146,17 @@ div.background(background-img="/img/bg-brown.jpg")
                                     a(ng-click='answer.downvote()')
                                         span.down.glyphicon.glyphicon-chevron-down
                         div.editor-inner(ng-bind-html="answer.text")
-                    .row
+                    div(ng-show="answer.viewEdit")
+                        form.editor.short
+                            div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+                        .row
+                            .col-xs-12
+                                button.btn.btn-success.pull-right(ng-click='updateAnswer(answer)') 提交解答
+                    .row(ng-hide='view.answerEdit')
                         .col-xs-12
-                            a.right-spaced.small 编辑回答
+                            a.right-spaced.small(ng-show="answer.author == user.username", ng-click="editAnswer(answer)") 编辑回答
                             a.right-spaced.small 评论
+                            a.right-spaced.small(ng-show="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
                             p.pull-right
                                 span {{answer.dateCreated}} 由
                                 a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
@@ -163,13 +170,14 @@ div.background(background-img="/img/bg-brown.jpg")
                                 span &#8212&nbsp
                                     a.blue {{comment.author}}
                     //hr
-                    br
-                    h3 你的回答
-                    form.editor.short()
-                        div.editor-inner(ng-model='answerEditor.text', medium-editor, options="{{answerEditor.options}}")
-                    .row
-                        .col-xs-12
-                            button.btn.btn-success.pull-right(ng-click='addAnswer()') 提交解答
+                    div(ng-hide='view.answerEdit')
+                        br
+                        h3 你的回答
+                        form.editor.short
+                            div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+                        .row
+                            .col-xs-12
+                                button.btn.btn-success.pull-right(ng-click='addAnswer()') 提交解答
                     .row
                         .col-xs-12
                             br

@@ -116,7 +116,8 @@ angular.module('SpruceQuizApp')
                     $scope.editor.data = Model.question
                 };
 
-                $scope.answerEditor = {text: ''}
+                $scope.answerEditor = {}
+                $scope.answerEditor.data = {text: ''}
                 $scope.answerEditor.options = {
                     buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'superscript', 'subscript', 'strikethrough', ' unorderedlist', 'orderedlist', 'pre', 'image'],
                     placeholder: "请在这里输入你的解答。" +
@@ -124,12 +125,30 @@ angular.module('SpruceQuizApp')
                 };
                 $scope.addAnswer = function () {
                     Model.addAnswer(
-                        $scope.answerEditor.text,
-                        function(result) { $scope.answerEditor.text = ''; },
-                        function(err) {
-                            console.log ("there is an error");
-                            $rootScope.error = err
+                        $scope.answerEditor.data,
+                        function(result) { $scope.answerEditor.text = ''; }
+                    )
+                }
+                $scope.editAnswer = function(answer) {
+                    $scope.answerEditor.data = answer;
+                    $scope.view.answerEdit = true;
+                    answer.viewEdit = true;
+                }
+                $scope.updateAnswer = function (answer) {
+                    Model.updateAnswer(
+                        $scope.answerEditor.data,
+                        function(result) {
+                            $scope.answerEditor.text = '';
+                            $scope.view.answerEdit = false;
+                            delete answer.viewEdit;
                         }
+                    )
+                }
+                $scope.removeAnswer = function (answer) {
+                    console.log('removing this answer')
+                    Model.removeAnswer(
+                        answer,
+                        function(result) { $scope.answerEditor.text = ''; }
                     )
                 }
             }

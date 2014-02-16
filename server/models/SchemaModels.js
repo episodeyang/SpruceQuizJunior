@@ -45,7 +45,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             __options__: {
                 toJSON: {
                     getters: true,
-                    virtuals: true
+                    virtuals: true,
+                    transform: function (doc, rtn, options) { delete rtn._id; }
                 },
                 toObject: {
                     getters: true,

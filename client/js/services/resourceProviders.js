@@ -30,7 +30,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         var Answer = $resource('/api/questions/:id/answers/:answerId', {id: '@id', answerId: '@answerId'});
         return {
             add: Answers.create,
-            update: Answer.save,
+            save: Answer.save,
             remove: Answer.remove
         };
     })

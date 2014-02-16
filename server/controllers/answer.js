@@ -51,11 +51,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) },
                     {$set: {'answers.$.text': req.body.text, "answer.$.dateEdited": Date.now()}},
                     {select: 'answers' },
-                    function (err, result, n) {
-                        console.log(result);
-                        console.log(
-                            'total number of answers affected: ' + n
-                        )
+                    function (err, result) {
                         if (err) {
                             return res.send(500, err);
                         } else {
@@ -69,12 +65,17 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             removeById: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
-                QuestionM.findByIdAndRemove(
-                    ObjectId(req.params.id),
-                    function(err, results){
-                        if (err) {return res.send(403, err)};
-                        return res.send(204);
+                if (!req.params.id || !req.params.answerId) { return res.send(400); }
+                QuestionM.findOneAndUpdate(
+                    {_id: ObjectId(req.params.id) },
+                    {$pull: {answers: {_id: ObjectId(req.params.answerId)} }},
+                    {select: 'answers' },
+                    function (err, results) {
+                        if (err) {
+                            return res.send(500, err);
+                        } else {
+                            return res.send(201, results);
+                        };
                     });
             }
         };

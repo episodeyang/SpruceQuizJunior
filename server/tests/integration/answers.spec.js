@@ -61,8 +61,16 @@ describe('Answer API test - ', function (done) {
         request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
             .send({text: ansText})
             .expect(201).end(function (err, res){
-                console.log(res.body);
                 res.body.answers[0].text.should.eql(ansText);
+                done();
+            });
+    });
+    it('delete answer in a question', function (done) {
+        var originalLength = _.size(question.answers);
+        passportStub.login(studentUser);
+        request(app).del('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+            .expect(201).end(function (err, res){
+                _.size(res.body.answers).should.eql(originalLength-1);
                 done();
             });
     });

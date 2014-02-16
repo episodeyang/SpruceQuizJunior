@@ -149,10 +149,10 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
             }
-            modelInstance.addAnswer = function(text, success, error) {
+            modelInstance.addAnswer = function(answer, success, error) {
                 var ans = {
                     id: modelInstance.question.id,
-                    text: text
+                    text: answer.text
                 };
                 Answers.add(
                     ans,
@@ -165,9 +165,26 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 );
             }
-            modelInstance.deleteAnswer = function(answer) {
+            modelInstance.updateAnswer = function(answer, success, error) {
                 var ans = {
-                    id: question.id,
+                    id: modelInstance.question.id,
+                    answerId: answer.id,
+                    text: answer.text
+                };
+                Answers.save(
+                    ans,
+                    function( results ) {
+                        modelInstance.question.answers = results.answers;
+                        if (success) { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (error) { error(err); };
+                    }
+                )
+            }
+            modelInstance.removeAnswer = function(answer, success, error) {
+                var ans = {
+                    id: modelInstance.question.id,
                     answerId: answer.id
                 };
                 Answers.remove(
