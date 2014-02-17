@@ -65,8 +65,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     //    span.input-group-btn
                     //        button.btn.btn-default(type='button') 标题
                     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
-                    form.editor.tall.top-margin
-                        //-(name = 'questionEditor')
+                    form.editor.tall.top-margin(name = 'questionAskEditorForm')
                         div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                     div.bottom-margin.top-margin
                         a.badge(ng-repeat-start='tag in editor.data.tags track by $index') {{tag}}
@@ -83,7 +82,7 @@ div.background(background-img="/img/bg-brown.jpg")
                 div(ng-show="view.state.split('.')[0]=='question'")
                     div(ng-show="view.state ==='question.edit'")
                         input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
-                        form.editor.tall.top-margin(name = 'questionEditor')
+                        form.editor.tall.top-margin(name = 'questionEditorForm')
                             div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
 
                         div.bottom-margin.top-margin
@@ -148,7 +147,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             div.editor-inner(ng-bind-html="answer.text")
                         div(ng-show="answer.viewEdit")
                             hr
-                            form.editor.short.top-margin
+                            form.editor.short.top-margin(name = 'answerEditorForm')
                                 div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
                             .row
                                 .col-xs-12
@@ -180,7 +179,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     div(ng-hide='view.answerEdit')
                         br
                         h3 你的回答
-                        form.editor.short
+                        form.editor.short(name = 'answerEditorForm')
                             div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
                         .row
                             .col-xs-12
