@@ -65,6 +65,58 @@ describe('Answer API test - ', function (done) {
                 done();
             });
     });
+    it('upvote answer', function (done) {
+        var query = {
+            voteup: 'true'
+        };
+        passportStub.login(studentUser);
+        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+            .send(query)
+            .expect(201).end(function (err, res){
+                res.body.answers[0].voteup.should.containEql(studentUser.username);
+                res.body.answers[0].votedown.should.not.containEql(studentUser.username);
+                done();
+            });
+    });
+    it('upvote answer again to remove vote', function (done) {
+        var query = {
+            voteup: 'true'
+        };
+        passportStub.login(studentUser);
+        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+            .send(query)
+            .expect(201).end(function (err, res){
+                res.body.answers[0].voteup.should.not.containEql(studentUser.username);
+                res.body.answers[0].votedown.should.not.containEql(studentUser.username);
+                done();
+            });
+    });
+    it('downvote answer', function (done) {
+        var query = {
+            votedown: 'true'
+        };
+        passportStub.login(studentUser);
+        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+            .send(query)
+            .expect(201).end(function (err, res){
+                res.body.answers[0].votedown.should.containEql(studentUser.username);
+                res.body.answers[0].voteup.should.not.containEql(studentUser.username);
+                done();
+            });
+    });
+    it('downvote answer again to remove downvote', function (done) {
+        var query = {
+            votedown: 'true'
+        };
+        passportStub.login(studentUser);
+        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+            .send(query)
+            .expect(201).end(function (err, res){
+                res.body.answers[0].votedown.should.not.containEql(studentUser.username);
+                res.body.answers[0].voteup.should.not.containEql(studentUser.username);
+                done();
+            });
+    });
     it('delete answer in a question', function (done) {
         var originalLength = _.size(question.answers);
         passportStub.login(studentUser);

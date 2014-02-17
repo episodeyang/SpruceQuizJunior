@@ -157,6 +157,8 @@ angular.module('SpruceQuizApp')
                         function(result) { $scope.answerEditor.data = {}; }
                     )
                 }
+                $scope.voteupAnswer = Model.voteupAnswer;
+                $scope.votedownAnswer = Model.votedownAnswer;
             }
         ]
     );

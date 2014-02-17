@@ -64,8 +64,8 @@ describe('Server Authentication Tests - ', function (done) {
                 res.body.should.have.property("id");
                 res.body.username.should.equal(data.studentLogin.username);
                 studentUser = res.body;
-                console.log('show student user object');
-                console.log(studentUser);
+//                console.log('show student user object');
+//                console.log(studentUser);
                 done();
             })
     });

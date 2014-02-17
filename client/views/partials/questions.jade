@@ -71,7 +71,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     div.bottom-margin.top-margin
                         a.badge(ng-repeat-start='tag in editor.data.tags track by $index') {{tag}}
                         span(ng-repeat-end) &nbsp&nbsp
-                    input(type='text', placeholder="问题标签", ng-model="editor.tagText").form-control.bottom-margin
+                    input(type='text', placeholder="问题标签--请用逗号分隔不同标签", ng-model="editor.tagText").form-control.bottom-margin
                     .row
                         .col-xs-12
                             button.btn.btn-link(ng-click='example()') 问题模板
@@ -90,7 +90,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
                                 span.white {{tag}} &nbsp
                                 a.white(ng-click='Model.question.tags.splice($index, 1)') &times
-                        input(type='text', placeholder="问题标签", ng-model="editor.tagText").form-control.bottom-margin
+                        input(type='text', placeholder="问题标签--请用逗号分隔不同标签", ng-model="editor.tagText").form-control.bottom-margin
                         .row
                             .col-xs-12
                                 button.btn.btn-link(ng-click='example()') 问题模板
@@ -134,48 +134,48 @@ div.background(background-img="/img/bg-brown.jpg")
                     br
                     h3(ng-show="Model.question.nAnswers")
                         b 大家的回答
-
-                    form.editor.top-margin(id="{{answer.id}}", ng-repeat-start="answer in Model.question.answers", ng-hide="answer.viewEdit")
-                        .fixed-left
-                            .rounded.grey.transparent.vote-box
-                                p.text-center
-                                    a(ng-click='answer.downvote()')
-                                        span.up.glyphicon.glyphicon-chevron-up
-                                h3.text-center {{answer.vote}}
-                                p.text-center
-                                    a(ng-click='answer.downvote()')
-                                        span.down.glyphicon.glyphicon-chevron-down
-                        div.editor-inner(ng-bind-html="answer.text")
-                    div(ng-show="answer.viewEdit")
-                        hr
-                        form.editor.short.top-margin
-                            div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
-                        .row
+                    div(ng-repeat="answer in Model.question.answers")
+                        form.editor.top-margin(id="{{answer.id}}", ng-hide="answer.viewEdit")
+                            .fixed-left
+                                .rounded.grey.transparent.vote-box
+                                    p.text-center
+                                        a(ng-click='voteupAnswer($index)')
+                                            span.up.glyphicon.glyphicon-chevron-up( ng-class='{glow: answer.votedup}')
+                                    h3.text-center {{answer.vote}}
+                                    p.text-center
+                                        a(ng-click='votedownAnswer($index)')
+                                            span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: answer.voteddown}')
+                            div.editor-inner(ng-bind-html="answer.text")
+                        div(ng-show="answer.viewEdit")
+                            hr
+                            form.editor.short.top-margin
+                                div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+                            .row
+                                .col-xs-12
+                                    button.btn.btn-info.pull-right(ng-click='updateAnswer(answer)') 修改
+                                    button.btn.btn-danger.pull-right.right-margin(ng-click='cancelUpdateAnswer(answer)') 取消
+                            hr
+                        .row(ng-hide='answer.viewEdit')
                             .col-xs-12
-                                button.btn.btn-info.pull-right(ng-click='updateAnswer(answer)') 修改
-                                button.btn.btn-danger.pull-right.right-margin(ng-click='cancelUpdateAnswer(answer)') 取消
-                        hr
-                    .row(ng-hide='answer.viewEdit')
-                        .col-xs-12
-                            a.right-spaced.small(ng-click="editAnswer(answer)") 编辑回答
-                            a.right-spaced.small 评论
-                            a.right-spaced.small(ng-show="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
-                            p.pull-right
-                                span {{ answer.dateCreated | date:yy-MM-dd }} 由
-                                a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
-                                span 创建
-                            p.pull-right(ng-show='answer.dateEdited')
-                                span {{ answer.dateEdited | date:yy-MM-dd }} 由
-                                a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
-                                span 修改
-                    .row(ng-repeat-end)
-                        .col-xs-12(ng-repeat='comment in answer.comments')
-                            hr.low-margin
-                            p.small
-                                span.badge.margin-right {{comment.votes}}
-                                span {{comment.text}}
-                                span &#8212&nbsp
-                                    a.blue {{comment.author}}
+                                a.right-spaced.small(ng-click="editAnswer(answer)") 编辑回答
+                                a.right-spaced.small 评论
+                                a.right-spaced.small(ng-show="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
+                                p.pull-right
+                                    span {{ answer.dateCreated | date:yy-MM-dd }} 由
+                                    a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
+                                    span 创建
+                                p.pull-right(ng-show='answer.dateEdited')
+                                    span {{ answer.dateEdited | date:yy-MM-dd }} 由
+                                    a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
+                                    span 修改
+                        .row
+                            .col-xs-12(ng-repeat='comment in answer.comments')
+                                hr.low-margin
+                                p.small
+                                    span.badge.margin-right {{comment.votes}}
+                                    span {{comment.text}}
+                                    span &#8212&nbsp
+                                        a.blue {{comment.author}}
                     //hr
                     div(ng-hide='view.answerEdit')
                         br
@@ -197,4 +197,3 @@ div.background(background-img="/img/bg-brown.jpg")
                     .panel-heading 相关问题
                     .panel-body
                         p(ph-txt='3s')
-

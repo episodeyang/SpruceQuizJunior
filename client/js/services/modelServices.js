@@ -54,6 +54,8 @@ angular.module('modelServices', ['resourceProvider'])
                 console.log('model initialized')
                 modelInstance.user = user;
 //                console.log(modelInstance.user)
+                modelInstance.question = {};
+                modelInstance.questions = [];
             };
 
             /** helper function that gets the role string by looking up the object defined for the roles
@@ -92,18 +94,24 @@ angular.module('modelServices', ['resourceProvider'])
                 return sections;
             }
 
-            modelInstance.question = {};
-            modelInstance.questions = [];
-
-            modelInstance.getVoteStatus = function(){
-                modelInstance.question.votedup = _.contains(modelInstance.question.voteup, modelInstance.user.username)
-                modelInstance.question.voteddown = _.contains(modelInstance.question.votedown, modelInstance.user.username)
+            modelInstance.getVoteStatus = function(model){
+                model.votedup = _.contains(model.voteup, modelInstance.user.username)
+                model.voteddown = _.contains(model.votedown, modelInstance.user.username)
+            }
+            modelInstance.getQuestionVoteStatus = function(){
+                modelInstance.getVoteStatus(modelInstance.question);
             };
             modelInstance.getQuestion = function(id) {
-                Questions.get( {id:id}, function(question){
-                    modelInstance.question = question;
-                    modelInstance.getVoteStatus();
-                }, function(err){ $rootScope.error = err; } );
+//                modelInstance.question = {};
+                Questions.get(
+                    {id:id},
+                    function(question){
+                        modelInstance.question = question;
+                        modelInstance.getQuestionVoteStatus();
+                        _.map(modelInstance.question.answers, modelInstance.getVoteStatus)
+                    }, function(err){
+                        $rootScope.error = err;
+                    } );
             };
             modelInstance.queryQuestions = function() {
                 Questions.query(function(questions){
@@ -120,13 +128,13 @@ angular.module('modelServices', ['resourceProvider'])
                 } );
             };
             modelInstance.saveQuestion = function(question, success, error) {
-                if (question.id) {$rootScope.error = "udpate does not have object id."}
+//                if (question.id) {$rootScope.error = "udpate does not have object id."}
                 Questions.save(question, function(q){
                     _.extend(modelInstance.question, q);
-                    if (success) { success() };
+                    if (success) { success(q) };
                 }, function(err){
                     $rootScope.error = err;
-                    if (error) { error() };
+                    if (error) { error(err) };
                 } );
             };
             modelInstance.removeQuestion = function(question) {
@@ -140,14 +148,14 @@ angular.module('modelServices', ['resourceProvider'])
                     id: question.id,
                     voteup: 'true'
                 }
-                modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
+                modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
             modelInstance.votedown = function(question) {
                 var q = {
                     id: question.id,
                     votedown: 'true'
                 }
-                modelInstance.saveQuestion(q, modelInstance.getVoteStatus);
+                modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
             modelInstance.addAnswer = function(answer, success, error) {
                 var ans = {
@@ -158,6 +166,7 @@ angular.module('modelServices', ['resourceProvider'])
                     ans,
                     function(results){
                         modelInstance.question.answers = results.answers;
+                        console.log(results.answers);
                         if (success) { success(results); }
                     }, function(err) {
                         $rootScope.error = err;
@@ -197,6 +206,31 @@ angular.module('modelServices', ['resourceProvider'])
                         if (error) { error(err); };
                     }
                 )
+            }
+
+            modelInstance.voteupAnswer = function(answerIndex) {
+                var ans = {
+                    id: modelInstance.question.id,
+                    answerId: modelInstance.question.answers[answerIndex].id,
+                    "voteup": 'true'
+                }
+                function callback (result)  {
+                    _.extend(modelInstance.question, result);
+                    modelInstance.getVoteStatus(modelInstance.question.answers[answerIndex])
+                }
+                Answers.save(ans, callback );
+            }
+            modelInstance.votedownAnswer = function(answerIndex) {
+                var ans = {
+                    id: modelInstance.question.id,
+                    answerId: modelInstance.question.answers[answerIndex].id,
+                    "votedown": 'true'
+                }
+                function callback (result)  {
+                    _.extend(modelInstance.question, result);
+                    modelInstance.getVoteStatus(modelInstance.question.answers[answerIndex])
+                }
+                Answers.save(ans, callback );
             }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
