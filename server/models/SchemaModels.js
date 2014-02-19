@@ -14,53 +14,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         return s[0].toUpperCase() + s.slice(1);
     }
 
-    var config_nest = {
-        quizProblem: {
-            problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
-            weight: Number
-        },
-        examProblem: {
-            problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
-            problemType: String,
-            weight: Number,
-            receivedScore: Number,
-            studentAnswer: Array
-        },
-        postPrototype: {
-            text: String,
-            author: String, //{type: Schema.Types.ObjectId, ref: 'User'},
-            dateOfCreation: Date,
-            dateEdited: Date
-        },
-        answer: {
-            text: String,
-            author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
-            dateCreated: {type: Date, default: Date.now},
-            dateEdited: {type: Date},
-            voteup: { type: [String], 'default': []},
-            votedown: { type: [String], 'default': []},
-            __virtuals__: {
-                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" }
-            },
-            __options__: {
-                toJSON: {
-                    getters: true,
-                    virtuals: true,
-                    transform: function (doc, rtn, options) { delete rtn._id; }
-                },
-                toObject: {
-                    getters: true,
-                    virtuals: true
-                }
-            }
-        },
-        user: {
-            username: String,
-            name: String
-        }
-    };
     var subSchema = {};
-    _.each(config_nest, function (schema, title) {
+    function subSchemaBuilder (schema, title) {
         if (schema.__methods__) {
             var methods = schema.__methods__;
             delete schema.__methods__;
@@ -94,7 +49,66 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 subSchema[capitalize(title)].set(optionKey, option);
             });
         }
-    });
+    }
+
+    var config_nest = {
+        quizProblem: {
+            problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
+            weight: Number
+        },
+        examProblem: {
+            problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
+            problemType: String,
+            weight: Number,
+            receivedScore: Number,
+            studentAnswer: Array
+        },
+        commentPrototype: {
+            text: String,
+            author: String, //{type: Schema.Types.ObjectId, ref: 'User'},
+            dateOfCreation: Date,
+            dateEdited: Date,
+            voteup: [String],
+            votedown: [String],
+            __virtuals__: {
+                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
+            }
+        },
+        user: {
+            username: String,
+            name: String
+        }
+    };
+    _.each(config_nest, subSchemaBuilder);
+
+    var config_nest_2 = {
+        answer: {
+            text: String,
+            author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
+            dateCreated: {type: Date, default: Date.now},
+            dateEdited: {type: Date},
+            voteup: { type: [String], 'default': []},
+            votedown: { type: [String], 'default': []},
+            comments: [subSchema.CommentPrototype],
+            __virtuals__: {
+                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" }
+            },
+            __options__: {
+                toJSON: {
+                    getters: true,
+                    virtuals: true,
+                    transform: function (doc, rtn, options) { delete rtn._id; }
+                },
+                toObject: {
+                    getters: true,
+                    virtuals: true
+                }
+            }
+        }
+    };
+
+    _.each(config_nest_2, subSchemaBuilder);
+    _.extend(config_nest, config_nest_2);
 
     /**
      * @typedef schema {{name: string, lang: string}}
@@ -180,7 +194,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             text: String,
             author: config_nest.user, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
             tags: Array,
-            comments: [subSchema.PostPrototype],
+            comments: [subSchema.CommentPrototype],
             answers: [subSchema.Answer],
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},

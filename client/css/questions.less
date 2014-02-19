@@ -124,8 +124,19 @@ a.blue {
   color: #34c6d7;
 }
 
+@light-brown : fadeout(#604830, 40%);
+@faint-brown : fadeout(#604830, 80%);
 hr {
-  border-top: 1px solid fadeout(#604830, 40%);
+  border-top: 1px solid @light-brown;
+}
+hr.dotted {
+  border-top: 1px dotted @light-brown;
+}
+hr.light-dotted {
+  border-top: 1px dotted @faint-brown;
+}
+.dotted-bottom {
+  border-bottom: 1px dotted @light-brown;
 }
 
 h3.title {
@@ -154,6 +165,9 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 
 .bottom-margin {
   margin-bottom: 15px;
+}
+.short-bottom-margin {
+  margin-bottom: 7px;
 }
 
 .right-margin {
