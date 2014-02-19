@@ -68,8 +68,9 @@ div.background(background-img="/img/bg-brown.jpg")
                     form.editor.tall.top-margin(name = 'questionAskEditorForm')
                         div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                     div.bottom-margin.top-margin
-                        a.badge(ng-repeat-start='tag in editor.data.tags track by $index') {{tag}}
-                        span(ng-repeat-end) &nbsp&nbsp
+                        .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
+                            span.white {{tag}} &nbsp
+                            a.white(ng-click='editor.data.tags.splice($index, 1)') &times
                     input(type='text', placeholder="问题标签--请用逗号分隔不同标签", ng-model="editor.tagText").form-control.bottom-margin
                     .row
                         .col-xs-12
