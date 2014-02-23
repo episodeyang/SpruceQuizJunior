@@ -48,51 +48,51 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 if (req.body.voteup == 'true' || req.body.votedown == 'true') {
                     var query = {
                         "_id": ObjectId(req.params.id),
-                        "answerComments._id": ObjectId(req.params.answerId)
-//                        "answers.comments._id": ObjectId(req.params.commentId)
+                        "answerComments._id": ObjectId(req.params.commentId)
                     };
                     function callback (err, result){
+                        if (! result || !result.answerComments) { return res.send(404, "the answer comment can not be found");}
                         if (req.body.voteup === 'true') {
-                            if (_.contains(result.comments[0].voteup, req.user.username)) {
+                            if (_.contains(result.answerComments[0].voteup, req.user.username)) {
                                 var update = {
                                     $pull: {
-                                        "answers.$.comments.$.votedown": req.user.username,
-                                        "answers.$.comments.$.voteup": req.user.username
+                                        "answerComments.$.votedown": req.user.username,
+                                        "answerComments.$.voteup": req.user.username
                                     }
                                 };
                             } else {
                                 var update = {
                                     $pull: {
-                                        "answers.$.comments.$.votedown": req.user.username
+                                        "answerComments.$.votedown": req.user.username
                                     },
                                     $push: {
-                                        "answers.$.comments.$.voteup": req.user.username
+                                        "answerComments.$.voteup": req.user.username
                                     }
                                 };
                             }
                         }
                         if (req.body.votedown === 'true') {
-                            if (_.contains(result.comments[0].votedown, req.user.username)) {
+                            if (_.contains(result.answerComments[0].votedown, req.user.username)) {
                                 var update = {
                                     $pull: {
-                                        "answers.$.comments.$.votedown": req.user.username,
-                                        "answers.$.comments.$.voteup": req.user.username
+                                        "answerComments.$.votedown": req.user.username,
+                                        "answerComments.$.voteup": req.user.username
                                     }
                                 };
                             } else {
                                 var update = {
                                     $pull: {
-                                        "answers.$.comments.$.voteup": req.user.username
+                                        "answerComments.$.voteup": req.user.username
                                     },
                                     $push: {
-                                        "answers.$.comments.$.votedown": req.user.username
+                                        "answerComments.$.votedown": req.user.username
                                     }
                                 };
                             }
                         }
-                        QuestionM.findOneAndUpdate(query, update, {select: 'answers.comments'}, function (err, result, n) {
+                        QuestionM.findOneAndUpdate(query, update, {select: 'answerComments'}, function (err, result, n) {
                             var q = {
-                                comments: result.comments,
+                                answerComments: result.answerComments
                             };
                             if (err) { return res.send(500, err); }
                             else {
@@ -101,14 +101,12 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         });
                     }
 
-                    QuestionM.findOne(query).select('answers').exec(callback);
+                    QuestionM.findOne(query).select('answerComments.$').exec(callback);
                 } else {
                     var query = {
                         "_id": ObjectId(req.params.id),
-//                        "answerComments.answersId": ObjectId(req.params.answerId),
                         "answerComments._id": ObjectId(req.params.commentId)
                     };
-                    console.log(query);
                     QuestionM.findOneAndUpdate(
                         query,
 //                    New $currentDate applicable at mongodb v2.6 upcoming release.
@@ -134,12 +132,12 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 if (!req.params.id || !req.params.answerId || !req.params.commentId ) { return res.send(400); }
                 var query = {
                     "_id": ObjectId(req.params.id),
-                    "answers._id": ObjectId(req.params.answerId),
+                    "answerComments._id": ObjectId(req.params.commentId),
                 };
                 QuestionM.findOneAndUpdate(
                     query,
-                    {$pull: {answers: {comments: {_id: ObjectId(req.params.commentId)} } }},
-                    {select: 'answers.comments' },
+                    {$pull: {answerComments: {_id: ObjectId(req.params.commentId)} } },
+                    {select: 'answerComments' },
                     function (err, results) {
                         if (err) {
                             return res.send(500, err);
