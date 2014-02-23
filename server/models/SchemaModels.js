@@ -72,6 +72,40 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             votedown: [String],
             __virtuals__: {
                 voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
+            },
+            __options__: {
+                toJSON: {
+                    getters: true,
+                    virtuals: true,
+                    transform: function (doc, rtn, options) { delete rtn._id; }
+                },
+                toObject: {
+                    getters: true,
+                    virtuals: true
+                }
+            }
+        },
+        answerCommentPrototype: {
+            answerId: Schema.Types.ObjectId,
+            text: String,
+            author: String, //{type: Schema.Types.ObjectId, ref: 'User'},
+            dateOfCreation: Date,
+            dateEdited: Date,
+            voteup: [String],
+            votedown: [String],
+            __virtuals__: {
+                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
+            },
+            __options__: {
+                toJSON: {
+                    getters: true,
+                    virtuals: true,
+                    transform: function (doc, rtn, options) { delete rtn._id; }
+                },
+                toObject: {
+                    getters: true,
+                    virtuals: true
+                }
             }
         },
         user: {
@@ -89,7 +123,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             dateEdited: {type: Date},
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},
-            comments: [subSchema.CommentPrototype],
+//            comments: {type: [subSchema.CommentPrototype], 'default': []},
             __virtuals__: {
                 voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" }
             },
@@ -194,7 +228,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             text: String,
             author: config_nest.user, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
             tags: Array,
-            comments: [subSchema.CommentPrototype],
+            comments: {type: [subSchema.CommentPrototype], 'default': []},
+            answerComments: {type: [subSchema.AnswerCommentPrototype], 'default': []},
             answers: [subSchema.Answer],
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},
@@ -202,14 +237,17 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             dateEdited: { type: Date },
             __virtuals__: {
                 idGet: function () { return this._id; },
-                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" },
+                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || 0 },
                 nAnswersGet: function () { return _.size(this.answers); }
             },
             __options__: {
                 toJSON: {
                     getters: true,
                     virtuals: true,
-                    transform: function (doc, rtn, options) { delete rtn._id; delete rtn.__v; }
+                    transform: function (doc, rtn, options) {
+                        delete rtn._id;
+                        delete rtn.__v;
+                    }
                 },
                 toObject: {
                     getters: true,

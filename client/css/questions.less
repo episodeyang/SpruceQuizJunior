@@ -205,8 +205,12 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
   background-color: white;
   padding: 15px;
   border-radius: 3px;
-  div:focus {
+  :focus {
     outline: none;
+  }
+  .editor-inner {
+    border-style: none;
+    width: 100%;
   }
 }
 a.editor {
@@ -216,14 +220,31 @@ a.editor {
 }
 .editor.tall{
   min-height: 30%;
-  > div.editor-inner {
+  > .editor-inner {
     min-height: 30%;
   }
 }
 .editor.short{
   min-height: 95px;
-  > div.editor-inner {
-    min-height: 40px;
+  > .editor-inner {
+    min-height: 95px;
+  }
+}
+.comment-editor {
+  position:relative;
+  background-color: fadeout(white, 60%);
+  min-height: 45px;
+  padding: 0 0px 0 0px ;
+  border-radius: 3px;
+  :focus {
+    outline: none;
+  }
+  .editor-inner {
+    background-color: transparent;
+    border-style: none;
+    width: 100%;
+    min-height: 45px;
+    resize:vertical;
   }
 }
 

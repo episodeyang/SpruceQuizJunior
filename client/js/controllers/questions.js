@@ -115,6 +115,14 @@ angular.module('SpruceQuizApp')
                     $scope.view.state = 'question.edit';
                     $scope.editor.data = Model.question
                 };
+                $scope.removeQuestion = function (question) {
+                    Model.removeQuestion(
+                        question,
+                        function () {
+                            $location.path('/');
+                        }
+                    )
+                }
 
                 $scope.answerEditor = {}
                 $scope.answerEditor.data = {text: ''}
@@ -160,7 +168,18 @@ angular.module('SpruceQuizApp')
                 $scope.voteupAnswer = Model.voteupAnswer;
                 $scope.votedownAnswer = Model.votedownAnswer;
 
+                $scope.view.commentEditor = {}
                 $scope.showCommentEditor = function () {
+                    $scope.view.commentEditor.state = true;
+
+                }
+                $scope.cancelCommentEdit = function () {
+                    $scope.view.commentEditor.state = false;
+                }
+                $scope.submitComment = function() {
+                    var query = {}
+                    query.id = question.id;
+                    if (answer) query.answerId = answer.id;
 
                 }
             }

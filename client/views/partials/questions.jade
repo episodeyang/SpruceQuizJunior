@@ -118,7 +118,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题
-                                a.right-spaced.small 删除
+                                a.right-spaced.small(ng-show = "user.username == Model.question.author.username", ng-click="removeQuestion(Model.question)") 删除
                                 a.right-spaced.small 举报
                                 p.pull-right
                                     span {{Model.question.dateCreated | date:yy-MM-dd }} 由
@@ -127,7 +127,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row(ng-hide="Model.question.comments")
                             .col-xs-12
                                 hr.short-top-margin.light-dotted.short-bottom-margin
-                        .row(ng-hide="Model.question.comments")
+                        .row(ng-hide="Model.question.comments || view.commentEditor.state", ng-click="showCommentEditor()")
                             .col-xs-12
                                 a.right-spaced 添加评论
                     .row(ng-show="Model.question.comments")
@@ -139,9 +139,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .col-xs-6(ng-show="comment.vote")
                                     span.badge {{comment.vote}}
                                 .col-xs-6.pull-right
-                                    span.glyphicon.glyphicon-circle-arrow-up.small
-                                    span.glyphicon.glyphicon-flag.small.short-top-margin
-                                //span.
+                                    //span.glyphicon.glyphicon-circle-arrow-up.small
+                                    //span.glyphicon.glyphicon-flag.small.short-top-margin
                         .col-md-11.col-sm-11.col-xs-10
                             p.small
                                 span {{comment.text}}
@@ -150,23 +149,31 @@ div.background(background-img="/img/bg-brown.jpg")
                     .row(ng-repeat-end)
                         .col-xs-12
                             hr.short-top-margin.light-dotted.short-bottom-margin
-                    .row(ng-show="Model.question.comments")
+                    .row(ng-show="view.commentEditor.state")
+                        .col-xs-11.pull-right
+                            form.comment-editor.short
+                                textarea.editor-inner.small(ng-model="commentEditor.data.text")
+                            .row
+                                .col-xs-12
+                                    button.btn.btn-success.btn-small.pull-right 确定
+
+                    .row(ng-show="Model.question.comments && !view.commentEditor.state", ng-click="showCommentEditor()")
                         .col-md-11.col-sm-11.col-xs-10.pull-right
                             a.right-spaced(ng-click="editor.showCommentEditor()") 添加评论
 
                     br
                     h3(ng-show="Model.question.nAnswers")
                         b 大家的回答
-                    div(ng-repeat="answer in Model.question.answers")
+                    div(ng-repeat="answer in Model.question.answers | orderBy:'-vote':false")
                         form.editor.top-margin(id="{{answer.id}}", ng-hide="answer.viewEdit")
                             .fixed-left
                                 .rounded.grey.transparent.vote-box
                                     p.text-center
-                                        a(ng-click='voteupAnswer($index)')
+                                        a(ng-click='voteupAnswer(answer)')
                                             span.up.glyphicon.glyphicon-chevron-up( ng-class='{glow: answer.votedup}')
                                     h3.text-center {{answer.vote}}
                                     p.text-center
-                                        a(ng-click='votedownAnswer($index)')
+                                        a(ng-click='votedownAnswer(answer)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: answer.voteddown}')
                             div.editor-inner(ng-bind-html="answer.text")
                         div(ng-show="answer.viewEdit")

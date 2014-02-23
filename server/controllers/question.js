@@ -91,7 +91,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             findOne: function (req, res) {
                 if (!req.params.id) { return res.send(400); }
-                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers dateEdited dateCreated', function(err, results){
+                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated', function(err, results){
                     if (err) {return res.send(403, err)}
                     else {
                         return res.send(200, results);

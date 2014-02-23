@@ -6,8 +6,8 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user', './controllers/question', './controllers/answer'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl) {
+    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -115,6 +115,42 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/questions/:id/answers/:answerId',
                 httpMethod: 'DELETE',
                 middleware: [AnswerCtrl.removeById],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/comments',
+                httpMethod: 'POST',
+                middleware: [CommentCtrl.add],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/comments/:commentId',
+                httpMethod: 'POST',
+                middleware: [CommentCtrl.update],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/comments/:commentId',
+                httpMethod: 'DELETE',
+                middleware: [CommentCtrl.removeById],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId/comments',
+                httpMethod: 'POST',
+                middleware: [AnswerCommentCtrl.add],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId/comments/:commentId',
+                httpMethod: 'POST',
+                middleware: [AnswerCommentCtrl.update],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId/comments/:commentId',
+                httpMethod: 'DELETE',
+                middleware: [AnswerCommentCtrl.removeById],
                 accessLevel: accessLevels.loggedin
             },
             {

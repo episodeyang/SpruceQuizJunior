@@ -1,11 +1,11 @@
 /**
- * @fileOverview Answers Controller
- * @module Questions.Answers
+ * @fileOverview Comments Controller
+ * @module Questions.Comments
  * @type {exports}
- * This `AnswersCtrl` module takes care of question related operations, such as
- *              answer.add(:QuestionId),
- *              answer.remove(:QuestionId, :AnswerId)
- *              question.update(:QuestionId, :AnswerId, text)
+ * This `CommentsCtrl` module takes care of question related operations, such as
+ *              comment.add(:QuestionId),
+ *              comment.remove(:QuestionId, :CommentId)
+ *              comment.update(:QuestionId, :CommentId, text)
  *              etc.,
  *
  *
@@ -17,81 +17,82 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
         var ObjectId = mongoose.Types.ObjectId;
         return {
             /**
-             * @api {post} /api/questions/:id/answers Add A Question
-             * @apiName CreateAnswer
-             * @apiGroup Questions.Answers
+             * @api {post} /api/questions/:id/comments Add A Question
+             * @apiName CreateComment
+             * @apiGroup Questions.Comments
              */
             add: function (req, res) {
                 "use strict";
+                console.log('this is running. this is running.');
                 if (!req.params.id) { return res.send(400); }
-                var answer = {
-                        text: req.body.text,
-                        author: req.user.username
-                    };
+                var comment = {
+                    id: req.params.id,
+                    text: req.body.text,
+                    author: req.user.username
+                };
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
-                    {$push: {answers: answer}},
-                    {select: "answers"},
+                    {$push: {comments: comment}},
+                    {select: "comments"},
                     function(err, result){
                         if (err) {return res.send(403, err)};
                         return res.send(201, result);
                     });
             },
             /**
-             * @api {post} /api/questions/:id/answers/:answerId Update Answer
-             * @apiName UpdateAnswer
-             * @apiGroup Questions.Answers
+             * @api {post} /api/questions/:id/comments/:commentId Update Comment
+             * @apiName UpdateComment
+             * @apiGroup Questions.Comments
              */
             update: function (req, res) {
-                if (!req.params.id || !req.params.answerId) { return res.send(400); }
+                if (!req.params.id || !req.params.commentId) { return res.send(400); }
                 if (req.body.voteup == 'true' || req.body.votedown == 'true') {
                     var query = {
                         "_id": ObjectId(req.params.id),
-                        "answers._id": ObjectId(req.params.answerId)
+                        "comments._id": ObjectId(req.params.commentId)
                     };
                     function callback (err, result){
                         if (req.body.voteup === 'true') {
-                            if (_.contains(result.answers[0].voteup, req.user.username)) {
+                            if (_.contains(result.comments[0].voteup, req.user.username)) {
                                 var update = {
                                     $pull: {
-                                        "answers.$.votedown": req.user.username,
-                                        "answers.$.voteup": req.user.username
+                                        "comments.$.votedown": req.user.username,
+                                        "comments.$.voteup": req.user.username
                                     }
                                 };
                             } else {
                                 var update = {
                                     $pull: {
-                                        "answers.$.votedown": req.user.username
+                                        "comments.$.votedown": req.user.username
                                     },
                                     $push: {
-                                        "answers.$.voteup": req.user.username
+                                        "comments.$.voteup": req.user.username
                                     }
                                 };
                             }
                         }
                         if (req.body.votedown === 'true') {
-                            if (_.contains(result.answers[0].votedown, req.user.username)) {
+                            if (_.contains(result.comments[0].votedown, req.user.username)) {
                                 var update = {
                                     $pull: {
-                                        "answers.$.votedown": req.user.username,
-                                        "answers.$.voteup": req.user.username
+                                        "comments.$.votedown": req.user.username,
+                                        "comments.$.voteup": req.user.username
                                     }
                                 };
                             } else {
                                 var update = {
                                     $pull: {
-                                        "answers.$.voteup": req.user.username
+                                        "comments.$.voteup": req.user.username
                                     },
                                     $push: {
-                                        "answers.$.votedown": req.user.username
+                                        "comments.$.votedown": req.user.username
                                     }
                                 };
                             }
                         }
-                        QuestionM.findOneAndUpdate(query, update, {select: 'answers answerComments'}, function (err, result, n) {
+                        QuestionM.findOneAndUpdate(query, update, {select: 'comments'}, function (err, result, n) {
                             var q = {
-                                answers: result.answers,
-                                nAnswers: result.nAnswers
+                                comments: result.comments,
                             };
                             if (err) { return res.send(500, err); }
                             else {
@@ -99,14 +100,15 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                             };
                         });
                     }
-                    QuestionM.findOne(query).select('answers.$').exec(callback);
+
+                    QuestionM.findOne(query).select('comments.$').exec(callback);
                 } else {
                     QuestionM.findOneAndUpdate(
-                        {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) },
+                        {_id: ObjectId(req.params.id), "comments._id": ObjectId(req.params.commentId) },
 //                    New $currentDate applicable at mongodb v2.6 upcoming release.
-//                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answer.$.dateEdited": true}},
-                        {$set: {'answers.$.text': req.body.text, 'answer.$.dateEdited': new Date() }},
-                        {select: 'answers answerComments' },
+//                    {$set: {'comments.$.text': req.body.text}, $currentDate: {"comment.$.dateEdited": true}},
+                        {$set: {'comments.$.text': req.body.text, 'comment.$.dateEdited': new Date() }},
+                        {select: 'comments' },
                         function (err, result) {
                             if (err) {
                                 return res.send(500, err);
@@ -123,17 +125,11 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             removeById: function (req, res) {
-                if (!req.params.id || !req.params.answerId) { return res.send(400); }
-                var query = {
-                        _id: ObjectId(req.params.id)
-                    };
+                if (!req.params.id || !req.params.commentId) { return res.send(400); }
                 QuestionM.findOneAndUpdate(
-                    query,
-                    {$pull: {
-                        answers: {_id: ObjectId(req.params.answerId)},
-                        answerComments: {answerId: ObjectId(req.params.answerId)}
-                    }},
-                    {select: 'answers answerComments' },
+                    {_id: ObjectId(req.params.id) },
+                    {$pull: {comments: {_id: ObjectId(req.params.commentId)} }},
+                    {select: 'comments' },
                     function (err, results) {
                         if (err) {
                             return res.send(500, err);

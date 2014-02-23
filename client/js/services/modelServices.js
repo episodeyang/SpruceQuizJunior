@@ -102,7 +102,6 @@ angular.module('modelServices', ['resourceProvider'])
                 modelInstance.getVoteStatus(modelInstance.question);
             };
             modelInstance.getQuestion = function(id) {
-//                modelInstance.question = {};
                 Questions.get(
                     {id:id},
                     function(question){
@@ -137,10 +136,16 @@ angular.module('modelServices', ['resourceProvider'])
                     if (error) { error(err) };
                 } );
             };
-            modelInstance.removeQuestion = function(question) {
-                Questions.remove(question, function(result){
-                    console.log('removal success');
-                }, function(err){ $rootScope.error = err; } );
+            modelInstance.removeQuestion = function(question, success, error) {
+                Questions.remove(question, function(res){
+//                    console.log('removal success');
+                    modelInstance.question = {};
+                    modelInstance.queryQuestions();
+                    if (success) {success();}
+                }, function(err){
+                    $rootScope.error = err;
+                    if (error) { error(); }
+                } );
             };
 
             modelInstance.voteup = function(question) {
@@ -166,7 +171,7 @@ angular.module('modelServices', ['resourceProvider'])
                     ans,
                     function(results){
                         modelInstance.question.answers = results.answers;
-                        console.log(results.answers);
+                        _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                         if (success) { success(results); }
                     }, function(err) {
                         $rootScope.error = err;
@@ -184,6 +189,7 @@ angular.module('modelServices', ['resourceProvider'])
                     ans,
                     function( results ) {
                         modelInstance.question.answers = results.answers;
+                        _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                         if (success) { success(results); }
                     }, function( err ) {
                         $rootScope.error = err;
@@ -200,6 +206,7 @@ angular.module('modelServices', ['resourceProvider'])
                     ans,
                     function( results ) {
                         modelInstance.question.answers = results.answers;
+                        _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                         if (success) { success(results); }
                     }, function( err ) {
                         $rootScope.error = err;
@@ -208,27 +215,27 @@ angular.module('modelServices', ['resourceProvider'])
                 )
             }
 
-            modelInstance.voteupAnswer = function(answerIndex) {
+            modelInstance.voteupAnswer = function(answer) {
                 var ans = {
                     id: modelInstance.question.id,
-                    answerId: modelInstance.question.answers[answerIndex].id,
+                    answerId: answer.id,
                     "voteup": 'true'
                 }
                 function callback (result)  {
                     _.extend(modelInstance.question, result);
-                    modelInstance.getVoteStatus(modelInstance.question.answers[answerIndex])
+                    _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                 }
                 Answers.save(ans, callback );
             }
-            modelInstance.votedownAnswer = function(answerIndex) {
+            modelInstance.votedownAnswer = function(answer) {
                 var ans = {
                     id: modelInstance.question.id,
-                    answerId: modelInstance.question.answers[answerIndex].id,
+                    answerId: answer.id,
                     "votedown": 'true'
                 }
                 function callback (result)  {
                     _.extend(modelInstance.question, result);
-                    modelInstance.getVoteStatus(modelInstance.question.answers[answerIndex])
+                    _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                 }
                 Answers.save(ans, callback );
             }
