@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modelServices', ['resourceProvider'])
-    .factory('Model', ['$rootScope', 'Users', 'Questions', 'Answers', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
+    .factory('Model', ['$rootScope', 'Users', 'Questions', 'Answers', 'Comments', 'AnswerComments', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
         'Schools', 'Sections', 'Units', 'Materials',
         /**
          * model factory
@@ -16,7 +16,7 @@ angular.module('modelServices', ['resourceProvider'])
          * @author test
          * @param random
          */
-        function ($rootScope, Users, Questions, Answers, Students, Parents, Teachers, Admins, Superadmins,
+        function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Students, Parents, Teachers, Admins, Superadmins,
                   Schools, Sections, Units, Materials) {
             var modelInstance = {};
 
@@ -120,20 +120,20 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.createQuestion = function(question, success, error) {
                 Questions.create(question, function(result){
                     modelInstance.question = result;
-                    if (success) { success(result); };
+                    if (typeof success != 'undefined') { success(result); };
                 }, function(err){
                     $rootScope.error = err;
-                    if (error) { error(err); };
+                    if (typeof error != 'undefined') { error(err); };
                 } );
             };
             modelInstance.saveQuestion = function(question, success, error) {
 //                if (question.id) {$rootScope.error = "udpate does not have object id."}
                 Questions.save(question, function(q){
                     _.extend(modelInstance.question, q);
-                    if (success) { success(q) };
+                    if (typeof success != 'undefined') { success(q) };
                 }, function(err){
                     $rootScope.error = err;
-                    if (error) { error(err) };
+                    if (typeof error != 'undefined') { error(err) };
                 } );
             };
             modelInstance.removeQuestion = function(question, success, error) {
@@ -141,10 +141,10 @@ angular.module('modelServices', ['resourceProvider'])
 //                    console.log('removal success');
                     modelInstance.question = {};
                     modelInstance.queryQuestions();
-                    if (success) {success();}
+                    if (typeof success != 'undefined') {success();}
                 }, function(err){
                     $rootScope.error = err;
-                    if (error) { error(); }
+                    if (typeof error != 'undefined') { error(); }
                 } );
             };
 
@@ -162,6 +162,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
+
             modelInstance.addAnswer = function(answer, success, error) {
                 var ans = {
                     id: modelInstance.question.id,
@@ -172,10 +173,10 @@ angular.module('modelServices', ['resourceProvider'])
                     function(results){
                         modelInstance.question.answers = results.answers;
                         _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
-                        if (success) { success(results); }
+                        if (typeof success != 'undefined') { success(results); }
                     }, function(err) {
                         $rootScope.error = err;
-                        if (error) { error(err); };
+                        if (typeof error != 'undefined') { error(err); };
                     }
                 );
             }
@@ -190,10 +191,10 @@ angular.module('modelServices', ['resourceProvider'])
                     function( results ) {
                         modelInstance.question.answers = results.answers;
                         _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
-                        if (success) { success(results); }
+                        if (typeof success != 'undefined') { success(results); }
                     }, function( err ) {
                         $rootScope.error = err;
-                        if (error) { error(err); };
+                        if (typeof error != 'undefined') { error(err); };
                     }
                 )
             }
@@ -207,14 +208,13 @@ angular.module('modelServices', ['resourceProvider'])
                     function( results ) {
                         modelInstance.question.answers = results.answers;
                         _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
-                        if (success) { success(results); }
+                        if (typeof success != 'undefined') { success(results); }
                     }, function( err ) {
                         $rootScope.error = err;
-                        if (error) { error(err); };
+                        if (typeof error != 'undefined') { error(err); };
                     }
                 )
             }
-
             modelInstance.voteupAnswer = function(answer) {
                 var ans = {
                     id: modelInstance.question.id,
@@ -239,6 +239,32 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 Answers.save(ans, callback );
             }
+
+            modelInstance.addComment = function (comment, success, error) {
+                var comment = {
+                    id: modelInstance.question.id,
+                    text: comment.text
+                };
+                Comments.add(
+                    comment,
+                    function(results){
+                        modelInstance.question.comments = results.comments;
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function(err) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
+            modelInstance.removeComment = function () {}
+            modelInstance.voteupComment = function () {}
+            modelInstance.votedownComment = function () {}
+
+            modelInstance.addAnswerComment = function () {
+            }
+            modelInstance.removeAnswerComment = function () {}
+            modelInstance.voteupAnswerComment = function () {}
+            modelInstance.votedownAnswerComment = function () {}
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
             // TODO: need to understand the undefined case better.

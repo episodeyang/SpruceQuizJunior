@@ -156,7 +156,7 @@ var testData = {
         voteup: [],
         votedown: [],
         comments: [{text: '这个问题很有趣', author: 'authorName'}],
-        answerComments: [{}],
+        answerComments: [],
         answers: [
             {text: '这道题的解法应该是这样的：', author: 'authorName2', upvote: 0, downvote: 0 }
         ]

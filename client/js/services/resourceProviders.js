@@ -34,6 +34,28 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             remove: Answer.remove
         };
     })
+    .factory('Comments', function ($resource) {
+        var Comments = $resource('/api/questions/:id/comments', {id: '@id'}, {
+            create: {method: 'POST'}
+        });
+        var Comment = $resource('/api/questions/:id/comments/:commentId', {id: '@id', commentId: '@commentId'});
+        return {
+            add: Comments.create,
+            save: Comment.save,
+            remove: Comment.remove
+        };
+    })
+    .factory('AnswerComments', function ($resource) {
+        var AnswerComments = $resource('/api/questions/:id/answer/:answerId/comments', {id: '@id'}, {
+            create: {method: 'POST'}
+        });
+        var AnswerComment = $resource('/api/questions/:id/answer/:answerId/comments/:commentId', {id: '@id', commentId: '@commentId'});
+        return {
+            add: AnswerComments.create,
+            save: AnswerComment.save,
+            remove: AnswerComment.remove
+        };
+    })
     .factory('Students', function ($resource) {
         return {
             onErrata: $resource('/api/students/errata/:id', {id: '@_id'}, {

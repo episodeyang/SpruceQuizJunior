@@ -168,18 +168,23 @@ angular.module('SpruceQuizApp')
                 $scope.voteupAnswer = Model.voteupAnswer;
                 $scope.votedownAnswer = Model.votedownAnswer;
 
-                $scope.view.commentEditor = {}
+                $scope.view.commentEditor = {};
+                $scope.commentEditor = {data: {}};
                 $scope.showCommentEditor = function () {
                     $scope.view.commentEditor.state = true;
-
                 }
                 $scope.cancelCommentEdit = function () {
                     $scope.view.commentEditor.state = false;
+                    $scope.commentEditor = {data: {}};
                 }
-                $scope.submitComment = function() {
-                    var query = {}
-                    query.id = question.id;
-                    if (answer) query.answerId = answer.id;
+                $scope.submitComment = function(answer) {
+                    function success () {
+                        $scope.commentEditor = {data: {}};
+                    }
+                    if (answer) { Model.addAnswerComment(answer, success); }
+                    if (!answer) {
+                        Model.addComment($scope.commentEditor.data, success);
+                    };
 
                 }
             }
