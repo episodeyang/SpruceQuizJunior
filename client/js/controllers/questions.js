@@ -146,7 +146,6 @@ angular.module('SpruceQuizApp')
                     Model.updateAnswer(
                         $scope.answerEditor.data,
                         function(result) {
-                            console.log('I just did this!')
                             $scope.answerEditor.data = {};
                             $scope.view.answerEdit = false;
                             delete answer.viewEdit;
@@ -177,16 +176,18 @@ angular.module('SpruceQuizApp')
                     $scope.view.commentEditor.state = false;
                     $scope.commentEditor = {data: {}};
                 }
-                $scope.submitComment = function(answer) {
-                    function success () {
-                        $scope.commentEditor = {data: {}};
-                    }
-                    if (answer) { Model.addAnswerComment(answer, success); }
-                    if (!answer) {
-                        Model.addComment($scope.commentEditor.data, success);
-                    };
 
+                function clearCommentEditor () {
+                    $scope.commentEditor = {data: {}};
                 }
+                $scope.submitComment = function(answer) {
+                    if (answer) { Model.addAnswerComment($scope.commentEditor.data, answer, clearCommentEditor); }
+                    if (!answer) {
+                        Model.addComment($scope.commentEditor.data, clearCommentEditor);
+                    };
+                }
+
+
             }
         ]
     );

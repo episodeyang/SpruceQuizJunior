@@ -36,9 +36,9 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.Users = Users;
             modelInstance.Questions = Questions;
 
-            /** Destroy the model instance
-             *    place holder for now, to be called later by log out
-             *    @alias Model.destroy()
+            /**
+             * @alias Model.destroy()
+             * Handle for destroy the model instance. Is called later during log out
              */
             modelInstance.destroy = function() {
                 // do nothing
@@ -241,14 +241,15 @@ angular.module('modelServices', ['resourceProvider'])
             }
 
             modelInstance.addComment = function (comment, success, error) {
-                var comment = {
+                var query = {
                     id: modelInstance.question.id,
                     text: comment.text
                 };
                 Comments.add(
-                    comment,
+                    query,
                     function(results){
                         modelInstance.question.comments = results.comments;
+                        _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
                         if (typeof success != 'undefined') { success(results); }
                     }, function(err) {
                         $rootScope.error = err;
@@ -256,15 +257,212 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 );
             }
-            modelInstance.removeComment = function () {}
-            modelInstance.voteupComment = function () {}
-            modelInstance.votedownComment = function () {}
-
-            modelInstance.addAnswerComment = function () {
+            modelInstance.updateComment = function (comment, success, error) {
+                /**
+                 * extend the comment object with the query id, then post to the api call.
+                 */
+                var query = {
+                    id: modelInstance.question.id,
+                    commentId: comment.id,
+                };
+                _.extend(comment, query)
+                Comments.save(
+                    comment,
+                    function( results ) {
+                        modelInstance.question.comments = results.comments;
+                        _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                )
             }
-            modelInstance.removeAnswerComment = function () {}
-            modelInstance.voteupAnswerComment = function () {}
-            modelInstance.votedownAnswerComment = function () {}
+            modelInstance.removeComment = function (comment, success, error) {
+                /**
+                 * extend the comment object with the query id, then post to the api call.
+                 */
+                var query = {
+                    id: modelInstance.question.id,
+                    commentId: comment.id,
+                };
+                Comments.remove(
+                    query,
+                    function( results ) {
+                        modelInstance.question.comments = results.comments;
+                        _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
+            modelInstance.voteupComment = function (comment, success, error) {
+                var comment = {
+                    id: modelInstance.question.id,
+                    commentId: comment.id,
+                    "voteup": 'true'
+                }
+                Comments.save(
+                    query,
+                    function( results ) {
+                        modelInstance.question.comments = results.comments;
+                        _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
+            modelInstance.votedownComment = function (comment, success, error) {
+                var comment = {
+                    id: modelInstance.question.id,
+                    commentId: comment.id,
+                    "votedown": 'true'
+                }
+                Comments.save(
+                    query,
+                    function( results ) {
+                        modelInstance.question.comments = results.comments;
+                        _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
+
+            modelInstance.attachAnswerComments = function () {
+
+                function dichotomizer (answerComments, answer) {
+                    var acceptList = [], rejectList = [];
+
+                    function arbitrator (answerComment) {
+                        if (answerComment.answerId === answer.id) {
+                            trueList.append(data);
+                        }
+                        else {rejectList.append(data)}
+                    };
+
+                    _.each(answerComments, arbitrator);
+
+                    return acceptList, rejectList
+                }
+                function attachByAnswerId (answer) {
+                    answer.comments, modelInstance.question.answerComments = dichotomizer(modelInstance.question.answerComments, answer)
+                }
+
+                _.each(modelInstance.question.answers, attachByAnswerId)
+            }
+
+            modelInstance.addAnswerComment = function (answer, comment, success, error) {
+                var query = {
+                    id: modelInstance.question.id,
+                    answerId: answer.id,
+                    text: comment.text
+                };
+                AnswerComments.add(
+                    query ,
+                    function(results){
+                        modelInstance.question.answerComments = results.answerComments;
+                        _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
+                        modelInstance.attachAnswerComments();
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function(err) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+
+            }
+            modelInstance.updateAnswerComment = function (comment, success, error) {
+                /**
+                 * extend the comment object with the query id, then post to the api call.
+                 */
+                var query = {
+                    id: modelInstance.question.id,
+                    answerId: comment.answerId,
+                    commentId: comment.id,
+                };
+                _.extend(comment, query)
+                Comments.save(
+                    comment,
+                    function( results ) {
+                        modelInstance.question.answerComments = results.answerComments;
+                        _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
+                        modelInstance.attachAnswerComments();
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                )
+            }
+            modelInstance.removeAnswerComment = function (comment, success, error) {
+                /**
+                 * extend the comment object with the query id, then post to the api call.
+                 */
+                var query = {
+                    id: modelInstance.question.id,
+                    answerId: comment.answerId,
+                    commentId: comment.id,
+                };
+                Comments.remove(
+                    query,
+                    function( results ) {
+                        modelInstance.question.answerComments = results.answerComments;
+                        _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
+                        modelInstance.attachAnswerComments();
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
+            modelInstance.voteupAnswerComment = function (comment, success, error) {
+                var comment = {
+                    id: modelInstance.question.id,
+                    answerId: comment.answerId,
+                    commentId: comment.id,
+                    "voteup": 'true'
+                }
+                Comments.save(
+                    query,
+                    function( results ) {
+                        modelInstance.question.answerComments = results.answerComments;
+                        _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
+                        modelInstance.attachAnswerComments();
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
+            modelInstance.votedownAnswerComment = function (comment, success, error) {
+                var comment = {
+                    id: modelInstance.question.id,
+                    answerId: comment.answerId,
+                    commentId: comment.id,
+                    "votedown": 'true'
+                }
+                Comments.save(
+                    query,
+                    function( results ) {
+                        modelInstance.question.answerComments = results.answerComments;
+                        _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
+                        modelInstance.attachAnswerComments();
+                        if (typeof success != 'undefined') { success(results); }
+                    }, function( err ) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') { error(err); };
+                    }
+                );
+            }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
             // TODO: need to understand the undefined case better.
@@ -289,7 +487,6 @@ angular.module('modelServices', ['resourceProvider'])
                 }
             };
 
-
             //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
 
             /**
@@ -301,7 +498,6 @@ angular.module('modelServices', ['resourceProvider'])
              *    subjectList.idList is a list of IDs to be looked up
              * @param userData
              */
-
 
             modelInstance.getSections = function (userParam, subjectList) {
 
