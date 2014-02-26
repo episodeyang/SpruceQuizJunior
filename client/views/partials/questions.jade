@@ -184,6 +184,28 @@ div.background(background-img="/img/bg-brown.jpg")
                                         a(ng-click='votedownAnswer(answer)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: answer.voteddown}')
                             div.editor-inner(ng-bind-html="answer.text")
+                            //- answer comments
+                            div(ng-repeat='comment in answer.comments')
+                                .row.comment-strip
+                                    .col-md-1.col-sm-1.col-xs-2
+                                        .row
+                                            .col-xs-6(ng-show="comment.vote")
+                                                span.badge {{comment.vote}}
+                                            .col-xs-6.pull-right
+                                                a.button
+                                                    span.glyphicon.glyphicon-circle-arrow-up.small
+                                                a.button
+                                                    span.glyphicon.glyphicon-flag.small.short-top-margin
+                                    .col-md-11.col-sm-11.col-xs-10
+                                        p.small
+                                            span {{comment.text}}
+                                            span &#8212&nbsp
+                                                a.blue {{comment.author}}
+                                            a.button
+                                                span.pull-right.glyphicon.glyphicon-remove
+                                .row
+                                    .col-xs-12
+                                        hr.short-top-margin.light-dotted.short-bottom-margin
                         div(ng-show="answer.viewEdit")
                             hr
                             form.editor.short.top-margin(name = 'answerEditorForm')
