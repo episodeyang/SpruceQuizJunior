@@ -141,9 +141,11 @@ div.background(background-img="/img/bg-brown.jpg")
                             .row
                                 .col-xs-6(ng-show="comment.vote")
                                     span.badge {{comment.vote}}
-                                .col-xs-6.pull-right.button-group
-                                    span.glyphicon.glyphicon-circle-arrow-up.small
-                                    span.glyphicon.glyphicon-flag.small.short-top-margin
+                                .col-xs-6.pull-right
+                                    a.button
+                                        span.glyphicon.glyphicon-circle-arrow-up.small
+                                    a.button
+                                        span.glyphicon.glyphicon-flag.small.short-top-margin
                         .col-md-11.col-sm-11.col-xs-10
                             p.small
                                 span {{comment.text}}
