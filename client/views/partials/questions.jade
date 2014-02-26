@@ -136,23 +136,24 @@ div.background(background-img="/img/bg-brown.jpg")
                     .row(ng-show="Model.question.comments != []")
                         .col-xs-12
                             hr.low-margin.dotted
-                    .row.comment-strip(ng-repeat='comment in Model.question.comments')
-                        .col-md-1.col-sm-1.col-xs-2
-                            .row
-                                .col-xs-6(ng-show="comment.vote")
-                                    span.badge {{comment.vote}}
-                                .col-xs-6.pull-right
+                    div(ng-repeat='comment in Model.question.comments')
+                        .row.comment-strip
+                            .col-md-1.col-sm-1.col-xs-2
+                                .row
+                                    .col-xs-6(ng-show="comment.vote")
+                                        span.badge {{comment.vote}}
+                                    .col-xs-6.pull-right
+                                        a.button
+                                            span.glyphicon.glyphicon-circle-arrow-up.small
+                                        a.button
+                                            span.glyphicon.glyphicon-flag.small.short-top-margin
+                            .col-md-11.col-sm-11.col-xs-10
+                                p.small
+                                    span {{comment.text}}
+                                    span &#8212&nbsp
+                                        a.blue {{comment.author}}
                                     a.button
-                                        span.glyphicon.glyphicon-circle-arrow-up.small
-                                    a.button
-                                        span.glyphicon.glyphicon-flag.small.short-top-margin
-                        .col-md-11.col-sm-11.col-xs-10
-                            p.small
-                                span {{comment.text}}
-                                span &#8212&nbsp
-                                    a.blue {{comment.author}}
-                                a.button
-                                    span.pull-right.glyphicon.glyphicon-remove
+                                        span.pull-right.glyphicon.glyphicon-remove
                         .row
                             .col-xs-12
                                 hr.short-top-margin.light-dotted.short-bottom-margin
