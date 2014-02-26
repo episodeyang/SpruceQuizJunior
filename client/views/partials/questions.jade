@@ -81,6 +81,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     form.editor.tall(ng-show='editor.showHtml')
                         p {{editor.data.text}}
                 div(ng-show="view.state.split('.')[0]=='question'")
+                    //- question main text
                     div(ng-show="view.state ==='question.edit'")
                         input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                         form.editor.tall.top-margin(name = 'questionEditorForm')
@@ -130,23 +131,26 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row(ng-hide="Model.question.comments != [] || view.commentEditor.state", ng-click="showCommentEditor()")
                             .col-xs-12
                                 a.right-spaced 添加评论
+
+                    //- question Comments
                     .row(ng-show="Model.question.comments != []")
                         .col-xs-12
                             hr.low-margin.dotted
-                    div(ng-repeat='comment in Model.question.comments')
-                        .row
-                            .col-md-1.col-sm-1.col-xs-2
-                                .row
-                                    .col-xs-6(ng-show="comment.vote")
-                                        span.badge {{comment.vote}}
-                                    .col-xs-6.pull-right
-                                        //span.glyphicon.glyphicon-circle-arrow-up.small
-                                        //span.glyphicon.glyphicon-flag.small.short-top-margin
-                            .col-md-11.col-sm-11.col-xs-10
-                                p.small
-                                    span {{comment.text}}
-                                    span &#8212&nbsp
-                                        a.blue {{comment.author}}
+                    .row.comment-strip(ng-repeat='comment in Model.question.comments')
+                        .col-md-1.col-sm-1.col-xs-2
+                            .row
+                                .col-xs-6(ng-show="comment.vote")
+                                    span.badge {{comment.vote}}
+                                .col-xs-6.pull-right.button-group
+                                    span.glyphicon.glyphicon-circle-arrow-up.small
+                                    span.glyphicon.glyphicon-flag.small.short-top-margin
+                        .col-md-11.col-sm-11.col-xs-10
+                            p.small
+                                span {{comment.text}}
+                                span &#8212&nbsp
+                                    a.blue {{comment.author}}
+                                a.button
+                                    span.pull-right.glyphicon.glyphicon-remove
                         .row
                             .col-xs-12
                                 hr.short-top-margin.light-dotted.short-bottom-margin
