@@ -101,6 +101,30 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.getQuestionVoteStatus = function(){
                 modelInstance.getVoteStatus(modelInstance.question);
             };
+
+            modelInstance.attachAnswerComments = function () {
+
+                function dichotomizer (answerComments, answer) {
+                    var acceptList = [], rejectList = [];
+
+                    function arbitrator (answerComment) {
+                        if (answerComment.answerId === answer.id) {
+                            trueList.append(data);
+                        }
+                        else {rejectList.append(data)}
+                    };
+
+                    _.each(answerComments, arbitrator);
+
+                    return acceptList, rejectList
+                }
+                function attachByAnswerId (answer) {
+                    answer.comments, modelInstance.question.answerComments = dichotomizer(modelInstance.question.answerComments, answer)
+                }
+                _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
+                _.each(modelInstance.question.answers, attachByAnswerId)
+            }
+
             modelInstance.getQuestion = function(id) {
                 Questions.get(
                     {id:id},
@@ -108,6 +132,8 @@ angular.module('modelServices', ['resourceProvider'])
                         modelInstance.question = question;
                         modelInstance.getQuestionVoteStatus();
                         _.map(modelInstance.question.answers, modelInstance.getVoteStatus)
+                        _.map(modelInstance.question.comments, modelInstance.getVoteStatus)
+                        modelInstance.attachAnswerComments();
                     }, function(err){
                         $rootScope.error = err;
                     } );
@@ -335,28 +361,6 @@ angular.module('modelServices', ['resourceProvider'])
                 );
             }
 
-            modelInstance.attachAnswerComments = function () {
-
-                function dichotomizer (answerComments, answer) {
-                    var acceptList = [], rejectList = [];
-
-                    function arbitrator (answerComment) {
-                        if (answerComment.answerId === answer.id) {
-                            trueList.append(data);
-                        }
-                        else {rejectList.append(data)}
-                    };
-
-                    _.each(answerComments, arbitrator);
-
-                    return acceptList, rejectList
-                }
-                function attachByAnswerId (answer) {
-                    answer.comments, modelInstance.question.answerComments = dichotomizer(modelInstance.question.answerComments, answer)
-                }
-
-                _.each(modelInstance.question.answers, attachByAnswerId)
-            }
 
             modelInstance.addAnswerComment = function (answer, comment, success, error) {
                 var query = {

@@ -138,17 +138,17 @@ div.background(background-img="/img/bg-brown.jpg")
                             hr.low-margin.dotted
                     div(ng-repeat='comment in Model.question.comments')
                         .row.comment-strip
-                            .col-md-1.col-sm-1.col-xs-2
+                            .col-md-1.col-sm-2.col-xs-2
                                 .row
-                                    .col-xs-6(ng-show="comment.vote")
-                                        span.badge {{comment.vote}}
-                                    .col-xs-6.pull-right
-                                        //- TODO: need to finish
-                                        a.button(ng-click="voteupComment(comment)")
-                                            span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
-                                        a.button(ng-click="votedownComment(comment)")
-                                            span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
-                            .col-md-11.col-sm-11.col-xs-10
+                                    .col-xs-12.fill
+                                        p
+                                            span.badge.small(ng-show="comment.vote") {{comment.vote}}
+                                            a.button.pull-right(ng-click="voteupComment(comment)")
+                                                span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
+                                        p
+                                            a.button.pull-right(ng-click="votedownComment(comment)")
+                                                span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
+                            .col-md-11.col-sm-10.col-xs-10
                                 p.small
                                     span {{comment.text}}
                                     span &#8212&nbsp
@@ -188,16 +188,17 @@ div.background(background-img="/img/bg-brown.jpg")
                             //- answer comments
                             div(ng-repeat='comment in answer.comments')
                                 .row.comment-strip
-                                    .col-md-1.col-sm-1.col-xs-2
+                                    .col-md-1.col-sm-2.col-xs-2
                                         .row
-                                            .col-xs-6(ng-show="comment.vote")
-                                                span.badge {{comment.vote}}
-                                            .col-xs-6.pull-right
-                                                a.button(ng-click="voteupAnswerComment(comment)")
-                                                    span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
-                                                a.button(ng-click="votedownAnswerComment(comment)")
-                                                    span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
-                                    .col-md-11.col-sm-11.col-xs-10
+                                            .col-xs-12.no-right-padding
+                                                p
+                                                    span.badge.small(ng-show="comment.vote") {{comment.vote}}
+                                                    a.button(ng-click="voteupComment(comment)")
+                                                        span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
+                                                p
+                                                    a.button(ng-click="votedownComment(comment)")
+                                                        span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
+                                    .col-md-11.col-sm-10.col-xs-10
                                         p.small
                                             span {{comment.text}}
                                             span &#8212&nbsp
@@ -233,7 +234,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-xs-12(ng-repeat='comment in answer.comments')
                                 hr.low-margin
                                 p.small
-                                    span.badge.margin-right {{comment.votes}}
+                                    span.badge.small.margin-right {{comment.votes}}
                                     span {{comment.text}}
                                     span &#8212&nbsp
                                         a.blue {{comment.author}}

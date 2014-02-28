@@ -289,8 +289,8 @@ div.rounded {
       .text-outer-glow(@Yellow)
     }
     .glow-pink{
-      color: @Pink;
-      .text-outer-glow(@Pink)
+      color: @Pink-light;
+      .text-outer-glow(@Pink-light)
     }
   }
 }
@@ -324,6 +324,9 @@ div.rounded {
 }
 
 .comment-strip {
+  p {
+    min-height: 12;
+  }
   .button { color: transparent; }
   &:hover {
     .button { color: @gray-light; }
@@ -333,12 +336,17 @@ div.rounded {
     .text-outer-glow(@Yellow)
   }
   .glow-pink{
-    color: @Pink;
-    .text-outer-glow(@Pink)
+    color: @Pink-light;
+    .text-outer-glow(@Pink-light)
   }
 }
 
-
+.fill {
+  padding-left: 0;
+  padding-right: 21%;
+  right: -15px;
+  left: 15px;
+}
 
 p {
   margin-bottom: 0;
