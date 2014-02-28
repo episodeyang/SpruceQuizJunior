@@ -23,7 +23,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             add: function (req, res) {
                 "use strict";
-                console.log('this is running. this is running.');
                 if (!req.params.id) { return res.send(400); }
                 var comment = {
                     id: req.params.id,
@@ -53,6 +52,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     };
                     function callback (err, result){
                         if (req.body.voteup === 'true') {
+                            if (result == null) {return res.send(404, 'cannot find comment')};
+                            if (result.comments == []) {return res.send(404, 'there is no comment')};
                             if (_.contains(result.comments[0].voteup, req.user.username)) {
                                 var update = {
                                     $pull: {

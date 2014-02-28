@@ -46,10 +46,10 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('AnswerComments', function ($resource) {
-        var AnswerComments = $resource('/api/questions/:id/answer/:answerId/comments', {id: '@id'}, {
+        var AnswerComments = $resource('/api/questions/:id/answers/:answerId/comments', {id: '@id', answerId: '@answerId'}, {
             create: {method: 'POST'}
         });
-        var AnswerComment = $resource('/api/questions/:id/answer/:answerId/comments/:commentId', {id: '@id', commentId: '@commentId'});
+        var AnswerComment = $resource('/api/questions/:id/answers/:answerId/comments/:commentId', {id: '@id', answerId: '@answerId', commentId: '@commentId'});
         return {
             add: AnswerComments.create,
             save: AnswerComment.save,

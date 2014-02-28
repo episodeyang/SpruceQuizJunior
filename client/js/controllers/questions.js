@@ -168,12 +168,28 @@ angular.module('SpruceQuizApp')
                 $scope.votedownAnswer = Model.votedownAnswer;
 
                 $scope.view.commentEditor = {};
+                $scope.view.answerCommentEditor = {};
                 $scope.commentEditor = {data: {}};
-                $scope.showCommentEditor = function () {
-                    $scope.view.commentEditor.state = true;
+                $scope.showCommentEditor = function (answer) {
+                    function setViewStateFalse (obj) {
+                        try {obj.view.state = false;}
+                        catch (e) {};
+                    }
+                    if (answer) {
+                        _.each(Model.question.answers, setViewStateFalse)
+                        answer.view = { state: true };
+                    }
+                    else {
+                        $scope.view.commentEditor.state = true;
+                    }
                 }
-                $scope.cancelCommentEdit = function () {
-                    $scope.view.commentEditor.state = false;
+                $scope.cancelCommentEdit = function (answer) {
+                    if (answer) {
+                        answer.view = { state: false };
+                    }
+                    else {
+                        $scope.view.commentEditor.state = false;
+                    }
                     $scope.commentEditor = {data: {}};
                 }
 
@@ -181,15 +197,19 @@ angular.module('SpruceQuizApp')
                     $scope.commentEditor = {data: {}};
                 }
                 $scope.submitComment = function(answer) {
-                    if (answer) { Model.addAnswerComment($scope.commentEditor.data, answer, clearCommentEditor); }
+                    if (answer) { Model.addAnswerComment($scope.commentEditor.data, answer, clearCommentEditor);
+                    }
                     if (!answer) {
                         Model.addComment($scope.commentEditor.data, clearCommentEditor);
                     };
                 }
+
                 $scope.voteupComment = Model.voteupComment;
                 $scope.votedownComment = Model.votedownComment;
+                $scope.removeComment = Model.removeComment;
                 $scope.voteupAnswerComment = Model.voteupAnswerComment;
                 $scope.votedownAnswerComment = Model.votedownAnswerComment;
+                $scope.removeAnswerComment = Model.removeAnswerComment;
 
             }
         ]

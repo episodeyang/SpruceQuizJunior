@@ -153,7 +153,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                     span {{comment.text}}
                                     span &#8212&nbsp
                                         a.blue {{comment.author}}
-                                    a.button
+                                    a.button(ng-click="removeComment(comment)")
                                         span.pull-right.glyphicon.glyphicon-remove
                         .row
                             .col-xs-12
@@ -165,6 +165,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             .row
                                 .col-xs-12
                                     button.btn.btn-success.btn-small.pull-right(ng-click="submitComment()") 确定
+                                    button.btn.btn-danger.btn-small.pull-right.right-margin(ng-click="cancelCommentEdit()") 取消
 
                     .row(ng-show="Model.question.comments && !view.commentEditor.state", ng-click="showCommentEditor()")
                         .col-md-11.col-sm-11.col-xs-10.pull-right
@@ -186,28 +187,6 @@ div.background(background-img="/img/bg-brown.jpg")
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": answer.voteddown}')
                             div.editor-inner(ng-bind-html="answer.text")
                             //- answer comments
-                            div(ng-repeat='comment in answer.comments')
-                                .row.comment-strip
-                                    .col-md-1.col-sm-2.col-xs-2
-                                        .row
-                                            .col-xs-12.no-right-padding
-                                                p
-                                                    span.badge.small(ng-show="comment.vote") {{comment.vote}}
-                                                    a.button(ng-click="voteupComment(comment)")
-                                                        span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
-                                                p
-                                                    a.button(ng-click="votedownComment(comment)")
-                                                        span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
-                                    .col-md-11.col-sm-10.col-xs-10
-                                        p.small
-                                            span {{comment.text}}
-                                            span &#8212&nbsp
-                                                a.blue {{comment.author}}
-                                            a.button
-                                                span.pull-right.glyphicon.glyphicon-remove
-                                .row
-                                    .col-xs-12
-                                        hr.short-top-margin.light-dotted.short-bottom-margin
                         div(ng-show="answer.viewEdit")
                             hr
                             form.editor.short.top-margin(name = 'answerEditorForm')
@@ -220,7 +199,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row(ng-hide='answer.viewEdit')
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editAnswer(answer)") 编辑回答
-                                a.right-spaced.small 评论
+                                a.right-spaced.small(ng-click="showCommentEditor(answer)") 评论
                                 a.right-spaced.small(ng-show="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
                                 p.pull-right
                                     span {{ answer.dateCreated | date:yy-MM-dd }} 由
@@ -230,14 +209,42 @@ div.background(background-img="/img/bg-brown.jpg")
                                     span {{ answer.dateEdited | date:yy-MM-dd }} 由
                                     a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
                                     span 修改
-                        .row
-                            .col-xs-12(ng-repeat='comment in answer.comments')
-                                hr.low-margin
-                                p.small
-                                    span.badge.small.margin-right {{comment.votes}}
-                                    span {{comment.text}}
-                                    span &#8212&nbsp
-                                        a.blue {{comment.author}}
+
+                        //- answer Comments
+                        .row(ng-show="answer.comments != []")
+                            .col-xs-12
+                                hr.low-margin.dotted
+                        div(ng-repeat='comment in answer.comments', ng-hide='answer.viewEdit')
+                            .row.comment-strip
+                                .col-md-1.col-sm-2.col-xs-2
+                                    .row
+                                        .col-xs-12.fill
+                                            p
+                                                span.badge.small(ng-show="comment.vote") {{comment.vote}}
+                                                a.button.pull-right(ng-click="voteupAnswerComment(comment)")
+                                                    span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
+                                            p
+                                                a.button.pull-right(ng-click="votedownAnswerComment(comment)")
+                                                    span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
+                                .col-md-11.col-sm-10.col-xs-10
+                                    p.small
+                                        span {{comment.text}}
+                                        span &#8212&nbsp
+                                            a.blue {{comment.author}}
+                                        a.button(ng-click="removeAnswerComment(comment)")
+                                            span.pull-right.glyphicon.glyphicon-remove
+                            .row
+                                .col-xs-12
+                                    hr.short-top-margin.light-dotted.short-bottom-margin
+
+                        .row(ng-show="answer.view.state")
+                            .col-xs-11.pull-right
+                                form.comment-editor.short
+                                    textarea.editor-inner.small(ng-model="commentEditor.data.text")
+                                .row
+                                    .col-xs-12
+                                        button.btn.btn-success.btn-small.pull-right(ng-click="submitComment(answer)") 确定
+                                        button.btn.btn-danger.btn-small.pull-right.right-margin(ng-click="cancelCommentEdit(answer)") 取消
                     //hr
                     div(ng-hide='view.answerEdit')
                         br

@@ -71,6 +71,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             voteup: [String],
             votedown: [String],
             __virtuals__: {
+                idGet: function () { return this._id; },
                 voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
             },
             __options__: {
@@ -94,6 +95,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             voteup: [String],
             votedown: [String],
             __virtuals__: {
+                idGet: function () { return this._id; },
                 voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
             },
             __options__: {
@@ -125,6 +127,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             votedown: { type: [String], 'default': []},
 //            comments: {type: [subSchema.CommentPrototype], 'default': []},
             __virtuals__: {
+                idGet: function () { return this._id; },
                 voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" }
             },
             __options__: {

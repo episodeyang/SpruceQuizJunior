@@ -53,6 +53,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     function callback (err, result){
                         if (! result || !result.answerComments) { return res.send(404, "the answer comment can not be found");}
                         if (req.body.voteup === 'true') {
+                            if (result == null) {return res.send(404, 'cannot find comment')};
+                            if (result.answerComments == []) {return res.send(404, 'there is no answer comment')};
                             if (_.contains(result.answerComments[0].voteup, req.user.username)) {
                                 var update = {
                                     $pull: {

@@ -108,20 +108,26 @@ angular.module('modelServices', ['resourceProvider'])
                     var acceptList = [], rejectList = [];
 
                     function arbitrator (answerComment) {
-                        if (answerComment.answerId === answer.id) {
-                            trueList.append(data);
+//                        console.log(answerComment.answerId);
+//                        console.log(answer.id);
+//                        console.log(answerComment.answerId.valueOf() === answer.id)
+                        if (answerComment.answerId.valueOf() === answer.id) {
+                            acceptList.push(answerComment);
                         }
-                        else {rejectList.append(data)}
+                        else {rejectList.push(answerComment)}
                     };
 
                     _.each(answerComments, arbitrator);
 
-                    return acceptList, rejectList
+                    return [acceptList, rejectList]
                 }
                 function attachByAnswerId (answer) {
-                    answer.comments, modelInstance.question.answerComments = dichotomizer(modelInstance.question.answerComments, answer)
+//                    console.log(dichotomizer(modelInstance.question.answerComments, answer))
+                    var tuple = dichotomizer(modelInstance.question.answerComments, answer)
+                    answer.comments = tuple[0] ;
+                    modelInstance.question.answerComments = tuple[1];
                 }
-                _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
+//                _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
                 _.each(modelInstance.question.answers, attachByAnswerId)
             }
 
@@ -133,6 +139,7 @@ angular.module('modelServices', ['resourceProvider'])
                         modelInstance.getQuestionVoteStatus();
                         _.map(modelInstance.question.answers, modelInstance.getVoteStatus)
                         _.map(modelInstance.question.comments, modelInstance.getVoteStatus)
+                        _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
                         modelInstance.attachAnswerComments();
                     }, function(err){
                         $rootScope.error = err;
@@ -310,7 +317,7 @@ angular.module('modelServices', ['resourceProvider'])
                  */
                 var query = {
                     id: modelInstance.question.id,
-                    commentId: comment.id,
+                    commentId: comment.id
                 };
                 Comments.remove(
                     query,
@@ -362,7 +369,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
 
 
-            modelInstance.addAnswerComment = function (answer, comment, success, error) {
+            modelInstance.addAnswerComment = function (comment, answer, success, error) {
                 var query = {
                     id: modelInstance.question.id,
                     answerId: answer.id,
@@ -392,7 +399,7 @@ angular.module('modelServices', ['resourceProvider'])
                     commentId: comment.id,
                 };
                 _.extend(comment, query)
-                Comments.save(
+                AnswerComments.save(
                     comment,
                     function( results ) {
                         modelInstance.question.answerComments = results.answerComments;
@@ -412,9 +419,9 @@ angular.module('modelServices', ['resourceProvider'])
                 var query = {
                     id: modelInstance.question.id,
                     answerId: comment.answerId,
-                    commentId: comment.id,
+                    commentId: comment.id
                 };
-                Comments.remove(
+                AnswerComments.remove(
                     query,
                     function( results ) {
                         modelInstance.question.answerComments = results.answerComments;
@@ -428,13 +435,13 @@ angular.module('modelServices', ['resourceProvider'])
                 );
             }
             modelInstance.voteupAnswerComment = function (comment, success, error) {
-                var comment = {
+                var query = {
                     id: modelInstance.question.id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                     "voteup": 'true'
                 }
-                Comments.save(
+                AnswerComments.save(
                     query,
                     function( results ) {
                         modelInstance.question.answerComments = results.answerComments;
@@ -448,13 +455,13 @@ angular.module('modelServices', ['resourceProvider'])
                 );
             }
             modelInstance.votedownAnswerComment = function (comment, success, error) {
-                var comment = {
+                var query = {
                     id: modelInstance.question.id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                     "votedown": 'true'
                 }
-                Comments.save(
+                AnswerComments.save(
                     query,
                     function( results ) {
                         modelInstance.question.answerComments = results.answerComments;
