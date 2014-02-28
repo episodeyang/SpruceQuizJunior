@@ -108,11 +108,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .rounded.bg-grey.transparent.vote-box
                                     p.text-center
                                         a(ng-click='Model.voteup(Model.question)')
-                                            span.up.glyphicon.glyphicon-chevron-up(ng-class='{glow: Model.question.votedup}')
+                                            span.up.glyphicon.glyphicon-chevron-up(ng-class='{"glow-yellow": Model.question.votedup}')
                                     h3.text-center.no-margin {{Model.question.vote}}
                                     p.text-center
                                         a(ng-click='Model.votedown(Model.question)')
-                                            span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: Model.question.voteddown}')
+                                            span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": Model.question.voteddown}')
                             div.editor-inner(ng-bind-html="Model.question.text")
                         div.bottom-margin.top-margin
                             a.badge(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
@@ -143,10 +143,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                     .col-xs-6(ng-show="comment.vote")
                                         span.badge {{comment.vote}}
                                     .col-xs-6.pull-right
-                                        a.button
-                                            span.glyphicon.glyphicon-circle-arrow-up.small
-                                        a.button
-                                            span.glyphicon.glyphicon-flag.small.short-top-margin
+                                        //- TODO: need to finish
+                                        a.button(ng-click="voteupComment(comment)")
+                                            span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
+                                        a.button(ng-click="votedownComment(comment)")
+                                            span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
                             .col-md-11.col-sm-11.col-xs-10
                                 p.small
                                     span {{comment.text}}
@@ -178,11 +179,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .rounded.grey.transparent.vote-box
                                     p.text-center
                                         a(ng-click='voteupAnswer(answer)')
-                                            span.up.glyphicon.glyphicon-chevron-up( ng-class='{glow: answer.votedup}')
+                                            span.up.glyphicon.glyphicon-chevron-up( ng-class='{"glow-yellow": answer.votedup}')
                                     h3.text-center {{answer.vote}}
                                     p.text-center
                                         a(ng-click='votedownAnswer(answer)')
-                                            span.down.glyphicon.glyphicon-chevron-down(ng-class='{glow: answer.voteddown}')
+                                            span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": answer.voteddown}')
                             div.editor-inner(ng-bind-html="answer.text")
                             //- answer comments
                             div(ng-repeat='comment in answer.comments')
@@ -192,10 +193,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                             .col-xs-6(ng-show="comment.vote")
                                                 span.badge {{comment.vote}}
                                             .col-xs-6.pull-right
-                                                a.button
-                                                    span.glyphicon.glyphicon-circle-arrow-up.small
-                                                a.button
-                                                    span.glyphicon.glyphicon-flag.small.short-top-margin
+                                                a.button(ng-click="voteupAnswerComment(comment)")
+                                                    span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
+                                                a.button(ng-click="votedownAnswerComment(comment)")
+                                                    span.glyphicon.glyphicon-flag.small.short-top-margin( ng-class='{"glow-pink": comment.voteddown}')
                                     .col-md-11.col-sm-11.col-xs-10
                                         p.small
                                             span {{comment.text}}

@@ -186,7 +186,10 @@ angular.module('SpruceQuizApp')
                         Model.addComment($scope.commentEditor.data, clearCommentEditor);
                     };
                 }
-
+                $scope.voteupComment = Model.voteupComment;
+                $scope.votedownComment = Model.votedownComment;
+                $scope.voteupAnswerComment = Model.voteupAnswerComment;
+                $scope.votedownAnswerComment = Model.votedownAnswerComment;
 
             }
         ]

@@ -299,7 +299,7 @@ angular.module('modelServices', ['resourceProvider'])
                 );
             }
             modelInstance.voteupComment = function (comment, success, error) {
-                var comment = {
+                var query = {
                     id: modelInstance.question.id,
                     commentId: comment.id,
                     "voteup": 'true'
@@ -317,7 +317,7 @@ angular.module('modelServices', ['resourceProvider'])
                 );
             }
             modelInstance.votedownComment = function (comment, success, error) {
-                var comment = {
+                var query = {
                     id: modelInstance.question.id,
                     commentId: comment.id,
                     "votedown": 'true'

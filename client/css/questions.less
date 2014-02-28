@@ -284,9 +284,13 @@ div.rounded {
       left: -1px;
       right: -0.5px;
     }
-    .glow {
+    .glow-yellow {
       color: @Yellow;
       .text-outer-glow(@Yellow)
+    }
+    .glow-pink{
+      color: @Pink;
+      .text-outer-glow(@Pink)
     }
   }
 }
@@ -324,7 +328,16 @@ div.rounded {
   &:hover {
     .button { color: @gray-light; }
   }
+  .glow-yellow {
+    color: @Yellow;
+    .text-outer-glow(@Yellow)
+  }
+  .glow-pink{
+    color: @Pink;
+    .text-outer-glow(@Pink)
+  }
 }
+
 
 
 p {
