@@ -43,10 +43,6 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row
                             .col-lg-12
                                 a.editor.short.top-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
-                                    //-.row
-                                        .col-lg-11.col-sm-push-1.col-xs-10.col-xs-push-2
-                                            h4.no-margin {{question.title}}
-                                            hr.low-margin
                                     .row
                                         div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-top-margin.bottom-margin
@@ -61,9 +57,6 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                                 p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")
-                    //.input-group
-                    //    span.input-group-btn
-                    //        button.btn.btn-default(type='button') 标题
                     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                     form.editor.tall.top-margin(name = 'questionAskEditorForm')
                         div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
