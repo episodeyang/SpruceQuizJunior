@@ -46,6 +46,7 @@ angular.module('SpruceQuizApp')
                 };
                 $scope.toggleHtml = function () {
                     $scope.editor.showHtml = !$scope.editor.showHtml;
+                    mixpanel.track("toggleHtml");
                 };
 
                 $scope.$watch('editor.tagText', function(newVal){
@@ -66,9 +67,11 @@ angular.module('SpruceQuizApp')
                 var validator = function(data) {
                     if (data.title.length < 10) {
                         return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
+                        mixpanel.track("question title too short");
                     };
                     if (data.text.length < 100) {
                         return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
+                        mixpanel.track("question too short");
                     }
                 };
 
@@ -80,6 +83,7 @@ angular.module('SpruceQuizApp')
                             function(){
                                 $rootScope.error = '';
                                 $location.path('/questions/'+Model.question.id);
+                                mixpanel.track("submitted question");
                             }
                         );
                     }
