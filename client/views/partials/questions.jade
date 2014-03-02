@@ -7,7 +7,7 @@ div.background(background-img="/img/bg-brown.jpg")
     +navbar
     .alert-box(ng-show='error', ng-click="errorClear()")
         p.title {{error.title || error}}
-            a.pull-right.small(ng-show="error.details", ng-click="view.error.show=show") 细节
+            a.pull-right.small(ng-if="error.details", ng-click="view.error.show=show") 细节
         .details(ng-hide='view.error.show')
             p {{error.details}}
     .container
@@ -29,12 +29,12 @@ div.background(background-img="/img/bg-brown.jpg")
                         a.text-center(ng-click="view.state='search'") 所有问题
                     li(ng-class="{active: view.state=='ask'}")
                         a.text-center(ng-click="view.state='ask'") 提问
-                //ul.nav.nav-pills.nav-stacked(ng-show="view.state=='question'")
+                //ul.nav.nav-pills.nav-stacked(ng-if="view.state=='question'")
                 //    li
                 //        //-(ng-class="{active: view.state=='question'}")
                 //        a.text-center 返回
             .col-sm-7.col-xs-9
-                div(ng-show="view.state=='search'")
+                div(ng-if="view.state=='search'")
                     .input-group
                         input(type='text').form-control
                         span.input-group-btn
@@ -56,7 +56,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                             .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
                                                 p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                                 p.no-top-margin.text-center.small 回答
-                div(ng-show="view.state=='ask'")
+                div(ng-if="view.state=='ask'")
                     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                     //form.editor.tall.top-margin(name = 'questionAskEditorForm')
                     //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
@@ -96,7 +96,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.cancel()') 取消
                         form.editor.tall(ng-if='editor.showHtml')
                             p {{editor.data.text}}
-                    div(ng-show="view.state==='question'")
+                    div(ng-if="view.state==='question'")
                         h3.title.bottom-margin {{Model.question.title}}
                         .editor.top-margin
                             .fixed-left
@@ -129,7 +129,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 a.right-spaced 添加评论
 
                     //- question Comments
-                    .row(ng-show="Model.question.comments != []")
+                    .row(ng-if="Model.question.comments != []")
                         .col-xs-12
                             hr.low-margin.dotted
                     div(ng-repeat='comment in Model.question.comments')
@@ -138,7 +138,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .row
                                     .col-xs-12.fill
                                         p
-                                            span.badge.small(ng-show="comment.vote") {{comment.vote}}
+                                            span.badge.small(ng-if="comment.vote") {{comment.vote}}
                                             a.button.pull-right(ng-click="voteupComment(comment)")
                                                 span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
                                         p
@@ -154,7 +154,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row
                             .col-xs-12
                                 hr.short-top-margin.light-dotted.short-bottom-margin
-                    .row(ng-show="view.commentEditor.state")
+                    .row(ng-if="view.commentEditor.state")
                         .col-xs-11.pull-right
                             form.comment-editor.short
                                 textarea.editor-inner.small(ng-model="commentEditor.data.text")
@@ -163,15 +163,15 @@ div.background(background-img="/img/bg-brown.jpg")
                                     button.btn.btn-success.btn-small.pull-right(ng-click="submitComment()") 确定
                                     button.btn.btn-danger.btn-small.pull-right.right-margin(ng-click="cancelCommentEdit()") 取消
 
-                    .row(ng-show="Model.question.comments && !view.commentEditor.state", ng-click="showCommentEditor()")
+                    .row(ng-if="Model.question.comments && !view.commentEditor.state", ng-click="showCommentEditor()")
                         .col-md-11.col-sm-11.col-xs-10.pull-right
                             a.right-spaced(ng-click="editor.showCommentEditor()") 添加评论
 
                     br
-                    h3(ng-show="Model.question.nAnswers")
+                    h3(ng-if="Model.question.nAnswers")
                         b 大家的回答
                     div(ng-repeat="answer in Model.question.answers | orderBy:'-vote':false")
-                        form.editor.top-margin(id="{{answer.id}}", ng-hide="answer.viewEdit")
+                        form.editor.top-margin(id="{{answer.id}}", ng-if="!answer.viewEdit")
                             .fixed-left
                                 .rounded.grey.transparent.vote-box
                                     p.text-center
@@ -183,7 +183,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": answer.voteddown}')
                             div.editor-inner(math-html="answer.text")
                             //- answer comments
-                        div(ng-show="answer.viewEdit")
+                        div(ng-if="answer.viewEdit")
                             //form.editor.short.top-margin(name = 'answerEditorForm')
                                 div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
 
@@ -198,7 +198,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editAnswer(answer)") 编辑回答
                                 a.right-spaced.small(ng-click="showCommentEditor(answer)") 评论
-                                a.right-spaced.small(ng-show="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
+                                a.right-spaced.small(ng-if="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
                                 p.pull-right
                                     span {{ answer.dateCreated | date:yy-MM-dd }} 由
                                     a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
@@ -209,7 +209,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                     span 修改
 
                         //- answer Comments
-                        .row(ng-show="answer.comments != []")
+                        .row(ng-if="answer.comments != []")
                             .col-xs-12
                                 hr.low-margin.dotted
                         div(ng-repeat='comment in answer.comments', ng-hide='answer.viewEdit')
@@ -218,7 +218,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                     .row
                                         .col-xs-12.fill
                                             p
-                                                span.badge.small(ng-show="comment.vote") {{comment.vote}}
+                                                span.badge.small(ng-if="comment.vote") {{comment.vote}}
                                                 a.button.pull-right(ng-click="voteupAnswerComment(comment)")
                                                     span.glyphicon.glyphicon-circle-arrow-up.small( ng-class='{"glow-yellow": comment.votedup}')
                                             p
@@ -235,7 +235,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .col-xs-12
                                     hr.short-top-margin.light-dotted.short-bottom-margin
 
-                        .row(ng-show="answer.view.state")
+                        .row(ng-if="answer.view.state")
                             .col-xs-11.pull-right
                                 form.comment-editor.short
                                     textarea.editor-inner.small(ng-model="commentEditor.data.text")
