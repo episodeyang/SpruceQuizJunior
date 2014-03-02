@@ -131,6 +131,16 @@ angular.module('SpruceQuizApp')
                     placeholder: "请在这里输入你的解答。" +
                         "如需修改文字风格，请高亮文字。风格编辑工具会自动显示。"
                 };
+
+                $scope.editor.toolbar = [
+                    ['redo', 'undo', 'clear'],
+                    ['h3', 'h4'], ['p', 'pre', 'quote'],
+                    ['bold', 'italics', 'underline'], ['ul', 'ol'],
+                    ['justifyLeft','justifyCenter','justifyRight'],
+                    ['insertImage', 'insertLink', 'unlink'],
+                    ['html']
+                ]
+
                 $scope.addAnswer = function () {
                     Model.addAnswer(
                         $scope.answerEditor.data,

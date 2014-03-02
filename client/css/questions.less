@@ -180,6 +180,9 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 h1.no-bottom-margin, h2.no-bottom-margin, h3.no-bottom-margin, h4.no-bottom-margin, h5.no-bottom-margin, h6.no-bottom-margin, hr.no-bottom-margin, p.no-bottom-margin {
   margin-bottom: 0;
 }
+.no-bottom-margin {
+  margin-bottom: 0;
+}
 h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.low-margin, hr.low-margin, p.low-margin {
   margin-top: 5;
   margin-bottom: 5;
@@ -208,10 +211,10 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
   :focus {
     outline: none;
   }
-  .editor-inner {
-    border-style: none;
-    width: 100%;
-  }
+//  .editor-inner {
+//    border-style: none;
+//    width: 100%;
+//  }
 }
 a.editor {
   display: block;
@@ -245,6 +248,62 @@ a.editor {
     width: 100%;
     min-height: 45px;
     resize:vertical;
+  }
+}
+
+text-angular-toolbar {
+  button {
+    padding: 0px;
+    font-size: 50%;
+  }
+
+}
+.ta-btn-group {
+  border: none;
+  background-color:transparent;
+  color: white;
+}
+text-angular {
+  .ta-toolbar {
+    font-size: 10px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    .btn-group {
+      margin-right: 15px;
+    }
+    .btn {
+      padding: 0px;
+      height: 24px;
+      min-width: 24px;
+      color: grey;
+      background-color: transparent;
+      border: none;
+    }
+    .btn:active, .btn.active {
+      color: black;
+      background-color: transparent;
+      .box-shadow(none);
+    }
+  }
+  .ta-editor {
+    background-color: white;
+    border-radius: 3px;
+    padding: 15px;
+    width: 100%;
+  }
+  .ta-editor:focus {
+    outline-color: @gray-lighte;
+    outline-width: 3px;
+  }
+}
+text-angular.tall {
+  .ta-editor {
+    min-height: 30%;
+  }
+}
+text-angular.short{
+  .ta-editor {
+    min-height: 95px;
   }
 }
 

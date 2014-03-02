@@ -58,8 +58,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 p.no-top-margin.text-center.small 回答
                 div(ng-show="view.state=='ask'")
                     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
-                    form.editor.tall.top-margin(name = 'questionAskEditorForm')
-                        div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+                    //form.editor.tall.top-margin(name = 'questionAskEditorForm')
+                    //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+                    text-angular.tall(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+
                     div.bottom-margin.top-margin
                         .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
                             span.white {{tag}} &nbsp
@@ -71,15 +73,15 @@ div.background(background-img="/img/bg-brown.jpg")
                             button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 文本代码
                             button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
                             button.btn.btn-success.pull-right(active-ctrl, ng-hide='editor.showHtml', ng-click='editor.submit()') 提交问题
-                    form.editor.tall(ng-show='editor.showHtml')
+                    .editor.tall(ng-show='editor.showHtml')
                         p {{editor.data.text}}
-                div(ng-show="view.state.split('.')[0]=='question'")
+                div(ng-if="view.state.split('.')[0]=='question'")
                     //- question main text
-                    div(ng-show="view.state ==='question.edit'")
+                    div(ng-if="view.state ==='question.edit'")
                         input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
-                        form.editor.tall.top-margin(name = 'questionEditorForm')
-                            div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
-
+                        //form.editor.tall.top-margin(name = 'questionEditorForm')
+                        //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+                        text-angular.tall.top-margin(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         div.bottom-margin.top-margin
                             .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
                                 span.white {{tag}} &nbsp
@@ -92,11 +94,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                 button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
                                 button.btn.btn-info.pull-right(active-ctrl, ng-hide='editor.showHtml', ng-click='editor.updateQuestion()') 确定修改
                                 button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.cancel()') 取消
-                        form.editor.tall(ng-show='editor.showHtml')
+                        form.editor.tall(ng-if='editor.showHtml')
                             p {{editor.data.text}}
                     div(ng-show="view.state==='question'")
                         h3.title.bottom-margin {{Model.question.title}}
-                        form.editor.top-margin
+                        .editor.top-margin
                             .fixed-left
                                 .rounded.bg-grey.transparent.vote-box
                                     p.text-center
@@ -106,7 +108,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                     p.text-center
                                         a(ng-click='Model.votedown(Model.question)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": Model.question.voteddown}')
-                            div.editor-inner(ng-bind-html="Model.question.text")
+                            //-div.editor-inner(compile="'<mathjax>' + Model.question.text + '</mathjax>'")
+                            div.editor-inner(math-html="Model.question.text")
                         div.bottom-margin.top-margin
                             a.badge(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
                         .row
@@ -178,17 +181,19 @@ div.background(background-img="/img/bg-brown.jpg")
                                     p.text-center
                                         a(ng-click='votedownAnswer(answer)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": answer.voteddown}')
-                            div.editor-inner(ng-bind-html="answer.text")
+                            div.editor-inner(math-html="answer.text")
                             //- answer comments
                         div(ng-show="answer.viewEdit")
-                            hr
-                            form.editor.short.top-margin(name = 'answerEditorForm')
+                            //form.editor.short.top-margin(name = 'answerEditorForm')
                                 div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
-                            .row
+
+                            .row.top-margin.bottom-margin
+                                .col-xs-12
+                                    text-angular.short(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+                            .row.top-margin.bottom-margin
                                 .col-xs-12
                                     button.btn.btn-info.pull-right(ng-click='updateAnswer(answer)') 修改
                                     button.btn.btn-danger.pull-right.right-margin(ng-click='cancelUpdateAnswer(answer)') 取消
-                            hr
                         .row(ng-hide='answer.viewEdit')
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editAnswer(answer)") 编辑回答
@@ -242,8 +247,10 @@ div.background(background-img="/img/bg-brown.jpg")
                     div(ng-hide='view.answerEdit')
                         br
                         h3 你的回答
-                        form.editor.short(name = 'answerEditorForm')
-                            div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+                        //form.editor.short(name = 'answerEditorForm')
+                        //    div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+
+                        text-angular.short(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         .row
                             .col-xs-12
                                 button.btn.btn-success.pull-right(ng-click='addAnswer()') 提交解答
