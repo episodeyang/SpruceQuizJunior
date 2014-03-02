@@ -550,8 +550,103 @@ angular.module('modelServices', ['resourceProvider'])
              * Utilities
              */
             modelInstance.stripHtml = function(string, maxLength) {
+                function dec2char ( n ) {
+                    // converts a single string representing a decimal number to a character
+                    // note that no checking is performed to ensure that this is just a hex number, eg. no spaces etc
+                    // dec: string, the dec codepoint to be converted
+                    var result = '';
+                    if (n <= 0xFFFF) { result += String.fromCharCode(n); }
+                    else if (n <= 0x10FFFF) {
+                        n -= 0x10000
+                        result += String.fromCharCode(0xD800 | (n >> 10)) + String.fromCharCode(0xDC00 | (n & 0x3FF));
+                    }
+                    else { result += 'dec2char error: Code point out of range: '+dec2hex(n); }
+                    return result;
+                }
+                function dec2hex ( textString ) {
+                    return (textString+0).toString(16).toUpperCase();
+                }
+
+                function  dec2hex2 ( textString ) {
+                    var hexequiv = new Array ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F");
+                    return hexequiv[(textString >> 4) & 0xF] + hexequiv[textString & 0xF];
+                }
+
+                function  dec2hex4 ( textString ) {
+                    var hexequiv = new Array ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F");
+                    return hexequiv[(textString >> 12) & 0xF] + hexequiv[(textString >> 8) & 0xF]
+                        + hexequiv[(textString >> 4) & 0xF] + hexequiv[textString & 0xF];
+                }
+                function convertUnicode2Char ( str ) {
+                    // converts a string containing U+... escapes to a string of characters
+                    // str: string, the input
+
+                    // first convert the 6 digit escapes to characters
+                    str = str.replace(/[Uu]\+10([A-Fa-f0-9]{4})/g,
+                        function(matchstr, parens) {
+                            return hex2char('10'+parens);
+                        }
+                    );
+                    // next convert up to 5 digit escapes to characters
+                    str = str.replace(/[Uu]\+([A-Fa-f0-9]{1,5})/g,
+                        function(matchstr, parens) {
+                            return hex2char(parens);
+                        }
+                    );
+                    return str;
+                }
+                function convertDecNCR2Char ( str ) {
+                    // converts a string containing &#...; escapes to a string of characters
+                    // str: string, the input
+
+                    // convert up to 6 digit escapes to characters
+                    str = str.replace(/&#([0-9]{1,7});/g,
+                        function(matchstr, parens) {
+                            return dec2char(parens);
+                        }
+                    );
+                    return str;
+                }
+                function convertCharStr2UTF16 ( str ) {
+                    // Converts a string of characters to UTF-16 code units, separated by spaces
+                    // str: sequence of Unicode characters
+                    var highsurrogate = 0;
+                    var suppCP;
+                    var n = 0;
+                    var outputString = '';
+                    for (var i = 0; i < str.length; i++) {
+                        var cc = str.charCodeAt(i);
+                        if (cc < 0 || cc > 0xFFFF) {
+                            outputString += '!Error in convertCharStr2UTF16: unexpected charCodeAt result, cc=' + cc + '!';
+                        }
+                        if (highsurrogate != 0) {
+                            if (0xDC00 <= cc && cc <= 0xDFFF) {
+                                suppCP = 0x10000 + ((highsurrogate - 0xD800) << 10) + (cc - 0xDC00);
+                                suppCP -= 0x10000; outputString += dec2hex4(0xD800 | (suppCP >> 10)) + ' ' + dec2hex4(0xDC00 | (suppCP & 0x3FF)) + ' ';
+                                highsurrogate = 0;
+                                continue;
+                            }
+                            else {
+                                outputString += 'Error in convertCharStr2UTF16: low surrogate expected, cc=' + cc + '!';
+                                highsurrogate = 0;
+                            }
+                        }
+                        if (0xD800 <= cc && cc <= 0xDBFF) { // start of supplementary character
+                            highsurrogate = cc;
+                        }
+                        else {
+                            outputString += dec2hex(cc) + ' ';
+                        }
+                    }
+                    return outputString.substring(0, outputString.length-1);
+                }
+
                 if (!string) { return null; }
                 if (!maxLength) { var maxLength = 300 }
+//                string = decodeURIComponent(escape(string));
+//                string = unescape(encodeURIComponent(string));
+                string = convertDecNCR2Char(string)
+                console.log(string)
                 string = string.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi," ");
                 return string.slice(0, maxLength);
             }
