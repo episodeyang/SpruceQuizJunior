@@ -550,6 +550,12 @@ angular.module('modelServices', ['resourceProvider'])
              * Utilities
              */
             modelInstance.stripHtml = function(string, maxLength) {
+                /**
+                 * following code from http://www.rishida.net/tools/conversion/conversionfunctions.js
+                 * the applet is at: http://www.rishida.net/tools/conversion/
+                 * @param n
+                 * @returns {string}
+                 */
                 function dec2char ( n ) {
                     // converts a single string representing a decimal number to a character
                     // note that no checking is performed to ensure that this is just a hex number, eg. no spaces etc
