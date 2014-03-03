@@ -22,16 +22,24 @@ a.navbar-brand {
     color: @white-moderate;
   }
 }
-.navbar-nav > li > a {padding-top:12px !important; padding-bottom:12px !important;}
+.navbar-nav > li > a {
+  padding-top:12px !important;
+  padding-bottom:12px !important;
+}
 .navbar {min-height:44px !important}
 li.dropdown > a {padding-top: 13px; vertical-align: middle;}
 ul.nav {
-  height: 44px;
   li {
-    height: 44px;
     a {
-      height: 44px;
-      span {
+      padding-top: 13px !important;
+      padding-bottom: 13px !important;
+      padding-left: 11px;
+      padding-right: 11px;
+
+//      vertical-align: bottom;
+      font-size: 14px;
+      span.glyphicon {
+        margin-top:2px;
         color: @white-light;
       }
     }

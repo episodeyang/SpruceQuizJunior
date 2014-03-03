@@ -27,7 +27,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         a(href='/') 问题
         .row
             .col-sm-2.col-xs-3
-                ul.nav.nav-pills.nav-stacked(ng-hide="view.state.split('.')[0] === 'question'")
+                ul.nav.sp-nav.nav-pills.nav-stacked(ng-hide="view.state.split('.')[0] === 'question'")
                     li(ng-class="{active: view.state=='search'}")
                         a.text-center(ng-click="view.state='search'") 所有问题
                     li(ng-class="{active: view.state=='ask'}")
