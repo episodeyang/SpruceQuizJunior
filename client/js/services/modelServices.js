@@ -145,10 +145,15 @@ angular.module('modelServices', ['resourceProvider'])
                         $rootScope.error = err;
                     } );
             };
-            modelInstance.queryQuestions = function() {
-                Questions.query(function(questions){
-                    modelInstance.questions = questions;
-                }, function(err){ $rootScope.error = err; } );
+            modelInstance.queryQuestions = function(query) {
+                Questions.query(
+                    query,
+                    function (questions) {
+                        modelInstance.questions = questions;
+                    },
+                    function (err) {
+                        $rootScope.error = err;
+                    });
             };
             modelInstance.createQuestion = function(question, success, error) {
                 Questions.create(question, function(result){
@@ -194,6 +199,12 @@ angular.module('modelServices', ['resourceProvider'])
                     votedown: 'true'
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
+            }
+
+            modelInstance.queryStickyQuestions = function() {
+                modelInstance.queryQuestions({
+                    //TODO: nothing here yet. will need stickys.
+                });
             }
 
             modelInstance.addAnswer = function(answer, success, error) {

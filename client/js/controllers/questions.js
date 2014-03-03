@@ -69,7 +69,7 @@ angular.module('SpruceQuizApp')
                         return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
                         mixpanel.track("question title too short");
                     };
-                    if (data.text.length < 100) {
+                    if (data.text.length < 50) {
                         return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
                         mixpanel.track("question too short");
                     }
