@@ -1,32 +1,48 @@
 @import "elements.less";
 @import "mixins.less";
-@import "navbar.less";
-nav.navbar.navbar-inverse {
+
+nav.navbar.navbar-inverse.navbar-fixed-top {
   width: 100%;
   background-color: #604830 !important;
+  height: 44px;
   .container {
+    height: 44px;
     .navbar-header {
-      a {
-//        padding-left: 0px;
+      height: 44px;
+    }
+  }
+}
+a.navbar-brand {
+  height: 44px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  font-size: 17px;
+  color: @white-light !important;
+  &:hover {
+    color: @white-moderate;
+  }
+}
+.navbar-nav > li > a {padding-top:12px !important; padding-bottom:12px !important;}
+.navbar {min-height:44px !important}
+li.dropdown > a {padding-top: 13px; vertical-align: middle;}
+ul.nav {
+  height: 44px;
+  li {
+    height: 44px;
+    a {
+      height: 44px;
+      span {
+        color: @white-light;
       }
     }
   }
-  ul {
-    li {
-
+  li:hover {
+    a {
+      span {
+        color: @white-moderate;
+      }
     }
   }
-  //  .nav-fixes {
-  //    height: 50px;
-  //    width: 100px;
-  //    //.border-radius(10px, 10px, 10px, 10px);
-  //    right: 200px;
-  //    top: 0px;
-  //    position: absolute;
-  //    small{
-  //      padding: 5px;
-  //    }
-  //  }
 }
 
 .navbar-collapse {
@@ -34,19 +50,3 @@ nav.navbar.navbar-inverse {
   border-color: #604830;
 }
 
-.navbar-inverse, .navbar-nav > li > a {
-  color: #ffffff !important;
-}
-
-// Somehow this doesn't work here.
-//@media (max-width: @screen-sm-min) {
-//  .navbar-header {
-//    margin-left: 0px;
-//  }
-//}
-//@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-//  .container {
-//    max-width: @screen-sm-max;
-//    width: 100%;
-//  }
-//}

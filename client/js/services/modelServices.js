@@ -596,7 +596,6 @@ angular.module('modelServices', ['resourceProvider'])
                 if (!string) { return null; }
                 if (!maxLength) { var maxLength = 300 }
                 string = convertDecNCR2Char(string)
-                console.log(string)
                 string = string.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi," ");
                 return string.slice(0, maxLength);
             }

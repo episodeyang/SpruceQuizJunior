@@ -13,15 +13,18 @@ div.background(background-img="/img/bg-brown.jpg")
     .container
         .row
             .col-sm-7.col-sm-offset-2.col-xs-12
-                ul.nav.nav-pills.pull-right
+                ul.nav.nav-pills
                     li
-                        a(href='/') 问题
-                    li
-                        a 分类
-                    li
-                        a 用户
-                    li
+                        a(href='/home')
+                            span.glyphicon.glyphicon-home
+                    li.pull-right
                         a 待回答
+                    li.pull-right
+                        a 用户
+                    li.pull-right
+                        a 分类
+                    li.pull-right
+                        a(href='/') 问题
         .row
             .col-sm-2.col-xs-3
                 ul.nav.nav-pills.nav-stacked(ng-hide="view.state.split('.')[0] === 'question'")
