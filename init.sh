@@ -3,7 +3,7 @@ npm update
 bower update 
 cd client/lib/angular-placeholders 
 npm install
-grunt 
+grunt before-test after-test
 cd ../../.. 
 cd client/lib/angular-bootstrap/ 
 npm install 
