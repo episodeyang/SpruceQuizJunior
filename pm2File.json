@@ -1,0 +1,46 @@
+[
+{
+  "name"      : "nantijiazi-tier-0",
+  "script"    : "/home/ge/projects/SpruceQuizJunior/server.js",
+  "args"      : "['--toto=heya coco', '-d', '1']",
+  "error_file" : ".child-err.log",
+  "instances"  : "1",
+  "port" : "3050",
+  "env": {
+      "NODE_ENV": "production"
+  }
+},
+{
+  "name"      : "nantijiazi-tier-1",
+  "script"    : "/home/ge/projects/SpruceQuizJunior/server.js",
+  "args"      : "['--toto=heya coco', '-d', '1']",
+  "error_file" : ".child-err.log",
+  "instances"  : "1",
+  "port" : "3051",
+  "env": {
+      "NODE_ENV": "production"
+  }
+},
+{
+  "name"      : "youzi.nantijiazi-tier-0",
+  "script"    : "/home/ge/projects/SpruceQuizJunior/server.js",
+  "args"      : "['--toto=heya coco', '-d', '1']",
+  "error_file" : ".child-err.log",
+  "instances"  : "1",
+  "port" : "3040",
+  "env": {
+      "NODE_ENV": "production"
+  }
+},
+{
+  "name"      : "youzi.nantijiazi-tier-1",
+  "script"    : "/home/ge/projects/SpruceQuizJunior/server.js",
+  "args"      : "['--toto=heya coco', '-d', '1']",
+  "error_file" : ".child-err.log",
+  "instances"  : "1",
+  "port" : "3041",
+  "env": {
+      "NODE_ENV": "production"
+  }
+}
+]
