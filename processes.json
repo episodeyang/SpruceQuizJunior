@@ -1,0 +1,11 @@
+[{
+  "name"      : "test",
+  "script"    : "/home/ge/projects/SpruceQuizJunior/server.js",
+  "args"      : "['--toto=heya coco', '-d', '1']",
+  "error_file" : ".child-err.log",
+  "instances"  : "1",
+  "env": {
+      "NODE_ENV": "production",
+      "baseUrl" : "/home/ge/projects/SpruceQuizJunior/"
+  }
+}]
