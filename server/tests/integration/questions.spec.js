@@ -33,8 +33,8 @@ describe('Question API test - ', function (done) {
     afterEach(function () {
         passportStub.logout(); // logout after each test
     });
-    it('needs to login to access', function (done) {
-        request(app).get('/api/questions').expect(401, done);
+    it("doesn't need to login to access", function (done) {
+        request(app).get('/api/questions').expect(200, done);
     });
     var question = {};
     var question2 = {};
@@ -58,8 +58,8 @@ describe('Question API test - ', function (done) {
         passportStub.login(superadminUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate2).expect(201, done);
     });
-    it('needs to login to access', function (done) {
-        request(app).get('/api/questions').expect(401, done);
+    it("doesn't need to login to access", function (done) {
+        request(app).get('/api/questions').expect(200, done);
     });
     it('get questions', function (done) {
         passportStub.login(studentUser); // login as user
@@ -68,10 +68,10 @@ describe('Question API test - ', function (done) {
             done();
         });
     });
-    it('needs to login to access', function (done) {
+    it("doesn't need to login to access", function (done) {
 //        console.log('show the question before using it to access');
 //        console.log(question);
-        request(app).get('/api/questions/' + question.id).expect(401, done);
+        request(app).get('/api/questions/' + question.id).expect(200, done);
     });
     it('get question by Id', function (done) {
         passportStub.login(studentUser); // login as user
@@ -81,7 +81,9 @@ describe('Question API test - ', function (done) {
         });
     });
     it('needs to login to access', function (done) {
-        request(app).post('/api/questions/' + question.id).expect(401, done);
+        console.log('I am actually here')
+        passportStub.logout(); // logout after each test
+        request(app).post('/api/questions/' + question.id).send({}).expect(401, done);
     });
     it('update question title by Id', function (done) {
         passportStub.login(studentUser); // login as user

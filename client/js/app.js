@@ -5,17 +5,23 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 
         var access = rolesHelper.accessLevels;
 
-        $routeProvider.when('/login',
-            {
-                templateUrl: '/partials/frontPage',
-                controller: 'FrontPageCtrl',
-                access: access.anon
-            });
         $routeProvider.when('/',
             {
                 templateUrl: '/partials/questions',
                 controller: 'QuestionCtrl',
-                access: access.loggedin
+                access: access.all
+            });
+        $routeProvider.when('/login',
+            {
+                templateUrl: '/partials/frontPage',
+                controller: 'FrontPageCtrl',
+                access: access.all
+            });
+        $routeProvider.when('/questions',
+            {
+                templateUrl: '/partials/questions',
+                controller: 'QuestionCtrl',
+                access: access.all
             });
 //        $routeProvider.when('/home',
 //            {
@@ -69,7 +75,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
             {
                 templateUrl: '/partials/questions',
                 controller: 'QuestionCtrl',
-                access: access.loggedin
+                access: access.all
             });
 //        $routeProvider.when('/reports',
 //            {
@@ -98,19 +104,24 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 
         $locationProvider.html5Mode(true);
 
-        $httpProvider.interceptors.push(function ($q, $location) {
-            return {
-                'responseError': function (response) {
-                    if (response.status === 401 || response.status === 403) {
-                        $location.path('/login');
-                        return $q.reject(response);
-                    }
-                    else {
-                        return $q.reject(response);
-                    }
-                }
-            }
-        });
+        /**
+         * the following template can be used to intercept unauthorized
+         * requests.
+         * For public users, this is a way to generate a popup for registration.
+         */
+//        $httpProvider.interceptors.push(function ($q, $location) {
+//            return {
+//                'responseError': function (response) {
+//                    if (response.status === 401 || response.status === 403) {
+//                        $location.path('/');
+//                        return $q.reject(response);
+//                    }
+//                    else {
+//                        return $q.reject(response);
+//                    }
+//                }
+//            }
+//        });
 
     }])
 
@@ -119,12 +130,16 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
-                if (Auth.isLoggedIn()) {
-                    $location.path('/');
-                }
-                else {
-                    $location.path('/login');
-                }
+                $location.path(current);
+                $rootScope.error = "access prohibited."
+//                if (Auth.isLoggedIn()) {
+//                    $location.path('/');
+//                    console.log('is logged in');
+//                }
+//                else {
+//                    $location.path('/login');
+//                    console.log('not logged in');
+//                }
             }
         });
 

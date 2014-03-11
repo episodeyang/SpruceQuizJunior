@@ -2,6 +2,10 @@ angular.module('SpruceQuizApp')
     .controller('FrontPageCtrl',
         ['$rootScope', '$scope', '$location', '$window', 'Auth', function($rootScope, $scope, $location, $window, Auth) {
 
+            $scope.user = Auth.user;
+            $scope.userRoles = Auth.userRoles;
+            $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
+
             $scope.viewCtrl = {};
             $scope.viewCtrl.showLoginForm = false;
             $scope.loginForm = {};
@@ -18,7 +22,8 @@ angular.module('SpruceQuizApp')
                         rememberme: $scope.loginForm.rememberMe
                     },
                     function(res) {
-                        $location.path('/');
+                        $location.path('/questions');
+                        console.log('log in successfully, jumping to /questions page');
                     },
                     function(err) {
                         $rootScope.errors.login = "Failed to login";
@@ -101,7 +106,7 @@ angular.module('SpruceQuizApp')
                         },
                         function(res) {
                             console.log('now move to path "/"')
-                            $location.path('/');
+                            $location.path('/questions');
                         },
                         function(err) {
                             $rootScope.errors.server= err;
