@@ -16,7 +16,10 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             var role;
             if(!req.user) role = userRoles.public;
             else          role = req.user.role;
-            var accessLevel = _.findWhere(routes, { path: req.route.path }).accessLevel || accessLevels.all;  //This look a bit fishy.
+            var accessLevel = _.findWhere(  routes,
+                                            {   path: req.route.path,
+                                                httpMethod: req.method.toUpperCase() })
+                .accessLevel || accessLevels.all;
             if (!(accessLevel.bitMask & role.bitMask)) return res.send(401);
             return next();
         };
@@ -73,7 +76,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/questions',
                 httpMethod: 'GET',
                 middleware: [QuestionCtrl.index],
-                accessLevel: accessLevels.loggedin
+                accessLevel: accessLevels.all
             },
             {
                 path: '/api/questions',
@@ -85,7 +88,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/questions/:id',
                 httpMethod: 'GET',
                 middleware: [QuestionCtrl.findOne],
-                accessLevel: accessLevels.loggedin
+                accessLevel: accessLevels.all
             },
             {
                 path: '/api/questions/:id',
