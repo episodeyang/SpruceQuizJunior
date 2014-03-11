@@ -9,6 +9,10 @@ angular.module('SpruceQuizApp')
                 $scope.userRoles = Auth.userRoles;
                 $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
 
+                if ( window.location.host.indexOf('youzi') == 0) {
+                    $scope.orgTitle = "游子 - ";
+                };
+
                 $scope.debug= {
                     alert: function(){
                         alert('konami code success');
