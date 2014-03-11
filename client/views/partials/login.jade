@@ -3,9 +3,24 @@
 
 .modal-header
     button.close(type='button', ng-click="cancel()") ×
-    h4#myModalLabel.modal-title Modal title
+    h4#myModalLabel.modal-title 用户登录
 .modal-body
-    | ...
-.modal-footer
+    .row
+        .col-xs-6
+            form
+                .form-group
+                    h4 登陆难题夹子
+                .form-group
+                    input.form-control(type='text', placeholder="用户名")
+                .form-group
+                    input.form-control(type='text', placeholder="密码")
+                .checkbox.pull-left
+                    label
+                        input(type="checkbox")
+                        | 记住我
+                button.pull-right.btn.btn-primary(type='button', ng-click="ok()") 登陆
+        .col-xs-6
+
+//-.modal-footer
     button.btn.btn-default(type='button', ng-click="cancel()") Close
     button.btn.btn-primary(type='button', ng-click="ok()") Save changes
