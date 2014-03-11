@@ -38,26 +38,12 @@ mixin navbar
                         a(href='/development') 开发
                 ul.nav.navbar-nav.navbar-right
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(ng-click="view.registerModal()") 注册难题夹子
+                        a(ng-click="view.registerModal()", data-animation='am-fade-and-slide-top', data-template='partials/login', bs-modal='modal') 注册难题夹子
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(ng-click="view.registerModal()") 用户登陆
-                    button.btn.btn-lg.btn-danger(type='button', data-animation='am-fade-and-slide-top', data-template='partials/login', bs-modal='modal')
-                        | Custom Modal
-                        br
-                        small (using data-template)
-                    button.btn.btn-lg.btn-primary(type='button', data-animation='am-fade-and-scale', data-placement='center', bs-modal='modal')
-                        | Click to toggle modal
-                        br
-                        small (using an object)
-                        small {{modal}}
+                        a(ng-click="view.registerModal()", data-animation='am-fade-and-slide-top', data-template='partials/register', bs-modal='modal') 用户登陆
 
-        li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
-                        a.dropdown-toggle(data-toggle='dropdown') {{ user.username }}
+                    li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
+                        a.dropdown-toggle(bs-dropdown="dropdown", template="partials/navbar/user-dropdown") {{ user.username }}
                             b.caret
-                        ul.dropdown-menu
-                            li
-                                a(href="", data-ng-click="logout()")
-                                    | 登出
-
 
 
