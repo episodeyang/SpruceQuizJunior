@@ -50,17 +50,20 @@
 
 
 .modal-backdrop.am-fade {
-  opacity: .5;
   z-index: 20;
-  transition: opacity .15s linear;
+}
+
+.modal-backdrop.am-fade {
+  opacity: 1;
+  .transition(opacity .20s linear);
   &.ng-enter {
     opacity: 0;
     &.ng-enter-active {
-      opacity: .5;
+      opacity: 1;
     }
   }
   &.ng-leave {
-    opacity: .5;
+    opacity: 1;
     &.ng-leave-active {
       opacity: 0;
     }
@@ -70,4 +73,23 @@
   z-index: 40;
 }
 
+
+.modal-dialog {
+  max-width: 400px;
+}
+
+.modal.center {
+ .modal-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+   .modal-content {
+     margin-top: 40%;
+
+   }
+}
+
+}
 

@@ -1,0 +1,43 @@
+//- for the modal template to work, the top most element
+//- has to be the div.modal in the following format.
+div.modal(tabindex='-1', role='dialog')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type='button', ng-click="cancel()") ×
+                h4#myModalLabel.modal-title 注册难题夹子
+            .modal-body
+                .row
+                    .col-sm-6
+                        //-classical form submission
+                        //-form(name="loginForm", ng-submit="/login", action="/login", method="post", role="form")
+                            .form-group
+                                h4 登陆难题夹子
+                            .form-group
+                                input.form-control(type='text', placeholder="用户名", name="username", required)
+                            .form-group
+                                input.form-control(type='password', placeholder="密码", name="password", required)
+                            .checkbox.pull-left.short-top-margin
+                                label
+                                    input(type="checkbox", name="rememberme", required)
+                                    | 记住我
+                            button.pull-right.btn.btn-primary(type='submit') 登陆
+                        //-angular form submission
+                        form(name="loginForm", ng-submit="submit()", role="form")
+                            .form-group
+                                h4 注册难题夹子
+                            .form-group
+                                input.form-control(type='text', placeholder="用户名", name="username", ng-model="username", required)
+                            .form-group
+                                input.form-control(type='password', placeholder="密码", name="password", ng-model="password", required)
+                            .checkbox.pull-left.short-top-margin
+                                label
+                                    input(type="checkbox", name="rememberme", ng-model="rememberme", required)
+                                    | 记住我
+                            button.pull-right.btn.btn-primary(type='submit') 登陆
+                            p {{loginForm.userame}}
+                    .col-sm-6
+
+            .modal-footer
+                button.btn.btn-default(type='button', ng-click="cancel()") Close
+                button.btn.btn-primary(type='button', ng-click="ok()") Save changes
