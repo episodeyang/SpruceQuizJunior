@@ -2,8 +2,8 @@
 /* Controllers */
 angular.module('SpruceQuizApp')
     .controller('QuestionCtrl',
-        ['$routeParams', '$location', '$filter', '$rootScope', '$scope', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
-            function ($routeParams, $location, $filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
+        ['$routeParams', '$location', '$filter', '$rootScope', '$scope', '$modal', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
+            function ($routeParams, $location, $filter, $rootScope, $scope, $modal, Auth, Sections, Units, Materials, Students, Model) {
                 //Boiler Plate for authentication info
                 $scope.user = Auth.user;
                 $scope.userRoles = Auth.userRoles;
@@ -12,7 +12,6 @@ angular.module('SpruceQuizApp')
                 if ( window.location.host.indexOf('youzi') == 0) {
                     $scope.orgTitle = "游子 - ";
                 };
-
                 $scope.debug= {
                     alert: function(){
                         alert('konami code success');
@@ -29,6 +28,38 @@ angular.module('SpruceQuizApp')
                 $scope.view = {
                     state: 'search'//three states: search, ask, all-questions
                 }
+
+                $scope.view.registerModal = function () {
+
+                    var modalInstance = $modal.open({
+                        templateUrl: '/partials/login',
+                        controller: ModalInstanceCtrl,
+                        resolve: {
+                            items: function () {
+                                return $scope.items;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (selectedItem) {
+                        $scope.selected = selectedItem;
+                    }, function () {
+                    });
+                };
+
+                var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+                    $scope.items = items;
+
+                    $scope.ok = function () {
+                        $modalInstance.close($scope.selected.item);
+                    };
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                };
+
                 $scope.editor = { tagText: "" };
                 $scope.editor.data = {
                     title: "",
