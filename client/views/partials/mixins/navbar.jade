@@ -38,7 +38,9 @@ mixin navbar
                         a(href='/development') 开发
                 ul.nav.navbar-nav.navbar-right
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(ng-click="view.registerModal()") 注册
+                        a(ng-click="view.registerModal()") 注册难题夹子
+                    li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                        a(ng-click="view.registerModal()") 用户登陆
                     li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
                         a.dropdown-toggle(data-toggle='dropdown') {{ user.username }}
                             b.caret
