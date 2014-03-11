@@ -1,6 +1,6 @@
 npm install 
 npm update 
-bower install
+bower install 
 bower update 
 cd client/lib/angular-placeholders 
 npm install
