@@ -28,6 +28,20 @@ angular.module('SpruceQuizApp')
                 $scope.view = {
                     state: 'search'//three states: search, ask, all-questions
                 }
+                $rootScope.errors = {}
+
+
+                var submit = function (){
+                    alert($scope.loginForm);
+                    Auth.login($scope.loginForm,
+                        function(res) {
+                            $location.path('/questions');
+                            console.log('log in successfully, jumping to /questions page');
+                        },
+                        function(err) {
+                            $rootScope.errors.login = "Failed to login";
+                        });
+                }
 
                 $scope.view.registerModal = function () {
 
@@ -35,8 +49,8 @@ angular.module('SpruceQuizApp')
                         templateUrl: '/partials/login',
                         controller: ModalInstanceCtrl,
                         resolve: {
-                            items: function () {
-                                return $scope.items;
+                            loginForm: function () {
+                                return $scope.loginForm;
                             }
                         }
                     });
@@ -47,10 +61,18 @@ angular.module('SpruceQuizApp')
                     });
                 };
 
-                var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+                var ModalInstanceCtrl = function ($scope, $modalInstance, loginForm) {
 
-                    $scope.items = items;
-
+                    $scope.loginForm = {
+                        username:'',
+                        password:'',
+                        rememberme:false
+                    };
+                    function submit () {
+                        alert(loginForm);
+                        alert(username);
+                    }
+                    $scope.submit = submit;
                     $scope.ok = function () {
                         $modalInstance.close($scope.selected.item);
                     };
