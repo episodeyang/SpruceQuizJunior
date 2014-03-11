@@ -37,7 +37,7 @@ mixin navbar
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
                         a(href='/development') 开发
                 ul.nav.navbar-nav.navbar-right
-                    //li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                    li(data-access-level='{{ accessLevels.anon }}', active-nav)
                         a(href='/register') 注册
                     li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
                         a.dropdown-toggle(data-toggle='dropdown') {{ user.username }}
@@ -46,4 +46,9 @@ mixin navbar
                             li
                                 a(href="", data-ng-click="logout()")
                                     | 登出
+    .foreground-container.container(ng-if="view.module")
+        .row
+            .col-xs-3
+            .col-xs-6
+                //-+loginForm
 
