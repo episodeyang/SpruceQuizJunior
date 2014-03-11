@@ -20,7 +20,6 @@ angular.module('SpruceQuizApp')
                 $rootScope.errorClear = function(){
                     $rootScope.error = null;
                 }
-
                 $scope.Model = Model;
 
                 $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
@@ -42,45 +41,6 @@ angular.module('SpruceQuizApp')
                             $rootScope.errors.login = "Failed to login";
                         });
                 }
-
-                $scope.view.registerModal = function () {
-
-                    var modalInstance = $modal.open({
-                        templateUrl: '/partials/login',
-                        controller: ModalInstanceCtrl,
-                        resolve: {
-                            loginForm: function () {
-                                return $scope.loginForm;
-                            }
-                        }
-                    });
-
-                    modalInstance.result.then(function (selectedItem) {
-                        $scope.selected = selectedItem;
-                    }, function () {
-                    });
-                };
-
-                var ModalInstanceCtrl = function ($scope, $modalInstance, loginForm) {
-
-                    $scope.loginForm = {
-                        username:'',
-                        password:'',
-                        rememberme:false
-                    };
-                    function submit () {
-                        alert(loginForm);
-                        alert(username);
-                    }
-                    $scope.submit = submit;
-                    $scope.ok = function () {
-                        $modalInstance.close($scope.selected.item);
-                    };
-
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                };
 
                 $scope.editor = { tagText: "" };
                 $scope.editor.data = {

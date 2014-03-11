@@ -2,7 +2,7 @@
 //- Date: 10/23/13 6:48 AM
 
 mixin navbar
-    nav.navbar.navbar-inverse.navbar-fixed-top(id='navbar', role='banner')
+    nav.navbar.navbar-inverse.navbar-fixed-top(id='navbar', role='banner', ng-controller="NavbarCtrl")
         //Brand and toggle get grouped for better mobile display
         .container
             .navbar-header
@@ -41,7 +41,17 @@ mixin navbar
                         a(ng-click="view.registerModal()") 注册难题夹子
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
                         a(ng-click="view.registerModal()") 用户登陆
-                    li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
+                    button.btn.btn-lg.btn-danger(type='button', data-animation='am-fade-and-slide-top', data-template='partials/login', bs-modal='modal')
+                        | Custom Modal
+                        br
+                        small (using data-template)
+                    button.btn.btn-lg.btn-primary(type='button', data-animation='am-fade-and-scale', data-placement='center', bs-modal='modal')
+                        | Click to toggle modal
+                        br
+                        small (using an object)
+                        small {{modal}}
+
+        li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
                         a.dropdown-toggle(data-toggle='dropdown') {{ user.username }}
                             b.caret
                         ul.dropdown-menu
