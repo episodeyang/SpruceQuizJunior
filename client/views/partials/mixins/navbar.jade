@@ -38,12 +38,11 @@ mixin navbar
                         a(href='/development') 开发
                 ul.nav.navbar-nav.navbar-right
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(data-animation='am-fade-and-slide-top', data-template='partials/register', data-placement='top', bs-modal='modal').no-right-padding 参与内测
-                    li
+                        a(data-animation='am-fade-and-slide-top', data-template='partials/register', data-placement='top', bs-modal='modal') 参与内测
+                    li(data-access-level='{{ accessLevels.anon }}', active-nav)
                         a -
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(data-animation='am-fade-and-slide-top', data-placement='center', data-template='partials/login', bs-modal='modal').no-left-padding 登陆
-                            span.glyphicon.glyphicon-share-alt(style="height: 14px;margin-left:2px; top:1px; margin-bottom:1.5px; position:relative")
+                        a(data-animation='am-fade-and-slide-top', data-placement='center', data-template='partials/login', bs-modal='modal') 登陆 &nbsp &nbsp
 
                     li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
                         a.dropdown-toggle(bs-dropdown="dropdown", template="partials/navbar/user-dropdown") {{ user.username }}
