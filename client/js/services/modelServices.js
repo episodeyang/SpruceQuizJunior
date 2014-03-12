@@ -53,7 +53,6 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.init = function (user) {
                 console.log('model initialized')
                 modelInstance.user = user;
-//                console.log(modelInstance.user)
                 modelInstance.question = {};
                 modelInstance.questions = [];
             };

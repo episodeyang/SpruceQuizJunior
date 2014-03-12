@@ -38,11 +38,9 @@ mixin navbar
                         a(href='/development') 开发
                 ul.nav.navbar-nav.navbar-right
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(data-animation='am-fade-and-slide-top', data-template='partials/register', bs-modal='modal') 注册难题夹子
+                        a(data-animation='am-fade-and-slide-top', data-template='partials/register', data-placement='top', bs-modal='modal') 注册夹子
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
                         a(data-animation='am-fade-and-slide-top', data-placement='center', data-template='partials/login', bs-modal='modal') 用户登陆
-                    li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(data-animation='am-fade-and-slide-top', data-placement='center',bs-modal='modal') test
 
                     li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
                         a.dropdown-toggle(bs-dropdown="dropdown", template="partials/navbar/user-dropdown") {{ user.username }}

@@ -76,20 +76,55 @@
 
 .modal-dialog {
   max-width: 400px;
+  min-height: 300px
 }
 
+.modal.wide {
+  .modal-dialog {
+    max-width: 900px;
+  }
+}
+.modal.width-medium {
+  .modal-dialog {
+    max-width: 600px;
+  }
+}
+.modal.top{
+  .modal-dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .modal-content {
+      margin-top: 20%;
+
+    }
+  }
+
+}
 .modal.center {
- .modal-dialog {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-   .modal-content {
-     margin-top: 40%;
+  .modal-dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .modal-content {
+      margin-top: 40%;
 
-   }
+    }
+  }
+
 }
 
+.bg-transparent {
+  background-color: transparent;
 }
 
+.no-right-padding {
+  padding-right: 0px;
+}
+.no-left-padding {
+  padding-left: 0px;
+}

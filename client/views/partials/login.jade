@@ -25,3 +25,6 @@ div.modal(tabindex='-1', role='dialog', ng-controller="LoginCtrl")
             //.modal-footer
             //    button.btn.btn-default(type='button', ng-click="$hide()") Close
             //    button.btn.btn-primary(type='button', ng-click="ok()") Save changes
+        .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")
+            div.alert.alert-warning.no-bottom-margin
+                p {{view.error}}
