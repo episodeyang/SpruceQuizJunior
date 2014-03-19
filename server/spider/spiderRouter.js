@@ -18,7 +18,10 @@ define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware'],
 
         var botViewApp = function(req, res, next){
 //            console.log('botView middleware is working');
-            if (uaRegEx.test(req.useragent) || req.url==="testurl") {
+            if (uaRegEx.test(req.useragent) || req.url==="/spider") {
+                res.send({
+                    spiderRounter: "this works!!"
+                });
                 console.log('botView middleware is routing');
 //                http.get(
 //                    config.botServer + '/' + config.botUrls[0],
@@ -29,7 +32,7 @@ define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware'],
 //                    }
 //                );
             }
-            next();
+//            next();
         }
         return botViewApp;
     });
