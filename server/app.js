@@ -3,13 +3,15 @@ if (typeof define !== 'function') {
 }
 
 define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middleware',
-    './routes', './models/User'],
-    function (module, express, http, mongoose, passport, path, lessMiddleware, routes, User) {
+    './routes', './models/User', './botView/botView'],
+    function (module, express, http, mongoose, passport, path, lessMiddleware,
+              routes, User, botView) {
         "use strict";
 
         var resetDB = ( process.env.RESETDB || false );
 
         var app = express();
+
 
         mongoose.connect('mongodb://localhost/sprucedb', function (err) {
             if (resetDB == 'true' || resetDB == 'True') {
@@ -35,6 +37,7 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
 
         app.set('views', __dirname + '../client/views');
         app.set('view engine', 'jade');
+        app.use(botView);
         app.use(express.logger('dev'))
         app.use(express.cookieParser());
         app.use(express.bodyParser());
