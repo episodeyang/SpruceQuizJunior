@@ -6,8 +6,8 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl) {
+    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './spider/index'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -160,6 +160,18 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/students',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/spider/questions',
+                httpMethod: 'GET',
+                middleware: [SpiderCtrl.question],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/spider/questions/:uuid',
+                httpMethod: 'GET',
+                middleware: [SpiderCtrl.questions],
                 accessLevel: accessLevels.all
             },
 //            {

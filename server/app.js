@@ -3,9 +3,9 @@ if (typeof define !== 'function') {
 }
 
 define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middleware',
-    './routes', './models/User', './botView/botView'],
+    './routes', './models/User', './spider/spiderRouter'],
     function (module, express, http, mongoose, passport, path, lessMiddleware,
-              routes, User, botView) {
+              routes, User, spiderRouter) {
         "use strict";
 
         var resetDB = ( process.env.RESETDB || false );
@@ -37,7 +37,7 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
 
         app.set('views', __dirname + '../client/views');
         app.set('view engine', 'jade');
-        app.use(botView);
+        app.use(spiderRouter);
         app.use(express.logger('dev'))
         app.use(express.cookieParser());
         app.use(express.bodyParser());
