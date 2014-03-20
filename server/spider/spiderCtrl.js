@@ -21,12 +21,19 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiName CreateComment
              * @apiGroup Questions.Comments
              */
-            question : function (req, res) {},
-            questions : function (req, res) {
+            question : function (req, res) {
                 "use strict";
                 res.send({
                     test:"json data is here"
                 })
+            },
+            questions : function (req, res) {
+                res.render('spider/questions.jade',
+                    {
+                        layout:'spider/layout.jade',
+                        title: 'test this',
+                        question: 'test question'
+                    })
             }
         }
     }
