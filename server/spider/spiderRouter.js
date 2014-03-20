@@ -9,8 +9,9 @@ if (typeof define !== 'function') {
 define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware'],
     function (express, http, mongoose, passport, path, lessMiddleware) {
         var config = {
-            botServer : 'localhost:4800',
-            botUrls : ['/searchEngine/questions',]
+            spiderServer : 'www.nantijiazi.com',
+            spiderPort: 80,
+            spiderUrls: ['/spider/questions/sdfasd',]
         };
 
         var agentString = 'Baiduspider|Googlebot|BingBot|Slurp!|MSNBot|YoudaoBot|JikeSpider|Sosospider|360Spider|Sogou web spider|Sogou inst spider';
@@ -18,21 +19,39 @@ define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware'],
 
         var botViewApp = function(req, res, next){
 //            console.log('botView middleware is working');
-            if (uaRegEx.test(req.useragent) || req.url==="/spider") {
-                res.send({
-                    spiderRounter: "this works!!"
-                });
-                console.log('botView middleware is routing');
-//                http.get(
-//                    config.botServer + '/' + config.botUrls[0],
-//                    function(res) {
-//                        res.send(res);
-//                    },
-//                    function(res, error) {
-//                    }
-//                );
+//            console.log(req.headers["user-agent"]);
+//            console.log('testing user agent')
+//            console.log(uaRegEx.test(req.headers["user-agent"]));
+            if (uaRegEx.test(req.headers["user-agent"]) || req.url==="/spider") {
+//                res.send({
+//                    spiderRouter: "this works!!"
+//                });
+                var query = 'http://127.0.0.1:8001/spider/questions/asdfas'
+//                {
+//                    host: config.spiderServer,
+//                    port: config.spiderPort,
+//                    path: config.spiderUrls[0]
+//                };
+                console.log(req.headers['user-agent'] + ' is intercepted by spiderRouter middleware');
+                var data = ''
+                http.get(
+                    query,
+                    function(response) {
+                        response.on('data', function(chunk){
+                            data += chunk;
+//                            console.log(chunk);
+                        });
+                        response.on('end', function() {
+                            console.log(data);
+                            res.send(data);
+                        });
+                    },
+                    function(res, error) {
+                    }
+                );
+            } else {
+                next();
             }
-//            next();
         }
         return botViewApp;
     });

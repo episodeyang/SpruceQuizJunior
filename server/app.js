@@ -37,7 +37,6 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
 
         app.set('views', __dirname + '../client/views');
         app.set('view engine', 'jade');
-        app.use(spiderRouter);
         app.use(express.logger('dev'))
         app.use(express.cookieParser());
         app.use(express.bodyParser());
@@ -51,6 +50,7 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
             }));
         app.use(passport.initialize());
         app.use(passport.session());
+        app.use(spiderRouter);
 
         passport.use(User.localStrategy);
         //passport.use(User.twitterStrategy());  // Comment out this line if you don't want to enable login via Twitter

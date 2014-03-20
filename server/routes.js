@@ -6,7 +6,7 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './spider/index'],
+    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './spider/spiderCtrl'],
     function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
