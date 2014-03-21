@@ -62,6 +62,8 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
 
         routes(app);
 
-        app.set('port', process.env.PORT || 8000);
+        if (!process.env.PORT) process.env.PORT = 8000;
+        app.set('port', process.env.PORT);
+
         return app;
     })
