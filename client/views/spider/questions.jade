@@ -1,10 +1,10 @@
 extends layout
 block body
     h1 难题夹子问题列表
-    div
+    ol
         each question in questions
-            a.question(href="/questions/#{question.id}")
-                div= question.title
-                //-div !{question.text}
-                div= question.author.name
+            li
+                a.question(href="/questions/#{question.id}")
+                    div 问题： #{question.title}
+                    a(href='/p/#{question.author.username}') 作者: #{question.author.name}
 
