@@ -9,8 +9,9 @@ if (typeof define !== 'function') {
 define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware', 'underscore'],
     function (express, http, mongoose, passport, path, lessMiddleware, _) {
         var allowedUrls = [
-                '^/questions/?$',
-                '^/questions/\\w+$'];
+            '^/$',
+            '^/questions/?$',
+            '^/questions/\\w+$'];
         var config = {
             hostname : '127.0.0.1',
             port : 80,
