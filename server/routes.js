@@ -165,13 +165,13 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             {
                 path: '/spider/questions',
                 httpMethod: 'GET',
-                middleware: [SpiderCtrl.question],
+                middleware: [SpiderCtrl.questions],
                 accessLevel: accessLevels.all
             },
             {
                 path: '/spider/questions/:uuid',
                 httpMethod: 'GET',
-                middleware: [SpiderCtrl.questions],
+                middleware: [SpiderCtrl.question],
                 accessLevel: accessLevels.all
             },
 //            {
