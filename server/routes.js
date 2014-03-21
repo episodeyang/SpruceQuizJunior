@@ -169,7 +169,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
-                path: '/spider/questions/:uuid',
+                path: '/spider/questions/:id',
                 httpMethod: 'GET',
                 middleware: [SpiderCtrl.question],
                 accessLevel: accessLevels.all

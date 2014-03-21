@@ -1,0 +1,17 @@
+extends layout
+block body
+    h1 难题夹子问题
+    div
+        div.question
+            div= question.title
+            div !{question.text}
+            a(href="/p/#{question.author.username}") #{question.author.name}
+            ul
+                each tag in question.tags
+                    li
+                        a(href="/tags/#{tag}")= tag
+            each comment in question.comments
+                div !{comment.text}
+                a(href="/p/#{comment.author.username}") #{comment.author}
+
+

@@ -42,9 +42,9 @@ define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware', 'u
                 } else {
                     return res.send(404);
                 }
-                console.log('query')
-                console.log(query)
-                console.log(req.headers['user-agent'] + ' is intercepted by spiderRouter middleware');
+//                console.log('query')
+//                console.log(query)
+//                console.log(req.headers['user-agent'] + ' is intercepted by spiderRouter middleware');
                 var data = '';
                 http.get(
                     query,
@@ -54,7 +54,7 @@ define(['express', 'http', 'mongoose', 'passport', 'path', 'less-middleware', 'u
 //                            console.log(chunk);
                         });
                         response.on('end', function() {
-                            console.log(data);
+//                            console.log(data);
                             res.send(data);
                         });
                     },

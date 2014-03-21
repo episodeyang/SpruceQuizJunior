@@ -16,24 +16,41 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
         return {
-            /**
-             * @api {post} /api/questions/:id/answer/:answerId/comments Add A Comment to an answer
-             * @apiName CreateComment
-             * @apiGroup Questions.Comments
-             */
             question : function (req, res) {
-                "use strict";
-                res.send({
-                    test:"json data is here"
+                var question;
+                console.log('req.params.id')
+                console.log(req.params.id)
+                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated', function(err, results){
+                    if (err) {return res.send(403, err)}
+                    else {
+                        question = results;
+                        console.log("results")
+                        console.log(results)
+                        res.render('spider/question.jade',
+                            {
+                                layout:'spider/layout.jade',
+                                title: 'test this',
+                                question: question
+                            });
+                    };
                 })
             },
             questions : function (req, res) {
-                res.render('spider/questions.jade',
-                    {
-                        layout:'spider/layout.jade',
-                        title: 'test this',
-                        question: 'test question'
-                    })
+                var questions = null;
+                QuestionM.find({}, function(err, docs){
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err);
+                    } else {
+                        questions = docs;
+                        res.render('spider/questions.jade',
+                            {
+                                layout:'spider/layout.jade',
+                                title: 'test this',
+                                questions: questions
+                            });
+                    };
+                })
             }
         }
     }

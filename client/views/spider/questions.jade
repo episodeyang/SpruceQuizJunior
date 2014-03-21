@@ -1,5 +1,10 @@
 extends layout
 block body
-    h1 难题夹子最新题目
-    ol
-        li=question
+    h1 难题夹子问题列表
+    div
+        each question in questions
+            a.question(href="/questions/#{question.id}")
+                div= question.title
+                //-div !{question.text}
+                div= question.author.name
+
