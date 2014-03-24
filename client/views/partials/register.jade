@@ -26,9 +26,9 @@ div.modal(tabindex='-1', role='dialog', ng-controller='RegisterCtrl')
                                 .col-xs-6
                                     input.form-control(type="text", ng-model="registerData.birthdayString", placeholder="生日 1995 05 03", required)
                             .form-group
-                                //button.btn.btn-default(type='button', ng-model='userRole',data-html='0',  placeholder="您是学生，老师，还是家长？", ng-options='role.value as role.title for role in roleList', bs-select='bs-select')
-                                //    | Action
-                                //    span.caret
+                                //-button.btn.btn-default(type='button', ng-model='userRole',data-html='0',  placeholder="您是学生，老师，还是家长？", ng-options='role.value as role.title for role in roleList', bs-select='bs-select')
+                                //-    | Action
+                                //-    span.caret
                                 .row
                                     .col-xs-4
                                         label.btn.no-left-padding
@@ -46,8 +46,8 @@ div.modal(tabindex='-1', role='dialog', ng-controller='RegisterCtrl')
                                                 | 家长
                             .form-group
                                 input.form-control(type="text", ng-model="registerData.schoolName", placeholder="你的学校叫什么名字？")
-                            //    .warining
-                            //        p.text-semi-white(ng-repeat="(errorType, error) in errors") {{error}}
+                            //-    .warining
+                            //-        p.text-semi-white(ng-repeat="(errorType, error) in errors") {{error}}
                             button.pull-right.btn.btn-info(type='submit') 加入我们！
         .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")
             div.alert.alert-warning.no-bottom-margin
