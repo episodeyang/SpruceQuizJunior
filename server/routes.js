@@ -29,7 +29,8 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/partials/*',
                 httpMethod: 'GET',
                 middleware: [function (req, res) {
-                    var requestedView = path.join('./', req.url);
+                    var url = /^.*(?=\.html\s*$)/g.exec(req.url) || [req.url];
+                    var requestedView = path.join('./', url[0]);
                     res.render(requestedView);
                 }],
                 accessLevel: accessLevels.all

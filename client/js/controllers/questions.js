@@ -22,13 +22,11 @@ angular.module('SpruceQuizApp')
                 }
                 $scope.Model = Model;
 
-                $scope.expression = "\\( \\frac{5}{4} \\div \\frac{1}{6} \\)";
-
                 $scope.view = {
                     state: 'search'//three states: search, ask, all-questions
                 }
                 $rootScope.errors = {}
-
+                $scope.modal = $modal;
 
                 var submit = function (){
                     alert($scope.loginForm);

@@ -94,8 +94,13 @@ angular.module('modelServices', ['resourceProvider'])
             }
 
             modelInstance.getVoteStatus = function(model){
-                model.votedup = _.contains(model.voteup, modelInstance.user.username)
-                model.voteddown = _.contains(model.votedown, modelInstance.user.username)
+                if (modelInstance.user) {
+                    model.votedup = _.contains(model.voteup, modelInstance.user.username)
+                    model.voteddown = _.contains(model.votedown, modelInstance.user.username)
+                } else {
+                    model.votedup = false;
+                    model.voteddown = false;
+                }
             }
             modelInstance.getQuestionVoteStatus = function(){
                 modelInstance.getVoteStatus(modelInstance.question);
