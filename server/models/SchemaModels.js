@@ -141,7 +141,12 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     virtuals: true
                 }
             }
+        },
+        feed: {
+            action: String,
+            data: Schema.Types.Mixed
         }
+
     };
 
     _.each(config_nest_2, subSchemaBuilder);
@@ -226,6 +231,12 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         superadmin: {
             name: String
         },
+        userFeed: {
+            user: {type: Schema.Types.ObjectId},
+            page: {type: Number, index: true},
+            count: {type: Number, index: true},
+            feeds: [subSchema.Feed]
+        },
         question: {
             title: String,
             text: String,
@@ -257,111 +268,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     virtuals: true
                 }
             }
-        },
-        problem: {
-            topLevel: Boolean,
-            problemType: String,
-            question: Array,
-            choices: Array,
-            multimedia: Array,
-            subproblems: Array,
-            solutions: Array,
-            explanations: Array,
-            hints: Array,
-            hintRules: Array,
-            lastUpdated: Date
-        },
-        mistakeTag: {
-            title: String,
-            comment: String
-        },
-        problemNote: {
-            problemId: { type: Schema.Types.ObjectId, ref: 'Problem' },
-            tagName: String,
-            mainText: String,
-            mistakeTags: [
-                { type: Schema.Types.ObjectId, ref: 'MistakeTag' }
-            ],
-            note: String,
-            lastUpdated: Date
-        },
-        quiz: {
-            quizUUID: {
-                type: String,
-                unique: true
-            },
-            quizTitle: String,
-            quizDate: Date,
-            quizTopics: Array,
-            totalScore: Number,
-            quizProblems: [subSchema.QuizProblem]
-        },
-        material: {
-            materialName: String,
-            comment: String,
-            dateOfCreation: { type: Date, default: Date.now },
-            dateOfModification: Date,
-            lastEditedBy: String,
-            sourceUrl: String,
-            materialType: String
-        },
-        unit: {
-            unitTitle: String,
-            comment: String,
-            father: [
-                { type: Schema.Types.ObjectId, ref: 'UnitSchema' }
-            ],
-            child: [
-                { type: Schema.Types.ObjectId, ref: 'UnitSchema' }
-            ],
-            items: [
-                { type: Schema.Types.ObjectId, ref: 'Material' }
-            ],
-            archived: Array
-        },
-        school: {
-            schoolName: String
-        },
-        section: {
-            sectionName: String,
-            sectionDisplayName: String,
-            school: { type: Schema.Types.ObjectId, ref: 'School' },
-            sectionParent: { type: Schema.Types.ObjectId, ref: 'SectionSchema' },
-            sectionUnits: [
-                { type: Schema.Types.ObjectId, ref: 'Unit' }
-            ]
-        },
-        exam: {
-            examTitle: String,
-            examDate: Date,
-            section: { type: Schema.Types.ObjectId, ref: 'Section' },
-            attendence: Boolean,
-            totalScore: Number,
-            totalReceivedScore: Number,
-            rank: Number,
-            examProblems: [subSchema.ExamProblem]
-        },
-        erratum: {
-            title: String,
-            subject: String,
-            url: String,
-            problemNotes: [
-                { type: Schema.Types.ObjectId, ref: 'ProblemNotes' }
-            ],
-            dateCreated: Date,
-            dateModified: Date
-        },
-        feed: {
-            userId: {
-                type: Schema.Types.ObjectId
-            },   //Note: not reference
-            groupId: {
-                type: Schema.Types.ObjectId
-            },   //Note: not reference
-            type: String,
-            feedData: String,
-            createdDate: Date,
-            archived: Array
         }
     };
 
