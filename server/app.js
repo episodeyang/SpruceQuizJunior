@@ -26,7 +26,7 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
         var db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error:'));
         db.once('open', function callback() {
-            console.log('Connected to Spruce database');
+            console.log('Connected to Nantijiazi database');
         });
         // Now setup view and stylesheet path and middlewares
         if (module.uri) {
