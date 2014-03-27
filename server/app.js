@@ -13,7 +13,7 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
         var app = express();
 
 
-        mongoose.connect('mongodb://localhost/sprucedb', function (err) {
+        mongoose.connect('mongodb://localhost/nantijiazidb', function (err) {
             if (resetDB == 'true' || resetDB == 'True') {
                 console.log(resetDB);
                 mongoose.connection.db.dropDatabase(function (err) {

@@ -63,9 +63,17 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             receivedScore: Number,
             studentAnswer: Array
         },
+        user: {
+            username: String,
+            name: String
+        }
+    };
+    _.each(config_nest, subSchemaBuilder);
+
+    var config_nest_2 = {
         commentPrototype: {
             text: String,
-            author: String, //{type: Schema.Types.ObjectId, ref: 'User'},
+            author: config_nest.user, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateOfCreation: Date,
             dateEdited: Date,
             voteup: [String],
@@ -89,7 +97,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         answerCommentPrototype: {
             answerId: Schema.Types.ObjectId,
             text: String,
-            author: String, //{type: Schema.Types.ObjectId, ref: 'User'},
+            author: config_nest.user, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateOfCreation: Date,
             dateEdited: Date,
             voteup: [String],
@@ -110,17 +118,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 }
             }
         },
-        user: {
-            username: String,
-            name: String
-        }
-    };
-    _.each(config_nest, subSchemaBuilder);
-
-    var config_nest_2 = {
         answer: {
             text: String,
-            author: String,//{type: Schema.Types.ObjectId, ref: 'User'},
+            author: config_nest.user, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateCreated: {type: Date, default: Date.now},
             dateEdited: {type: Date},
             voteup: { type: [String], 'default': []},
