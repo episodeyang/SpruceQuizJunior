@@ -237,6 +237,18 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             count: {type: Number, index: true},
             feeds: [subSchema.Feed]
         },
+        sessionFeed: {
+            session: {type: Schema.Types.ObjectId},
+            page: {type: Number, index: true},
+            count: {type: Number, index: true},
+            feeds: [subSchema.Feed]
+        },
+        textbookFeed: {
+            session: {type: Schema.Types.ObjectId},
+            page: {type: Number, index: true},
+            count: {type: Number, index: true},
+            feeds: [subSchema.Feed]
+        },
         question: {
             title: String,
             text: String,
