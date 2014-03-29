@@ -63,7 +63,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             receivedScore: Number,
             studentAnswer: Array
         },
-        user: {
+        userFragment: {
             username: String,
             name: String
         }
@@ -73,7 +73,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
     var config_nest_2 = {
         commentPrototype: {
             text: String,
-            author: config_nest.user, //{type: Schema.Types.ObjectId, ref: 'User'},
+            author: config_nest.userFragment, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateOfCreation: Date,
             dateEdited: Date,
             voteup: [String],
@@ -97,7 +97,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         answerCommentPrototype: {
             answerId: Schema.Types.ObjectId,
             text: String,
-            author: config_nest.user, //{type: Schema.Types.ObjectId, ref: 'User'},
+            author: config_nest.userFragment, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateOfCreation: Date,
             dateEdited: Date,
             voteup: [String],
@@ -120,7 +120,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         answer: {
             text: String,
-            author: config_nest.user, //{type: Schema.Types.ObjectId, ref: 'User'},
+            author: config_nest.userFragment, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateCreated: {type: Date, default: Date.now},
             dateEdited: {type: Date},
             voteup: { type: [String], 'default': []},
@@ -146,7 +146,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             action: String,
             data: Schema.Types.Mixed
         }
-
     };
 
     _.each(config_nest_2, subSchemaBuilder);
@@ -200,6 +199,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             ],
             comments: String,
             preferences: {
+                activation: {
+                    state: {type: Boolean, default: false},
+                    emailSent: {type: Boolean, default: false}
+                },
                 problemNoteListLimit: Number,
                 anotherPreference: String
             }
@@ -209,7 +212,15 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             email: String,
             studentIds: [
                 { type: Schema.Types.ObjectId, ref: 'Student' }
-            ]
+            ],
+            preferences: {
+                activation: {
+                    state: {type: Boolean, default: false},
+                    emailSent: {type: Boolean, default: false}
+                },
+                problemNoteListLimit: Number,
+                anotherPreference: String
+            }
         },
         teacher: {
             name: String,
@@ -219,17 +230,41 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             ],
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'School' }
-            ]
+            ],
+            preferences: {
+                activation: {
+                    state: {type: Boolean, default: false},
+                    emailSent: {type: Boolean, default: false}
+                },
+                problemNoteListLimit: Number,
+                anotherPreference: String
+            }
         },
         admin: {
             name: String,
             email: String,
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'schools' }
-            ]
+            ],
+            preferences: {
+                activation: {
+                    state: {type: Boolean, default: false},
+                    emailSent: {type: Boolean, default: false}
+                },
+                problemNoteListLimit: Number,
+                anotherPreference: String
+            }
         },
         superadmin: {
-            name: String
+            name: String,
+            preferences: {
+                activation: {
+                    state: {type: Boolean, default: false},
+                    emailSent: {type: Boolean, default: false}
+                },
+                problemNoteListLimit: Number,
+                anotherPreference: String
+            }
         },
         userFeed: {
             user: {type: Schema.Types.ObjectId},
@@ -240,19 +275,19 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         sessionFeed: {
             session: {type: Schema.Types.ObjectId},
             page: {type: Number, index: true},
-            count: {type: Number, index: true},
+            count: {type: Number, index: false},
             feeds: [subSchema.Feed]
         },
         textbookFeed: {
             session: {type: Schema.Types.ObjectId},
             page: {type: Number, index: true},
-            count: {type: Number, index: true},
+            count: {type: Number, index: false},
             feeds: [subSchema.Feed]
         },
         question: {
             title: String,
             text: String,
-            author: config_nest.user, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
+            author: config_nest.userFragment, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
             tags: Array,
             comments: {type: [subSchema.CommentPrototype], 'default': []},
             answerComments: {type: [subSchema.AnswerCommentPrototype], 'default': []},
@@ -284,7 +319,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
     };
 
     var Config = {};
-
     _.each(config, function (schema, title) {
         if (schema.__methods__) {
             var methods = schema.__methods__;

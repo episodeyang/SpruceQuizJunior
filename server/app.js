@@ -10,14 +10,17 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
 
         var resetDB = ( process.env.RESETDB || false );
 
-        var app = express();
+        if (typeof process.env.NJ_MAILER_PASSWORD != 'string') {
+            console.log('NJ_MAILER_PASSWORD environmental variable not set. Need for nodemailer.');
+            throw new Error("Cannot find variable NJ_MAILER_PASSWORD");
+        }
 
+        var app = express();
 
         mongoose.connect('mongodb://localhost/nantijiazidb', function (err) {
             if (resetDB == 'true' || resetDB == 'True') {
                 console.log(resetDB);
                 mongoose.connection.db.dropDatabase(function (err) {
-//            require('./server/models/Initialization.js');
                     console.log("reset database complete");
                 });
             }

@@ -3,8 +3,9 @@
  * @name auth
  */
 'use strict';
-define(['passport', '../models/User'],
-    function (passport, User) {
+define(['passport', '../models/User', '../mailer/mailing'],
+    function (passport, User, MailingCtrl) {
+        var sendRegisterEmail = MailingCtrl.register;
         return {
             /**
              * @name register
@@ -34,6 +35,11 @@ define(['passport', '../models/User'],
                             }
                             else {
                                 res.json(201, { "role": user.role, "username": user.username, "id": user._id});
+                                sendRegisterEmail({
+                                    username: req.body.username,
+                                    email: req.body.params.email,
+                                    name: req.body.params.name
+                                });
                             }
                         });
                     }

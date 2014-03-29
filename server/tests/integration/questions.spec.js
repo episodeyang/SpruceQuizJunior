@@ -81,7 +81,7 @@ describe('Question API test - ', function (done) {
         });
     });
     it('needs to login to access', function (done) {
-        console.log('I am actually here')
+//        console.log('I am actually here')
         passportStub.logout(); // logout after each test
         request(app).post('/api/questions/' + question.id).send({}).expect(401, done);
     });

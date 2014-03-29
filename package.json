@@ -13,7 +13,8 @@
     "superagent": "~0.15.7",
     "requirejs": "~2.1.10",
     "amdefine": "~0.1.0",
-    "blanket": "~1.1.6"
+    "blanket": "~1.1.6",
+    "nodemailer": "~0.6.1"
   },
   "repository": {
     "type": "git",
