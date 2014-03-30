@@ -22,4 +22,5 @@ define(['../models/SchemaModels', 'nodemailer', './login'],
         };
 
         return login;
-    };
+    }
+);

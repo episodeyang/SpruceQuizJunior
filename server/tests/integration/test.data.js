@@ -96,7 +96,7 @@ var testData = {
             schoolName: '北京景山学校',
             name: '欧丽',
             DOB: new Date(1970, 1, 1),
-            email: 'issac.hofstadter@gmail.com.com'
+            email: 'issac.hofstadter@gmail.com'
         }
     },
     /** teacher login data*/
