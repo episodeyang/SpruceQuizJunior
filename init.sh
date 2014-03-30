@@ -9,5 +9,5 @@ cd ../../..
 cd client/lib/angular-bootstrap/ 
 npm install 
 grunt html2js 
-grunt build
+grunt build:tabs
 cd ../../..

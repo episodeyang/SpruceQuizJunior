@@ -1,6 +1,8 @@
 'use strict';
 angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
-        'mgcrea.ngStrap', // 'ui-bootstrap',
+        'ui.bootstrap',
+        'mgcrea.ngStrap.modal',
+        'mgcrea.ngStrap.dropdown',
         'nvd3ChartDirectives', 'placeholders', 'textAngular', 'angular-medium-editor'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', '$modalProvider',
         function ($routeProvider, $locationProvider, $httpProvider, $modalProvider) {
@@ -89,18 +91,18 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 //                controller: 'ReportCtrl',
 //                access: access.superuser
 //            });
-//        $routeProvider.when('/superadmin',
-//            {
-//                templateUrl: '/partials/superadmin',
-//                controller: 'SuperAdminCtrl',
-//                access: access.superadmin
-//            });
-//        $routeProvider.when('/development',
-//            {
-//                templateUrl: '/partials/development',
-//                controller: 'DevelopmentCtrl',
-//                access: access.superadmin
-//            });
+        $routeProvider.when('/superadmin',
+            {
+                templateUrl: '/partials/superadmin',
+                controller: 'SuperAdminCtrl',
+                access: access.superadmin
+            });
+        $routeProvider.when('/development',
+            {
+                templateUrl: '/partials/development',
+                controller: 'DevelopmentCtrl',
+                access: access.superadmin
+            });
 //        $routeProvider.when('/404',
 //            {
 //                templateUrl: '/partials/404',
