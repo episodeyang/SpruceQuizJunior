@@ -1,16 +1,17 @@
 include mixins/navbar
 include mixins/footer
+link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/tabs.css', rel="stylesheet")
 div.background
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.sp-container
+.body
     +navbar
     .container(style="width:900px;")
         .row
             tabset
                 tab(heading="用户")
-                    div.tab-box.background-white
+                    div.tab-box.bg-white
                         .container
-                            //div(ng-controller="SuperAdminUserTableCtrl")
                             br
                             button.btn.btn-success(ng-click="listStudents()") 学生数据
                             br
@@ -18,8 +19,6 @@ div.background
                             h3(ph-txt='1s')
                             div(ph-txt='3p2s').background-white
                             div(ng-show="studentShowClicked && data['student'].data.length > 0")
-                                //dir-test(pageStatus="pageStatus")
-                                //json-table(type="student", data="data", pageStatus="pageStatus")
 
                 tab(heading="班级")
                     p TODO
@@ -27,6 +26,7 @@ div.background
                     //p {{model.sectionList}}
                 tab(heading="教学材料")
         +footer
+link(href='/css/superadmin.css', rel="stylesheet")
 
 
 
