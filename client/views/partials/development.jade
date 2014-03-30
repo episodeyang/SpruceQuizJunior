@@ -3,9 +3,10 @@
 
 include mixins/navbar
 include mixins/footer
+link(href='/css/questions.css', rel="stylesheet")
 div.background
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-div
+.body
     +navbar
     .container
         .row
