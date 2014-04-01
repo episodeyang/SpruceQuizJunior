@@ -64,8 +64,16 @@ table {
   width: 100%;
 }
 
+
+@brown : #604830;
+@lighter-brown: lighten(@brown, 20%);
+@light-brown: lighten(@brown, 10%);
+@dark-brown: darken(@brown, 10%);
+@darker-brown: darken(@brown, 20%);
+
 a {
-  color: #00b0ff;
+  color: @brown;
+  // #00b0ff;
   text-decoration: none;
 }
 
@@ -77,9 +85,10 @@ a.btn {
   text-decoration: none;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  background-color: #018fe1;
-  background-image: -webkit-linear-gradient(top, #00aeff 0%, #018fe1 100%);
-  border-color: #0195eb #0083c7 #0175b8 #0083c7;
+  background-color: lighten(@brown, 10%);
+    // #018fe1;
+  background-image: -webkit-linear-gradient(top, @lighter-brown 0%, @light-brown 100%);
+  border-color: @lighter-brown @light-brown @brown @dark-brown;
   color: #ffffff;
 }
 

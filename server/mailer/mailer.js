@@ -59,7 +59,7 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
 
         var mailer = new Mailer()
 
-        var mailer_extend = {
+        var mailer_extended_functions = {
             /**
              * @name register
              * @function
@@ -69,17 +69,18 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
              * @param user.name
              * @returns email server response
              */
-            register: function (user, callback) {
-                var locals = {
-                    name: user.name,
-                    subnet: ''
-                };
+            register: function (recipient, locals, callback) {
                 var email = {
                     from: logins.auth.user,
-                    to: user.email,
+                    to: recipient,
                     subject: '欢迎来到难题夹子！',
                     generateTextFromHTML: true
                 };
+
+                if (locals.subnet) {
+                    locals.subnet += '.';
+                };
+
 //                function setEmailSentFlag () {
 //                    var query = {
 //                        username: user.username
@@ -105,7 +106,7 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
             }
         };
 
-        return _.extend(mailer, mailer_extend);
+        return _.extend(mailer, mailer_extended_functions);
     }
 )
 ;

@@ -35,11 +35,12 @@ define(['passport', '../models/User', '../mailer/mailer'],
                             }
                             else {
                                 res.json(201, { "role": user.role, "username": user.username, "id": user._id});
-                                sendRegisterEmail({
-                                    username: req.body.username,
-                                    email: req.body.params.email,
-                                    name: req.body.params.name
-                                });
+                                sendRegisterEmail(
+                                    req.body.params.email,
+                                    {   username: req.body.username,
+                                        email: req.body.params.email,
+                                        name: req.body.params.name    }
+                                );
                             }
                         });
                     }

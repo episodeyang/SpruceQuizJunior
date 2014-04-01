@@ -29,7 +29,7 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins' ],
                 var locals = {};
                 var locals = {};
                 _.extend(locals, req.query);
-                if (locals.subnet ) {
+                if (locals.subnet) {
                     locals.subnet += '.';
                 }
 
