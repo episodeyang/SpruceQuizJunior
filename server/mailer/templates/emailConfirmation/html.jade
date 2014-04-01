@@ -1,4 +1,3 @@
-
 div.container(bgcolor='#EEEEEE')
     table
         tbody
@@ -37,7 +36,7 @@ div.container(bgcolor='#EEEEEE')
                                 | #{dateTime}
                         br
                         br
-                        | 夹子团队，2014年3月
+                        | 夹子团队，#{new Date().getFullYear()}年#{new Date().getMonth()+1}月
                         div
                             table
                                 tbody
@@ -57,7 +56,7 @@ div.container(bgcolor='#EEEEEE')
                                                 br
                                         td
                             div.hidden
-                                | 2014-03-30 11:25:12 +0000
+                                | #{dateTime}
                         br
                         br
                 td

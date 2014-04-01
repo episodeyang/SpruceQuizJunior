@@ -21,7 +21,7 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins' ],
              * @param user.name
              * @returns email server response
              */
-            get: function (req, res, next) {
+            render: function (req, res, next) {
                 if (req.params.templateString == undefined) {
                     console.log('no templateString in request')
                     return res.send(400);
@@ -53,17 +53,17 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins' ],
                         });
             },
 
-            send: function (req, res, next) {
+            testSend: function (req, res, next) {
                 if (req.params.templateString == undefined) {
                     console.log('no templateString in request')
                     return res.send(400);
                 }
                 var locals = {};
-                locals.name = req.query.name || '杨歌';
-                locals.username = req.query.username || 'episodeyang';
-                locals.subnet = req.query.subnet + '.' || 'www.';
-                locals.code = req.query.code || 'someActivationCodeHere';
-                locals.dateTime = new Date()
+                var locals = {};
+                _.extend(locals, req.query);
+                if (locals.subnet) {
+                    locals.subnet += '.';
+                }
 
                 var email = {
                     from: logins.auth.user,
@@ -84,6 +84,9 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins' ],
                             }
                             res.send(200, response);
                         });
+            },
+            activate: function (req, res, next) {
+                console.log('activation link clicked.')
             },
         };
     }

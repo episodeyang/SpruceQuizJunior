@@ -164,21 +164,21 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
-                path: '/emails/render',
-                httpMethod: 'GET',
-                middleware: [MailerCtrl.get],
-                accessLevel: accessLevels.all
-            },
-            {
                 path: '/emails/render/:templateString',
                 httpMethod: 'GET',
-                middleware: [MailerCtrl.get],
-                accessLevel: accessLevels.all
+                middleware: [MailerCtrl.render],
+                accessLevel: accessLevels.admin
             },
             {
                 path: '/emails/send/:templateString',
                 httpMethod: 'GET',
-                middleware: [MailerCtrl.send],
+                middleware: [MailerCtrl.testSend],
+                accessLevel: accessLevels.superadmin
+            },
+            {
+                path: '/emails/activate',
+                httpMethod: 'GET',
+                middleware: [MailerCtrl.activate],
                 accessLevel: accessLevels.all
             },
             {
