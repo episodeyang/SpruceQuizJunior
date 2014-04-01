@@ -1,7 +1,7 @@
 /**
  * Created by ge on 3/29/14.
  */
-define(['../models/SchemaModels', 'nodemailer', './login'],
+define(['../models/SchemaModels', 'nodemailer', './logins'],
     function (SchemaModels, nodemailer, login) {
         if (typeof process.env.NJ_MAILER_PASSWORD != 'string') {
             console.log('NJ_MAILER_PASSWORD environmental variable not set. Need for nodemailer.');

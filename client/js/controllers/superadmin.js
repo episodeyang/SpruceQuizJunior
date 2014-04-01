@@ -29,6 +29,10 @@ spApp.controller('DevelopmentCtrl',
     ['$scope', '_',
         function ($scope, _) {
             // this object is to hold data for future tables
+
+            function sendMail (api) {
+            }
+
             var designConfig = {
                 frontEnd: {"title": "前端工作总表",
                     "modules": [

@@ -3,9 +3,9 @@
  * @name auth
  */
 'use strict';
-define(['passport', '../models/User', '../mailer/mailing'],
-    function (passport, User, MailingCtrl) {
-        var sendRegisterEmail = MailingCtrl.register;
+define(['passport', '../models/User', '../mailer/mailer'],
+    function (passport, User, mailer) {
+        var sendRegisterEmail = mailer.register;
         return {
             /**
              * @name register

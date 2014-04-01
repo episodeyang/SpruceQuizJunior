@@ -6,8 +6,8 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, SpiderCtrl) {
+    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -161,6 +161,24 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/students',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/emails/render',
+                httpMethod: 'GET',
+                middleware: [MailerCtrl.get],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/emails/render/:templateString',
+                httpMethod: 'GET',
+                middleware: [MailerCtrl.get],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/emails/send/:templateString',
+                httpMethod: 'GET',
+                middleware: [MailerCtrl.send],
                 accessLevel: accessLevels.all
             },
             {
