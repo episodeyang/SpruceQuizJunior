@@ -14,7 +14,7 @@ define(['nodemailer'],
         }
         if (typeof process.env.NJ_MAILER_USER != 'string') {
             console.log('NJ_MAILER_USER environmental variable not set. Need for nodemailer.');
-            throw new Error("Cannot find variable NJ_MAILER_PASSWORD");
+            throw new Error("Cannot find variable NJ_MAILER_USER");
         }
 
         var logins = {
