@@ -21,8 +21,8 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
 
                 console.log('host')
                 console.log(req.headers.host)
-                console.log('subdomain')
-                console.log(req.subdomain)
+                console.log('subdomains')
+                console.log(req.subdomains)
 
                 if (req.params.templateString === undefined) {
                     console.log('no templateString in request');
@@ -95,7 +95,7 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
             activate: function (req, res, next) {
 
                 var locals = {
-                    domain: 'www.nantijiazi.com',
+                    domain: req.headers.host,
                     layout: 'templates/layout.jade',
                     title: '邮箱激活成功！',
                     message: '页面将会在2秒钟内跳转回到首页...'

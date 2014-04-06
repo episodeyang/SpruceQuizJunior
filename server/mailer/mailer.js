@@ -147,7 +147,7 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
                 };
 
                 if (locals.domain === undefined) {
-                    locals.domain = 'www.nantijiazi.com';
+                    locals.domain = 'nantijiazi.com';
                 }
 
                 mailer.render('emailConfirmation', locals).send(email).response(callback);
@@ -165,7 +165,7 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
                 console.log(recipient + ' wants to reset password');
 
                 if (locals.domain === undefined) {
-                    locals.domain = 'www.nantijiazi.com';
+                    locals.domain = 'nantijiazi.com';
                 }
 
                 var email = {
