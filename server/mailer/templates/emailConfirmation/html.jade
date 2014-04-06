@@ -15,7 +15,7 @@ div.container(bgcolor='#EEEEEE')
                                                 tbody
                                                     tr
                                                         td.center
-                                                            a(href='http://#{subnet}nantijiazi.com', title='nantijiazi email', target='_blank')
+                                                            a(href='http://#{domain}', title='nantijiazi email', target='_blank')
                                                                 | 难题夹子
                                                                 //-img(src='', border='0', alt='难题夹子', width='142', height='51')
                                     td
@@ -29,7 +29,7 @@ div.container(bgcolor='#EEEEEE')
                         br
                         br
                         div
-                            a.btn(href="http://#{subnet}nantijiazi.com/email/confirmation?code=#{code}&username=#{username}", target='_blank')
+                            a.btn(href='http://#{domain}/email/activate?code=#{code}&username=#{username}&email=#{email}', target='_blank')
                                 span.il 点击确认
                                 span.il 邮件
                             div.hidden

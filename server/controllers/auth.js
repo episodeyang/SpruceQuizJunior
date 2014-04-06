@@ -3,9 +3,14 @@
  * @name auth
  */
 'use strict';
-define(['passport', '../models/User', '../mailer/mailer'],
-    function (passport, User, mailer) {
-        var sendRegisterEmail = mailer.register;
+define(['passport', '../models/User', '../mailer/mailer', '../models/SchemaModels'],
+    function (passport, User, mailer, SchemaModels) {
+        var StudentM = SchemaModels.Student;
+        var ParentM = SchemaModels.Parent;
+        var TeacherM = SchemaModels.Teacher;
+        var AdminM = SchemaModels.Admin;
+        var SuperadminM = SchemaModels.Superadmin;
+
         return {
             /**
              * @name register
@@ -18,32 +23,53 @@ define(['passport', '../models/User', '../mailer/mailer'],
             register: function (req, res, next) {
                 try {
                     User.validate(req.body);
-                }
-                catch (err) {
+                } catch (err) {
                     return res.send(400, err.message);
                 }
 
-                User.addUser(req.body.username, req.body.password, req.body.role, req.body.params,
-                    function (err, user) {
-                        if (err === 'UserAlreadyExists') return res.send(403, "User already exists");
-                        else if (err)                    return res.send(500);
+                function loginCallback (err, user) {
+                    if (err === 'UserAlreadyExists') return res.send(403, "User already exists");
+                    else if (err)                    return res.send(500);
 
-                        // the passport custom callback
-                        req.logIn(user, function (err) {
-                            if (err) {
-                                next(err);
+                    //console.log('user passed into loginCallback');
+                    //console.log(user);
+                    var locals = {
+                        username: user.username,
+                        email: user[user.role.title].email.split('#')[0],
+                        name: user[user.role.title].name.split(',').join(''),
+                        code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1]
+                    };
+
+//                    console.log(locals);
+                    mailer.register (
+                        locals.email,
+                        locals,
+                        function (error, response) {
+                            if (response.message && response.messageId) {
+                                //todo: add #sent tag to the user email entry.
+                                //user.email = user.email + "#sent:true";
                             }
-                            else {
-                                res.json(201, { "role": user.role, "username": user.username, "id": user._id});
-                                sendRegisterEmail(
-                                    req.body.params.email,
-                                    {   username: req.body.username,
-                                        email: req.body.params.email,
-                                        name: req.body.params.name    }
-                                );
-                            }
-                        });
-                    }
+
+                        }
+                    );
+
+                    // the passport custom callback
+                    req.logIn(user, function (err) {
+                        if (err) {
+                            next(err);
+                        } else {
+                            res.json(201, { "role": user.role, "username": user.username, "id": user._id});
+
+                        }
+                    });
+                }
+
+                User.addUser(
+                    req.body.username,
+                    req.body.password,
+                    req.body.role,
+                    req.body.params,
+                    loginCallback
                 );
             },
 

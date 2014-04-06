@@ -1,68 +1,72 @@
 /**
  * @module MailerCtrl
- * @name mailer
+ * @name MailerCtrl
  */
 'use strict';
-define(['underscore', '../models/SchemaModels', './mailer', './logins' ],
-    function (_, SchemaModels, mailer, logins) {
-
-        var UserM = SchemaModels.User;
-
-        var register = mailer.register;
-        var passwordReset = mailer.passwordReset;
+define(['underscore', '../models/SchemaModels', './mailer', './logins', '../models/User' ],
+    function (_, SchemaModels, mailer, logins, User) {
 
         return {
             /**
-             * @name register
+             * controller that renders the selected template
+             * @name render
              * @function
-             * @param user
-             * @param user.username
-             * @param user.email
-             * @param user.name
-             * @returns email server response
+             * @param req
+             * @param req.query.templateString
+             * @param res
+             * @param {nextCallback} next
+             * @returns {html} rendered html with inline css
              */
             render: function (req, res, next) {
-                if (req.params.templateString == undefined) {
-                    console.log('no templateString in request')
+                if (req.params.templateString === undefined) {
+                    console.log('no templateString in request');
                     return res.send(400);
                 }
                 var locals = {};
-                var locals = {};
                 _.extend(locals, req.query);
-                if (locals.subnet) {
-                    locals.subnet += '.';
-                }
 
                 mailer
                     .render(req.params.templateString, locals)
                     .rendered(
                         function (err, html, text) {
-                            if (err) {
-                                if (err.code == 'ENOENT') {
-                                    console.log(err);
-                                    return res.send(404, 'templateNameNotFound');
-                                } else if (err == 'templateName was not defined') {
-                                    console.log(err);
-                                    return res.send(400, 'templateNameUndefined');
-                                } else {
-                                    console.log(err);
-                                    return res.send(500, err);
-                                };
+                        if (err) {
+                            if (err.code == 'ENOENT') {
+                                console.log(err);
+                                return res.send(404, 'templateNameNotFound');
+                            } else if (err == 'templateName was not defined') {
+                                console.log(err);
+                                return res.send(400, 'templateNameUndefined');
+                            } else {
+                                console.log(err);
+                                return res.send(500, err);
                             }
-                            res.send(200, html);
-                        });
+                            ;
+                        }
+                        res.send(200, html);
+                    });
             },
 
+            /**
+             * controller renders and sends email with the specified template
+             * @name testSend
+             * @function
+             * @param req
+             * @param req.query.templateString
+             * @param res
+             * @param {nextCallback} next
+             * @returns {string} email server response
+             */
             testSend: function (req, res, next) {
                 if (req.params.templateString == undefined) {
                     console.log('no templateString in request')
                     return res.send(400);
                 }
                 var locals = {};
-                var locals = {};
                 _.extend(locals, req.query);
                 if (locals.subnet) {
                     locals.subnet += '.';
+                } else {
+                    locals.subnet = '';
                 }
 
                 var email = {
@@ -76,18 +80,51 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins' ],
                     .render(req.params.templateString, locals)
                     .send(email)
                     .response(
-                        function (error, response) {
-                            console.log(error)
-                            console.log(response)
-                            if (response.name == "RecipientError") {
-                                return res.send(400, 'RecipientError:' + response);
-                            }
-                            res.send(200, response);
-                        });
+                    function (error, response) {
+                        console.log(error)
+                        console.log(response)
+                        if (response.name == "RecipientError") {
+                            return res.send(400, 'RecipientError:' + response);
+                        }
+                        res.send(200, response);
+                    });
             },
+
             activate: function (req, res, next) {
-                console.log('activation link clicked.')
-            },
+                var locals = {
+                    layout: 'templates/layout.jade',
+                    title: '邮箱激活成功！',
+                    message: '页面将会在1秒钟内跳转回到首页...'
+                };
+
+                function sendConfirmed(error, message) {
+                    if (error == null) {
+                        res.render('templates/activate.jade', locals);
+                    }
+                    if (error == "userDoesNotExist") {
+                        locals.title = "用户不存在哦~";
+                        res.render('templates/activate.jade', locals);
+                    }
+                    if (error == "emailAreadyActivated") {
+                        locals.title = "此邮箱已经激活过了";
+                        res.render('templates/activate.jade', locals);
+                    }
+                    if (error == "linkError") {
+                        locals.title = "激活链接错误";
+                        locals.message = "重新发送激活邮件请点这里：";
+                        res.render('templates/activate.jade', locals);
+                    }
+                }
+
+                if (req.query.username === undefined || req.query.email === undefined || req.query.code === undefined) {
+                    //== "linkError") {
+                    locals.title = "激活链接错误";
+                    locals.message = "重新发送激活邮件请点这里：";
+                    res.render('templates/activate.jade', locals);
+                    return next('linkParameterError');
+                }
+                User.confirmEmail(req.query.username, req.query.code, req.query.email, sendConfirmed);
+            }
         };
     }
 );

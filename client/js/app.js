@@ -2,6 +2,8 @@
 angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
         'ui.bootstrap',
         'mgcrea.ngStrap.modal',
+//        'mgcrea.ngStrap.select',
+        'mgcrea.ngStrap.button',
         'mgcrea.ngStrap.dropdown',
         'nvd3ChartDirectives', 'placeholders', 'textAngular', 'angular-medium-editor'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', '$modalProvider',

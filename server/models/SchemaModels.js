@@ -180,6 +180,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         student: {
             name: String,
+            username: {type: String, unique: true},
             DOB: Date,
             email: String,
             sections: [
@@ -188,14 +189,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'School' }
             ],
-            exams: [
-                { type: Schema.Types.ObjectId, ref: 'Exam' }
-            ],
-            mistakeTags: [
-                { type: Schema.Types.ObjectId, ref: 'MistakeTag' }
-            ],
-            errata: [
-                { type: Schema.Types.ObjectId, ref: 'Erratum' }
+            textbooks: [
+                { type: Schema.Types.ObjectId, ref: 'Textbook'}
             ],
             comments: String,
             preferences: {
@@ -209,22 +204,22 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         parent: {
             name: String,
+            username: {type: String, unique: true},
             email: String,
+            DOB: Date,
             studentIds: [
                 { type: Schema.Types.ObjectId, ref: 'Student' }
             ],
             preferences: {
-                activation: {
-                    state: {type: Boolean, default: false},
-                    emailSent: {type: Boolean, default: false}
-                },
                 problemNoteListLimit: Number,
                 anotherPreference: String
             }
         },
         teacher: {
             name: String,
+            username: {type: String, unique: true},
             email: String,
+            DOB: Date,
             sections: [
                 { type: Schema.Types.ObjectId, ref: 'Section' }
             ],
@@ -242,7 +237,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         admin: {
             name: String,
+            username: {type: String, unique: true},
             email: String,
+            DOB: Date,
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'schools' }
             ],
@@ -257,6 +254,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         superadmin: {
             name: String,
+            username: {type: String, unique: true},
+            email: String,
+            DOB: Date,
             preferences: {
                 activation: {
                     state: {type: Boolean, default: false},
@@ -265,6 +265,14 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 problemNoteListLimit: Number,
                 anotherPreference: String
             }
+        },
+        textbook: {
+            title: String,
+            author: {
+                name: String
+            },
+            tableOfContent: {type: Schema.Types.Mixed },
+            tags: Array
         },
         userFeed: {
             user: {type: Schema.Types.ObjectId},
