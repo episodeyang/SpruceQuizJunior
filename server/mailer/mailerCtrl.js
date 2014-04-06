@@ -92,9 +92,10 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
 
             activate: function (req, res, next) {
                 var locals = {
+                    domain: 'www.nantijiazi.com',
                     layout: 'templates/layout.jade',
                     title: '邮箱激活成功！',
-                    message: '页面将会在1秒钟内跳转回到首页...'
+                    message: '页面将会在2秒钟内跳转回到首页...'
                 };
 
                 function sendConfirmed(error, message) {
@@ -105,8 +106,13 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
                         locals.title = "用户不存在哦~";
                         res.render('templates/activate.jade', locals);
                     }
-                    if (error == "emailAreadyActivated") {
+                    if (error == "emailAlreadyActivated") {
                         locals.title = "此邮箱已经激活过了";
+                        res.render('templates/activate.jade', locals);
+                    }
+                    if (error == "invalidCode") {
+                        locals.title = "激活码有错";
+                        locals.message = "重新发送激活邮件请点这里：";
                         res.render('templates/activate.jade', locals);
                     }
                     if (error == "linkError") {

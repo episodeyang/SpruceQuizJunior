@@ -18,21 +18,41 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
             , SuperadminM = SchemaModels.Superadmin;
         var check = validator.check;
 
-        function keyParser(string) {
+        function dictParser(string) {
             /**
-             * takes in a string that looks like:
-             * @param {String} input string - something like: "user@email.com#code:14a3b23#username:username"
+             * convert `#` separated string to a dictionary
+             * @param {String} string something like: "user@email.com#code:14a3b23#username:username"
              * @return {object} output dictionary - something like: { email: <email>, otherKey: value}
              */
             var strList = string.split('#');
             var params = { email: strList.shift() };
             function pushKey (item) {
                 params[item.split(':')[0]] = item.split(':')[1];
-            };
+            }
             _.each(strList, pushKey);
             return params;
         }
 
+
+        function dictMaker(data) {
+            /**
+             * convert a dictionary to `#` separated string
+             * @param {object} data
+             * @return {string} string
+             */
+            function makeString (value, key) {
+                if (value) {
+                    return "#" + key + ":" + value;
+                }
+            }
+            // add the `#` inside the makeString for better
+            // null value handling and default `#` prefix.
+            return _.map(data, makeString).join('');
+        }
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
         return {
 
             addUser: function (username, password, role, params, callback) {
@@ -111,8 +131,6 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     {username: username},
                     function (err, user) {
                         user.populate(user.role.title, function (err, user) {
-                            //var reg = new RegExp(/@.+#code:(\w+)/);
-
                             //console.log('show returned user object');
                             //console.log(user);
 
@@ -120,21 +138,27 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                                 return callback('userDoesNotExist');
                             }
                             var userEmail = user[user.role.title].email;
-                            var params = keyParser(userEmail);
+                            var params = dictParser(userEmail);
 
-                            if (params.code === undefined) {
-                                return callback('emailAlreadyConfirmed.');
+                            if (!params.code) {
+                                return callback('emailAlreadyActivated');
                             }
-                            if (code == params.code && email == params.email && username == user.username) {
-                                user[user.role.title].email = params.email;
-                                user.save();
-                                return callback(null, 'emailConfirmed');
+
+                            if (params.code !== code) {
+                                return callback('invalidCode');
+                            }
+                            if (code === params.code && email === params.email && username === user.username) {
+                                SchemaModels[capitalize(user.role.title)].findOneAndUpdate(
+                                    {username: username},
+                                    {email: email},
+                                    function (err, user) {
+                                        return callback(null, 'emailConfirmed');
+                                    }
+                                );
                             }
                         });
                     }
                 );
-                callback();
-
             },
 
             validate: function (user) {
