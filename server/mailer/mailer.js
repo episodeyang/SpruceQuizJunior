@@ -147,6 +147,7 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
                 };
 
                 if (locals.domain === undefined) {
+                    console.log('mailer.register local parameter does not have domain name.')
                     locals.domain = 'nantijiazi.com';
                 }
 
@@ -165,6 +166,7 @@ define(['underscore', 'module', 'nodemailer', 'email-templates', 'path', './logi
                 console.log(recipient + ' wants to reset password');
 
                 if (locals.domain === undefined) {
+                    console.log('mailer.passwordReset local parameter does not have domain name.')
                     locals.domain = 'nantijiazi.com';
                 }
 
