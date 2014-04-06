@@ -18,12 +18,19 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
              * @returns {html} rendered html with inline css
              */
             render: function (req, res, next) {
+
+                console.log('host')
+                console.log(req.headers.host)
+                console.log('subdomain')
+                console.log(req.subdomain)
+
                 if (req.params.templateString === undefined) {
                     console.log('no templateString in request');
                     return res.send(400);
                 }
                 var locals = {};
                 _.extend(locals, req.query);
+                locals.domain = req.subdomain + '.' + req.headers.host;
 
                 mailer
                     .render(req.params.templateString, locals)
@@ -86,6 +93,7 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
             },
 
             activate: function (req, res, next) {
+
                 var locals = {
                     domain: 'www.nantijiazi.com',
                     layout: 'templates/layout.jade',
