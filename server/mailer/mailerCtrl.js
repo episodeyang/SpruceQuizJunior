@@ -63,11 +63,6 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
                 }
                 var locals = {};
                 _.extend(locals, req.query);
-                if (locals.subnet) {
-                    locals.subnet += '.';
-                } else {
-                    locals.subnet = '';
-                }
 
                 var email = {
                     from: logins.auth.user,
