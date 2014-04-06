@@ -9,11 +9,11 @@
 define(['nodemailer'],
     function (nodemailer) {
         if (typeof process.env.NJ_MAILER_PASSWORD != 'string') {
-            console.log('NJ_MAILER_PASSWORD environmental variable not set. Need for nodemailer.');
+            console.log('NJ_MAILER_PASSWORD environmental variable not set. Need for mailer module.');
             throw new Error("Cannot find variable NJ_MAILER_PASSWORD");
         }
         if (typeof process.env.NJ_MAILER_USER != 'string') {
-            console.log('NJ_MAILER_USER environmental variable not set. Need for nodemailer.');
+            console.log('NJ_MAILER_USER environmental variable not set. Need for mailer module.');
             throw new Error("Cannot find variable NJ_MAILER_USER");
         }
 
