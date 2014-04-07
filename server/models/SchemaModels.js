@@ -183,8 +183,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             username: {type: String, unique: true},
             DOB: Date,
             email: String,
-            sections: [
-                { type: Schema.Types.ObjectId, ref: 'Section' }
+            sessions: [
+                { type: Schema.Types.ObjectId, ref: 'Session' }
             ],
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'School' }
@@ -194,12 +194,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             ],
             comments: String,
             preferences: {
-                activation: {
-                    state: {type: Boolean, default: false},
-                    emailSent: {type: Boolean, default: false}
-                },
-                problemNoteListLimit: Number,
-                anotherPreference: String
             }
         },
         parent: {
@@ -207,12 +201,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             username: {type: String, unique: true},
             email: String,
             DOB: Date,
+            sessions: [
+                { type: Schema.Types.ObjectId, ref: 'Session' }
+            ],
             studentIds: [
                 { type: Schema.Types.ObjectId, ref: 'Student' }
             ],
             preferences: {
-                problemNoteListLimit: Number,
-                anotherPreference: String
             }
         },
         teacher: {
@@ -220,19 +215,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             username: {type: String, unique: true},
             email: String,
             DOB: Date,
-            sections: [
-                { type: Schema.Types.ObjectId, ref: 'Section' }
+            sessions: [
+                { type: Schema.Types.ObjectId, ref: 'Session' }
             ],
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'School' }
             ],
             preferences: {
-                activation: {
-                    state: {type: Boolean, default: false},
-                    emailSent: {type: Boolean, default: false}
-                },
-                problemNoteListLimit: Number,
-                anotherPreference: String
             }
         },
         admin: {
@@ -240,16 +229,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             username: {type: String, unique: true},
             email: String,
             DOB: Date,
+            sessions: [
+                { type: Schema.Types.ObjectId, ref: 'Session' }
+            ],
             schools: [
                 { type: Schema.Types.ObjectId, ref: 'schools' }
             ],
             preferences: {
-                activation: {
-                    state: {type: Boolean, default: false},
-                    emailSent: {type: Boolean, default: false}
-                },
-                problemNoteListLimit: Number,
-                anotherPreference: String
             }
         },
         superadmin: {
@@ -257,13 +243,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             username: {type: String, unique: true},
             email: String,
             DOB: Date,
+            sessions: [
+                { type: Schema.Types.ObjectId, ref: 'Session' }
+            ],
+            schools: [
+                { type: Schema.Types.ObjectId, ref: 'schools' }
+            ],
             preferences: {
-                activation: {
-                    state: {type: Boolean, default: false},
-                    emailSent: {type: Boolean, default: false}
-                },
-                problemNoteListLimit: Number,
-                anotherPreference: String
             }
         },
         textbook: {
@@ -281,8 +267,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             feeds: [subSchema.Feed]
         },
         session: {
+            title: String,
+            overview: String,
             members: [subSchema.userFragment],
-            textbooks: [ {type: Schema.Types.ObjectId, ref: "Textbook"} ]
+            textbooks: [ {type: Schema.Types.ObjectId, ref: "Textbook"} ],
+            teachers: [subSchema.userFragment]
         },
         sessionFeed: {
             session: {type: Schema.Types.ObjectId},
