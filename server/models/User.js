@@ -130,7 +130,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 UserM.findOne(
                     {username: username},
                     function (err, user) {
-                        if (user === undefined) {
+                        if (!user || err) {
+                            console.log('User.confirmEmail error: user'+ user + ' error' + err)
                             return callback('userDoesNotExist');
                         }
                         user.populate(user.role.title, function (err, user) {
