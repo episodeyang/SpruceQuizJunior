@@ -2,7 +2,7 @@
   "name": "SpruceQuizJunior",
   "version": "0.0.1",
   "dependencies": {
-    "express": "*",
+    "express": "3.5.0",
     "mongoose": "*",
     "jade": "*",
     "less-middleware": "~0.1.12",
