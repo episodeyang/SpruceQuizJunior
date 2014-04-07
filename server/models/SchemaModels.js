@@ -280,6 +280,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             count: {type: Number, index: true},
             feeds: [subSchema.Feed]
         },
+        session: {
+            members: [subSchema.userFragment],
+            textbooks: [ {type: Schema.Types.ObjectId, ref: "Textbook"} ]
+        },
         sessionFeed: {
             session: {type: Schema.Types.ObjectId},
             page: {type: Number, index: true},
