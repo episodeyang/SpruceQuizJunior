@@ -30,7 +30,7 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
                 }
                 var locals = {};
                 _.extend(locals, req.query);
-                locals.domain = req.headers.host;
+                if (!locals.domain) locals.domain = req.headers.host;
 
                 mailer
                     .render(req.params.templateString, locals)
@@ -70,7 +70,7 @@ define(['underscore', '../models/SchemaModels', './mailer', './logins', '../mode
                 }
                 var locals = {};
                 _.extend(locals, req.query);
-                locals.domain = req.headers.host;
+                if (!locals.domain) locals.domain = req.headers.host;
 
                 var email = {
                     from: logins.auth.user,
