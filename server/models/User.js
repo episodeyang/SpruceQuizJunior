@@ -130,13 +130,13 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 UserM.findOne(
                     {username: username},
                     function (err, user) {
+                        if (user === undefined) {
+                            return callback('userDoesNotExist');
+                        }
                         user.populate(user.role.title, function (err, user) {
                             //console.log('show returned user object');
                             //console.log(user);
 
-                            if (user === undefined) {
-                                return callback('userDoesNotExist');
-                            }
                             var userEmail = user[user.role.title].email;
                             var params = dictParser(userEmail);
 
