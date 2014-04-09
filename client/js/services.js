@@ -6,9 +6,17 @@ sqApp.factory('_', function() {
 
 sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function($http, $rootScope, $cookieStore, Model){
 
-    var accessLevels = rolesHelper.accessLevels
-        , userRoles = rolesHelper.userRoles
-        , currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
+    var accessLevels = rolesHelper.accessLevels;
+    var userRoles = rolesHelper.userRoles;
+    var currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
+
+    function passwordHash (string, ind) {
+        if (ind >=1) {
+            return new jsSHA(passwordHash(string, ind-1), 'TEXT').getHash('SHA-256', 'HEX');
+        } else {
+            return new jsSHA(string, 'TEXT').getHash('SHA-256', 'HEX');
+        }
+    }
 
     function modelInitializationCallBack(user) {
 //        console.log('Model Initialization started');
@@ -38,6 +46,9 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
             return user.role.bitMask === userRoles.student.bitMask || user.role.bitMask === userRoles.parent.bitMask || user.role.bitMask === userRoles.teacher.bitMask || user.role.bitMask === userRoles.admin.bitMask || user.role.bitMask === userRoles.superadmin.bitMask;
         },
         register: function (user, success, error) {
+            user.password = passwordHash(user.password, 3141);
+            console.log('show the content of user')
+            console.log(user)
             $http.post('/register', user).success(function (user) {
                 _.extend(currentUser, user);
                 modelInitializationCallBack(currentUser);
@@ -45,6 +56,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
             }).error(error);
         },
         login: function (user, success, error) {
+            user.password = passwordHash(user.password, 3141);
             $http.post('/login', user).success(function (user) {
                 _.extend(currentUser, user);
                 modelInitializationCallBack(currentUser);

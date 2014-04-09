@@ -29,7 +29,8 @@
     "angular-medium-editor": "https://github.com/thijsw/angular-medium-editor.git",
     "font-awesome": "~4.0.3",
     "angular-motion": "~0.3.2",
-    "angular-strap": "https://github.com/mgcrea/angular-strap.git#master"
+    "angular-strap": "https://github.com/mgcrea/angular-strap.git#master",
+    "jssha": "~1.5.0"
   },
   "devDependencies": {
     "MathJax": "*"
