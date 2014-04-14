@@ -37,7 +37,8 @@ define(['passport', '../models/User', '../mailer/mailer', '../models/SchemaModel
                         username: user.username,
                         email: user[user.role.title].email.split('#')[0],
                         name: user[user.role.title].name.split(',').join(''),
-                        code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1]
+                        code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1],
+                        domain: req.headers.host
                     };
 
 //                    console.log(locals);
