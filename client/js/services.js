@@ -46,18 +46,20 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
             return user.role.bitMask === userRoles.student.bitMask || user.role.bitMask === userRoles.parent.bitMask || user.role.bitMask === userRoles.teacher.bitMask || user.role.bitMask === userRoles.admin.bitMask || user.role.bitMask === userRoles.superadmin.bitMask;
         },
         register: function (user, success, error) {
-            user.password = passwordHash(user.password, 3141);
-            console.log('show the content of user')
-            console.log(user)
-            $http.post('/register', user).success(function (user) {
+            var userCopy = _.extend({}, user);
+            userCopy.password = passwordHash(user.password, 1051);
+//            console.log('show the content of user')
+//            console.log(user)
+            $http.post('/register', userCopy).success(function (user) {
                 _.extend(currentUser, user);
                 modelInitializationCallBack(currentUser);
                 success(user);
             }).error(error);
         },
         login: function (user, success, error) {
-            user.password = passwordHash(user.password, 3141);
-            $http.post('/login', user).success(function (user) {
+            var userCopy = _.extend({}, user);
+            userCopy.password = passwordHash(user.password, 1051);
+            $http.post('/login', userCopy).success(function (user) {
                 _.extend(currentUser, user);
                 modelInitializationCallBack(currentUser);
                 success(user);
