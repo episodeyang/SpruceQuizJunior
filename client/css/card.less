@@ -1,0 +1,155 @@
+@import "elements.less";
+@import "mixins.less";
+@import "variables.less";
+
+//@import "media.less";
+
+.editor.concave {
+  border-top: 1px solid fadeout(#604830, 40%);
+}
+
+.editor.convex {
+  border-bottom: 1px solid fadeout(#604830, 40%);
+}
+
+.editor {
+  position:relative;
+  background-color: white;
+  padding: 15px;
+  border-radius: 3px;
+  :focus {
+    outline: none;
+  }
+//  .editor-inner {
+//    border-style: none;
+//    width: 100%;
+//  }
+}
+a.editor {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+}
+.editor.tall{
+  min-height: 30%;
+  > .editor-inner {
+    min-height: 30%;
+  }
+}
+.editor.short{
+  min-height: 95px;
+  > .editor-inner {
+    min-height: 95px;
+  }
+}
+.comment-editor {
+  position:relative;
+  background-color: fadeout(white, 60%);
+  min-height: 45px;
+  padding: 0 0px 0 0px ;
+  border-radius: 3px;
+  :focus {
+    outline: none;
+  }
+  .editor-inner {
+    background-color: transparent;
+    border-style: none;
+    width: 100%;
+    min-height: 45px;
+    resize:vertical;
+  }
+}
+
+text-angular-toolbar {
+  button {
+    padding: 0px;
+    font-size: 50%;
+  }
+
+}
+.ta-btn-group {
+  border: none;
+  background-color:transparent;
+  color: white;
+}
+text-angular {
+  .ta-toolbar {
+    font-size: 10px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    .btn-group {
+      margin-right: 15px;
+    }
+    .btn {
+      padding: 0px;
+      height: 24px;
+      min-width: 24px;
+      color: grey;
+      background-color: transparent;
+      border: none;
+    }
+    .btn:active, .btn.active {
+      color: black;
+      background-color: transparent;
+      .box-shadow(none);
+    }
+  }
+  .ta-editor {
+    background-color: white;
+    border-radius: 3px;
+    padding: 15px;
+    width: 100%;
+  }
+  .ta-editor:focus {
+    outline-color: @gray-lighte;
+    outline-width: 3px;
+  }
+}
+text-angular.tall {
+  .ta-editor {
+    min-height: 30%;
+  }
+}
+text-angular.short{
+  .ta-editor {
+    min-height: 95px;
+  }
+}
+
+.card-title {
+  font-size: 1.7em;
+  .name {
+    color: darkred;
+    font-weight: 900;
+  }
+  .signature {
+    color: grey;
+    font-weight: 400;
+  }
+}
+.text-strip {
+  color: grey;
+  margin-bottom: 5px;
+  span.glyphicon {
+    color: darkgrey;
+    margin: 0px;
+//    padding: 0px 0px 0px 5px;
+    padding-left: 3px;
+    padding-right: 0px;
+    border: 0px solid #d3d3d3;
+    &:hover {
+      color: grey;
+    }
+  }
+  span {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid lightgrey;
+  }
+  span.end {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 0px solid darkgrey;
+  }
+}
+

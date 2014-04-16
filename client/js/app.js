@@ -1,124 +1,130 @@
 'use strict';
 angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ngRoute', 'ngResource', 'ngAnimate',
-        'ui.bootstrap',
-        'mgcrea.ngStrap.modal',
+    'ui.bootstrap',
+    'mgcrea.ngStrap.modal',
 //        'mgcrea.ngStrap.select',
-        'mgcrea.ngStrap.button',
-        'mgcrea.ngStrap.dropdown',
-        'nvd3ChartDirectives', 'placeholders', 'textAngular', 'angular-medium-editor'])
+    'mgcrea.ngStrap.button',
+    'mgcrea.ngStrap.dropdown',
+    'nvd3ChartDirectives', 'placeholders', 'textAngular', 'angular-medium-editor'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', '$modalProvider',
         function ($routeProvider, $locationProvider, $httpProvider, $modalProvider) {
 
-        angular.extend($modalProvider.defaults, {
-            html: true
-        });
+            angular.extend($modalProvider.defaults, {
+                html: true
+            });
 
-        var access = rolesHelper.accessLevels;
+            var access = rolesHelper.accessLevels;
 
-        $routeProvider.when('/',
-            {
-                templateUrl: '/partials/questions',
-                controller: 'QuestionCtrl',
-                access: access.all
-            });
-        $routeProvider.when('/login',
-            {
-                templateUrl: '/partials/frontPage',
-                controller: 'FrontPageCtrl',
-                access: access.all
-            });
-        $routeProvider.when('/questions',
-            {
-                templateUrl: '/partials/questions',
-                controller: 'QuestionCtrl',
-                access: access.all
-            });
-//        $routeProvider.when('/home',
-//            {
-//                templateUrl: '/partials/home',
-//                controller: 'HomeCtrl',
-//                access: access.loggedin
-//            });
-//        $routeProvider.when('/errata/:errataId',
-//            {
-//                templateUrl: '/partials/errata',
-//                controller: 'ErrataCtrl',
-//                access: access.loggedin
-//            });
-//        $routeProvider.when('/public/login',
-//            {
-//                templateUrl: '/partials/public/login',
-//                controller: 'LoginCtrl',
-//                access: access.anon
-//            });
-//        $routeProvider.when('/public/register',
-//            {
-//                templateUrl: '/partials/public/register',
-//                controller: 'LoginCtrl',
-//                access: access.anon
-//            });
-//        $routeProvider.when('/auth/twitter',
-//            {
-//                templateUrl: '/partials/register',
-//                controller: 'RegisterCtrl',
-//                access: access.anon
-//            });
-//        $routeProvider.when('/private',
-//            {
-//                templateUrl: '/partials/private',
-//                controller: 'PrivateCtrl',
-//                access: access.loggedin
-//            });
-//        $routeProvider.when('/admin',
-//            {
-//                templateUrl: '/partials/admin',
-//                controller: 'AdminCtrl',
-//                access: access.superuser
-//            });
-//        $routeProvider.when('/sections',
-//            {
-//                templateUrl: '/partials/sections',
-//                controller: 'SectionCtrl',
-//                access: access.loggedin
-//            });
-        $routeProvider.when('/questions/:questionId',
-            {
-                templateUrl: '/partials/questions',
-                controller: 'QuestionCtrl',
-                access: access.all
-            });
-//        $routeProvider.when('/reports',
-//            {
-//                templateUrl: '/partials/reports',
-//                controller: 'ReportCtrl',
-//                access: access.superuser
-//            });
-        $routeProvider.when('/superadmin',
-            {
-                templateUrl: '/partials/superadmin',
-                controller: 'SuperAdminCtrl',
-                access: access.superadmin
-            });
-        $routeProvider.when('/development',
-            {
-                templateUrl: '/partials/development',
-                controller: 'DevelopmentCtrl',
-                access: access.superadmin
-            });
-//        $routeProvider.when('/404',
-//            {
-//                templateUrl: '/partials/404',
-//                access: access.all
-//            });
-        $routeProvider.otherwise({redirectTo: '/404'});
+            $routeProvider.when('/',
+                {
+                    templateUrl: '/partials/questions',
+                    controller: 'QuestionCtrl',
+                    access: access.all
+                });
+            $routeProvider.when('/login',
+                {
+                    templateUrl: '/partials/frontPage',
+                    controller: 'FrontPageCtrl',
+                    access: access.all
+                });
+            $routeProvider.when('/questions',
+                {
+                    templateUrl: '/partials/questions',
+                    controller: 'QuestionCtrl',
+                    access: access.all
+                });
+//            $routeProvider.when('/home',
+//                {
+//                    templateUrl: '/partials/home',
+//                    controller: 'HomeCtrl',
+//                    access: access.loggedin
+//                });
+//            $routeProvider.when('/errata/:errataId',
+//                {
+//                    templateUrl: '/partials/errata',
+//                    controller: 'ErrataCtrl',
+//                    access: access.loggedin
+//                });
+//            $routeProvider.when('/public/login',
+//                {
+//                    templateUrl: '/partials/public/login',
+//                    controller: 'LoginCtrl',
+//                    access: access.anon
+//                });
+//            $routeProvider.when('/public/register',
+//                {
+//                    templateUrl: '/partials/public/register',
+//                    controller: 'LoginCtrl',
+//                    access: access.anon
+//                });
+//            $routeProvider.when('/auth/twitter',
+//                {
+//                    templateUrl: '/partials/register',
+//                    controller: 'RegisterCtrl',
+//                    access: access.anon
+//                });
+//            $routeProvider.when('/private',
+//                {
+//                    templateUrl: '/partials/private',
+//                    controller: 'PrivateCtrl',
+//                    access: access.loggedin
+//                });
+//            $routeProvider.when('/admin',
+//                {
+//                    templateUrl: '/partials/admin',
+//                    controller: 'AdminCtrl',
+//                    access: access.superuser
+//                });
+//            $routeProvider.when('/sections',
+//                {
+//                    templateUrl: '/partials/sections',
+//                    controller: 'SectionCtrl',
+//                    access: access.loggedin
+//                });
+            $routeProvider.when('/questions/:questionId',
+                {
+                    templateUrl: '/partials/questions',
+                    controller: 'QuestionCtrl',
+                    access: access.all
+                });
+            $routeProvider.when('/users/:username',
+                {
+                    templateUrl: '/partials/users',
+                    controller: 'UserCtrl',
+                    access: access.all
+                });
+//            $routeProvider.when('/reports',
+//                {
+//                    templateUrl: '/partials/reports',
+//                    controller: 'ReportCtrl',
+//                    access: access.superuser
+//                });
+            $routeProvider.when('/superadmin',
+                {
+                    templateUrl: '/partials/superadmin',
+                    controller: 'SuperAdminCtrl',
+                    access: access.superadmin
+                });
+            $routeProvider.when('/development',
+                {
+                    templateUrl: '/partials/development',
+                    controller: 'DevelopmentCtrl',
+                    access: access.superadmin
+                });
+//            $routeProvider.when('/404',
+//                {
+//                    templateUrl: '/partials/404',
+//                    access: access.all
+//                });
+            $routeProvider.otherwise({redirectTo: '/404'});
 
-        $locationProvider.html5Mode(true);
+            $locationProvider.html5Mode(true);
 
-        /**
-         * the following template can be used to intercept unauthorized
-         * requests.
-         * For public users, this is a way to generate a popup for registration.
-         */
+            /**
+             * the following template can be used to intercept unauthorized
+             * requests.
+             * For public users, this is a way to generate a popup for registration.
+             */
 //        $httpProvider.interceptors.push(function ($q, $location) {
 //            return {
 //                'responseError': function (response) {
@@ -133,7 +139,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 //            }
 //        });
 
-    }])
+        }])
 
     .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
 
