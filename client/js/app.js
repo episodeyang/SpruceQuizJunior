@@ -93,6 +93,18 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'UserCtrl',
                     access: access.all
                 });
+            $routeProvider.when('/books/:bookId',
+                {
+                    templateUrl: '/partials/books',
+                    controller: 'BookCtrl',
+                    access: access.all
+                });
+            $routeProvider.when('/sessions/:sessionId',
+                {
+                    templateUrl: '/partials/sessions',
+                    controller: 'SessionCtrl',
+                    access: access.all
+                });
 //            $routeProvider.when('/reports',
 //                {
 //                    templateUrl: '/partials/reports',

@@ -33,38 +33,36 @@ div.background(background-img="/img/bg-brown.jpg")
                         a.text-center(ng-click="view.state='info'") 信息
                     li(ng-class="{active: view.state=='search'}")
                         a.text-center(ng-click="view.state='search'") 搜索
-                    li(ng-class="{active: view.state=='answers'}")
-                        a.text-center(ng-click="view.state='answers'") 他的回答
-                    li(ng-class="{active: view.state=='follow'}")
-                        a.text-center(ng-click="view.state='follow'") 他的关注
-                    li(ng-class="{active: view.state=='stats'}")
-                        a.text-center(ng-click="view.state='stats'") 统计数据
                     li(ng-class="{active: view.state=='questions'}")
-                        a.text-center(ng-click="view.state='questions'") 他的提问
-                    li(ng-class="{active: view.state=='comments'}")
-                        a.text-center(ng-click="view.state='comments'") 他的评论
+                        a.text-center(ng-click="view.state='questions'") 问题
+                    li(ng-class="{active: view.state=='answers'}")
+                        a.text-center(ng-click="view.state='answers'") 回答
             .col-sm-7.col-xs-9
                 div
                     .row
                         .col-xs-12
                             .editor.convex.no-top-margin
                                 .card-title.bottom-margin
-                                    span.name 张小明
-                                    span.signature , 数理小超人
+                                    span.name 高中语文
+                                    span.signature ，三年级一班
                                 .row
                                     .col-sm-4.col-xs-12.col-sm-push-8
-                                        div.text-strip.pull-right
-                                            span.glyphicon.glyphicon-arrow-right.no-padding
-                                            span.end 更多信息
+                                        div.info-button-dropdown.text-strip.pull-right
+                                            a
+                                                span.glyphicon.glyphicon-arrow-right.no-padding
+                                                span.end 更多信息
+                                            div.drop-down
+                                                p 成员
+                                                p 课程资料
+                                                p 知识树
                                     .col-sm-8.col-xs-12.col-sm-pull-4
                                         div.text-strip
                                             span.glyphicon.glyphicon-user
                                             span 南山区第一中学
-                                            span.end 2015届
+                                            span.end 沈晓燕
                                         div.text-strip
                                             span.glyphicon.glyphicon-book
-                                            span 数学
-                                            span.end 物理奥林匹克竞赛
+                                            span.end 语文
                                         div.text-strip
                                             span.glyphicon.glyphicon-book
                                             span 回答 265
