@@ -1,13 +1,17 @@
-span[contenteditable=true] {
+[contenteditable=true] {
   cursor: pointer;
   padding: .2em;
   border-bottom: 1px dashed grey ;
 }
-span[contenteditable=true]:focus {
+[contenteditable=true]:focus {
   cursor: pointer;
   border-bottom: 1px solid grey ;
   padding: .2em;
   font-style: italic;
   outline-style: none;
   background-color: lightgoldenrodyellow;
+}
+[contenteditable][placeholder]:empty:before {
+  content: attr(placeholder);
+  color: #bababa;
 }

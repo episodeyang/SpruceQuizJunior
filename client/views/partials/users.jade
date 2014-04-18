@@ -49,9 +49,9 @@ div.background(background-img="/img/bg-brown.jpg")
                         .col-xs-12
                             .editor.convex.no-top-margin
                                 .card-title.bottom-margin
-                                    span.name(contenteditable="{{view.profile.edit}}", ng-model="profile.name") {{profile.name}}
+                                    span.name(contenteditable="{{view.profile.edit}}", ng-model="profile.name", placeholder="姓名") {{profile.name}}
                                     span.signature ，
-                                    span.signature(contenteditable="{{view.profile.edit}}", ng-model="profile.signature") {{profile.signature}}
+                                    span.signature(contenteditable="{{view.profile.edit}}", ng-model="profile.signature", placeholder="简介签名...") {{profile.signature}}
                                     span.edit.pull-right.fa.fa-cog(ng-hide="view.profile.edit", ng-click="view.profile.edit = true")
                                     span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
                                 .row
