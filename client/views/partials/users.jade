@@ -49,8 +49,11 @@ div.background(background-img="/img/bg-brown.jpg")
                         .col-xs-12
                             .editor.convex.no-top-margin
                                 .card-title.bottom-margin
-                                    span.name 张小明
-                                    span.signature , 数理小超人
+                                    span.name(contenteditable="{{view.profile.edit}}", ng-model="profile.name") {{profile.name}}
+                                    span.signature ，
+                                    span.signature(contenteditable="{{view.profile.edit}}", ng-model="profile.signature") {{profile.signature}}
+                                    span.edit.pull-right.fa.fa-cog(ng-hide="view.profile.edit", ng-click="view.profile.edit = true")
+                                    span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
                                 .row
                                     .col-sm-4.col-xs-12.col-sm-push-8
                                         div.text-strip.pull-right
@@ -59,17 +62,18 @@ div.background(background-img="/img/bg-brown.jpg")
                                     .col-sm-8.col-xs-12.col-sm-pull-4
                                         div.text-strip
                                             span.glyphicon.glyphicon-user
-                                            span 南山区第一中学
-                                            span.end 2015届
+                                            span {{profile.schools[0].name}}
+                                            span.end {{profile.schools[0].classYear}}届
                                         div.text-strip
                                             span.glyphicon.glyphicon-book
-                                            span 数学
-                                            span.end 物理奥林匹克竞赛
+                                            span(ng-repeat="major in profile.schools[0].majors") {{major}}
+                                            span.end(ng-repeat="ec in profile.schools[0].extracurriculars",
+                                                ng-class="{'end' : $index == profile.schools[0].extracurriculars.length}") {{ec}}
                                         div.text-strip
-                                            span.glyphicon.glyphicon-book
-                                            span 回答 265
-                                            span 提问 14
-                                            span.end 编辑 3
+                                            span.glyphicon.glyphicon-stats
+                                            span 回答 {{profile.questionCount}}
+                                            span 提问 {{profile.answerCount}}
+                                            span.end 编辑 {{profile.editCount}}
 
 
                     .flow-container
