@@ -47,33 +47,66 @@ div.background(background-img="/img/bg-brown.jpg")
                 div
                     .row
                         .col-xs-12
-                            .editor.convex.no-top-margin
-                                .card-title.bottom-margin
-                                    span.name(contenteditable="{{view.profile.edit}}", ng-model="profile.name", placeholder="姓名") {{profile.name}}
-                                    span.signature ，
-                                    span.signature(contenteditable="{{view.profile.edit}}", ng-model="profile.signature", placeholder="简介签名...") {{profile.signature}}
-                                    span.edit.pull-right.fa.fa-cog(ng-hide="view.profile.edit", ng-click="view.profile.edit = true")
-                                    span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
-                                .row
-                                    .col-sm-4.col-xs-12.col-sm-push-8
-                                        div.text-strip.pull-right
-                                            span.glyphicon.glyphicon-arrow-right.no-padding
-                                            span.end 更多信息
-                                    .col-sm-8.col-xs-12.col-sm-pull-4
-                                        div.text-strip
-                                            span.glyphicon.glyphicon-user
-                                            span {{profile.schools[0].name}}
-                                            span.end {{profile.schools[0].classYear}}届
-                                        div.text-strip
-                                            span.glyphicon.glyphicon-book
-                                            span(ng-repeat="major in profile.schools[0].majors") {{major}}
-                                            span.end(ng-repeat="ec in profile.schools[0].extracurriculars",
-                                                ng-class="{'end' : $index == profile.schools[0].extracurriculars.length}") {{ec}}
-                                        div.text-strip
-                                            span.glyphicon.glyphicon-stats
-                                            span 回答 {{profile.questionCount}}
-                                            span 提问 {{profile.answerCount}}
-                                            span.end 编辑 {{profile.editCount}}
+                            flip(flipped="view.profile.flipped")
+                                flip-front.editor.convex.no-top-margin
+                                    .card-title.bottom-margin
+                                        span.name {{profile.name}}
+                                        span.signature ，
+                                        span.signature {{profile.signature}}
+                                    .row
+                                        .col-sm-4.col-xs-12.col-sm-push-8
+                                            div.text-strip.pull-right(ng-click="view.profile.flipped=true")
+                                                span.glyphicon.glyphicon-arrow-right.no-padding
+                                                span 更多信息
+                                        .col-sm-8.col-xs-12.col-sm-pull-4
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-user
+                                                span.separated {{profile.schools[0].name}}
+                                                span {{profile.schools[0].classYear}}届
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-book
+                                                span(ng-repeat="major in profile.schools[0].majors").separated {{major}}
+                                                span(ng-repeat="ec in profile.schools[0].extracurriculars",
+                                                    ng-class="{'end' : $index == profile.schools[0].extracurriculars.length}").separated {{ec}}
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-stats
+                                                span.separated 回答 {{profile.questionCount}}
+                                                span.separated 提问 {{profile.answerCount}}
+                                                span 编辑 {{profile.editCount}}
+
+                                flip-back.editor.convex.no-top-margin
+                                    .card-title.bottom-margin
+                                        span.name(contenteditable="{{view.profile.edit}}", ng-model="profile.name", placeholder="姓名") {{profile.name}}
+                                        span.signature ，
+                                        span.signature(contenteditable="{{view.profile.edit}}", ng-model="profile.signature", placeholder="简介签名...") {{profile.signature}}
+                                        span.edit.pull-right.fa.fa-cog(ng-hide="view.profile.edit", ng-click="view.profile.edit = true")
+                                        span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
+                                        span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
+                                    .row
+                                        .col-xs-12
+                                            div.text-strip.pull-right(ng-click="view.profile.flipped=false")
+                                                span.glyphicon.glyphicon-arrow-left.no-padding
+                                                span.end 返回
+                                    .row(ng-repeat="school in profile.schools")
+                                        .col-sm-12.col-xs-12
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-user
+                                                span.separated(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].name", placeholder="学校...") {{school.name}}
+                                                span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].classYear", placeholder="毕业年份...") {{school.classYear}}
+                                                span.separated 届
+                                                span.separated(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].type", placeholder="学校种类") {{school.type}}
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-book
+                                                span(ng-repeat="major in school.majors", contenteditable="{{view.profile.edit}}", ng-model="school.majors[$index].classYear", placeholder="专业...").separated {{major}}
+                                                span(ng-repeat="ec in school.extracurriculars",
+                                                ng-class="{'end' : $index == school.extracurriculars.length}") {{ec}}
+                                    .row
+                                        .col-sm-12.col-xs-12
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-stats
+                                                span.separated 回答 {{profile.questionCount}}
+                                                span.separated 提问 {{profile.answerCount}}
+                                                span 编辑 {{profile.editCount}}
 
 
                     .flow-container
