@@ -37,7 +37,11 @@ angular.module('SpruceQuizApp')
                     schools: [
                         {   name: "北京四中",
                             classYear: 2015,
-                            type: 'middleSchool',
+                            type: '初中',
+                            entrance: 2013,
+                            left: 2015,
+                            alumnus: true,
+                            favorites: ['数学'],
                             majors: ['数学'],
                             extracurriculars: ["数学奥林匹克竞赛"],
                             alumni: true
