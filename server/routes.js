@@ -158,7 +158,79 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
-                path: '/api/students',
+                path: '/api/users',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username/feeds',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username/questions',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username/answers',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username/comments',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username/edits',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/:sessionId',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/session/:sessionId/feeds',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/boooks',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/books/:bookId',
+                httpMethod: 'GET',
+                middleware: [UserCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/books/:bookId/feeds',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.index],
                 accessLevel: accessLevels.all

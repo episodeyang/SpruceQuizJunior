@@ -87,11 +87,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                             ul.text-strip(ng-click="view.profile.flipped=false")
                                                 li.pull-right 返回
                                                 li.glyphicon.glyphicon-arrow-left.no-padding.pull-right
-                                    .row(ng-repeat="school in profile.schools")
+                                    .row
                                         .col-xs-12.text-block-container
                                             .text-block.title 学校
                                             .text-block-body
-                                                .unit
+                                                .unit(ng-repeat-start="school in profile.schools")
                                                     span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].name", placeholder="学校...") {{school.name}}
                                                 .unit
                                                     span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].classYear", placeholder="毕业年份...") {{school.classYear}}
@@ -105,23 +105,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].type", placeholder="中学、高中、大学、研究生") {{school.type}}
                                                 .unit.button
                                                     span.fa.fa-times
-                                                hr
                                                 .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].name", placeholder="学校...") {{school.name}}
-                                                .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].classYear", placeholder="毕业年份...") {{school.classYear}}
-                                                    span 届
-                                                .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].entrance", placeholder="入学年份...") {{school.entrance}}
-                                                    span 年至
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].left", placeholder="离开年份...") {{school.left}}
-                                                    span 年
-                                                .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="profile.schools[$index].type", placeholder="中学、高中、大学、研究生") {{school.type}}
-                                                .unit.button
-                                                    span.fa.fa-times
-                                                .unit.pull-right.button
+                                                .unit.pull-right.button(ng-show='$index == profile.schools.length-1')
                                                     span.fa.fa-plus
+                                                hr(ng-repeat-end)
                                         .col-xs-12.text-block-container
                                             .text-block.title 学科特长
                                             .text-block-body

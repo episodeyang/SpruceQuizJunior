@@ -145,6 +145,16 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         feed: {
             action: String,
             data: Schema.Types.Mixed
+        },
+        school: {
+            name: String,
+            classYear: Number,
+            type: String,
+            entrance: Number,
+            left: Number,
+            alumnus: Number,
+            alumni: Boolean,
+            majors: [String]
         }
     };
 
@@ -183,6 +193,14 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             username: {type: String, unique: true},
             DOB: Date,
             email: String,
+            addresses: [String],
+            strongSubjects: [String],
+            strength: [String],
+            weakness: [String],
+            majors: [String],
+            extracuriculars: [String],
+            schoolRecord: [ config_nest.school ],
+            teacherComments: { type: Schema.Types.Mixed, default: {}},
             sessions: [
                 { type: Schema.Types.ObjectId, ref: 'Session' }
             ],
@@ -192,7 +210,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             textbooks: [
                 { type: Schema.Types.ObjectId, ref: 'Textbook'}
             ],
-            comments: String,
             preferences: {
             }
         },
@@ -262,6 +279,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         userFeed: {
             user: {type: Schema.Types.ObjectId},
+            username: String,
             page: {type: Number, index: true},
             count: {type: Number, index: true},
             feeds: [subSchema.Feed]
