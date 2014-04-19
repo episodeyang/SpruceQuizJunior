@@ -34,7 +34,7 @@ angular.module('SpruceQuizApp')
                     name: "张小明",
                     username: "student",
                     signature: "数理小超人",
-                    DOB: new Date.now(),
+                    DOB: new Date(),
                     addresses: [],
                     schools: [
                         {   name: "北京四中",
