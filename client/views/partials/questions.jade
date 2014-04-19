@@ -116,6 +116,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             div.editor-inner(math-html="Model.question.text")
                         div.bottom-margin.top-margin
                             a.badge(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
+                            a.badge.bg-turquoise(ng-repeat='book in Model.question.books track by $index').right-margin {{book}}
                         .row
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题
