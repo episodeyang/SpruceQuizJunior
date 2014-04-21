@@ -9,14 +9,8 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
     var accessLevels = rolesHelper.accessLevels;
     var userRoles = rolesHelper.userRoles;
     var currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
+    var getHash = passwordHash.getHash;
 
-    function passwordHash (string, ind) {
-        if (ind >=1) {
-            return new jsSHA(passwordHash(string, ind-1), 'TEXT').getHash('SHA-256', 'HEX');
-        } else {
-            return new jsSHA(string, 'TEXT').getHash('SHA-256', 'HEX');
-        }
-    }
 
     function modelInitializationCallBack(user) {
 //        console.log('Model Initialization started');
@@ -47,7 +41,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         register: function (user, success, error) {
             var userCopy = _.extend({}, user);
-            userCopy.password = passwordHash(user.password, 1051);
+            userCopy.password = getHash(user.password);
 //            console.log('show the content of user')
 //            console.log(user)
             $http.post('/register', userCopy).success(function (user) {
@@ -58,7 +52,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         login: function (user, success, error) {
             var userCopy = _.extend({}, user);
-            userCopy.password = passwordHash(user.password, 1051);
+            userCopy.password = getHash(user.password);
             $http.post('/login', userCopy).success(function (user) {
                 _.extend(currentUser, user);
                 modelInitializationCallBack(currentUser);

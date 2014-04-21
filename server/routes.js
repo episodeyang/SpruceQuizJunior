@@ -6,8 +6,10 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user', './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, MailerCtrl, SpiderCtrl) {
+    './controllers/user',
+        './controllers/student',
+        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -166,7 +168,25 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             {
                 path: '/api/users/:username',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [UserCtrl.findOne],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/students/:username',
+                httpMethod: 'GET',
+                middleware: [StudentCtrl.findOne],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/students/:username',
+                httpMethod: 'post',
+                middleware: [StudentCtrl.update],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/students/:username',
+                httpMethod: 'delete',
+                middleware: [StudentCtrl.remove],
                 accessLevel: accessLevels.all
             },
             {
@@ -628,8 +648,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                         break;
                 }
             });
-        }
-
+        };
     }
 );
 

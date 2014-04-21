@@ -18,7 +18,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
     function (_, SchemaModels, rolesHelper) {
         "use strict";
         var UserM = SchemaModels.User;
+        var StudentM = SchemaModels.Student;
         var userRoles = rolesHelper.userRoles;
+        var keyString = 'name username DOB email addresses strongSubjects strenth  weakness majors extracurriculars schoolRecord teacherComments sessions schools textbooks';
         return {
             /**
              * @api {get} /user/:id Request User information
@@ -47,53 +49,52 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              */
                 //This is mostly experimental, since no testing spec is in place yet.
             index: function (req, res) {
-                var users;
-                UserM.find({$where: "this.role.title == 'student'"}, function (err, results) {
-                    users = results;
-                    _.each(users, function (user) {
-                        delete user.password;
-                    });
-                    console.log(users);
-                    res.json(users);
-                });
-            },
-            /**
-             * @api {delete} /user/:id Request User information
-             * @apiName DeleteUser
-             * @apiGroup User
-             *
-             * @apiParam {Number} id Users unique ID.
-             *
-             * @apiSuccess {String} @todo need to complete
-             *
-             * @apiSuccessExample Success-Response:
-             *     HTTP/1.1 200 OK
-             *     {
-             *       "firstname": "John",
-             *       "lastname": "Doe"
-             *     }
-             *
-             * @apiError UserNotFound The id of the User was not found.
-             *
-             * @apiErrorExample Error-Response:
-             *     HTTP/1.1 404 Not Found
-             *     {
-             *       "error": "UserNotFound"
-             *     }
-             */
-            remove: function (req, res) {
-                UserM.remove({ id: req.params.uuid }, function (err) {
-                    if (err) {
-                        res.send(404, "Remove user failed.");
+                StudentM.find(
+                    {},
+                    keyString,
+                    function (err, students) {
+                        if (err) {
+                            return res.json(404, err);
+                        }
+                        return res.json(200, students);
                     }
-                });
+                );
             },
-            //todo: also get the sub document depending on the user type.
             findOne: function (req, res) {
-                UserM.findOne({username: req.params.username}, function (err, user) {
-                    delete user.password;
-                    res.json(200, user);
-                });
+                StudentM.findOneAndUpdate(
+                    {username: req.params.username},
+                    keyString,
+                    function (err, user) {
+                        if (err) {
+                            return res.send(404, 'userNotFound');
+                        }
+                        res.send(201, user);
+                    }
+                );
+            },
+            update: function (req, res) {
+                StudentM.findOneAndUpdate(
+                    {username: req.params.username},
+                    req.body.params,
+                    keyString,
+                    function (err, user) {
+                        if (err) {
+                            return res.send(404, 'userNotFound');
+                        }
+                        res.send(201, user);
+                    }
+                );
+            },
+            remove: function (req, res) {
+                StudentM.remove(
+                    {username: req.params.username},
+                    function (err) {
+                        if (err) {
+                            return res.send(404, 'userNotFound');
+                        }
+                        res.send(201);
+                    }
+                )
             }
         };
-    });
+    })

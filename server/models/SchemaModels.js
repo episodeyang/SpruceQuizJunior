@@ -198,7 +198,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             strength: [String],
             weakness: [String],
             majors: [String],
-            extracuriculars: [String],
+            extracurriculars: [String],
             schoolRecord: [ config_nest.school ],
             teacherComments: { type: Schema.Types.Mixed, default: {}},
             sessions: [

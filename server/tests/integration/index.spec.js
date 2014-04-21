@@ -14,12 +14,25 @@ var app = require('../../app.js'),
     should = require('should'),
     passportStub = require('../../lib/passport-stub.js'),//the modified version of passport-stub, for the newer interface.
     userRoles = require('../../../client/js/rolesHelper.js').userRoles,
-    accessLevels = require('../../../client/js/rolesHelper.js').accessLevels;
+    accessLevels = require('../../../client/js/rolesHelper.js').accessLevels,
+    getHash = require('../../../client/js/passwordHash.js').getHash;
+
 
 app.use(express.bodyParser());
 passportStub.install(app);
 
 var studentUser, parentUser, teacherUser, adminUser, superadminUser;
+
+data.studentRegister.password = getHash(data.studentRegister.password);
+data.teacherRegister.password = getHash(data.teacherRegister.password);
+data.parentRegister.password = getHash(data.parentRegister.password);
+data.adminRegister.password = getHash(data.adminRegister.password);
+data.superadminRegister.password = getHash(data.superadminRegister.password);
+data.studentLogin.password = getHash(data.studentLogin.password);
+data.teacherLogin.password = getHash(data.teacherLogin.password);
+data.parentLogin.password = getHash(data.parentLogin.password);
+data.adminLogin.password = getHash(data.adminLogin.password);
+data.superadminLogin.password = getHash(data.superadminLogin.password);
 
 describe('Server Authentication Tests - ', function (done) {
     beforeEach(function () {

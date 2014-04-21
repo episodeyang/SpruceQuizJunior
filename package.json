@@ -15,7 +15,8 @@
     "amdefine": "~0.1.0",
     "blanket": "~1.1.6",
     "nodemailer": "~0.6.1",
-    "email-templates": "~0.1.7"
+    "email-templates": "~0.1.7",
+    "jssha": "~1.5.0"
   },
   "repository": {
     "type": "git",

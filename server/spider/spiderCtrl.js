@@ -18,8 +18,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
         return {
             question : function (req, res) {
                 var question;
-                console.log('req.params.id')
-                console.log(req.params.id)
+                // console.log('req.params.id');
+                // console.log(req.params.id);
                 QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated', function(err, results){
                     if (err) {return res.send(403, err)}
                     else {
@@ -45,13 +45,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         questions = docs;
                         res.render('spider/questions.jade',
                             {
-                                layout:'spider/layout.jade',
+                                layout: 'spider/layout.jade',
                                 title: 'test this',
                                 questions: questions
                             });
-                    };
-                })
+                    }
+                });
             }
-        }
+        };
     }
 );
