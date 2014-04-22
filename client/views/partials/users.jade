@@ -79,8 +79,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓名") {{Model.profile.name.split(',').join('')}}
                                         span.signature ，
                                         span.signature(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...") {{Model.profile.signature}}
-                                        span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit", ng-click="view.profile.edit = true")
-                                        span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
+                                        span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit", ng-click="editProfile()")
+                                        span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="submitProfile()")
                                         span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
                                     .row
                                         .col-xs-12
@@ -111,15 +111,15 @@ div.background(background-img="/img/bg-brown.jpg")
                                         .col-xs-12.text-block-container
                                             .text-block.title 专业
                                             .text-block-body
-                                                .unit(ng-repeat="major in Model.profile.schoolRecord.slice(-1)[0].majors")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord.slice(-1)[0].majors[$index]", placeholder="目前专业...")  {{major}}
+                                                .unit(ng-repeat="major in Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors")
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors[$index]", placeholder="目前专业...") {{major}}
                                                 .unit.pull-right.button
                                                     span.fa.fa-plus
                                         .col-xs-12.text-block-container
                                             .text-block.title 学科特长
                                             .text-block-body
                                                 .unit(ng-repeat="subject in Model.profile.strongSubjects")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.strongSubjects[$index]", placeholder="学科特长...")  {{subject}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.strongSubjects[$index]", placeholder="学科特长...") {{subject}}
                                                 .unit.pull-right.button
                                                     span.fa.fa-plus
                                         .col-xs-12.text-block-container
