@@ -76,7 +76,7 @@ div.background(background-img="/img/bg-brown.jpg")
 
                                 flip-back.editor.convex.no-top-margin
                                     .card-title.bottom-margin
-                                        span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓名") {{Model.profile.name}}
+                                        span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓名") {{Model.profile.name.split(',').join('')}}
                                         span.signature ，
                                         span.signature(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...") {{Model.profile.signature}}
                                         span.edit.pull-right.fa.fa-cog(ng-hide="view.profile.edit", ng-click="view.profile.edit = true")
@@ -105,7 +105,6 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].type", placeholder="中学、高中、大学、研究生") {{school.type}}
                                                 .unit.button
                                                     span.fa.fa-times
-                                                .unit
                                                 .unit.pull-right.button(ng-show='$index == profile.schoolRecord.length-1')
                                                     span.fa.fa-plus
                                                 hr(ng-repeat-end)
