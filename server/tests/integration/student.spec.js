@@ -41,9 +41,7 @@ describe('Student API test - ', function (done) {
     });
     it('update student', function (done) {
         passportStub.login(studentUser); // login as user
-        studentUser.schoolRecord = data.schoolRecord;
-        studentUser.signature = data.signature;
-        request(app).post('/api/students/' + studentUser.username).send(studentUser).expect(201).end(function (err, res) {
+        request(app).post('/api/students/' + studentUser.username).send(data.studentInfo).expect(201).end(function (err, res) {
             question = res.body;
 //            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
             done();

@@ -117,8 +117,6 @@ angular.module('mgcrea.ngStrap.modal', ['mgcrea.ngStrap.helpers.dimensions']).pr
           scope.$destroy();
         };
         $modal.show = function () {
-
-          bodyElement = angular.element($window.document.body);
           var parent = options.container ? findElement(options.container) : null;
           var after = options.container ? null : options.element;
           // Fetch a cloned element linked from template

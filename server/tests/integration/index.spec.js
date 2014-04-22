@@ -18,8 +18,6 @@ var app = require('../../app.js'),
     //getHash = require('../../../client/js/passwordHash.js').getHash,
     passwordHash = require('../../../client/js/passwordHash.js').passwordHash;
 
-
-
 app.use(express.bodyParser());
 passportStub.install(app);
 

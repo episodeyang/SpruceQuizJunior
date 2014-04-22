@@ -20,7 +20,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
         var UserM = SchemaModels.User;
         var StudentM = SchemaModels.Student;
         var userRoles = rolesHelper.userRoles;
-        var keyString = 'name username signature DOB email addresses strongSubjects strenth  weakness majors extracurriculars schoolRecord teacherComments sessions schools textbooks';
+        var keyString = 'name username signature DOB email addresses strongSubjects extracurriculars schoolRecord teacherFields stats sessions schools textbooks';
         return {
             /**
              * @api {get} /user/:id Request User information

@@ -195,12 +195,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             email: String,
             addresses: [String],
             strongSubjects: [String],
-            strength: [String],
-            weakness: [String],
-            majors: [String],
             extracurriculars: [String],
             schoolRecord: [ subSchema.school ],
-            teacherComments: { type: Schema.Types.Mixed, default: {}},
+            teacherFields: { type: Schema.Types.Mixed, default: {}},
+            stats: { type: Schema.Types.Mixed, default: {}},
             sessions: [
                 { type: Schema.Types.ObjectId, ref: 'Session' }
             ],
