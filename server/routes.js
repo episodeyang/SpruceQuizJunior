@@ -18,9 +18,10 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             var role;
             if(!req.user) role = userRoles.public;
             else          role = req.user.role;
-            var accessLevel = _.findWhere(  routes,
-                                            {   path: req.route.path,
-                                                httpMethod: req.method.toUpperCase() })
+            var accessLevel = _
+                .findWhere( routes,
+                            {   path: req.route.path,
+                                httpMethod: req.method.toUpperCase() })
                 .accessLevel || accessLevels.all;
             if (!(accessLevel.bitMask & role.bitMask)) return res.send(401);
             return next();
@@ -183,12 +184,13 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 middleware: [StudentCtrl.update],
                 accessLevel: accessLevels.all
             },
-            {
-                path: '/api/students/:username',
-                httpMethod: 'delete',
-                middleware: [StudentCtrl.remove],
-                accessLevel: accessLevels.all
-            },
+            // todo: student delete api is under development
+//            {
+//                path: '/api/students/:username',
+//                httpMethod: 'DELETE',
+//                middleware: [StudentCtrl.remove],
+//                accessLevel: accessLevels.all
+//            },
             {
                 path: '/api/users/:username/feeds',
                 httpMethod: 'GET',
@@ -623,14 +625,15 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 ]
             }
         ];
-
         return function (app) {
 
             _.each(routes, function (route) {
                 route.middleware.unshift(ensureAuthorized);
                 var args = _.flatten([route.path, route.middleware]);
 
-                switch (route.httpMethod.toUpperCase()) {
+                route.httpMethod = route.httpMethod.toUpperCase();
+
+                switch (route.httpMethod) {
                     case 'GET':
                         app.get.apply(app, args);
                         break;

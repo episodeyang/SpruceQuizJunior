@@ -152,7 +152,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             type: String,
             entrance: Number,
             left: Number,
-            alumnus: Number,
             alumni: Boolean,
             majors: [String]
         }
@@ -190,6 +189,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         student: {
             name: String,
+            signature: String,
             username: {type: String, unique: true},
             DOB: Date,
             email: String,
@@ -199,7 +199,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             weakness: [String],
             majors: [String],
             extracurriculars: [String],
-            schoolRecord: [ config_nest.school ],
+            schoolRecord: [ subSchema.school ],
             teacherComments: { type: Schema.Types.Mixed, default: {}},
             sessions: [
                 { type: Schema.Types.ObjectId, ref: 'Session' }

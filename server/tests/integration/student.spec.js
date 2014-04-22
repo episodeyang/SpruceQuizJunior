@@ -8,6 +8,7 @@ require('amdefine/intercept');
 var _ = require('underscore'),
     app = require('../../app.js'),
     data = require('./test.data.js'),
+    data2 = require('./school.data.js'),
     express = require('express'),
     request = require('supertest'),
     superagent = require('superagent'),
@@ -16,6 +17,8 @@ var _ = require('underscore'),
     passportStub = require('../../lib/passport-stub.js'),//the modified version of passport-stub, for the newer interface.
     userRoles = require('../../../client/js/rolesHelper.js').userRoles,
     accessLevels = require('../../../client/js/rolesHelper.js').accessLevels;
+
+_.extend(data, data2);
 
 app.use(express.bodyParser());
 passportStub.install(app);
@@ -34,16 +37,18 @@ describe('Student API test - ', function (done) {
         passportStub.logout(); // logout after each test
     });
     it("doesn't need to login to access", function (done) {
-        request(app).get('/api/students').expect(200, done);
+        request(app).get('/api/students/' + studentUser.username).expect(200, done);
     });
-//    it('update student', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions').send(data.questionCreate).expect(201).end(function (err, res) {
-//            question = res.body;
+    it('update student', function (done) {
+        passportStub.login(studentUser); // login as user
+        studentUser.schoolRecord = data.schoolRecord;
+        studentUser.signature = data.signature;
+        request(app).post('/api/students/' + studentUser.username).send(studentUser).expect(201).end(function (err, res) {
+            question = res.body;
 //            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
-//            done();
-//        });
-//    });
+            done();
+        });
+    });
 //    it('create another question', function (done) {
 //        passportStub.login(superadminUser); // login as user
 //        request(app).post('/api/questions').send(data.questionCreate2).expect(201).end(function (err, res) {

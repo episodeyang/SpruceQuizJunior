@@ -57,7 +57,10 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('Students', function ($resource) {
+        var Student = $resource('/api/students/:username', {username: '@username'});
         return {
+            get: Student.get,
+            save: Student.save,
             onErrata: $resource('/api/students/errata/:id', {id: '@_id'}, {
                 list: {method: 'GET', params: {id: 'all'}, isArray: true},
                 create: {method: 'POST', params: {id: 'create'}}

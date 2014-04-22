@@ -24,5 +24,8 @@
         }
         return passwordHash(string, config.numberOfRuns);
     };
+    exports.passwordHash = function (obj) {
+        obj.password = exports.getHash(obj.password);
+    };
 
-})(typeof exports === 'undefined' ? this.passwordHash = {} : exports);
+})(typeof exports === 'undefined' ? this['passwordHash'] = {} : exports);

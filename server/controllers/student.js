@@ -20,7 +20,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
         var UserM = SchemaModels.User;
         var StudentM = SchemaModels.Student;
         var userRoles = rolesHelper.userRoles;
-        var keyString = 'name username DOB email addresses strongSubjects strenth  weakness majors extracurriculars schoolRecord teacherComments sessions schools textbooks';
+        var keyString = 'name username signature DOB email addresses strongSubjects strenth  weakness majors extracurriculars schoolRecord teacherComments sessions schools textbooks';
         return {
             /**
              * @api {get} /user/:id Request User information
@@ -61,40 +61,40 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                 );
             },
             findOne: function (req, res) {
-                StudentM.findOneAndUpdate(
+                StudentM.findOne(
                     {username: req.params.username},
                     keyString,
                     function (err, user) {
                         if (err) {
                             return res.send(404, 'userNotFound');
                         }
-                        res.send(201, user);
+                        res.send(200, user);
                     }
                 );
             },
             update: function (req, res) {
                 StudentM.findOneAndUpdate(
                     {username: req.params.username},
-                    req.body.params,
+                    req.body,
                     keyString,
-                    function (err, user) {
+                    function (err, student) {
                         if (err) {
                             return res.send(404, 'userNotFound');
                         }
-                        res.send(201, user);
+                        res.send(201, student);
                     }
                 );
-            },
-            remove: function (req, res) {
-                StudentM.remove(
-                    {username: req.params.username},
-                    function (err) {
-                        if (err) {
-                            return res.send(404, 'userNotFound');
-                        }
-                        res.send(201);
-                    }
-                )
-            }
+            }//,
+//            remove: function (req, res) {
+//                StudentM.remove(
+//                    {username: req.params.username},
+//                    function (err) {
+//                        if (err) {
+//                            return res.send(404, 'userNotFound');
+//                        }
+//                        res.send(201);
+//                    }
+//                );
+//            }
         };
     })

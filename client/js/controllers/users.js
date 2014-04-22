@@ -30,51 +30,51 @@ angular.module('SpruceQuizApp')
 
                 $rootScope.errors = {};
 
-                $scope.profile = {
-                    name: "张小明",
-                    username: "student",
-                    signature: "数理小超人",
-                    DOB: new Date(),
-                    addresses: [],
-                    schools: [
-                        {   name: "北京四中",
-                            classYear: 2015,
-                            type: 'middleSchool',
-                            entrance: 2012,
-                            left: 2015,
-                            alumnus: true,
-                            alumni: true
-                        },
-                        {   name: "人民大学附属中学",
-                            classYear: 2018,
-                            type: 'highSchool',
-                            entrance: 2015,
-                            left: null,
-                            alumnus: null,
-                            alumni: true
-                        },
-                        {   name: "清华大学",
-                            classYear: 2022,
-                            type: 'college',
-                            entrance: 2018,
-                            left: null,
-                            alumnus: null,
-                            alumni: true,
-                            majors: ['计算机']
-                        }
-                    ],
-                    strongSubjects: ['数学'],
-                    majors: [''],
-                    extracurriculars: ["数学奥林匹克竞赛"],
-                    questions: [],
-                    questionCount: 24,
-                    answers: [],
-                    answerCount: 32,
-                    edits: [],
-                    editCount: 56
-                };
+//                $scope.profile = {
+//                    name: "张小明",
+//                    username: "student",
+//                    signature: "数理小超人",
+//                    DOB: new Date(),
+//                    addresses: [],
+//                    schools: [
+//                        {   name: "北京四中",
+//                            classYear: 2015,
+//                            type: 'middleSchool',
+//                            entrance: 2012,
+//                            left: 2015,
+//                            alumnus: true,
+//                            alumni: true
+//                        },
+//                        {   name: "人民大学附属中学",
+//                            classYear: 2018,
+//                            type: 'highSchool',
+//                            entrance: 2015,
+//                            left: null,
+//                            alumnus: null,
+//                            alumni: true
+//                        },
+//                        {   name: "清华大学",
+//                            classYear: 2022,
+//                            type: 'college',
+//                            entrance: 2018,
+//                            left: null,
+//                            alumnus: null,
+//                            alumni: true,
+//                            majors: ['计算机']
+//                        }
+//                    ],
+//                    strongSubjects: ['数学'],
+//                    majors: [''],
+//                    extracurriculars: ["数学奥林匹克竞赛"],
+//                    questions: [],
+//                    questionCount: 24,
+//                    answers: [],
+//                    answerCount: 32,
+//                    edits: [],
+//                    editCount: 56
+//                };
 
-                if ($routeParams.username) {
-                }
+                Model.getUserProfile($routeParams.username);
+                $scope.profile = Model.profile;
             }
         ]);

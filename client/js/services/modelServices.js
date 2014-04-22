@@ -488,6 +488,34 @@ angular.module('modelServices', ['resourceProvider'])
                         if (typeof error != 'undefined') { error(err); };
                     }
                 );
+            };
+            modelInstance.profile = {};
+            modelInstance.getUserProfile = function (username) {
+                var query = {
+                    username: username
+                };
+                function success (student) {
+                    console.log('got student profile info!');
+                    console.log(student);
+                    modelInstance.profile = student;
+                }
+                function error (err) {
+                    $rootscope.error = err;
+                }
+                Students.get(query, success, error);
+            };
+            modelInstance.updateUserProfile = function (username) {
+                var query = {
+                    username: username
+                };
+                function success (student) {
+                    console.log('got student profile info!')
+                    modelInstance.profile = student;
+                }
+                function error (err) {
+                    $rootscope.error = err;
+                }
+                Students.get(query, success, error);
             }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};

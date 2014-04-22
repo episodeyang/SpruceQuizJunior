@@ -15,7 +15,9 @@ var app = require('../../app.js'),
     passportStub = require('../../lib/passport-stub.js'),//the modified version of passport-stub, for the newer interface.
     userRoles = require('../../../client/js/rolesHelper.js').userRoles,
     accessLevels = require('../../../client/js/rolesHelper.js').accessLevels,
-    getHash = require('../../../client/js/passwordHash.js').getHash;
+    //getHash = require('../../../client/js/passwordHash.js').getHash,
+    passwordHash = require('../../../client/js/passwordHash.js').passwordHash;
+
 
 
 app.use(express.bodyParser());
@@ -23,16 +25,16 @@ passportStub.install(app);
 
 var studentUser, parentUser, teacherUser, adminUser, superadminUser;
 
-data.studentRegister.password = getHash(data.studentRegister.password);
-data.teacherRegister.password = getHash(data.teacherRegister.password);
-data.parentRegister.password = getHash(data.parentRegister.password);
-data.adminRegister.password = getHash(data.adminRegister.password);
-data.superadminRegister.password = getHash(data.superadminRegister.password);
-data.studentLogin.password = getHash(data.studentLogin.password);
-data.teacherLogin.password = getHash(data.teacherLogin.password);
-data.parentLogin.password = getHash(data.parentLogin.password);
-data.adminLogin.password = getHash(data.adminLogin.password);
-data.superadminLogin.password = getHash(data.superadminLogin.password);
+passwordHash(data.studentRegister);
+passwordHash(data.teacherRegister);
+passwordHash(data.parentRegister);
+passwordHash(data.adminRegister);
+passwordHash(data.superadminRegister);
+passwordHash(data.studentLogin);
+passwordHash(data.teacherLogin);
+passwordHash(data.parentLogin);
+passwordHash(data.adminLogin);
+passwordHash(data.superadminLogin);
 
 describe('Server Authentication Tests - ', function (done) {
     beforeEach(function () {
