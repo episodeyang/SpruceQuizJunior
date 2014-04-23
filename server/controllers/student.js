@@ -79,7 +79,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     keyString,
                     function (err, student) {
                         if (err) {
-                            return res.send(404, 'userNotFound');
+                            return res.send(404, err);
                         }
                         res.send(201, student);
                     }
