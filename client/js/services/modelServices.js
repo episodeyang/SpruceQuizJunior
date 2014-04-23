@@ -498,7 +498,7 @@ angular.module('modelServices', ['resourceProvider'])
                     modelInstance.profile = student;
                 }
                 function error (err) {
-                    $rootscope.error = err;
+                    $rootScope.error = err;
                 }
                 Students.get(query, success, error);
             };
@@ -509,7 +509,7 @@ angular.module('modelServices', ['resourceProvider'])
                     success();
                 }
                 function errorCallback (err) {
-                    $rootscope.error = err;
+                    $rootScope.error = err;
                     error(err);
                 }
                 Students.save(query, successCallback, errorCallback);
