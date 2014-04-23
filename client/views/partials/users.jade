@@ -79,7 +79,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓, 名...")
                                         span.signature ，
                                         span.signature(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...")
-                                        span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit", ng-click="editProfile()")
+                                        span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit || user.username !== Model.profile.username", ng-click="editProfile()")
                                         span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="submitProfile()")
                                         span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
                                     .row
