@@ -7,44 +7,35 @@ var spApp = angular.module('SpruceQuizApp');
 spApp.directive('contenteditable', function () {
     return {
         require: 'ngModel',
-        link: function (scope, elm, attrs, ctrl) {
-            // view -> model
-            function onBlur () {
-                scope.$apply(function () {
-                    ctrl.$setViewValue(elm.html());
-                });
-            }
-            elm.bind('blur', onBlur);
+        link: function (scope, element, attrs, ngModel) {
+            if (!ngModel) return; // do nothing if no ng-model
 
-            // model -> view
-            ctrl.render = function (value) {
-                elm.html(value);
+            // Specify how UI should be updated
+            ngModel.$render = function () {
+                element.html(ngModel.$viewValue || '');
             };
 
-            // load init value from DOM
-            ctrl.$render();
-            elm.bind('keydown', function (event) {
-                // console.log("keydown " + event.which);
+            // Listen for change events to enable binding
+            element.on('blur keydown keyup change', function () {
                 var esc = event.which == 27,
                     enter = event.which == 13,
                     el = event.target;
 
-                if (esc) {
-                    // console.log("esc");
-                    ctrl.$setViewValue(elm.html());
+                if (esc || enter) {
                     el.blur();
-                    event.preventDefault();
                 }
 
-                if (enter) {
-                    // console.log("enter");
-                    ctrl.$setViewValue(elm.html());
-                    el.blur();
-                    event.preventDefault();
-                }
-
+                scope.$apply(read);
             });
 
+            ngModel.$render();
+
+            // Write data to the model
+            function read() {
+                var html = element.html();
+                element.html(html.split('<br>').join(''))
+                ngModel.$setViewValue(html);
+            }
         }
     };
 });

@@ -38,55 +38,74 @@ angular.module('SpruceQuizApp')
                 return Object.prototype.toString.call(obj) === '[object Array]';
             }
 
+            $scope.addEmptySchool = function () {
+                Model.profile.schoolRecord.push({
+                    name: '',
+                    classYear: null,
+                    entrance: null,
+                    left: null,
+                    alumni: null,
+                    type: '',
+                    majors: ['']
+                });
+            };
+
             $scope.editProfile = function () {
 
                 $scope.view.profile.edit = true;
 
-                function removeNullAddEmptyToEnd(obj) {
-                    if (isArray(obj)) {
-                        obj.filter(function () {return true});
+                function removeNullAddEmptyToEnd(obj, key) {
+                    if (isArray(obj) && key !== 'schoolRecord') {
+                        obj.map(function (value, index) {
+                            if (!value) {
+                                obj.splice(index, 1);
+                            }
+                        });
                         obj.push('');
                     }
                 }
 
                 _.map(Model.profile, removeNullAddEmptyToEnd);
+                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length-1], removeNullAddEmptyToEnd);
 
-                if (Model.profile.schoolRecord[Model.profile.schoolRecord.length-1]==='') {
-                    Model.profile.schoolRecord[Model.profile.schoolRecord.length-1]={
-                        name: '',
-                        classYear: null,
-                        entrance: null,
-                        left: null,
-                        alumni: null,
-                        type: '',
-                        majors: ['']
-                    }
-                } else {
-                    Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors.push('');
-                }
-
-                console.log(Model.profile);
             };
+            $scope.$watch('Model.profile',
+                function (newVal, oldVal) {
+                },
+                true)
 
             $scope.submitProfile = function () {
 
-                var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length-1]
+                var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1]
 
                 function removeNull(obj, key) {
                     if (isArray(obj)) {
-                        obj.filter(function () {return true});
+                        obj.map(function (value, index) {
+                            if (!value) {
+                                obj.splice(index, 1);
+                            }
+                        });
                     }
                 }
+
                 _.map(Model.profile, removeNull);
-                console.log(school.name)
-                if (school.name=='') {
-                    console.log('removing the last schoolRecord')
-                    Model.profile.schoolRecord.splice(-1);
+                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length-1], removeNull);
+
+                if (school !== undefined) {
+                    if (!school.name) {
+                        // console.log('removing the last schoolRecord')
+                        Model.profile.schoolRecord.splice(-1);
+                    }
+                } else {
+                    Model.profile.schoolRecord = [];
                 }
 
-                console.log('now user profile is ready to submit')
-                console.log(Model.profile)
-                $scope.view.profile.edit = false;
+                Model.updateUserProfile(
+                    function () {
+                        $scope.view.profile.edit = false;
+                    },
+                    function (error) {
+                    })
             };
         }
     ]);

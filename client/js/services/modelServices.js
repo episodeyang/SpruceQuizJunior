@@ -495,8 +495,6 @@ angular.module('modelServices', ['resourceProvider'])
                     username: username
                 };
                 function success (student) {
-                    console.log('got student profile info!');
-                    console.log(student);
                     modelInstance.profile = student;
                 }
                 function error (err) {
@@ -504,18 +502,17 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 Students.get(query, success, error);
             };
-            modelInstance.updateUserProfile = function (username) {
-                var query = {
-                    username: username
-                };
-                function success (student) {
-                    console.log('got student profile info!')
+            modelInstance.updateUserProfile = function (success, error) {
+                var query =  modelInstance.profile;
+                function successCallback (student) {
                     modelInstance.profile = student;
+                    success();
                 }
-                function error (err) {
+                function errorCallback (err) {
                     $rootscope.error = err;
+                    error(err);
                 }
-                Students.get(query, success, error);
+                Students.save(query, successCallback, errorCallback);
             }
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
