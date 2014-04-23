@@ -73,9 +73,11 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                 );
             },
             update: function (req, res) {
+                var data = req.body;
+                delete data._id
                 StudentM.findOneAndUpdate(
                     {username: req.params.username},
-                    req.body,
+                    data,
                     keyString,
                     function (err, student) {
                         if (err) {
