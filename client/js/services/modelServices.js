@@ -505,7 +505,6 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.updateUserProfile = function (success, error) {
                 var query =  modelInstance.profile;
                 delete query._id;
-                console.log(query)
                 function successCallback (student) {
                     modelInstance.profile = student;
                     success();
