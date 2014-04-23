@@ -76,9 +76,9 @@ div.background(background-img="/img/bg-brown.jpg")
 
                                 flip-back.editor.convex.no-top-margin
                                     .card-title.bottom-margin
-                                        span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓名") {{Model.profile.name.split(',').join('')}}
+                                        span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓, 名...")
                                         span.signature ，
-                                        span.signature(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...") {{Model.profile.signature}}
+                                        span.signature(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...")
                                         span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit", ng-click="editProfile()")
                                         span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="submitProfile()")
                                         span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
@@ -92,17 +92,17 @@ div.background(background-img="/img/bg-brown.jpg")
                                             .text-block.title 学校
                                             .text-block-body
                                                 .unit(ng-repeat-start="school in Model.profile.schoolRecord track by $index")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].name", placeholder="学校...") {{school.name}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].name", placeholder="学校...")
                                                 .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].classYear", placeholder="毕业年份...") {{school.classYear}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].classYear", placeholder="毕业年份...")
                                                     span 届
                                                 .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].entrance", placeholder="入学年份...") {{school.entrance}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].entrance", placeholder="入学年份...")
                                                     span 年至
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].left", placeholder="离开年份...") {{school.left}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].left", placeholder="离开年份...")
                                                     span 年
                                                 .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].type", placeholder="中学、高中、大学、研究生") {{school.type}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].type", placeholder="中学、高中、大学、研究生")
                                                 .unit.button
                                                     span.fa.fa-times(ng-click="Model.profile.schoolRecord.splice($index,1)")
                                                 hr(ng-repeat-end, ng-if="$index !== Model.profile.schoolRecord.length-1")
@@ -112,21 +112,21 @@ div.background(background-img="/img/bg-brown.jpg")
                                             .text-block.title 专业
                                             .text-block-body
                                                 .unit(ng-repeat="major in Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors track by $index")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors[$index]", placeholder="目前专业...") {{major}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors[$index]", placeholder="目前专业...")
                                                 .unit.pull-right.button
                                                     span.fa.fa-plus(ng-click="editProfile()")
                                         .col-xs-12.text-block-container
                                             .text-block.title 学科特长
                                             .text-block-body
                                                 .unit(ng-repeat="subject in Model.profile.strongSubjects track by $index")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.strongSubjects[$index]", placeholder="学科特长...") {{subject}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.strongSubjects[$index]", placeholder="学科特长...")
                                                 .unit.pull-right.button
                                                     span.fa.fa-plus(ng-click="editProfile()")
                                         .col-xs-12.text-block-container
                                             .text-block.title 课外活动
                                             .text-block-body
                                                 .unit(ng-repeat="ec in Model.profile.extracurriculars track by $index" )
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.extracurriculars[$index]", placeholder="课外活动...") {{ec}}
+                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.extracurriculars[$index]", placeholder="课外活动...")
                                                 .unit.pull-right.button
                                                     span.fa.fa-plus(ng-click="editProfile()")
                                         .col-xs-12.text-block-container(style="margin-bottom: -15px;")

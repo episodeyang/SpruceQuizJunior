@@ -11,8 +11,8 @@ spApp.directive('contenteditable', function () {
             if (!ngModel) return; // do nothing if no ng-model
 
             // Specify how UI should be updated
-            ngModel.$render = function () {
-                element.html(ngModel.$viewValue || '');
+            ngModel.$render = function (value) {
+                element.html(value || ngModel.$viewValue || '');
             };
 
             // Listen for change events to enable binding
