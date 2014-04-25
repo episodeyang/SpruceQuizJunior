@@ -89,6 +89,14 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             })
         };
     })
+    .factory('Books', function ($resource) {
+        var Book = $resource('/api/books/:title', {title: '@title'});
+        return {
+            get: Book.get,
+            save: Book.save,
+            remove: Book.remove
+        };
+    })
     .factory('Parents', function ($resource) {
         return {
             onMaterials: $resource('/api/materials/:uuid', {uuid: '@materialUUID'}, {

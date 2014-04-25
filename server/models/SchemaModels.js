@@ -267,11 +267,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             preferences: {
             }
         },
-        textbook: {
+        book: {
             title: String,
             author: {
-                name: String
+                name: String,
+                username: String
             },
+            knowledgeTree: { type: Schema.Types.Mixed },
             tableOfContent: {type: Schema.Types.Mixed },
             tags: Array
         },

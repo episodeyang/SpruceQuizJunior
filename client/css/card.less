@@ -206,7 +206,7 @@ text-angular.short{
 //    color: gray;
     width: 100%;
     border: 0;
-    height: 1px;
+    height: 0.5px;
     background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
     background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
     background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
@@ -235,6 +235,20 @@ text-angular.short{
     }
   }
 }
+.img-block.image {
+  height: 100%;
+  width: 100px;
+  text-align: center;
+  position: absolute;
+}
+.img-block-body {
+  position: relative;
+  float: left;
+  right: 0;
+  margin:0px;
+  padding-left: 100px;
+  width: 100%;
+}
 
 
 
@@ -246,6 +260,8 @@ text-angular.short{
   }
   div.drop-down {
     position: absolute;
+    top: 20px;
+    right: 5px;
     min-width: 100px;
     background-color: transparent;
     transition: background-color 0.25s linear;

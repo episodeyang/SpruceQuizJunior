@@ -8,8 +8,8 @@
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
     './controllers/user',
         './controllers/student',
-        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, MailerCtrl, SpiderCtrl) {
+        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -240,21 +240,33 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/boooks',
+                path: '/api/books',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [BookCtrl.index],
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/books/:bookId',
+                path: '/api/books/:title',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [BookCtrl.findOne],
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/books/:bookId/feeds',
+                path: '/api/books',
+                httpMethod: 'POST',
+                middleware: [BookCtrl.add],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/books/:title',
+                httpMethod: 'POST',
+                middleware: [BookCtrl.update],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/books/:title/feeds',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [BookCtrl.index],
                 accessLevel: accessLevels.all
             },
             {
