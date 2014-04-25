@@ -180,7 +180,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             },
             {
                 path: '/api/students/:username',
-                httpMethod: 'post',
+                httpMethod: 'POST',
                 middleware: [StudentCtrl.update],
                 accessLevel: accessLevels.all
             },
