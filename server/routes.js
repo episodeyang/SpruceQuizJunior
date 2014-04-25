@@ -180,7 +180,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             },
             {
                 path: '/api/students/:username',
-                httpMethod: 'POST',
+                httpMethod: 'post',
                 middleware: [StudentCtrl.update],
                 accessLevel: accessLevels.all
             },
@@ -637,6 +637,10 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 ]
             }
         ];
+        function httpMethodRecitifier (route) {
+            route.httpMethod = route.httpMethod.toUpperCase();
+        }
+        _.each(routes, httpMethodRecitifier);
         return function (app) {
 
             _.each(routes, function (route) {
