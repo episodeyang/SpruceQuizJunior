@@ -4,7 +4,7 @@
  * contenteditable attribute.
  */
 var spApp = angular.module('SpruceQuizApp');
-spApp.directive('contenteditable', function () {
+spApp.directive('inlineEditable', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModel) {

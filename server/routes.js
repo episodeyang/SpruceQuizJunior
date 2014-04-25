@@ -642,10 +642,8 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             _.each(routes, function (route) {
                 route.middleware.unshift(ensureAuthorized);
                 var args = _.flatten([route.path, route.middleware]);
-
-                route.httpMethod = route.httpMethod.toUpperCase();
-
-                switch (route.httpMethod) {
+                // console.log(route.path + route.httpMethod);
+                switch (route.httpMethod.toUpperCase()) {
                     case 'GET':
                         app.get.apply(app, args);
                         break;

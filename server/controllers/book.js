@@ -72,7 +72,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     }
                 );
             },
-            create: function (req, res) {
+            add: function (req, res) {
                 book = new BookM
                 var data = req.body;
                 delete data._id;
