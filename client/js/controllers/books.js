@@ -27,7 +27,13 @@ angular.module('SpruceQuizApp')
                 };
                 $rootScope.errors = {};
 
-                if ($routeParams.username) {
+                if ($routeParams.authorAndTitle) {
+                    console.log("the book's title is " + $routeParams.authorAndTitle);
+                    var titleAuthor = $routeParams.authorAndTitle.split(',').reverse();
+                    var title = titleAuthor.splice(0,1)[0]
+                    var author = titleAuthor[0]
+                    console.log(title)
+                    console.log(author)
                 }
             }
         ]);

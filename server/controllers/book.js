@@ -14,40 +14,15 @@
  *          etc.,
  * good luck coding!
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper'],
-    function (_, SchemaModels, rolesHelper) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Book'],
+    function (_, SchemaModels, rolesHelper, BookM) {
         "use strict";
         var UserM = SchemaModels.User;
-        var BookM = SchemaModels.Book;
+//        var BookM = SchemaModels.Book;
         var userRoles = rolesHelper.userRoles;
-        var keyString = 'name title signature DOB email addresses strongSubjects extracurriculars schoolRecord teacherFields stats sessions schools textbooks';
+        var keyString = 'title authors category coverUrl editions related metaData publisher reviews tags parents children knowledgeTree tableOfContent';
+
         return {
-            /**
-             * @api {get} /user/:id Request User information
-             * @apiName GetUser
-             * @apiGroup User
-             *
-             * @apiParam {Number} id Users unique ID.
-             *
-             * @apiSuccess {String} firstname Firstname of the User.
-             * @apiSuccess {String} lastname  Lastname of the User.
-             *
-             * @apiSuccessExample Success-Response:
-             *     HTTP/1.1 200 OK
-             *     {
-             *       "firstname": "John",
-             *       "lastname": "Doe"
-             *     }
-             *
-             * @apiError UserNotFound The id of the User was not found.
-             *
-             * @apiErrorExample Error-Response:
-             *     HTTP/1.1 404 Not Found
-             *     {
-             *       "error": "UserNotFound"
-             *     }
-             */
-                //This is mostly experimental, since no testing spec is in place yet.
             index: function (req, res) {
                 BookM.find(
                     {},
@@ -60,39 +35,61 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     }
                 );
             },
-            findOne: function (req, res) {
+            findOneByTitle: function (req, res) {
                 BookM.findOne(
-                    {title: req.params.title},
+                    {
+                        title: req.params.title
+                    },
                     keyString,
                     function (err, user) {
                         if (err) {
-                            return res.send(404, 'bookNotFound '+ err);
+                            return res.send(404, 'bookNotFound ' + err);
                         }
                         res.send(200, user);
                     }
                 );
             },
-            add: function (req, res) {
-                book = new BookM
-                var data = req.body;
-                delete data._id;
-                BookM.findOneAndUpdate(
-                    {title: req.params.title},
-                    data,
+            findOneByAuthorAndTitle: function (req, res) {
+                BookM.findOne(
+                    {
+                        title: req.params.title,
+                        authors: {
+                            $elemMatch: {
+                                name: req.params.author
+                            }
+                        }
+                    },
                     keyString,
                     function (err, book) {
                         if (err) {
-                            return res.send(404, err);
+                            return res.send(404, 'bookNotFound ' + err);
+                        } else {
+                            return res.send(200, book);
                         }
-                        res.send(201, book);
+                    }
+                )
+                ;
+            },
+            add: function (req, res) {
+                var data = req.body;
+                delete data._id;
+                BookM.add(
+                    data,
+                    function (err, book) {
+                        if (err) {
+                            return res.send(404, 'request error' + err);
+                        } else {
+                            return res.send(201, book);
+                        }
                     }
                 );
+
             },
-            update: function (req, res) {
+            updateById: function (req, res) {
                 var data = req.body;
                 delete data._id;
                 BookM.findOneAndUpdate(
-                    {title: req.params.title},
+                    {_id: req.params.id},
                     data,
                     keyString,
                     function (err, book) {
@@ -114,5 +111,6 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     }
                 );
             }
-        };
+        }
+            ;
     })

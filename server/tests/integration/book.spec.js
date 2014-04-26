@@ -9,6 +9,7 @@ var _ = require('underscore'),
     app = require('../../app.js'),
     data = require('./test.data.js'),
     data2 = require('./school.data.js'),
+    bookData = require('./book.data.js'),
     express = require('express'),
     request = require('supertest'),
     superagent = require('superagent'),
@@ -29,6 +30,7 @@ var studentUser = data.studentUser,
     adminUser = data.adminUser,
     superadminUser = data.superadminUser;
 
+var book, bookUpdated;
 describe('Book API test - ', function (done) {
     beforeEach(function () {
         passportStub.logout(); // logout after each test
@@ -39,11 +41,19 @@ describe('Book API test - ', function (done) {
     it("doesn't need to login to access", function (done) {
         request(app).get('/api/books/' + studentUser.username).expect(200, done);
     });
+    it('add a book', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).post('/api/books').send(bookData.book).expect(201).end(function (err, res) {
+            book = res.body;
+            done();
+        });
+    });
     it('update book', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/books/' + studentUser.username).send(data.bookInfo).expect(201).end(function (err, res) {
-            question = res.body;
-//            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
+        book.title = 'Your Inner Fish';
+        request(app).post('/api/books/' + book._id).send(book).expect(201).end(function (err, res) {
+            BookUpdated = res.body;
+            BookUpdated.title.should.be.eql(book.title);
             done();
         });
     });

@@ -269,13 +269,23 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         book: {
             title: String,
-            author: {
-                name: String,
-                username: String
+            authors: [subSchema.UserFragment],
+            category: String,
+            coverUrl: String,
+            editions: [String],
+            related: [String],
+            metaData: {
+                publisher: String,
+                yearOfPublication: Date,
+                wordCount: Number,
+                pages: Number
             },
+            reviews: [subSchema.CommentPrototype],
+            tags: [String],
+            parents: [String],
+            children: [String],
             knowledgeTree: { type: Schema.Types.Mixed },
-            tableOfContent: {type: Schema.Types.Mixed },
-            tags: Array
+            tableOfContent: {type: Schema.Types.Mixed }
         },
         userFeed: {
             user: {type: Schema.Types.ObjectId},

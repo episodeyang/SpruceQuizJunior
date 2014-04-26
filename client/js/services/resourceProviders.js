@@ -90,11 +90,24 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('Books', function ($resource) {
-        var Book = $resource('/api/books/:title', {title: '@title'});
+        var Book = $resource('/api/books/:author/:title', {title: '@title', author: '@author'});
+        var Books = $resource('/api/books');
+        var BookById = $resource('/api/books/:id', {id: '@_id'});
         return {
+            add: Books.create,
             get: Book.get,
-            save: Book.save,
-            remove: Book.remove
+            save: BookById.save,
+            remove: BookById.remove
+        };
+    })
+    .factory('Sessions', function ($resource) {
+        var Sessions = $resource('/api/sessions');
+        var Session = $resource('/api/sessions/:id', {id: '@_id'});
+        return {
+            add: Sessions.create,
+            get: Session.get,
+            save: Session.save,
+            remove: Session.remove
         };
     })
     .factory('Parents', function ($resource) {

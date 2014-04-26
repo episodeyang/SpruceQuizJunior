@@ -516,6 +516,31 @@ angular.module('modelServices', ['resourceProvider'])
                 Students.save(query, successCallback, errorCallback);
             }
 
+            function bookQueryBuilder(authorAndTitle) {
+                var titleAuthor = authorAndTitle.split(',').reverse();
+                var title = titleAuthor.splice(0,1)
+                var authorName = titleAuthor[0]
+
+                var query = {
+                    title: title
+                };
+                if (author) {
+                    query.author = {name: authorName}
+                }
+                return query
+            }
+
+            modelInstance.getBook = function (authorAndTitle) {
+                var query = bookQueryBuilder(authorAndTitle);
+                function success (book) {
+                    modelInstance.book = book;
+                }
+                function error (err) {
+                    $rootScope.error = err;
+                }
+                Books.get(query, success, error);
+            };
+
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
             // TODO: need to understand the undefined case better.
             //      handle input cases of :
