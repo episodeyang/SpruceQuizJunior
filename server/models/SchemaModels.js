@@ -15,7 +15,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
     }
 
     var subSchema = {};
-    function subSchemaBuilder (schema, title) {
+
+    function subSchemaBuilder(schema, title) {
         if (schema.__methods__) {
             var methods = schema.__methods__;
             delete schema.__methods__;
@@ -41,7 +42,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     subSchema[capitalize(title)].virtual(virtualKey.slice(0, -3)).set(virtual);
                 } else {
                     subSchema[capitalize(title)].virtual(virtualKey.slice(0, -3)).get(virtual);
-                };
+                }
+                ;
             });
         }
         if (options) {
@@ -79,14 +81,20 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             voteup: [String],
             votedown: [String],
             __virtuals__: {
-                idGet: function () { return this._id; },
-                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
+                idGet: function () {
+                    return this._id;
+                },
+                voteGet: function () {
+                    return _.size(this.voteup) - _.size(this.votedown) || ''
+                }
             },
             __options__: {
                 toJSON: {
                     getters: true,
                     virtuals: true,
-                    transform: function (doc, rtn, options) { delete rtn._id; }
+                    transform: function (doc, rtn, options) {
+                        delete rtn._id;
+                    }
                 },
                 toObject: {
                     getters: true,
@@ -103,14 +111,20 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             voteup: [String],
             votedown: [String],
             __virtuals__: {
-                idGet: function () { return this._id; },
-                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || '' }
+                idGet: function () {
+                    return this._id;
+                },
+                voteGet: function () {
+                    return _.size(this.voteup) - _.size(this.votedown) || ''
+                }
             },
             __options__: {
                 toJSON: {
                     getters: true,
                     virtuals: true,
-                    transform: function (doc, rtn, options) { delete rtn._id; }
+                    transform: function (doc, rtn, options) {
+                        delete rtn._id;
+                    }
                 },
                 toObject: {
                     getters: true,
@@ -127,14 +141,20 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             votedown: { type: [String], 'default': []},
 //            comments: {type: [subSchema.CommentPrototype], 'default': []},
             __virtuals__: {
-                idGet: function () { return this._id; },
-                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || "0" }
+                idGet: function () {
+                    return this._id;
+                },
+                voteGet: function () {
+                    return _.size(this.voteup) - _.size(this.votedown) || "0"
+                }
             },
             __options__: {
                 toJSON: {
                     getters: true,
                     virtuals: true,
-                    transform: function (doc, rtn, options) { delete rtn._id; }
+                    transform: function (doc, rtn, options) {
+                        delete rtn._id;
+                    }
                 },
                 toObject: {
                     getters: true,
@@ -154,6 +174,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             left: Number,
             alumni: Boolean,
             majors: [String]
+        },
+        book: {
+            title: String,
+            author: { name: String, username: String},
+            coverUrl: String
         }
     };
 
@@ -165,187 +190,244 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
      * @type {{schemaConfig: Object.<string, schema>}}
      */
     var config = {
-        user: {
-            username: {
-                type: String,
-                unique: true
-            },
-            password: String,
-            role: {title: String, bitMask: Number},
-            student: { type: Schema.Types.ObjectId, ref: "Student"},
-            parent: { type: Schema.Types.ObjectId, ref: "Parent"},
-            teacher: { type: Schema.Types.ObjectId, ref: "Teacher" },
-            admin: { type: Schema.Types.ObjectId, ref: "Admin" },
-            superadmin: { type: Schema.Types.ObjectId, ref: "Superadmin" },
-            __methods__: {
-                validPassword: function (password) {
-                    if (password === this.password) {
-                        return true;
-                    } else {
-                        return false;
+            user: {
+                username: {
+                    type: String,
+                    unique: true
+                },
+                password: String,
+                role: {title: String, bitMask: Number},
+                student: { type: Schema.Types.ObjectId, ref: "Student"},
+                parent: { type: Schema.Types.ObjectId, ref: "Parent"},
+                teacher: { type: Schema.Types.ObjectId, ref: "Teacher" },
+                admin: { type: Schema.Types.ObjectId, ref: "Admin" },
+                superadmin: { type: Schema.Types.ObjectId, ref: "Superadmin" },
+                __methods__: {
+                    validPassword: function (password) {
+                        if (password === this.password) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
-            }
-        },
-        student: {
-            name: String,
-            signature: String,
-            username: {type: String, unique: true},
-            DOB: Date,
-            email: String,
-            addresses: [String],
-            strongSubjects: [String],
-            extracurriculars: [String],
-            schoolRecord: [ subSchema.school ],
-            teacherFields: { type: Schema.Types.Mixed, default: {}},
-            stats: { type: Schema.Types.Mixed, default: {}},
-            sessions: [
-                { type: Schema.Types.ObjectId, ref: 'Session' }
-            ],
-            schools: [
-                { type: Schema.Types.ObjectId, ref: 'School' }
-            ],
-            textbooks: [
-                { type: Schema.Types.ObjectId, ref: 'Textbook'}
-            ],
-            preferences: {
-            }
-        },
-        parent: {
-            name: String,
-            username: {type: String, unique: true},
-            email: String,
-            DOB: Date,
-            sessions: [
-                { type: Schema.Types.ObjectId, ref: 'Session' }
-            ],
-            studentIds: [
-                { type: Schema.Types.ObjectId, ref: 'Student' }
-            ],
-            preferences: {
-            }
-        },
-        teacher: {
-            name: String,
-            username: {type: String, unique: true},
-            email: String,
-            DOB: Date,
-            sessions: [
-                { type: Schema.Types.ObjectId, ref: 'Session' }
-            ],
-            schools: [
-                { type: Schema.Types.ObjectId, ref: 'School' }
-            ],
-            preferences: {
-            }
-        },
-        admin: {
-            name: String,
-            username: {type: String, unique: true},
-            email: String,
-            DOB: Date,
-            sessions: [
-                { type: Schema.Types.ObjectId, ref: 'Session' }
-            ],
-            schools: [
-                { type: Schema.Types.ObjectId, ref: 'schools' }
-            ],
-            preferences: {
-            }
-        },
-        superadmin: {
-            name: String,
-            username: {type: String, unique: true},
-            email: String,
-            DOB: Date,
-            sessions: [
-                { type: Schema.Types.ObjectId, ref: 'Session' }
-            ],
-            schools: [
-                { type: Schema.Types.ObjectId, ref: 'schools' }
-            ],
-            preferences: {
-            }
-        },
-        book: {
-            title: String,
-            authors: [subSchema.UserFragment],
-            category: String,
-            coverUrl: String,
-            editions: [String],
-            related: [String],
-            metaData: {
-                publisher: String,
-                yearOfPublication: Date,
-                wordCount: Number,
-                pages: Number
             },
-            reviews: [subSchema.CommentPrototype],
-            tags: [String],
-            parents: [String],
-            children: [String],
-            knowledgeTree: { type: Schema.Types.Mixed },
-            tableOfContent: {type: Schema.Types.Mixed }
-        },
-        userFeed: {
-            user: {type: Schema.Types.ObjectId},
-            username: String,
-            page: {type: Number, index: true},
-            count: {type: Number, index: true},
-            feeds: [subSchema.Feed]
-        },
-        session: {
-            title: String,
-            overview: String,
-            members: [subSchema.userFragment],
-            textbooks: [ {type: Schema.Types.ObjectId, ref: "Textbook"} ],
-            teachers: [subSchema.userFragment]
-        },
-        sessionFeed: {
-            session: {type: Schema.Types.ObjectId},
-            page: {type: Number, index: true},
-            count: {type: Number, index: false},
-            feeds: [subSchema.Feed]
-        },
-        textbookFeed: {
-            session: {type: Schema.Types.ObjectId},
-            page: {type: Number, index: true},
-            count: {type: Number, index: false},
-            feeds: [subSchema.Feed]
-        },
-        question: {
-            title: String,
-            text: String,
-            author: config_nest.userFragment, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
-            tags: Array,
-            comments: {type: [subSchema.CommentPrototype], 'default': []},
-            answerComments: {type: [subSchema.AnswerCommentPrototype], 'default': []},
-            answers: [subSchema.Answer],
-            voteup: { type: [String], 'default': []},
-            votedown: { type: [String], 'default': []},
-            dateCreated: { type: Date, default: Date.now },
-            dateEdited: { type: Date },
-            __virtuals__: {
-                idGet: function () { return this._id; },
-                voteGet: function () { return _.size(this.voteup) - _.size(this.votedown) || 0 },
-                nAnswersGet: function () { return _.size(this.answers); }
+            student: {
+                name: String,
+                signature: String,
+                username: {type: String, unique: true},
+                DOB: Date,
+                email: String,
+                addresses: [String],
+                strongSubjects: [String],
+                extracurriculars: [String],
+                schoolRecord: [ subSchema.school ],
+                teacherFields: { type: Schema.Types.Mixed, default: {}},
+                stats: { type: Schema.Types.Mixed, default: {}},
+                sessions: [
+                    { type: Schema.Types.ObjectId, ref: 'Session' }
+                ],
+                schools: [
+                    { type: Schema.Types.ObjectId, ref: 'School' }
+                ],
+                textbooks: [
+                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                ],
+                preferences: {
+                }
             },
-            __options__: {
-                toJSON: {
-                    getters: true,
-                    virtuals: true,
-                    transform: function (doc, rtn, options) {
-                        delete rtn._id;
-                        delete rtn.__v;
+            parent: {
+                name: String,
+                username: {type: String, unique: true},
+                email: String,
+                DOB: Date,
+                sessions: [
+                    { type: Schema.Types.ObjectId, ref: 'Session' }
+                ],
+                studentIds: [
+                    { type: Schema.Types.ObjectId, ref: 'Student' }
+                ],
+                preferences: {
+                }
+            },
+            teacher: {
+                name: String,
+                username: {type: String, unique: true},
+                email: String,
+                DOB: Date,
+                sessions: [
+                    { type: Schema.Types.ObjectId, ref: 'Session' }
+                ],
+                schools: [
+                    { type: Schema.Types.ObjectId, ref: 'School' }
+                ],
+                preferences: {
+                }
+            },
+            admin: {
+                name: String,
+                username: {type: String, unique: true},
+                email: String,
+                DOB: Date,
+                sessions: [
+                    { type: Schema.Types.ObjectId, ref: 'Session' }
+                ],
+                schools: [
+                    { type: Schema.Types.ObjectId, ref: 'schools' }
+                ],
+                preferences: {
+                }
+            },
+            superadmin: {
+                name: String,
+                username: {type: String, unique: true},
+                email: String,
+                DOB: Date,
+                sessions: [
+                    { type: Schema.Types.ObjectId, ref: 'Session' }
+                ],
+                schools: [
+                    { type: Schema.Types.ObjectId, ref: 'schools' }
+                ],
+                preferences: {
+                }
+            },
+            book: {
+                title: String,
+                authors: [subSchema.UserFragment],
+                category: String,
+                coverUrl: String,
+                editions: [String],
+                related: [String],
+                metaData: {
+                    publisher: String,
+                    yearOfPublication: Date,
+                    wordCount: Number,
+                    pages: Number
+                },
+                reviews: [subSchema.CommentPrototype],
+                tags: [String],
+                parents: [String],
+                children: [String],
+                knowledgeTree: { type: Schema.Types.Mixed },
+                tableOfContent: {type: Schema.Types.Mixed }
+            },
+            userFeed: {
+                user: {type: Schema.Types.ObjectId},
+                username: String,
+                page: {type: Number, index: true},
+                count: {type: Number, index: true},
+                feeds: [subSchema.Feed]
+            },
+            session: {
+                title: String,
+                teachers: [subSchema.UserFragment],
+                members: [subSchema.UserFragment],
+                school: String,
+                overview: String,
+                created: Date,
+                finished: Date,
+                tags: [String],
+                knowledgeTree: { type: Schema.Types.Mixed },
+                syllabus: {type: Schema.Types.Mixed },
+                reviews: [subSchema.CommentPrototype],
+                books: [ subSchema.Book ],
+                booksExt: [
+                    {type: Schema.Types.ObjectId, ref: "Book"}
+                ],
+                mother: [ { type: Schema.Types.ObjectId, ref: 'Session'}],
+                children: [ { type: Schema.Types.ObjectId, ref: 'Session'}],
+                //This one makes retrieving convenient.
+                __virtuals__: {
+                    // This pre-save hook is called only during .save() function.
+                    // NOT during native database calls such as findOneAndUpdate.
+                    booksPre: function (next) {
+                        this.booksExt = _.map(this.books, function(book){return book._id;});
+                        next();
+                    },
+                    booksPushSet: function (book) {
+                        this.books.push(book);
+                        this.booksExt.push(book._id);
+                    }
+                }
+            },
+            sessionFeed: {
+                session: {
+                    type: Schema.Types.ObjectId
+                },
+                page: {
+                    type: Number, index: true
+                },
+                count: {
+                    type: Number, index: false
+                },
+                feeds: [subSchema.Feed]
+            },
+            textbookFeed: {
+                session: {
+                    type: Schema.Types.ObjectId
+                },
+                page: {
+                    type: Number, index: true
+                },
+                count: {
+                    type: Number, index: false
+                },
+                feeds: [subSchema.Feed]
+            },
+            question: {
+                title: String,
+                text: String,
+                author: config_nest.userFragment, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
+                tags: Array,
+                comments: {
+                    type: [subSchema.CommentPrototype], default: []
+                },
+                answerComments: {
+                    type: [subSchema.AnswerCommentPrototype], 'default': []
+                },
+                answers: [subSchema.Answer],
+                voteup: {
+                    type: [String], 'default': []
+                },
+                votedown: {
+                    type: [String], 'default': []
+                },
+                dateCreated: {
+                    type: Date,
+                    default: Date.now
+                },
+                dateEdited: {
+                    type: Date
+                },
+                __virtuals__: {
+                    idGet: function () {
+                        return this._id;
+                    },
+                    voteGet: function () {
+                        return _.size(this.voteup) - _.size(this.votedown) || 0;
+                    },
+                    nAnswersGet: function () {
+                        return _.size(this.answers);
                     }
                 },
-                toObject: {
-                    getters: true,
-                    virtuals: true
+                __options__: {
+                    toJSON: {
+                        getters: true,
+                        virtuals: true,
+                        transform: function (doc, rtn, options) {
+                            delete rtn._id;
+                            delete rtn.__v;
+                        }
+                    },
+                    toObject: {
+                        getters: true,
+                        virtuals: true
+                    }
                 }
             }
         }
-    };
+        ;
 
     var Config = {};
     _.each(config, function (schema, title) {
@@ -373,10 +455,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             _.each(virtuals, function (virtual, virtualKey) {
                 if (virtualKey.slice(-3) == 'Set') {
                     Config[title + 'Schema'].virtual(virtualKey.slice(0, -3)).set(virtual);
-                } else {
-//                    console.log('showing the virtual key');
-//                    console.log(virtualKey.slice(0,-3));
+                } else if (virtualKey.slice(-3) == 'Get' ) {
                     Config[title + 'Schema'].virtual(virtualKey.slice(0, -3)).get(virtual);
+                } else if (virtualKey.slice(-3) == 'Pre') {
+                    Config[title + 'Schema'].pre('save', virtual);
                 };
             });
         }
@@ -390,4 +472,4 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
     Config.__config = config;
     Config.__config_nest = config_nest;
     return Config;
-})
+});

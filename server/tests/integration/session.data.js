@@ -19,25 +19,22 @@ var _ = require('underscore')
  * API test data
  * @namespace
  */
-var bookData = {
-    book: {
+var sessionData = {
+    session: {
         title: "我们的身体里有一条鱼",
-        authors: [
-            {name: 'Shubin,Neil', username: null}
+        teachers: [
+            {name: '杨,歌', username: 'yang.ge'}
         ],
-        category: String,
-        coverUrl: 'http://img5.douban.com/mpic/s4029808.jpg',
-        editions: [],
-        related: [],
-        metaData: {
-            publisher: 'Pantheon',
-            yearOfPublication: Date.now(),
-            wordCount: null,
-            pages: 320
-        },
+        members: [
+            {name: 'student', username: 'student'}
+        ],
+        overview: '这是一堂关于进化论的课程',
+        school: '北京大学',
+        created: Date.now(),
+        finished: null,
         reviews: [
             {
-                text: '这本书相当不错啊。真心非常喜欢。',
+                text: '这堂课相当不错啊。真心非常喜欢。',
                 author: {name: '杨歌', username: 'yang.ge'},
                 dateOfCreation: Date.now(),
                 dateEdited: Date.now(),
@@ -46,11 +43,11 @@ var bookData = {
             }
         ],
         tags: ['进化论', '古生物学', '生物学', '科普'],
-        parents: [],
+        mother: undefined,
         children: [],
         knowledgeTree: {},
         tableOfContent: {}
     }
 };
 
-module.exports = bookData;
+module.exports = sessionData;

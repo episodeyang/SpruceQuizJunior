@@ -8,8 +8,8 @@
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
     './controllers/user',
         './controllers/student',
-        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, MailerCtrl, SpiderCtrl) {
+        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/session', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SessionCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -224,19 +224,37 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             {
                 path: '/api/sessions',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [SessionCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions',
+                httpMethod: 'post',
+                middleware: [SessionCtrl.add],
                 accessLevel: accessLevels.all
             },
             {
                 path: '/api/sessions/:sessionId',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [SessionCtrl.findOne],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/:sessionId',
+                httpMethod: 'post',
+                middleware: [SessionCtrl.updateById],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/:sessionId',
+                httpMethod: 'delete',
+                middleware: [SessionCtrl.remove],
                 accessLevel: accessLevels.all
             },
             {
                 path: '/api/session/:sessionId/feeds',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [SessionCtrl.index],
                 accessLevel: accessLevels.all
             },
             {
