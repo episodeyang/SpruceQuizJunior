@@ -49,6 +49,13 @@ describe('Session API test - ', function (done) {
             done();
         });
     });
+    it('get a session', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).get('/api/sessions/'+session._id).expect(200).end(function (err, res) {
+            sessionData.session.title.should.be.eql(res.body.title);
+            done();
+        });
+    });
     it('update session', function (done) {
         passportStub.login(studentUser); // login as user
         session.title = '三年级一班化学';

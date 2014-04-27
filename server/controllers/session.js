@@ -35,10 +35,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                 );
             },
             findOne: function (req, res) {
-                SessionM.findOneById(
-                    {
-                        _id: req.params.sessionId
-                    },
+                SessionM.findById(
+                    req.params.sessionId,
                     keyString,
                     function (err, user) {
                         if (err) {
