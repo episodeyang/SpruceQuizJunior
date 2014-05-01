@@ -41,103 +41,91 @@ div.background(background-img="/img/bg-brown.jpg")
                 div
                     .row
                         .col-xs-12
-                            flip(flipped='view.profile.flipped')
-                                flip-front.editor.convex.no-top-margin
-                                    div.img-block.image
-                                        img(src="http://img5.douban.com/mpic/s4493277.jpg")
-                                    div.img-block-body
+                            div
+                                flip(flipped='view.card.flipped')
+                                    flip-front.editor.convex.no-top-margin
+                                        div.img-block.image
+                                            img(ng-src="{{Model.book.coverUrl}}")
+                                        div.img-block-body
+                                            .card-title.bottom-margin
+                                                span.name {{Model.book.title}}
+                                                span.signature(ng-repeat="author in Model.book.authors") , {{author.name.split(',').reverse().join(' ') || ''}}
+                                            .row
+                                                .col-sm-3.col-sm-push-9.col-xs-12
+                                                    div.info-button-dropdown.text-strip.pull-right
+                                                        a(ng-click='view.card.flipped=true')
+                                                            span.glyphicon.glyphicon-arrow-right.no-padding
+                                                            span.end 更多信息
+                                                        div.drop-down
+                                                            p 详情
+                                                            p 目录
+                                                            p 知识树
+                                                .col-sm-9.col-sm-pull-3.col-xs-12
+                                                    div.text-strip
+                                                        span.glyphicon.glyphicon-user
+                                                        span {{Model.book.metaData.publisher}}
+                                                        span.end {{Model.book.metaData.yearOfPublication}}年
+                                                    div.text-strip
+                                                        span.glyphicon.glyphicon-book
+                                                        span(ng-repeat="tag in Model.book.tags")
+                                                            a(ng-href="/tag/{{tag}}") {{tag}}
+                                                    div.text-strip
+                                                        span.glyphicon.glyphicon-book
+                                                        span 问题 14
+                                                        span 回答 265
+                                                        span.end 编辑 3
+                                    flip-back.editor.convex.no-top-margin
                                         .card-title.bottom-margin
-                                            span.name 数学分析
-                                            span.signature , Benjamin Rudin
+                                            span.name(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.title", placeholder="标题...")
+                                            span.signature(ng-repeat-start="author in Model.book.authors") ，
+                                            span.signature(ng-repeat-end, inline-editable, contenteditable="{{view.card.edit}}", ng-model="author.name", placeholder="作者...")
+                                            span.edit.pull-right.fa.fa-pencil(ng-hide="view.card.edit", ng-click="editBook()")
+                                            span.edit.pull-right.fa.fa-check(ng-show="view.card.edit", ng-click="submitBook()")
+                                            span.edit.pull-right.fa.fa-times(ng-show="view.card.edit", ng-click="view.card.edit = false")
                                         .row
-                                            .col-sm-3.col-xs-12.col-sm-push-9.col-xs-push-12
-                                                div.info-button-dropdown.text-strip.pull-right
-                                                    a(ng-click='view.profile.flipped=true')
-                                                        span.glyphicon.glyphicon-arrow-right.no-padding
-                                                        span.end 更多信息
-                                                    div.drop-down
-                                                        p 详情
-                                                        p 目录
-                                                        p 知识树
-                                            .col-sm-9.col-xs-4.col-sm-pull-3
-                                                div.text-strip
-                                                    span.glyphicon.glyphicon-user
-                                                    span 中山大学出版社
-                                                    span.end 2015年
-                                                div.text-strip
-                                                    span.glyphicon.glyphicon-book
-                                                    span 数学
-                                                    span.end 数学奥林匹克竞赛
-                                                div.text-strip
-                                                    span.glyphicon.glyphicon-book
-                                                    span 问题 14
-                                                    span 回答 265
-                                                    span.end 编辑 3
-                                flip-back.editor.convex.no-top-margin
-                                    .card-title.bottom-margin
-                                        span.name(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓, 名...")
-                                        span.signature ，
-                                        span.signature(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...")
-                                        span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit || user.username !== Model.profile.username", ng-click="editProfile()")
-                                        span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="submitProfile()")
-                                        span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
-                                    .row
-                                        .col-xs-12
-                                            ul.text-strip(ng-click="view.profile.flipped=false")
-                                                li.pull-right 返回
-                                                li.glyphicon.glyphicon-arrow-left.no-padding.pull-right
-                                    .row
-                                        .col-xs-12.text-block-container
-                                            .text-block.title 学校
-                                            .text-block-body
-                                                .unit(ng-repeat-start="school in Model.profile.schoolRecord track by $index")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].name", placeholder="学校...")
-                                                .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].classYear", placeholder="毕业年份...")
-                                                    span 届
-                                                .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].entrance", placeholder="入学年份...")
-                                                    span 年至
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].left", placeholder="离开年份...")
-                                                    span 年
-                                                .unit
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].type", placeholder="中学、高中、大学、研究生")
-                                                .unit.button
-                                                    span.fa.fa-times(ng-click="Model.profile.schoolRecord.splice($index,1)")
-                                                hr(ng-repeat-end, ng-if="$index !== Model.profile.schoolRecord.length-1")
-                                                .unit.pull-right.button
-                                                    span.fa.fa-plus(ng-click="addEmptySchool()", ng-show='view.profile.edit')
-                                        .col-xs-12.text-block-container
-                                            .text-block.title 专业
-                                            .text-block-body
-                                                .unit(ng-repeat="major in Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors track by $index")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors[$index]", placeholder="目前专业...")
-                                                .unit.pull-right.button
-                                                    span.fa.fa-plus(ng-click="editProfile()")
-                                        .col-xs-12.text-block-container
-                                            .text-block.title 学科特长
-                                            .text-block-body
-                                                .unit(ng-repeat="subject in Model.profile.strongSubjects track by $index")
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.strongSubjects[$index]", placeholder="学科特长...")
-                                                .unit.pull-right.button
-                                                    span.fa.fa-plus(ng-click="editProfile()")
-                                        .col-xs-12.text-block-container
-                                            .text-block.title 课外活动
-                                            .text-block-body
-                                                .unit(ng-repeat="ec in Model.profile.extracurriculars track by $index" )
-                                                    span(contenteditable="{{view.profile.edit}}", ng-model="Model.profile.extracurriculars[$index]", placeholder="课外活动...")
-                                                .unit.pull-right.button
-                                                    span.fa.fa-plus(ng-click="editProfile()")
-                                        .col-xs-12.text-block-container(style="margin-bottom: -15px;")
-                                            .text-block.title
-                                            .text-block-body
-                                                .unit
-                                                    span 回答 {{Model.profile.stats.questionCount}}
-                                                .unit
-                                                    span 提问 {{Model.profile.stats.answerCount}}
-                                                .unit
-                                                    span 编辑 {{Model.profile.stats.editCount}}
-
+                                            .col-xs-12
+                                                .text-strip(ng-click="view.card.flipped=false")
+                                                    span.pull-right 返回
+                                                    span.glyphicon.glyphicon-arrow-left.no-padding.pull-right
+                                        .row
+                                            .col-xs-12.text-block-container
+                                                .text-block.title 图片链接
+                                                .text-block-body
+                                                    .unit
+                                                        span(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.coverUrl", placeholder="图片地址...")
+                                                    hr
+                                            .col-xs-12.text-block-container
+                                                .text-block.title 基本信息
+                                                .text-block-body
+                                                    .unit
+                                                        span(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.category", placeholder="图书类型...")
+                                                    .unit
+                                                        span(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.metaData.publisher", placeholder="出版社...")
+                                                    .unit
+                                                        span(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.metaData.wordCound", placeholder="字数...")
+                                                    .unit
+                                                        span(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.metaData.pages", placeholder="页数...")
+                                                    hr
+                                            .col-xs-12.text-block-container
+                                                .text-block.title 标签
+                                                .text-block-body
+                                                    .unit(ng-repeat="tag in Model.book.tags track by $index")
+                                                        span(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.tags[$index]", placeholder="标签...")
+                                                    .unit.pull-right.button
+                                                        span.fa.fa-plus(ng-click="editBook()")
+                                            .col-xs-12.text-block-container(style="margin-bottom: -15px;")
+                                                .text-block.title
+                                                .text-block-body
+                                                    .unit
+                                                        span 回答 {{Model.book.stats.questionCount}}
+                                                    .unit
+                                                        span 提问 {{Model.book.stats.answerCount}}
+                                                    .unit
+                                                        span 编辑 {{Model.book.stats.editCount}}
+                            .editor
+                                p test this now
+                            .editor
+                                p test this now
 
 
             .col-sm-3.hidden-xs

@@ -23,17 +23,71 @@ angular.module('SpruceQuizApp')
                 $scope.Model = Model;
 
                 $scope.view = {
-                    state: 'search'
+                    state: 'search',
+                    card: {
+                        edit: false,
+                        flipped: false
+                    }
                 };
+                console.log($scope.view);
                 $rootScope.errors = {};
 
-                if ($routeParams.authorAndTitle) {
-                    console.log("the book's title is " + $routeParams.authorAndTitle);
-                    var titleAuthor = $routeParams.authorAndTitle.split(',').reverse();
-                    var title = titleAuthor.splice(0,1)[0]
-                    var author = titleAuthor[0]
-                    console.log(title)
-                    console.log(author)
+                Model.getBook($routeParams.title, $routeParams.authorName);
+
+                $scope.submitBook = Model.updateBook;
+                function isArray(obj) {
+                    return Object.prototype.toString.call(obj) === '[object Array]';
                 }
+                $scope.editBook = function () {
+                    $scope.view.card.edit = true;
+
+                    console.log($scope.view.card.edit);
+
+                    function removeNullAddEmptyToEnd(obj, key) {
+                        if (isArray(obj) && key !== 'schoolRecord') {
+                            obj.map(function (value, index) {
+                                if (!value) {
+                                    obj.splice(index, 1);
+                                }
+                            });
+                            obj.push('');
+                        }
+                    }
+                    _.map(Model.book, removeNullAddEmptyToEnd);
+
+
+                };
+                var changed = false;
+                $scope.$watch('Model.book',
+                    function (newVal, oldVal) {
+                        if (newVal.title != oldVal.title) {changed = true;}
+                    },
+                    true)
+
+                $scope.submitBook = function () {
+
+                    function removeNull(obj, key) {
+                        if (isArray(obj)) {
+                            obj.map(function (value, index) {
+                                if (!value) {
+                                    obj.splice(index, 1);
+                                }
+                            });
+                        }
+                    }
+
+                    _.map(Model.book, removeNull);
+
+                    Model.updateBook(
+                        function () {
+                            $scope.view.card.edit = false;
+                            if (changed === true) {
+                                $location.path('/books/'+ Model.book.authors[0] + '/' + Model.book.title);
+                                $scope.$apply()
+                            }
+                        },
+                        function (error) {
+                        });
+                };
             }
         ]);

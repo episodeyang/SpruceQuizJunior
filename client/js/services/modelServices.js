@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modelServices', ['resourceProvider'])
-    .factory('Model', ['$rootScope', 'Users', 'Questions', 'Answers', 'Comments', 'AnswerComments', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
+    .factory('Model', ['$rootScope', 'Users', 'Questions', 'Answers', 'Comments', 'AnswerComments', 'Books', 'Sessions', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
         'Schools', 'Sections', 'Units', 'Materials',
         /**
          * model factory
@@ -16,7 +16,7 @@ angular.module('modelServices', ['resourceProvider'])
          * @author test
          * @param random
          */
-        function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Students, Parents, Teachers, Admins, Superadmins,
+        function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins,
                   Schools, Sections, Units, Materials) {
             var modelInstance = {};
 
@@ -514,17 +514,13 @@ angular.module('modelServices', ['resourceProvider'])
                     error(err);
                 }
                 Students.save(query, successCallback, errorCallback);
-            }
+            };
 
-            function bookQueryBuilder(authorAndTitle) {
-                var titleAuthor = authorAndTitle.split(',').reverse();
-                var title = titleAuthor.splice(0,1)
-                var authorName = titleAuthor[0]
-
+            function bookQueryBuilder(title, authorName) {
                 var query = {
                     title: title
                 };
-                if (author) {
+                if (authorName) {
                     query.author = {name: authorName}
                 }
                 return query
@@ -534,11 +530,26 @@ angular.module('modelServices', ['resourceProvider'])
                 var query = bookQueryBuilder(authorAndTitle);
                 function success (book) {
                     modelInstance.book = book;
+                    console.log(book)
                 }
                 function error (err) {
                     $rootScope.error = err;
                 }
                 Books.get(query, success, error);
+            };
+            modelInstance.updateBook = function (success, error) {
+                var query =  modelInstance.book;
+                query.id = query._id;
+//                delete query._id;
+                function successCallback (book) {
+                    modelInstance.book = book;
+                    success();
+                }
+                function errorCallback (err) {
+                    $rootScope.error = err;
+                    error(err);
+                }
+                Books.save(query, successCallback, errorCallback);
             };
 
             // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};

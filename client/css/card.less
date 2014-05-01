@@ -13,40 +13,44 @@
 }
 
 .editor {
-  position:relative;
+  position: relative;
   background-color: white;
   padding: 15px;
   border-radius: 3px;
   :focus {
     outline: none;
   }
-//  .editor-inner {
-//    border-style: none;
-//    width: 100%;
-//  }
+  //  .editor-inner {
+  //    border-style: none;
+  //    width: 100%;
+  //  }
 }
+
 a.editor {
   display: block;
   box-sizing: border-box;
   margin-bottom: 1em;
 }
-.editor.tall{
+
+.editor.tall {
   min-height: 30%;
   > .editor-inner {
     min-height: 30%;
   }
 }
-.editor.short{
+
+.editor.short {
   min-height: 95px;
   > .editor-inner {
     min-height: 95px;
   }
 }
+
 .comment-editor {
-  position:relative;
+  position: relative;
   background-color: fadeout(white, 60%);
   min-height: 45px;
-  padding: 0 0px 0 0px ;
+  padding: 0 0px 0 0px;
   border-radius: 3px;
   :focus {
     outline: none;
@@ -56,7 +60,7 @@ a.editor {
     border-style: none;
     width: 100%;
     min-height: 45px;
-    resize:vertical;
+    resize: vertical;
   }
 }
 
@@ -67,11 +71,13 @@ text-angular-toolbar {
   }
 
 }
+
 .ta-btn-group {
   border: none;
-  background-color:transparent;
+  background-color: transparent;
   color: white;
 }
+
 text-angular {
   .ta-toolbar {
     font-size: 10px;
@@ -105,12 +111,14 @@ text-angular {
     outline-width: 3px;
   }
 }
+
 text-angular.tall {
   .ta-editor {
     min-height: 30%;
   }
 }
-text-angular.short{
+
+text-angular.short {
   .ta-editor {
     min-height: 95px;
   }
@@ -134,6 +142,7 @@ text-angular.short{
     }
   }
 }
+
 .text-strip {
   color: grey;
   margin-bottom: 5px;
@@ -142,7 +151,7 @@ text-angular.short{
   .glyphicon {
     color: darkgrey;
     margin: 0px;
-//    padding: 0px 0px 0px 5px;
+    //    padding: 0px 0px 0px 5px;
     padding-left: 3px;
     padding-right: 0px;
     border: 0px solid #d3d3d3;
@@ -155,7 +164,7 @@ text-angular.short{
   .separated {
     padding-left: 10px;
     padding-right: 10px;
-    border-right: 1px solid lightgrey !importantk;
+    border-right: 1px solid lightgrey !important k;
     position: relative;
     float: left;
   }
@@ -170,9 +179,10 @@ text-angular.short{
 .text-block-container {
   color: grey;
   border-top: 1px solid @gray-lighter;
-//  border-bottom: 1px solid @gray-lighter;
+  //  border-bottom: 1px solid @gray-lighter;
 }
-.unit, .text-block.title{
+
+.unit, .text-block.title {
   position: relative;
   float: left;
   height: 40px;
@@ -188,29 +198,31 @@ text-angular.short{
     line-height: 38px;
   }
 }
+
 .text-block.title {
   height: 100%;
   width: 80px;
   text-align: center;
   position: absolute;
 }
+
 .text-block-body {
   position: relative;
   float: left;
   right: 0;
-  margin:0px;
+  margin: 0px;
   padding-left: 80px;
   width: 100%;
   hr {
     margin: 0;
-//    color: gray;
+    //    color: gray;
     width: 100%;
     border: 0;
     height: 0.5px;
-    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
-    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
-    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
-    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25), rgba(0,0,0,0));
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+    background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
   }
 }
 
@@ -231,32 +243,40 @@ text-angular.short{
     }
     .button:active {
       color: orange;
-//      opacity: 0.9;
+      //      opacity: 0.9;
     }
   }
 }
+
 .img-block.image {
-  height: 100%;
   width: 100px;
+  min-height: 145px;
+  height: 100%;
   text-align: center;
   position: absolute;
+  img {
+    position: relative;
+  }
 }
+
 .img-block-body {
   position: relative;
-  float: left;
   right: 0;
-  margin:0px;
-  padding-left: 100px;
+  margin: 0px;
+  padding-left: 115px;
   width: 100%;
+  min-height: 145px;
 }
-
-
 
 .info-button-dropdown {
   p {
     margin-left: 25px;
     color: transparent;
-    transition: color 0.25s linear;
+    .transition(color 0.25s linear);
+  }
+
+  .glyphicon {
+    .transition(color 0.15s linear);
   }
   div.drop-down {
     position: absolute;
@@ -270,6 +290,9 @@ text-angular.short{
   &:hover {
     p {
       color: grey;
+    }
+    .glyphicon {
+      color: transparent;
     }
     div.drop-down {
       background-color: white;

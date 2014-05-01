@@ -31,7 +31,7 @@ var bookData = {
         related: [],
         metaData: {
             publisher: 'Pantheon',
-            yearOfPublication: Date.now(),
+            yearOfPublication: 2012,
             wordCount: null,
             pages: 320
         },

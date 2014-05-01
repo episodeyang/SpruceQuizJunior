@@ -223,11 +223,30 @@ option.c9{.option-color(@c9)}
           transition: transform @transition;
 }
 
+.perspective(@perspect) {
+  -webkit-perspective: @perspect;
+  -moz-perspective: @perspect;
+  -o-perspective: @perspect;
+  perspective: @perspect;
+}
+
 // Transformations
 .rotate(@degrees) {
   -webkit-transform: rotate(@degrees);
       -ms-transform: rotate(@degrees); // IE9+
           transform: rotate(@degrees);
+}
+.transform(@trans) {
+  -webkit-transform: @trans;
+  -moz-transform: @trans;
+  -o-transform: @trans;
+  transform: @trans;
+}
+.transform-style(@style) {
+  -webkit-transform-style: @style;
+  -moz-transform-style: @style;
+  -o-transform-style: @style;
+  transform-style: @style;
 }
 .scale(@ratio) {
   -webkit-transform: scale(@ratio);
@@ -236,6 +255,8 @@ option.c9{.option-color(@c9)}
 }
 .reflect-verticle {
   -webkit-transform: scale(-1,1);
+  -moz-transform: scale(-1,1);
+  -o-transform: scale(-1,1);
   -ms-transform: scale(-1,1); // IE9+
   transform: scale(-1,1);
 }

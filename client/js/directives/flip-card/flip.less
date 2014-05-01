@@ -1,0 +1,50 @@
+@import "../../../css/mixins.less";
+
+.flip {
+  .perspective(800);
+  position: relative;
+  width: 100%;
+  .card-container {
+    .transform-style(preserve-3d);
+    .transition(0.5s);
+
+    .front, .back {
+      width: 100%;
+      position:absolute;
+      .backface-visibility(hidden);
+    }
+    .front {
+      .transform(translateZ(1px))
+    }
+    .back {
+      .transform(translateZ(1px) rotatey(-180deg) );
+    }
+  }
+}
+
+.flip.front{
+  .card-container .front {
+    position: relative;
+  }
+  .card-container .back {
+  .transform(translateZ(1px) rotatey(-180deg) translateY(-180px));
+  }
+}
+
+.flip.back{
+
+  .card-container {
+    .transform(rotatey(-180deg));
+
+    .front {
+      //    position: absolute;
+      //    z-index: 2;
+    }
+    .back {
+      //    display: block;
+      //    z-index: -20;
+      position: relative;
+      .transform(rotatey(-180deg) translateZ(1px));
+    }
+  }
+}

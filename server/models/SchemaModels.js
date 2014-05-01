@@ -301,7 +301,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 related: [String],
                 metaData: {
                     publisher: String,
-                    yearOfPublication: Date,
+                    yearOfPublication: Number,
                     wordCount: Number,
                     pages: Number
                 },
