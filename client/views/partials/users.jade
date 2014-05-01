@@ -1,6 +1,7 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
@@ -138,7 +139,17 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span 提问 {{Model.profile.stats.answerCount}}
                                                 .unit
                                                     span 编辑 {{Model.profile.stats.editCount}}
-
+                        .col-xs-12
+                            .feed-container
+                                .time-header.separator
+                                    .unit 17
+                                        span.small 小时
+                                .time-header.right-label
+                                    .unit
+                                        span.small 回答
+                                .time-body.card
+                                    .unit.title “难题夹子是一个什么样的网站？"
+                                    .unit
 
                     .flow-container
                         .row
