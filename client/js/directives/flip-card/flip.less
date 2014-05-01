@@ -10,28 +10,29 @@
 
     .front, .back {
       width: 100%;
-      position:absolute;
+      position: absolute;
       .backface-visibility(hidden);
     }
     .front {
       .transform(translateZ(1px))
     }
     .back {
-      .transform(translateZ(1px) rotatey(-180deg) );
+      .transform(translateZ(1px) rotatey(-180deg));
     }
   }
 }
 
-.flip.front{
+.flip.front {
   .card-container .front {
     position: relative;
   }
   .card-container .back {
-  .transform(translateZ(1px) rotatey(-180deg) translateY(-155px));
+    //we can inject a different one for each page in the element style.
+    .transform(translateZ(1px) rotatey(-180deg) translateY(-155px));
   }
 }
 
-.flip.back{
+.flip.back {
 
   .card-container {
     .transform(rotatey(-180deg));

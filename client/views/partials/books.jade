@@ -42,8 +42,8 @@ div.background(background-img="/img/bg-brown.jpg")
                     .row
                         .col-xs-12
                             div
-                                flip(flipped='view.card.flipped')
-                                    flip-front.editor.convex.no-top-margin
+                                flip(flipped='view.card.flipped').bottom-margin
+                                    flip-front.card.convex.no-top-margin
                                         div.img-block.image
                                             img(ng-src="{{Model.book.coverUrl}}")
                                         div.img-block-body
@@ -74,7 +74,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                         span 问题 14
                                                         span 回答 265
                                                         span.end 编辑 3
-                                    flip-back.editor.convex.no-top-margin
+                                    flip-back.card.convex.no-top-margin
                                         .card-title.bottom-margin
                                             span.name(inline-editable, contenteditable="{{view.card.edit}}", ng-model="Model.book.title", placeholder="标题...")
                                             span.signature(ng-repeat-start="author in Model.book.authors") ，
@@ -122,9 +122,9 @@ div.background(background-img="/img/bg-brown.jpg")
                                                         span 提问 {{Model.book.stats.answerCount}}
                                                     .unit
                                                         span 编辑 {{Model.book.stats.editCount}}
-                            .editor
+                            .card.bottom-margin
                                 p test this now
-                            .editor
+                            .card.bottom-margin
                                 p test this now
 
 

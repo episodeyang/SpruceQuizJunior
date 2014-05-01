@@ -4,15 +4,15 @@
 
 //@import "media.less";
 
-.editor.concave {
+.card.concave {
   border-top: 1px solid fadeout(#604830, 40%);
 }
 
-.editor.convex {
+.card.convex {
   border-bottom: 1px solid fadeout(#604830, 40%);
 }
 
-.editor {
+.card {
   position: relative;
   background-color: white;
   padding: 15px;
@@ -20,33 +20,33 @@
   :focus {
     outline: none;
   }
-  //  .editor-inner {
+  //  .card-inner {
   //    border-style: none;
   //    width: 100%;
   //  }
 }
 
-a.editor {
+a.card {
   display: block;
   box-sizing: border-box;
   margin-bottom: 1em;
 }
 
-.editor.tall {
+.card.tall {
   min-height: 30%;
-  > .editor-inner {
+  > .card-inner {
     min-height: 30%;
   }
 }
 
-.editor.short {
+.card.short {
   min-height: 95px;
-  > .editor-inner {
+  > .card-inner {
     min-height: 95px;
   }
 }
 
-.comment-editor {
+.comment.card {
   position: relative;
   background-color: fadeout(white, 60%);
   min-height: 45px;
@@ -55,7 +55,7 @@ a.editor {
   :focus {
     outline: none;
   }
-  .editor-inner {
+  .card-inner {
     background-color: transparent;
     border-style: none;
     width: 100%;
@@ -100,26 +100,26 @@ text-angular {
       .box-shadow(none);
     }
   }
-  .ta-editor {
+  .ta.card {
     background-color: white;
     border-radius: 3px;
     padding: 15px;
     width: 100%;
   }
-  .ta-editor:focus {
+  .ta.card:focus {
     outline-color: @gray-lighte;
     outline-width: 3px;
   }
 }
 
 text-angular.tall {
-  .ta-editor {
+  .ta.card {
     min-height: 30%;
   }
 }
 
 text-angular.short {
-  .ta-editor {
+  .ta.card {
     min-height: 95px;
   }
 }

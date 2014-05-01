@@ -48,7 +48,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     .row
                         .col-xs-12
                             flip(flipped="view.profile.flipped")
-                                flip-front.editor.convex.no-top-margin
+                                flip-front.card.convex.no-top-margin
                                     .card-title.bottom-margin
                                         span.name {{Model.profile.name.split(',').join('')}}
                                         span.signature ，
@@ -74,7 +74,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 span.separated 提问 {{Model.profile.stats.answerCount}}
                                                 span 编辑 {{Model.profile.stats.editCount}}
 
-                                flip-back.editor.convex.no-top-margin
+                                flip-back.card.convex.no-top-margin
                                     .card-title.bottom-margin
                                         span.name(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓, 名...")
                                         span.signature ，
