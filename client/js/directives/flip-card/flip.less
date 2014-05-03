@@ -14,7 +14,8 @@
       .backface-visibility(hidden);
     }
     .front {
-      .transform(translateZ(1px))
+      z-index: 1;
+//      .transform(translateZ(1px))
     }
     .back {
       .transform(translateZ(1px) rotatey(-180deg));
@@ -39,13 +40,14 @@
 
     .front {
       //    position: absolute;
-      //    z-index: 2;
+          z-index: 1;
     }
     .back {
       //    display: block;
       //    z-index: -20;
       position: relative;
-      .transform(rotatey(-180deg) translateZ(1px));
+      .transform(rotatey(-180deg));
+//      .transform(rotatey(-180deg) translateZ(1px));
     }
   }
 }
