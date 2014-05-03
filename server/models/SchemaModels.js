@@ -163,7 +163,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             }
         },
         feed: {
-            action: String,
+            actionType: String,
+            time: {type: Date, default: Date.now},
             data: Schema.Types.Mixed
         },
         school: {
@@ -313,11 +314,15 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 tableOfContent: {type: Schema.Types.Mixed }
             },
             userFeed: {
-                user: {type: Schema.Types.ObjectId},
+                userId: {type: Schema.Types.ObjectId},
                 username: String,
-                page: {type: Number, index: true},
-                count: {type: Number, index: true},
-                feeds: [subSchema.Feed]
+                page: {type: Number, index: true, unique: true, default: 0},
+                count: {type: Number},
+                feeds: [subSchema.Feed],
+                __index__: {
+                    userId: 1,
+                    page: -1
+                }
             },
             session: {
                 title: String,
@@ -426,8 +431,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     }
                 }
             }
-        }
-        ;
+        };
 
     var Config = {};
     _.each(config, function (schema, title) {
@@ -442,6 +446,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         if (schema.__options__) {
             var options = schema.__options__;
             delete schema.__options__;
+        }
+        if (schema.__index__) {
+            var indexConfig = schema.__index__;
+            delete schema.__index__;
         }
         Config[title + 'Schema'] = new mongoose.Schema(schema, {collection: title});
         if (methods) {
@@ -466,6 +474,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             _.each(options, function (option, optionKey) {
                 Config[title + 'Schema'].set(optionKey, option);
             });
+        }
+        if (indexConfig) {
+            Config[title + 'Schema'].index(indexConfig);
         }
         Config[capitalize(title)] = mongoose.model(capitalize(title), Config[title + 'Schema']);
     });

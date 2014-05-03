@@ -18,6 +18,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
             , SuperadminM = SchemaModels.Superadmin;
         var check = validator.check;
 
+        var UserFeed = SchemaModels.UserFeed;
+
         function dictParser(string) {
             /**
              * convert `#` separated string to a dictionary

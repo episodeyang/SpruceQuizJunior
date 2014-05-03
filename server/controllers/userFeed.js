@@ -2,217 +2,58 @@
  * @fileOverview User Controller
  * @module User
  * @type {exports}
- * This `QuestionCtrl` module takes care of question related operations, such as
- *              question.index(),
- *              question.add(:id),
- *              question.findOne(:id, payload)
- *              question.update(:id, payload)
- *              question.remove(:id)
+ * This `QuestionCtrl` module takes care of userFeed related operations, such as
+ *              userFeed.index(),
+ *              userFeed.add(:id),
+ *              userFeed.findOne(:id, payload)
+ *              userFeed.update(:id, payload)
+ *              userFeed.remove(:id)
  *              etc.,
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
-    function (_, SchemaModels, rolesHelper, mongoose) {
-        var UserFeedM = SchemaModels.UserFeed;
+define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesHelper', "mongoose"],
+    function (_, SchemaModels, UserFeedM, rolesHelper, mongoose) {
+//        var UserFeedM = SchemaModels.UserFeed;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
+        var fieldString = "_id userId username page count feeds";
+
+        function callback (err, doc) {
+            if (err) {
+                console.log(err);
+                return res.send(403, err);
+            } else {
+                return res.send(200, results);
+            }
+        }
         return {
             /**
-             *
-             * @api {get} /api/questions Get Questions
-             * @apiName IndexQuestion
-             * @apiGroup Questions
-             * @apiSuccess {Array} list of all questions.
-             * @apiSuccessExample Success-Response:
-             *     HTTP/1.1 200 OK
-             *     [
-             *      { title: '行程问题解法',
-             *       text: 'some example text here',
-             *       answers: [],
-             *       comments: [],
-             *       tags: [ '三年级', '数学', '二元一次方程' ],
-             *       id: '52f6e14da7e331ff15fb4d13' },
-             *      { title: '行程问题解法',
-             *        text: 'some example text here',
-             *        answers: [],
-             *        comments: [],
-             *       tags: [ '三年级', '数学', '二元一次方程' ],
-             *       id: '52f6e5ff8021572716e3ee8f' },
-             *     ]
-             * @apiError UserNotFound The id of the User was not found.
-             * @apiErrorExample Error-Response:
-             *     HTTP/1.1 404 Not Found
-             *     {
-             *       "error": "UserNotFound"
-             *     }
-             */
-            index: function (req, res) {
-//                console.log('got request to /api/problems, processing now.');
-                UserFeedM.find({}, function(err, docs){
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, err);
-                    } else {
-                        return res.send(200, docs);
-                    };
-                })
-            },
-            /**
-             * @api {post} /api/questions Create Question
+             * @api {post} /api/userFeeds Create Question
              * @apiName CreateQuestion
              * @apiGroup Questions
              */
             add: function (req, res) {
-                var question = req.body;
-                if (req.user.role.title != 'superadmin') {
-                    question.dateCreated = Date.now();
-                    delete question.voteup;
-                    delete question.votedown;
-                    delete question.comments;
-                    delete question.answers;
-                    question.author = { username: req.user.username };
-                }
-                UserFeedM.create(question, function (err, results) {
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, err);
-                    };
-                })
-                    .then(function (question) {
-                        res.location(req.route.path + '/' + question.id);
-                        return res.send(201, question);
-                    });
+                UserFeedM.addFeed(req.body.userId, req.body.type, req.body.data, callback);
             },
             /**
-             * @api {get} /api/questions/:id Get A Specific Question
+             * @api {get} /api/userFeeds/:id Get A Specific Question
              * @apiName GetQuestion
              * @apiGroup Questions
              */
-            findOne: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
-                UserFeedM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated', function(err, results){
-                    if (err) {return res.send(403, err)}
-                    else {
-                        return res.send(200, results);
-                    };
-                })
-            },
-            /**
-             * @api {post} /api/questions/:id Update Question
-             * @apiName UpdateQuestion
-             * @apiGroup Questions
-             */
-            update: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
-                if (req.body.voteup || req.body.votedown ) {
-                    if (req.body.voteup !== 'true' && req.body.votedown !== 'true' ) {
-                        return res.send(403, 'votingContractError');
-                    } else {
-                        UserFeedM.findById(
-                            req.params.id,
-                            'voteup votedown vote',
-                            function(err, question) {
-                                if (req.body.voteup === 'true') {
-                                    if (_.contains(question.voteup, req.user.username)) {
-                                        var update = {
-                                            $pull: {
-                                                votedown: req.user.username,
-                                                voteup: req.user.username
-                                            }
-                                        };
-                                    } else {
-                                        var update = {
-                                            $pull: {
-                                                votedown: req.user.username
-                                            },
-                                            $push: {
-                                                voteup: req.user.username
-                                            }
-                                        };
-                                    }
-                                }
-                                if (req.body.votedown === 'true') {
-                                    if (_.contains(question.votedown, req.user.username)) {
-                                        var update = {
-                                            $pull: {
-                                                votedown: req.user.username,
-                                                voteup: req.user.username
-                                            }
-                                        };
-                                    } else {
-                                        var update = {
-                                            $pull: {
-                                                voteup: req.user.username
-                                            },
-                                            $push: {
-                                                votedown: req.user.username
-                                            }
-                                        };
-                                    }
-                                }
-
-                                UserFeedM.findByIdAndUpdate(req.params.id, update, {select: 'vote voteup votedown'}, function (err, result, n) {
-                                    var q = {
-                                        voteup: result.voteup,
-                                        votedown: result.votedown,
-                                        vote: result.vote
-                                    };
-                                    if (err) { return res.send(500, err); }
-                                    else {
-                                        return res.send(201, q );
-                                    };
-                                });
-                            }
-                        )
-                    }
-                } else {
-                    var update = {};
-                    var fieldString = '';
-                    if (req.body.title) {
-                        update.title = req.body.title;
-                        fieldString += 'title ';
-                    }
-                    if (req.body.text) {
-                        update.text = req.body.text;
-                        fieldString += 'text ';
-                    }
-                    if (req.body.tags) {
-                        update.tags = req.body.tags;
-                        fieldString += 'tags ';
-                    }
-                    if (fieldString.length > 0) {
-//                        $currentDate setting will be in mongoDB v2.6 upcoming release.
-//                        update.$currentDate = {dateEdited: true};
-                        update.dateEdited = new Date();
-                        fieldString += 'dateEdited';
-                    }
-                    UserFeedM.findByIdAndUpdate(
-                        req.params.id,
-                        update,
-                        {select: fieldString},
-                        function (err, result, n) {
-                            if (err) {
-                                return res.send(500, err);
-                            } else {
-                                return res.send(201, result);
-                            };
-                        });
+            getByPage: function (req, res) {
+                if (!req.params.userId) {
+                    return res.send(400, 'noUserIdInRequest');
                 }
-            },
-            /**
-             * @api {delete} /api/questions/:id Delete Question
-             * @apiName DeleteQuestion
-             * @apiGroup Questions
-             */
-            removeById: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
-                UserFeedM.findByIdAndRemove(
-                    ObjectId(req.params.id),
-                    function(err, results){
-                        if (err) {return res.send(403, err)};
-                        return res.send(204);
-                    });
+                var query = {
+                    userId: req.params.userId
+                };
+                if (!req.params.page) {
+                     query.page = -1;
+                } else {
+                    query.page = req.params.page;
+                }
+                UserFeedM.findOne(query, callback);
             }
         };
     });

@@ -30,16 +30,18 @@ div.background(background-img="/img/bg-brown.jpg")
         .row
             .col-sm-2.col-xs-3
                 ul.nav.sp-nav.nav-pills.nav-stacked
-                    li(ng-class="{active: view.state=='info'}")
-                        a.text-center(ng-click="view.state='info'") 信息
+                    li(ng-class="{active: view.state=='newsFeed'}")
+                        a.text-center(ng-click="view.state='newsFeed'") 更新和信息
                     li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'") 搜索
+                        a.text-center(ng-click="view.state='search'")
+                            span 搜索 &nbsp
+                            i.fa.fa-search
+                    li(ng-class="{active: view.state=='stats'}")
+                        a.text-center(ng-click="view.state='stats'") 统计数据
                     li(ng-class="{active: view.state=='answers'}")
                         a.text-center(ng-click="view.state='answers'") 他的回答
                     li(ng-class="{active: view.state=='follow'}")
                         a.text-center(ng-click="view.state='follow'") 他的关注
-                    li(ng-class="{active: view.state=='stats'}")
-                        a.text-center(ng-click="view.state='stats'") 统计数据
                     li(ng-class="{active: view.state=='questions'}")
                         a.text-center(ng-click="view.state='questions'") 他的提问
                     li(ng-class="{active: view.state=='comments'}")
@@ -149,7 +151,37 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.small 回答
                                 .time-body.card
                                     .unit.title “难题夹子是一个什么样的网站？"
+                                    .unit 难题夹子为学术讨论提供最好的问答体验。在难题夹子上，你可以在富文本编辑器中直接录入公式，化学反应式和矩阵模型。在难题夹子上，你可以对同学的问题进行评论和回答，并对每一个问题和回答评论和打分。而那些投票得到的分数，会成为你经验的一部分。
+                            .feed-container
+                                .time-header.separator
+                                    .unit 17
+                                        span.small 小时
+                                .time-header.right-label
                                     .unit
+                                        span.small 评论
+                                .time-body.card
+                                    .unit.title “难题夹子是一个什么样的网站？"
+                                    .unit 难题夹子为学术讨论提供最好的问答体验。在难题夹子上，你可以在富文本编辑器中直接录入公式，化学反应式和矩阵模型。在难题夹子上，你可以对同学的问题进行评论和回答，并对每一个问题和回答评论和打分。而那些投票得到的分数，会成为你经验的一部分。
+                            .feed-container
+                                .time-header.separator
+                                    .unit 1
+                                        span.small 天
+                                .time-header.right-label
+                                    .unit
+                                        span.small 回答
+                                .time-body.card
+                                    .unit.title “难题夹子是一个什么样的网站？"
+                                    .unit 难题夹子为学术讨论提供最好的问答体验。在难题夹子上，你可以在富文本编辑器中直接录入公式，化学反应式和矩阵模型。在难题夹子上，你可以对同学的问题进行评论和回答，并对每一个问题和回答评论和打分。而那些投票得到的分数，会成为你经验的一部分。
+                            .feed-container
+                                .time-header.separator.last
+                                    .unit 1
+                                        span.small 天
+                                .time-header.right-label
+                                    .unit
+                                        span.small 提问
+                                .time-body.card
+                                    .unit.title “难题夹子是一个什么样的网站？"
+                                    .unit 难题夹子为学术讨论提供最好的问答体验。在难题夹子上，你可以在富文本编辑器中直接录入公式，化学反应式和矩阵模型。在难题夹子上，你可以对同学的问题进行评论和回答，并对每一个问题和回答评论和打分。而那些投票得到的分数，会成为你经验的一部分。
 
                     .flow-container
                         .row

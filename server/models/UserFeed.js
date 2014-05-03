@@ -10,207 +10,80 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
     function (crypto, _, passport, passportLocal, validator, rolesHelper, SchemaModels) {
         var LocalStrategy = passportLocal.Strategy;
         var userRoles = rolesHelper.userRoles;
-        var UserM = SchemaModels.User
-            , StudentM = SchemaModels.Student
-            , ParentM = SchemaModels.Parent
-            , TeacherM = SchemaModels.Teacher
-            , AdminM = SchemaModels.Admin
-            , SuperadminM = SchemaModels.Superadmin;
+        var UserM = SchemaModels.User;
+        //    , StudentM = SchemaModels.Student
+        //    , ParentM = SchemaModels.Parent
+        //    , TeacherM = SchemaModels.Teacher
+        //    , AdminM = SchemaModels.Admin
+        //    , SuperadminM = SchemaModels.Superadmin;
         var check = validator.check;
 
-        var UserFeed = SchemaModels.UserFeed;
-
-        function dictParser(string) {
-            /**
-             * convert `#` separated string to a dictionary
-             * @param {String} string something like: "user@email.com#code:14a3b23#username:username"
-             * @return {object} output dictionary - something like: { email: <email>, otherKey: value}
-             */
-            var strList = string.split('#');
-            var params = { email: strList.shift() };
-            function pushKey (item) {
-                params[item.split(':')[0]] = item.split(':')[1];
-            }
-            _.each(strList, pushKey);
-            return params;
-        }
-
-
-        function dictMaker(data) {
-            /**
-             * convert a dictionary to `#` separated string
-             * @param {object} data
-             * @return {string} string
-             */
-            function makeString (value, key) {
-                if (value) {
-                    return "#" + key + ":" + value;
-                }
-            }
-            // add the `#` inside the makeString for better
-            // null value handling and default `#` prefix.
-            return _.map(data, makeString).join('');
-        }
+        var UserFeedM = SchemaModels.UserFeed;
 
         function capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
-        return {
 
-            addUser: function (username, password, role, params, callback) {
-
-                function createNewUser() {
-                    var user = new UserM({
-                        username: username,
-                        password: password,
-                        role: role,
-                        student: null,
-                        parent: null,
-                        teacher: null,
-                        admin: null,
-                        superadmin: null
-                    });
-
-                    var email = params.email + '#code:' + crypto.createHash('sha1').digest('hex');
-                    var subUser = {
-                        name: params.name,
-                        username: username,
-                        email: email,
-                        DOB: params.DOB
-                    };
-
-                    var userObject;
-                    if (role.bitMask === userRoles.student.bitMask) {
-                        userObject = new StudentM(subUser);
-                        userObject.save();
-                        user.student = userObject._id;
-                    } else if (role.bitMask === userRoles.parent.bitMask) {
-                        userObject = new ParentM(subUser);
-                        userObject.save();
-                        user.parent = userObject._id;
-                    } else if (role.bitMask === userRoles.teacher.bitMask) {
-                        userObject = new TeacherM(subUser);
-                        userObject.save();
-                        user.teacher = userObject._id;
-                    } else if (role.bitMask === userRoles.admin.bitMask) {
-                        userObject = new AdminM(subUser);
-                        userObject.save();
-                        user.admin = userObject._id;
-                    } else if (role.bitMask === userRoles.superadmin.bitMask) {
-                        userObject = new SuperadminM(subUser);
-                        userObject.save();
-                        user.superadmin = userObject._id;
-                    } else {
-                        return callback('InvalidRole.' + role.title);
-                    }
-
-                    user.save(function (err) {
-                        if (err) {
-                            console.log("An error occurred in saving new user to database.");
-                        } else {
-                            //console.log('subUser object')
-                            //console.log(subUser)
-                            user.populate(user.role.title, function (err, userFull) {
-                                return callback(null, userFull);
-                            });
-                        }
-                    });
+        var maxCount = 100;
+        var UserFeedMethods = {
+            newFeedBucket: function (userId, username, currentPageNumber, callback) {
+                var query = {
+                    userId: userId,
+                    page: currentPageNumber + 1
+                };
+                var update = {
+                    userId: userId,
+                    username: username
                 }
-                UserM.findOne({ username: username }, function (err, duplicate) {
-                    if (err) {
-                        console.log("An error occurred in checking User database.");
-                    } else if (duplicate) {
-                        console.log("User already exists");
-                        return callback("UserAlreadyExists");
-                    } else {
-                        createNewUser();
-                    }
-                });
-            },
-
-            confirmEmail: function (username, code, email, callback) {
-                UserM.findOne(
-                    {username: username},
-                    function (err, user) {
-                        if (!user || err) {
-                            console.log('User.confirmEmail error: user'+ user + ' error' + err)
-                            return callback('userDoesNotExist');
-                        }
-                        user.populate(user.role.title, function (err, user) {
-                            //console.log('show returned user object');
-                            //console.log(user);
-
-                            var userEmail = user[user.role.title].email;
-                            var params = dictParser(userEmail);
-
-                            if (!params.code) {
-                                return callback('emailAlreadyActivated');
-                            }
-
-                            if (params.code !== code) {
-                                return callback('invalidCode');
-                            }
-                            if (code === params.code && email === params.email && username === user.username) {
-                                SchemaModels[capitalize(user.role.title)].findOneAndUpdate(
-                                    {username: username},
-                                    {email: email},
-                                    function (err, user) {
-                                        return callback(null, 'emailConfirmed');
-                                    }
-                                );
-                            }
-                        });
-                    }
+                UserFeedM.findOneAndUpdate(
+                    query,
+                    update,
+                    {
+                        upsert: true,
+                        sort: {page: -1}
+                    },
+                    callback
                 );
             },
+            addFeed: function (userId, type, data, callback) {
+                if (!userId) {return callback('noUserId');}
+                if (!type) {return callback('noFeedType');}
+                if (!data) {return callback('noFeedData');}
+                var query = {
+                    userId: userId,
+                    page: -1
+                };
+                var feed = {
+                    actionType: type,
+                    data: data
+                };
+                var update = {
+                    $inc: {count: 1},
+                    $push: {feeds: feed}
+                };
 
-            validate: function (user) {
-                check(user.username, 'Username must be 1-20 characters long').len(1, 20);
-                check(user.password, 'Password hash is length 64').len(64);
-                check(user.username, 'Invalid username').not(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
-
-                // TODO: Seems node-validator's isIn function doesn't handle Number arrays very well...
-                // Till this is rectified Number arrays must be converted to string arrays
-                // https://github.com/chriso/node-validator/issues/185
-                //var stringArr = _.map(_.values(userRoles), function(val) { return val.toString() });
-                var stringArr = [ '1', '2', '4', '8', '16', '32', '64'];
-                //console.log(stringArr);
-                check(user.role.bitMask, 'Invalid user role given').isIn(stringArr);
-            },
-
-            localStrategy: new LocalStrategy(
-                function (username, password, done) {
-                    UserM.findOne({ username: username }, function (err, user) {
-                        if (err) {
-                            return done(err);
-                        }
-                        if (!user) {
-                            return done(null, false, { message: 'Incorrect username.' });
-                        } else if (!user.validPassword(password)) {
-                            return done(null, false, { message: 'Incorrect password.' });
-                        } else {
-                            return done(null, user);
-                        }
-                    });
+                function checkCount(error, doc) {
+                    if (error) {
+                        return callback(error);
+                    }
+                    if (doc.count >= maxCount) {
+                        var currentPageNumber = doc.page;
+                        var username = doc.username;
+                        this.newFeedBucket(userId, username, currentPageNumber);
+                    } else {
+                        callback(null, doc);
+                    }
                 }
-            ),
 
-            serializeUser: function (user, done) {
-                done(null, user.id);
-            },
-
-            deserializeUser: function (id, done) {
-                UserM.findOne({ _id: id }, function (err, user) {
-                    if (user) {
-                        done(null, user);
-                    }
-                    else {
-                        done(null, false);
-                    }
-                });
+                UserFeedM.findOneAndUpdate(
+                    query,
+                    update,
+                    {  sort: {page: -1}  },
+                    checkCount
+                );
             }
         };
-
+        _.extend(UserFeedM, UserFeedMethods);
     });
 
 

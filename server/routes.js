@@ -6,10 +6,10 @@
  */
 
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
-    './controllers/user',
+    './controllers/user', './controllers/userFeed',
         './controllers/student',
         './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/session', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SessionCtrl, MailerCtrl, SpiderCtrl) {
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SessionCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -220,6 +220,18 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.index],
                 accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/userFeeds/:userId/:page',
+                httpMethod: 'GET',
+                middleware: [UserFeedCtrl.getByPage],
+                accessLevel: accessLevels.all
+            },
+            {   //Only for testing. Should disable during production.
+                path: '/api/userFeeds/:userId',
+                httpMethod: 'POST',
+                middleware: [UserFeedCtrl.add],
+                accessLevel: accessLevels.superadmin
             },
             {
                 path: '/api/sessions',
