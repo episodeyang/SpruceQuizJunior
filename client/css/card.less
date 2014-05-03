@@ -20,10 +20,6 @@
   :focus {
     outline: none;
   }
-  //  .card-inner {
-  //    border-style: none;
-  //    width: 100%;
-  //  }
 }
 
 a.card {
@@ -34,19 +30,19 @@ a.card {
 
 .card.tall {
   min-height: 30%;
-  > .card-inner {
+  > .editor-inner {
     min-height: 30%;
   }
 }
 
 .card.short {
   min-height: 95px;
-  > .card-inner {
+  > .editor-inner {
     min-height: 95px;
   }
 }
 
-.comment.card {
+.comment-editor {
   position: relative;
   background-color: fadeout(white, 60%);
   min-height: 45px;
@@ -55,7 +51,7 @@ a.card {
   :focus {
     outline: none;
   }
-  .card-inner {
+  .editor-inner {
     background-color: transparent;
     border-style: none;
     width: 100%;

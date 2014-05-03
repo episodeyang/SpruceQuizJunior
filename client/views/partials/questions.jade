@@ -63,7 +63,7 @@ div.background(background-img="/img/bg-brown.jpg")
                 div(ng-if="view.state=='ask'")
                     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                     //form.card.tall.top-margin(name = 'questionAskEditorForm')
-                    //    div.card-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+                    //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                     text-angular.tall(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
 
                     div.bottom-margin.top-margin
@@ -84,7 +84,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     div(ng-if="view.state ==='question.edit'")
                         input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                         //form.card.tall.top-margin(name = 'questionEditorForm')
-                        //    div.card-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
+                        //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                         text-angular.tall.top-margin(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         div.bottom-margin.top-margin
                             .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
@@ -112,8 +112,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                     p.text-center
                                         a(ng-click='Model.votedown(Model.question)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": Model.question.voteddown}')
-                            //-div.card-inner(compile="'<mathjax>' + Model.question.text + '</mathjax>'")
-                            div.card-inner(math-html="Model.question.text")
+                            //-div.editor-inner(compile="'<mathjax>' + Model.question.text + '</mathjax>'")
+                            div.editor-inner(math-html="Model.question.text")
                         div.bottom-margin.top-margin
                             a.badge(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
                             a.badge.bg-turquoise(ng-repeat='book in Model.question.books track by $index').right-margin {{book}}
@@ -162,7 +162,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     .row(ng-if="view.commentEditor.state")
                         .col-xs-11.pull-right
                             form.comment-editor.short
-                                textarea.card-inner.small(ng-model="commentEditor.data.text")
+                                textarea.editor-inner.small(ng-model="commentEditor.data.text")
                             .row
                                 .col-xs-12
                                     button.btn.btn-success.btn-small.pull-right(ng-click="submitComment()") 确定
@@ -186,11 +186,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                     p.text-center
                                         a(ng-click='votedownAnswer(answer)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": answer.voteddown}')
-                            div.card-inner(math-html="answer.text")
+                            div.editor-inner(math-html="answer.text")
                             //- answer comments
                         div(ng-if="answer.viewEdit")
                             //form.card.short.top-margin(name = 'answerEditorForm')
-                                div.card-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+                                div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
 
                             .row.top-margin.bottom-margin
                                 .col-xs-12
@@ -243,7 +243,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row(ng-if="answer.view.state")
                             .col-xs-11.pull-right
                                 form.comment-editor.short
-                                    textarea.card-inner.small(ng-model="commentEditor.data.text")
+                                    textarea.editor-inner.small(ng-model="commentEditor.data.text")
                                 .row
                                     .col-xs-12
                                         button.btn.btn-success.btn-small.pull-right(ng-click="submitComment(answer)") 确定
@@ -253,7 +253,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         br
                         h3 你的回答
                         //form.card.short(name = 'answerEditorForm')
-                        //    div.card-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
+                        //    div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
 
                         text-angular.short(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         .row
