@@ -31,6 +31,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     userId: userId,
                     page: currentPageNumber + 1
                 };
+                console.log('query');
+                console.log(query);
                 var update = {
                     userId: userId,
                     username: username,
@@ -48,9 +50,9 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 );
             },
             addFeed: function (userId, username, type, data, callback) {
-                if (!userId) {return callback('noUserId');}
-                if (!type) {return callback('noFeedType');}
-                if (!data) {return callback('noFeedData');}
+                if (!userId) {return callback('noUserId'); }
+                if (!type) {return callback('noFeedType'); }
+                if (!data) {return callback('noFeedData'); }
                 var query = {
                     userId: userId
                 };
@@ -64,7 +66,9 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     $push: {feeds: feed}
                 };
 
-                function repeatAdd () {
+                function repeatAdd (error, doc) {
+                    if (error) { return console.log(error); }
+                    console.log(doc);
                     UserFeedM.findOneAndUpdate(
                         query,
                         update,
