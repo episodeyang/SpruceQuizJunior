@@ -142,9 +142,9 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 .unit
                                                     span 编辑 {{Model.profile.stats.editCount}}
                         .col-xs-12
-                            .feed-container(ng-repeat="feed in Model.userFeed.feeds track by $index")
+                            .feed-container(ng-repeat="feed in Model.userFeed.feeds track by $index | orderBy:time:reverse")
                                 .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
-                                    .unit {{feed.time}}
+                                    .unit {{feed.timeNumber}}
                                         span.small {{feed.timeUnit}}
                                 .time-header.right-label
                                     .unit

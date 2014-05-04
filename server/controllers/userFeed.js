@@ -31,7 +31,6 @@ define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesH
                         console.log(err);
                         return res.send(403, err);
                     } else {
-                        console.log(doc);
                         return res.send(200, doc);
                     }
                 }
@@ -48,7 +47,6 @@ define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesH
                         console.log(err);
                         return res.send(403, err);
                     } else {
-                        console.log(doc);
                         return res.send(200, doc);
                     }
                 }

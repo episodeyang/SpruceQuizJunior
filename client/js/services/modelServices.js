@@ -492,6 +492,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             function timeLapsed (time) {
                 var dt = Date.now() - new Date(time);
+                //console.log(dt);
                 var oneSecond = 1000;
                 var oneMinute = oneSecond * 60;
                 var oneHour = oneMinute * 60;
@@ -499,37 +500,45 @@ angular.module('modelServices', ['resourceProvider'])
                 var oneWeek = oneDay * 7;
                 var oneMonth = oneDay * 30;
                 var oneYear = oneDay * 365;
+                var timeString;
+
                 if (dt >= oneYear) {
-                    return Math.floor(dt/oneYear) + ' 年';
+                    timeString = Math.floor(dt/oneYear) + ' 年';
                 } else if (dt >= oneMonth) {
-                    return Math.floor(dt/oneMonth) + ' 月';
+                    timeString = Math.floor(dt/oneMonth) + ' 月';
                 } else if (dt >= oneWeek) {
-                    return Math.floor(dt/oneWeek) + ' 周';
+                    timeString = Math.floor(dt/oneWeek) + ' 周';
                 } else if (dt >= oneDay) {
-                    return Math.floor(dt/oneDay) + ' 天';
+                    timeString = Math.floor(dt/oneDay) + ' 天';
                 } else if (dt >= oneHour) {
-                    return Math.floor(dt/oneHour) + ' 小时';
+                    timeString = Math.floor(dt/oneHour) + ' 小时';
                 } else if (dt >= oneMinute) {
-                    return Math.floor(dt/oneMinute) + ' 分钟';
+                    timeString = Math.floor(dt/oneMinute) + ' 分钟';
                 } else if (dt >= oneSecond) {
-                    return Math.floor(dt/oneSecond) + ' 秒';
+                    timeString = Math.floor(dt/oneSecond) + ' 秒';
                 }
+
+                //console.log(timeString);
+                return timeString;
             }
             var feedTypeDict = {
+                questionGet: "阅读",
                 questionEdit: "编辑",
                 questionAdd: "提问",
                 questionVote: "投票",
                 answerAdd: "回答",
                 commentAdd: "评论"
             };
-            function feedTypeTranslator () {
+            function feedFormatter () {
+                var timeStrings;
                 _.each(
                     modelInstance.userFeed.feeds,
                     function (feed) {
-                        feed.type = feedTypeDict[feed.type];
-                        feed.time = timeLapsed(feed.time).split(' ');
-                        feed.timeUnit = feed.time[1]
-                        feed.time = feed.time[0]
+                        timeStrings = timeLapsed(feed.time).split(' ');
+                        feed.timeNumber = timeStrings[0];
+                        feed.timeUnit = timeStrings[1];
+
+                        feed.type = feedTypeDict[feed.actionType];
                     }
                 );
             }
@@ -539,7 +548,7 @@ angular.module('modelServices', ['resourceProvider'])
                 };
                 function success (feedBucket) {
                     modelInstance.userFeed = feedBucket;
-                    feedTypeTranslator();
+                    feedFormatter();
                 }
                 function error (err) {
                     $rootScope.error = err;
