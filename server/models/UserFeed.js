@@ -24,7 +24,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
-        var maxCount = 100;
+        var maxCount = 1000;
         var UserFeedMethods = {
             newFeedBucket: function (userId, username, currentPageNumber, callback) {
                 var query = {

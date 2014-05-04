@@ -522,12 +522,30 @@ angular.module('modelServices', ['resourceProvider'])
                 return timeString;
             }
             var feedTypeDict = {
-                questionGet: "阅读",
-                questionEdit: "编辑",
-                questionAdd: "提问",
-                questionVote: "投票",
-                answerAdd: "回答",
-                commentAdd: "评论"
+                questionGet: {
+                    tagText: "阅读",
+                    url: "/questions/"
+                },
+                questionEdit: {
+                    tagText: "编辑",
+                    url: '/questions/'
+                },
+                questionAdd: {
+                    tagText: "提问",
+                    url: '/questions/'
+                },
+                questionVote: {
+                    tagText: "投票",
+                    url: '/questions/'
+                },
+                answerAdd: {
+                    tagText: "回答",
+                    url: '/questions/'
+                },
+                commentAdd: {
+                    tagText: "评论",
+                    url: '/questions/'
+                }
             };
             function feedFormatter () {
                 var timeStrings;
@@ -538,7 +556,8 @@ angular.module('modelServices', ['resourceProvider'])
                         feed.timeNumber = timeStrings[0];
                         feed.timeUnit = timeStrings[1];
 
-                        feed.type = feedTypeDict[feed.actionType];
+                        feed.tagText = feedTypeDict[feed.actionType].tagText;
+                        feed.url = feedTypeDict[feed.actionType].url + feed.data.id;
                     }
                 );
             }

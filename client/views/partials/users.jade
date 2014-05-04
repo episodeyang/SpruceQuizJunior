@@ -148,9 +148,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.small {{feed.timeUnit}}
                                 .time-header.right-label
                                     .unit
-                                        span.small {{feed.type}}
+                                        span.small {{feed.tagText}}
                                 .time-body.card
-                                    .unit.title “{{feed.data.title}}"
+                                    .unit.title
+                                        a(ng-href="{{feed.url}}") “{{feed.data.title}}"
                                     .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
 
                     .flow-container
