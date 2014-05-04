@@ -31,7 +31,10 @@ angular.module('SpruceQuizApp')
 
             $rootScope.errors = {};
 
-
+            $scope.view.timeline = {
+                predicate: 'time',
+                reverse: true
+            };
             Model.getUserProfile($routeParams.username);
             Model.getUserFeeds($routeParams.username);
 
@@ -67,7 +70,7 @@ angular.module('SpruceQuizApp')
                 }
 
                 _.map(Model.profile, removeNullAddEmptyToEnd);
-                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length-1], removeNullAddEmptyToEnd);
+                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNullAddEmptyToEnd);
 
             };
             $scope.$watch('Model.profile',
@@ -90,7 +93,7 @@ angular.module('SpruceQuizApp')
                 }
 
                 _.map(Model.profile, removeNull);
-                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length-1], removeNull);
+                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNull);
 
                 if (school !== undefined) {
                     if (!school.name) {
