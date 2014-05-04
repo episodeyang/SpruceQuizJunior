@@ -33,28 +33,30 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 };
                 var update = {
                     userId: userId,
-                    username: username
-                }
+                    username: username,
+                    page: currentPageNumber + 1,
+                    count: 0
+                };
                 UserFeedM.findOneAndUpdate(
                     query,
                     update,
                     {
                         upsert: true,
-                        sort: {page: -1}
+                        sort: {page: -1} //To make sure to find the largest one.
                     },
                     callback
                 );
             },
-            addFeed: function (userId, type, data, callback) {
+            addFeed: function (userId, username, type, data, callback) {
                 if (!userId) {return callback('noUserId');}
                 if (!type) {return callback('noFeedType');}
                 if (!data) {return callback('noFeedData');}
                 var query = {
-                    userId: userId,
-                    page: -1
+                    userId: userId
                 };
                 var feed = {
                     actionType: type,
+                    time: new Date(),
                     data: data
                 };
                 var update = {
@@ -62,28 +64,45 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     $push: {feeds: feed}
                 };
 
+                function repeatAdd () {
+                    UserFeedM.findOneAndUpdate(
+                        query,
+                        update,
+                        {  sort: {page: -1} },//To make sure to find the largest one.
+                        callback
+                    );
+                }
+
                 function checkCount(error, doc) {
                     if (error) {
+                        console.log('error in checkCount call back function');
+                        console.log(error);
                         return callback(error);
                     }
-                    if (doc.count >= maxCount) {
+                    if (!doc) {
+                        console.log('creating first feed bucket for user');
+                        var currentPageNumber = -1;
+                        return UserFeedMethods.newFeedBucket(userId, username, currentPageNumber, repeatAdd);
+                    } else if (doc.count >= maxCount) {
                         var currentPageNumber = doc.page;
-                        var username = doc.username;
-                        this.newFeedBucket(userId, username, currentPageNumber);
+                        return UserFeedMethods.newFeedBucket(userId, username, currentPageNumber, callback);
                     } else {
-                        callback(null, doc);
+                        return callback(null, doc);
                     }
                 }
 
                 UserFeedM.findOneAndUpdate(
                     query,
                     update,
-                    {  sort: {page: -1}  },
+                    {
+                        sort: {page: -1} //To make sure to find the largest one.
+                    },
                     checkCount
                 );
             }
         };
         _.extend(UserFeedM, UserFeedMethods);
+        return UserFeedM;
     });
 
 

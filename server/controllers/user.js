@@ -53,7 +53,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     _.each(users, function (user) {
                         delete user.password;
                     });
-                    console.log(users);
+//                    console.log(users);
                     res.json(users);
                 });
             },

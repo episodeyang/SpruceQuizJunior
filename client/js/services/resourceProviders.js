@@ -2,14 +2,22 @@
 
 angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     .factory('Users', ['$resource', function ($resource) {
+        var Users = $resource('/api/users', {}, {
+            create: {method: 'POST'},
+            list: {method: 'GET'}
+        });
+        var User = $resource('/api/users/:id', {id: '@id'});
+        var Feeds = $resource('/api/users/:username/feeds', {username: '@username'});
+        var FeedsByPage = $resource('/api/users/:username/feeds/:page', {username: '@username', page: '@page'});
         return {
             list: $resource('/api/users'),
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
-                list: {method: 'GET', params: {uuid: 'all'}, isArray: true},
-            })
+                list: {method: 'GET', params: {uuid: 'all'}, isArray: true}
+            }),
+            getFeeds: Feeds.get,
+            getFeedsByPage: FeedsByPage.get
         };
     }])
-    //@todo: Need testing, just finished 2014/02/10
     .factory('Questions', function ($resource) {
         var Questions = $resource('/api/questions', {}, {
             create: {method: 'POST'}

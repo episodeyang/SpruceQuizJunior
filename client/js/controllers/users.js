@@ -33,6 +33,7 @@ angular.module('SpruceQuizApp')
 
 
             Model.getUserProfile($routeParams.username);
+            Model.getUserFeeds($routeParams.username);
 
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';

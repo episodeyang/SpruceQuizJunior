@@ -12,8 +12,8 @@
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
-    function (_, SchemaModels, rolesHelper, mongoose) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", "../models/FeedAPI"],
+    function (_, SchemaModels, rolesHelper, mongoose, FeedAPI) {
         var QuestionM = SchemaModels.Question;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
@@ -49,14 +49,15 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             index: function (req, res) {
 //                console.log('got request to /api/problems, processing now.');
-                QuestionM.find({}, function(err, docs){
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, err);
-                    } else {
-                        return res.send(200, docs);
-                    };
-                })
+                QuestionM
+                    .find({}, function (err, docs) {
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, err);
+                        } else {
+                            return res.send(200, docs);
+                        }
+                    });
             },
             /**
              * @api {post} /api/questions Create Question
@@ -73,14 +74,16 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     delete question.answers;
                     question.author = { username: req.user.username };
                 }
-                QuestionM.create(question, function (err, results) {
-                    if (err) {
-                        console.log(err);
-                        return res.send(500, err);
-                    };
-                })
+                QuestionM
+                    .create(question, function (err, results) {
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, err);
+                        }
+                    })
                     .then(function (question) {
                         res.location(req.route.path + '/' + question.id);
+                        FeedAPI.questionAdd(req.user, question);
                         return res.send(201, question);
                     });
             },
@@ -90,13 +93,21 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             findOne: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
-                QuestionM.findById(req.params.id, 'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated', function(err, results){
-                    if (err) {return res.send(403, err)}
-                    else {
-                        return res.send(200, results);
-                    };
-                })
+                if (!req.params.id) {
+                    return res.send(400);
+                }
+                QuestionM.findById(
+                    req.params.id,
+                    'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated',
+                    function (err, question) {
+                        if (err) {
+                            return res.send(403, err);
+                        } else {
+                            FeedAPI.questionGet(req.user, question);
+                            return res.send(200, question);
+                        }
+                    }
+                );
             },
             /**
              * @api {post} /api/questions/:id Update Question
@@ -104,71 +115,90 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             update: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
-                if (req.body.voteup || req.body.votedown ) {
-                    if (req.body.voteup !== 'true' && req.body.votedown !== 'true' ) {
-                        return res.send(403, 'votingContractError');
+                //console.log('request user object:')
+                //console.log(req.user);
+                if (!req.params.id) {
+                    return res.send(400, 'noQuestionId');
+                }
+                var actionType;
+
+                function voteQuestion(err, question) {
+                    if (req.body.voteup === 'true') {
+                        if (_.contains(question.voteup, req.user.username)) {
+                            var update = {
+                                $pull: {
+                                    votedown: req.user.username,
+                                    voteup: req.user.username
+                                }
+                            };
+                            actionType = 'removeUpVote';
+                        } else {
+                            var update = {
+                                $pull: {
+                                    votedown: req.user.username
+                                },
+                                $push: {
+                                    voteup: req.user.username
+                                }
+                            };
+                            actionType = 'upVote';
+                        }
+                    }
+                    if (req.body.votedown === 'true') {
+                        if (_.contains(question.votedown, req.user.username)) {
+                            var update = {
+                                $pull: {
+                                    votedown: req.user.username,
+                                    voteup: req.user.username
+                                }
+                            };
+                            actionType = 'removeDownVote';
+                        } else {
+                            var update = {
+                                $pull: {
+                                    voteup: req.user.username
+                                },
+                                $push: {
+                                    votedown: req.user.username
+                                }
+                            };
+                            actionType = 'downVote';
+                        }
+                    }
+
+                    QuestionM.findByIdAndUpdate(
+                        req.params.id,
+                        update,
+                        {select: 'title vote voteup votedown'},
+                        function (err, result, n) {
+                            var q = {
+                                voteup: result.voteup,
+                                votedown: result.votedown,
+                                vote: result.vote
+                            };
+                            if (err) {
+                                return res.send(500, err);
+                            } else {
+                                FeedAPI.questionVote(req.user, result)[actionType]();
+                                return res.send(201, q);
+                            }
+                        }
+                    );
+                }
+
+                if (req.body.voteup || req.body.votedown) {
+                    if (req.body.voteup !== 'true' && req.body.votedown !== 'true') {
+                        return res.send(403, 'cannotVoteUpAndDown');
                     } else {
                         QuestionM.findById(
                             req.params.id,
-                            'voteup votedown vote',
-                            function(err, question) {
-                                if (req.body.voteup === 'true') {
-                                    if (_.contains(question.voteup, req.user.username)) {
-                                        var update = {
-                                            $pull: {
-                                                votedown: req.user.username,
-                                                voteup: req.user.username
-                                            }
-                                        };
-                                    } else {
-                                        var update = {
-                                            $pull: {
-                                                votedown: req.user.username
-                                            },
-                                            $push: {
-                                                voteup: req.user.username
-                                            }
-                                        };
-                                    }
-                                }
-                                if (req.body.votedown === 'true') {
-                                    if (_.contains(question.votedown, req.user.username)) {
-                                        var update = {
-                                            $pull: {
-                                                votedown: req.user.username,
-                                                voteup: req.user.username
-                                            }
-                                        };
-                                    } else {
-                                        var update = {
-                                            $pull: {
-                                                voteup: req.user.username
-                                            },
-                                            $push: {
-                                                votedown: req.user.username
-                                            }
-                                        };
-                                    }
-                                }
-
-                                QuestionM.findByIdAndUpdate(req.params.id, update, {select: 'vote voteup votedown'}, function (err, result, n) {
-                                    var q = {
-                                        voteup: result.voteup,
-                                        votedown: result.votedown,
-                                        vote: result.vote
-                                    };
-                                    if (err) { return res.send(500, err); }
-                                    else {
-                                        return res.send(201, q );
-                                    };
-                                });
-                            }
-                        )
+                            'title voteup votedown vote',
+                            voteQuestion
+                        );
                     }
                 } else {
                     var update = {};
-                    var fieldString = '';
+                    var fieldString = 'title ';
                     if (req.body.title) {
                         update.title = req.body.title;
                         fieldString += 'title ';
@@ -182,22 +212,24 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         fieldString += 'tags ';
                     }
                     if (fieldString.length > 0) {
-//                        $currentDate setting will be in mongoDB v2.6 upcoming release.
-//                        update.$currentDate = {dateEdited: true};
-                        update.dateEdited = new Date();
                         fieldString += 'dateEdited';
                     }
                     QuestionM.findByIdAndUpdate(
                         req.params.id,
                         update,
-                        {select: fieldString},
+                        {
+                            select: fieldString,
+                            $currentDate: {dateEdited: true}
+                        },
                         function (err, result, n) {
                             if (err) {
                                 return res.send(500, err);
                             } else {
+                                FeedAPI.questionEdit(req.user, result);
                                 return res.send(201, result);
-                            };
-                        });
+                            }
+                        }
+                    );
                 }
             },
             /**
@@ -206,11 +238,16 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             removeById: function (req, res) {
-                if (!req.params.id) { return res.send(400); }
+                if (!req.params.id) {
+                    return res.send(400);
+                }
                 QuestionM.findByIdAndRemove(
                     ObjectId(req.params.id),
-                    function(err, results){
-                        if (err) {return res.send(403, err)};
+                    function (err, results) {
+                        if (err) {
+                            return res.send(403, err)
+                        }
+                        ;
                         return res.send(204);
                     });
             }

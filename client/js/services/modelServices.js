@@ -42,7 +42,7 @@ angular.module('modelServices', ['resourceProvider'])
              */
             modelInstance.destroy = function() {
                 // do nothing
-            }
+            };
             /**
              * @alias Model.init()
              * init function will initialize some of the most basic and commonly assessed components
@@ -488,6 +488,63 @@ angular.module('modelServices', ['resourceProvider'])
                         if (typeof error != 'undefined') { error(err); };
                     }
                 );
+            };
+
+            function timeLapsed (time) {
+                var dt = Date.now() - new Date(time);
+                var oneSecond = 1000;
+                var oneMinute = oneSecond * 60;
+                var oneHour = oneMinute * 60;
+                var oneDay = oneHour * 24;
+                var oneWeek = oneDay * 7;
+                var oneMonth = oneDay * 30;
+                var oneYear = oneDay * 365;
+                if (dt >= oneYear) {
+                    return Math.floor(dt/oneYear) + ' 年';
+                } else if (dt >= oneMonth) {
+                    return Math.floor(dt/oneMonth) + ' 月';
+                } else if (dt >= oneWeek) {
+                    return Math.floor(dt/oneWeek) + ' 周';
+                } else if (dt >= oneDay) {
+                    return Math.floor(dt/oneDay) + ' 天';
+                } else if (dt >= oneHour) {
+                    return Math.floor(dt/oneHour) + ' 小时';
+                } else if (dt >= oneMinute) {
+                    return Math.floor(dt/oneMinute) + ' 分钟';
+                } else if (dt >= oneSecond) {
+                    return Math.floor(dt/oneSecond) + ' 秒';
+                }
+            }
+            var feedTypeDict = {
+                questionEdit: "编辑",
+                questionAdd: "提问",
+                questionVote: "投票",
+                answerAdd: "回答",
+                commentAdd: "评论"
+            };
+            function feedTypeTranslator () {
+                _.each(
+                    modelInstance.userFeed.feeds,
+                    function (feed) {
+                        feed.type = feedTypeDict[feed.type];
+                        feed.time = timeLapsed(feed.time).split(' ');
+                        feed.timeUnit = feed.time[1]
+                        feed.time = feed.time[0]
+                    }
+                );
+            }
+            modelInstance.getUserFeeds = function (username) {
+                var query = {
+                    username: username
+                };
+                function success (feedBucket) {
+                    modelInstance.userFeed = feedBucket;
+                    feedTypeTranslator();
+                }
+                function error (err) {
+                    $rootScope.error = err;
+                }
+                Users.getFeeds(query, success, error);
             };
             modelInstance.profile = {};
             modelInstance.getUserProfile = function (username) {

@@ -194,45 +194,45 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             {
                 path: '/api/users/:username/feeds',
                 httpMethod: 'GET',
-                middleware: [UserCtrl.index],
+                middleware: [UserFeedCtrl.getByPage],
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/users/:username/questions',
-                httpMethod: 'GET',
-                middleware: [UserCtrl.index],
-                accessLevel: accessLevels.all
-            },
-            {
-                path: '/api/users/:username/answers',
-                httpMethod: 'GET',
-                middleware: [UserCtrl.index],
-                accessLevel: accessLevels.all
-            },
-            {
-                path: '/api/users/:username/comments',
-                httpMethod: 'GET',
-                middleware: [UserCtrl.index],
-                accessLevel: accessLevels.all
-            },
-            {
-                path: '/api/users/:username/edits',
-                httpMethod: 'GET',
-                middleware: [UserCtrl.index],
-                accessLevel: accessLevels.all
-            },
-            {
-                path: '/api/userFeeds/:userId/:page',
+                path: '/api/users/:username/feeds/:page',
                 httpMethod: 'GET',
                 middleware: [UserFeedCtrl.getByPage],
                 accessLevel: accessLevels.all
             },
             {   //Only for testing. Should disable during production.
-                path: '/api/userFeeds/:userId',
+                path: '/api/users/:userId/feeds',
                 httpMethod: 'POST',
                 middleware: [UserFeedCtrl.add],
                 accessLevel: accessLevels.superadmin
             },
+//            {
+//                path: '/api/users/:username/questions',
+//                httpMethod: 'GET',
+//                middleware: [UserCtrl.index],
+//                accessLevel: accessLevels.all
+//            },
+//            {
+//                path: '/api/users/:username/answers',
+//                httpMethod: 'GET',
+//                middleware: [UserCtrl.index],
+//                accessLevel: accessLevels.all
+//            },
+//            {
+//                path: '/api/users/:username/comments',
+//                httpMethod: 'GET',
+//                middleware: [UserCtrl.index],
+//                accessLevel: accessLevels.all
+//            },
+//            {
+//                path: '/api/users/:username/edits',
+//                httpMethod: 'GET',
+//                middleware: [UserCtrl.index],
+//                accessLevel: accessLevels.all
+//            },
             {
                 path: '/api/sessions',
                 httpMethod: 'GET',

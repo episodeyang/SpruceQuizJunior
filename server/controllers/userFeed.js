@@ -19,14 +19,6 @@ define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesH
         var ObjectId = mongoose.Types.ObjectId;
         var fieldString = "_id userId username page count feeds";
 
-        function callback (err, doc) {
-            if (err) {
-                console.log(err);
-                return res.send(403, err);
-            } else {
-                return res.send(200, results);
-            }
-        }
         return {
             /**
              * @api {post} /api/userFeeds Create Question
@@ -34,26 +26,47 @@ define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesH
              * @apiGroup Questions
              */
             add: function (req, res) {
-                UserFeedM.addFeed(req.body.userId, req.body.type, req.body.data, callback);
+                function callback (err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(403, err);
+                    } else {
+                        console.log(doc);
+                        return res.send(200, doc);
+                    }
+                }
+                UserFeedM.addFeed(req.body.userId, user.username, req.body.type, req.body.data, callback);
             },
             /**
-             * @api {get} /api/userFeeds/:id Get A Specific Question
-             * @apiName GetQuestion
+             * @api {get} /api/users/:username/feeds Get A Specific Question
+             * @apiName GetUserFeed
              * @apiGroup Questions
              */
             getByPage: function (req, res) {
-                if (!req.params.userId) {
-                    return res.send(400, 'noUserIdInRequest');
+                function callback (err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(403, err);
+                    } else {
+                        console.log(doc);
+                        return res.send(200, doc);
+                    }
+                }
+                if (!req.params.username) {
+                    return res.send(400, 'noUsernameInRequest');
                 }
                 var query = {
-                    userId: req.params.userId
+                    username: req.params.username
                 };
-                if (!req.params.page) {
-                     query.page = -1;
-                } else {
+                if (req.params.page) {
                     query.page = req.params.page;
                 }
-                UserFeedM.findOne(query, callback);
+                UserFeedM.findOne(
+                    query,
+                    null, // the field selection placeholder
+                    { sort: {page: -1}},
+                    callback
+                );
             }
         };
     });

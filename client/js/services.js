@@ -78,11 +78,3 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
 }]);
 
 
-angular.module('SpruceQuizApp')
-.factory('Users', function($http) {
-    return {
-        getAll: function(success, error) {
-            $http.get('/users').success(success).error(error);
-        }
-    };
-});
