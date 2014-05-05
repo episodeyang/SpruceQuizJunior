@@ -71,7 +71,7 @@ angular.module('SpruceQuizApp')
 
                 _.map(Model.profile, removeNullAddEmptyToEnd);
 
-                if (Model.profile.role.title === 'student') {
+                if (Model.profile.role.title === 'student' || true) {
                     _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNullAddEmptyToEnd);
                 }
 
@@ -98,7 +98,7 @@ angular.module('SpruceQuizApp')
 
                 _.map(Model.profile, removeNull);
 
-                if (Model.profile.role.title === 'student') {
+                if (Model.profile.role.title === 'student' || true) {
                     var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1];
                     _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNull);
 
