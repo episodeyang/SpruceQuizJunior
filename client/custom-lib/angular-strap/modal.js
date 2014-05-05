@@ -119,6 +119,7 @@ angular.module('mgcrea.ngStrap.modal', ['mgcrea.ngStrap.helpers.dimensions']).pr
         $modal.show = function () {
           var parent = options.container ? findElement(options.container) : null;
           var after = options.container ? null : options.element;
+          var bodyElement = angular.element($window.document.body);
           // Fetch a cloned element linked from template
           modalElement = $modal.$element = modalLinker(scope, function (clonedElement, scope) {
           });
