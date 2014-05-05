@@ -6,7 +6,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'},
             list: {method: 'GET'}
         });
-        var User = $resource('/api/users/:id', {id: '@id'});
+        var User = $resource('/api/users/:username', {username: '@username'});
         var Feeds = $resource('/api/users/:username/feeds', {username: '@username'});
         var FeedsByPage = $resource('/api/users/:username/feeds/:page', {username: '@username', page: '@page'});
         return {
@@ -14,6 +14,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
                 list: {method: 'GET', params: {uuid: 'all'}, isArray: true}
             }),
+            get: User.get,
+            save: User.save,
             getFeeds: Feeds.get,
             getFeedsByPage: FeedsByPage.get
         };
@@ -119,13 +121,16 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('Parents', function ($resource) {
+        var Parent = $resource('/api/parents/:username', {username: '@username'});
         return {
             onMaterials: $resource('/api/materials/:uuid', {uuid: '@materialUUID'}, {
                 list: {method: 'GET', params: {uuid: 'all'}, isArray: true}
-            })
+            }),
+            get: Parent.get
         };
     })
     .factory('Teachers', function ($resource) {
+        var Teacher = $resource('/api/teachers/:username', {username: '@username'});
         return {
             onTeachers: $resource('/api/teachers/:uuid', {uuid: '@userUUID'}, {
                 list: {method: 'GET', params: {uuid: 'all'}, isArray: true}
@@ -135,10 +140,12 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             onStudents: $resource('/api/teachers/:uuid/students', {uuid: '@userUUID'}, {
             }),
             onSections: $resource('/api/teachers/:uuid/sections', {uuid: '@userUUID'}, {
-            })
+            }),
+            get: Teacher.get
         };
     })
     .factory('Admins', function ($resource) {
+        var Admin = $resource('/api/admins/:username', {username: '@username'});
         return {
 //            onTeachers: $resource('/api/teachers/:uuid', {uuid:'@userUUID'}, {
 //                list: {method:'GET', params:{uuid: 'all'}, isArray:true}
@@ -150,10 +157,12 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             onSections: $resource('/api/admins/sections/:id', {id: '@_id'}, {
                 list: {method: 'GET', params: {id: 'all'}, isArray: true},
                 create: {method: 'POST', params: {id: 'create'}}
-            })
+            }),
+            get: Admin.get
         };
     })
     .factory('Superadmins', function ($resource) {
+        var Superadmin = $resource('/api/superadmin/:username', {username: '@username'});
         return {
 //            onTeachers: $resource('/api/teachers/:uuid', {uuid:'@userUUID'}, {
 //                list: {method:'GET', params:{uuid: 'all'}, isArray:true}
@@ -165,7 +174,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             onSections: $resource('/api/admins/sections/:id', {id: '@_id'}, {
                 list: {method: 'GET', params: {id: 'all'}, isArray: true},
                 create: {method: 'POST', params: {id: 'create'}}
-            })
+            }),
+            get: Superadmin.get
         };
     })
     .factory('Schools', function ($resource) {

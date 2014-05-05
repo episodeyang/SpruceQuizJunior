@@ -239,9 +239,16 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             },
             parent: {
                 name: String,
+                signature: String,
                 username: {type: String, unique: true},
-                email: String,
                 DOB: Date,
+                email: String,
+                addresses: [String],
+                strongSubjects: [String],
+                extracurriculars: [String],
+                schoolRecord: [ subSchema.school ],
+                teacherFields: { type: Schema.Types.Mixed, default: {}},
+                stats: { type: Schema.Types.Mixed, default: {}},
                 sessions: [
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
@@ -253,9 +260,16 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             },
             teacher: {
                 name: String,
+                signature: String,
                 username: {type: String, unique: true},
-                email: String,
                 DOB: Date,
+                email: String,
+                addresses: [String],
+                strongSubjects: [String],
+                extracurriculars: [String],
+                schoolRecord: [ subSchema.school ],
+                teacherFields: { type: Schema.Types.Mixed, default: {}},
+                stats: { type: Schema.Types.Mixed, default: {}},
                 sessions: [
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
@@ -267,9 +281,16 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             },
             admin: {
                 name: String,
+                signature: String,
                 username: {type: String, unique: true},
-                email: String,
                 DOB: Date,
+                email: String,
+                addresses: [String],
+                strongSubjects: [String],
+                extracurriculars: [String],
+                schoolRecord: [ subSchema.school ],
+                teacherFields: { type: Schema.Types.Mixed, default: {}},
+                stats: { type: Schema.Types.Mixed, default: {}},
                 sessions: [
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
@@ -281,9 +302,16 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             },
             superadmin: {
                 name: String,
+                signature: String,
                 username: {type: String, unique: true},
-                email: String,
                 DOB: Date,
+                email: String,
+                addresses: [String],
+                strongSubjects: [String],
+                extracurriculars: [String],
+                schoolRecord: [ subSchema.school ],
+                teacherFields: { type: Schema.Types.Mixed, default: {}},
+                stats: { type: Schema.Types.Mixed, default: {}},
                 sessions: [
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],

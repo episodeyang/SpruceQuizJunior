@@ -164,12 +164,18 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/users',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.index],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.admin
             },
             {
                 path: '/api/users/:username',
                 httpMethod: 'GET',
                 middleware: [UserCtrl.findOne],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username',
+                httpMethod: 'POST',
+                middleware: [UserCtrl.update],
                 accessLevel: accessLevels.all
             },
             {

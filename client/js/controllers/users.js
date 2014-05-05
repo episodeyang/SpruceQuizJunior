@@ -70,17 +70,21 @@ angular.module('SpruceQuizApp')
                 }
 
                 _.map(Model.profile, removeNullAddEmptyToEnd);
-                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNullAddEmptyToEnd);
+
+                if (Model.profile.role.title === 'student') {
+                    _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNullAddEmptyToEnd);
+                }
 
             };
-            $scope.$watch('Model.profile',
-                function (newVal, oldVal) {
-                },
-                true)
+            $scope
+                .$watch(
+                    'Model.profile',
+                    function (newVal, oldVal) {
+                    },
+                    true
+                );
 
             $scope.submitProfile = function () {
-
-                var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1]
 
                 function removeNull(obj, key) {
                     if (isArray(obj)) {
@@ -93,15 +97,18 @@ angular.module('SpruceQuizApp')
                 }
 
                 _.map(Model.profile, removeNull);
-                _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNull);
 
-                if (school !== undefined) {
-                    if (!school.name) {
-                        // console.log('removing the last schoolRecord')
-                        Model.profile.schoolRecord.splice(-1);
+                if (Model.profile.role.title === 'student') {
+                    var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1];
+                    _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNull);
+
+                    if (school !== undefined) {
+                        if (!school.name) {
+                            Model.profile.schoolRecord.splice(-1);
+                        }
+                    } else {
+                        Model.profile.schoolRecord = [];
                     }
-                } else {
-                    Model.profile.schoolRecord = [];
                 }
 
                 Model.updateUserProfile(

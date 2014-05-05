@@ -19,6 +19,11 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
         "use strict";
         var UserM = SchemaModels.User;
         var userRoles = rolesHelper.userRoles;
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         return {
             /**
              * @api {get} /user/:id Request User information
@@ -45,7 +50,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              *       "error": "UserNotFound"
              *     }
              */
-                //This is mostly experimental, since no testing spec is in place yet.
+            //This is mostly experimental, since no testing spec is in place yet.
             index: function (req, res) {
                 var users;
                 UserM.find({$where: "this.role.title == 'student'"}, function (err, results) {
@@ -88,12 +93,73 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                     }
                 });
             },
-            //todo: also get the sub document depending on the user type.
             findOne: function (req, res) {
-                UserM.findOne({username: req.params.username}, function (err, user) {
-                    delete user.password;
-                    res.json(200, user);
-                });
+                var query = {
+                        username: req.params.username
+                    },
+                    userRoot = {};
+
+                function sendSubDoc(error, user) {
+                    var userFull = {};
+                    if (error) {
+                        console.log(error);
+                        return res.send(500, 'no' + capitalize(user.role.title) + 'Found' + error);
+                    }
+                    // the ordering of the extension matters here,
+                    // because we want to keep the _id field of the usrRoot,
+                    // not the student/teacher/admin etc. subdoc.
+                    // UPDATE: A safer thing to to is to just get rid of the _id
+                    // field all together.
+                    _.extend(userFull, user.toObject(), userRoot);
+                    delete userFull._id;
+                    return res.json(200, userFull);
+                }
+
+                function callback(error, user) {
+                    if (error) {
+                        console.log(error);
+                        res.send(404, 'noUserFound' + error);
+                    }
+                    userRoot =  user.toObject();
+
+                    SchemaModels[capitalize(user.role.title)]
+                        .findOne(query).exec(sendSubDoc);
+                }
+
+                UserM.findOne(query).select('_id username role').exec(callback);
+            },
+            update: function (req, res) {
+
+                if (!req.body.role || !req.body.role.title) {
+                    console.log("no role entry in user payload");
+                    return res.send(401, 'needRoleInUserPayload');
+                }
+
+                function callback(err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(401, err);
+                    }
+                    // the ordering of the extension matters here,
+                    // because we want to keep the _id field of the user object,
+                    // not the student/teacher doc etc.
+                    var user = _.extend({}, doc.toObject(), req.body);
+                    delete user._id;
+                    return res.send(201, user);
+                }
+
+                var query = {
+                        username : req.params.username
+                    },
+                // to avoid overwriting student/teacher _id with user._id
+                    update = _.omit(req.body, '_id');
+
+                SchemaModels[capitalize(req.body.role.title)]
+                    .findOneAndUpdate(
+                        query,
+                        update,
+                        callback
+                    );
             }
         };
     });

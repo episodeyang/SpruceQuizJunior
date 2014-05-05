@@ -16,8 +16,7 @@ angular.module('modelServices', ['resourceProvider'])
          * @author test
          * @param random
          */
-        function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins,
-                  Schools, Sections, Units, Materials) {
+            function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins, Schools, Sections, Units, Materials) {
             var modelInstance = {};
 
             // helper mapping
@@ -40,7 +39,7 @@ angular.module('modelServices', ['resourceProvider'])
              * @alias Model.destroy()
              * Handle for destroy the model instance. Is called later during log out
              */
-            modelInstance.destroy = function() {
+            modelInstance.destroy = function () {
                 // do nothing
             };
             /**
@@ -78,7 +77,7 @@ angular.module('modelServices', ['resourceProvider'])
             var getDataHelper = function (typeDb, typeItem, idList) {
 
                 // NOTE: this is an important dependency
-                var typeLookup = 'on'+typeItem.toUpperCase()+'s';
+                var typeLookup = 'on' + typeItem.toUpperCase() + 's';
 
                 var sections = new Array();
                 for (var anId in idList) {
@@ -93,7 +92,7 @@ angular.module('modelServices', ['resourceProvider'])
                 return sections;
             }
 
-            modelInstance.getVoteStatus = function(model){
+            modelInstance.getVoteStatus = function (model) {
                 if (modelInstance.user) {
                     model.votedup = _.contains(model.voteup, modelInstance.user.username)
                     model.voteddown = _.contains(model.votedown, modelInstance.user.username)
@@ -102,54 +101,58 @@ angular.module('modelServices', ['resourceProvider'])
                     model.voteddown = false;
                 }
             }
-            modelInstance.getQuestionVoteStatus = function(){
+            modelInstance.getQuestionVoteStatus = function () {
                 modelInstance.getVoteStatus(modelInstance.question);
             };
 
             modelInstance.attachAnswerComments = function () {
 
-                function dichotomizer (answerComments, answer) {
+                function dichotomizer(answerComments, answer) {
                     var acceptList = [], rejectList = [];
 
-                    function arbitrator (answerComment) {
+                    function arbitrator(answerComment) {
 //                        console.log(answerComment.answerId);
 //                        console.log(answer.id);
 //                        console.log(answerComment.answerId.valueOf() === answer.id)
                         if (answerComment.answerId.valueOf() === answer.id) {
                             acceptList.push(answerComment);
                         }
-                        else {rejectList.push(answerComment)}
+                        else {
+                            rejectList.push(answerComment)
+                        }
                     };
 
                     _.each(answerComments, arbitrator);
 
                     return [acceptList, rejectList]
                 }
-                function attachByAnswerId (answer) {
+
+                function attachByAnswerId(answer) {
 //                    console.log(dichotomizer(modelInstance.question.answerComments, answer))
                     var tuple = dichotomizer(modelInstance.question.answerComments, answer)
-                    answer.comments = tuple[0] ;
+                    answer.comments = tuple[0];
                     modelInstance.question.answerComments = tuple[1];
                 }
+
 //                _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
                 _.each(modelInstance.question.answers, attachByAnswerId)
             }
 
-            modelInstance.getQuestion = function(id) {
+            modelInstance.getQuestion = function (id) {
                 Questions.get(
-                    {id:id},
-                    function(question){
+                    {id: id},
+                    function (question) {
                         modelInstance.question = question;
                         modelInstance.getQuestionVoteStatus();
                         _.map(modelInstance.question.answers, modelInstance.getVoteStatus)
                         _.map(modelInstance.question.comments, modelInstance.getVoteStatus)
                         _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
                         modelInstance.attachAnswerComments();
-                    }, function(err){
+                    }, function (err) {
                         $rootScope.error = err;
-                    } );
+                    });
             };
-            modelInstance.queryQuestions = function(query) {
+            modelInstance.queryQuestions = function (query) {
                 Questions.query(
                     query,
                     function (questions) {
@@ -159,45 +162,61 @@ angular.module('modelServices', ['resourceProvider'])
                         $rootScope.error = err;
                     });
             };
-            modelInstance.createQuestion = function(question, success, error) {
-                Questions.create(question, function(result){
+            modelInstance.createQuestion = function (question, success, error) {
+                Questions.create(question, function (result) {
                     modelInstance.question = result;
-                    if (typeof success != 'undefined') { success(result); };
-                }, function(err){
+                    if (typeof success != 'undefined') {
+                        success(result);
+                    }
+                    ;
+                }, function (err) {
                     $rootScope.error = err;
-                    if (typeof error != 'undefined') { error(err); };
-                } );
+                    if (typeof error != 'undefined') {
+                        error(err);
+                    }
+                    ;
+                });
             };
-            modelInstance.saveQuestion = function(question, success, error) {
+            modelInstance.saveQuestion = function (question, success, error) {
 //                if (question.id) {$rootScope.error = "udpate does not have object id."}
-                Questions.save(question, function(q){
+                Questions.save(question, function (q) {
                     _.extend(modelInstance.question, q);
-                    if (typeof success != 'undefined') { success(q) };
-                }, function(err){
+                    if (typeof success != 'undefined') {
+                        success(q)
+                    }
+                    ;
+                }, function (err) {
                     $rootScope.error = err;
-                    if (typeof error != 'undefined') { error(err) };
-                } );
+                    if (typeof error != 'undefined') {
+                        error(err)
+                    }
+                    ;
+                });
             };
-            modelInstance.removeQuestion = function(question, success, error) {
-                Questions.remove(question, function(res){
+            modelInstance.removeQuestion = function (question, success, error) {
+                Questions.remove(question, function (res) {
 //                    console.log('removal success');
                     modelInstance.question = {};
                     modelInstance.queryQuestions();
-                    if (typeof success != 'undefined') {success();}
-                }, function(err){
+                    if (typeof success != 'undefined') {
+                        success();
+                    }
+                }, function (err) {
                     $rootScope.error = err;
-                    if (typeof error != 'undefined') { error(); }
-                } );
+                    if (typeof error != 'undefined') {
+                        error();
+                    }
+                });
             };
 
-            modelInstance.voteup = function(question) {
+            modelInstance.voteup = function (question) {
                 var q = {
                     id: question.id,
                     voteup: 'true'
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
-            modelInstance.votedown = function(question) {
+            modelInstance.votedown = function (question) {
                 var q = {
                     id: question.id,
                     votedown: 'true'
@@ -205,30 +224,35 @@ angular.module('modelServices', ['resourceProvider'])
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
 
-            modelInstance.queryStickyQuestions = function() {
+            modelInstance.queryStickyQuestions = function () {
                 modelInstance.queryQuestions({
                     //TODO: nothing here yet. will need stickys.
                 });
             }
 
-            modelInstance.addAnswer = function(answer, success, error) {
+            modelInstance.addAnswer = function (answer, success, error) {
                 var ans = {
                     id: modelInstance.question.id,
                     text: answer.text
                 };
                 Answers.add(
                     ans,
-                    function(results){
+                    function (results) {
                         modelInstance.question.answers = results.answers;
                         _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function(err) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
-            modelInstance.updateAnswer = function(answer, success, error) {
+            modelInstance.updateAnswer = function (answer, success, error) {
                 var ans = {
                     id: modelInstance.question.id,
                     answerId: answer.id,
@@ -236,56 +260,68 @@ angular.module('modelServices', ['resourceProvider'])
                 };
                 Answers.save(
                     ans,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.answers = results.answers;
                         _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
                     }
                 )
-            }
-            modelInstance.removeAnswer = function(answer, success, error) {
+            };
+            modelInstance.removeAnswer = function (answer, success, error) {
                 var ans = {
                     id: modelInstance.question.id,
                     answerId: answer.id
                 };
                 Answers.remove(
                     ans,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.answers = results.answers;
                         _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
                     }
                 )
-            }
-            modelInstance.voteupAnswer = function(answer) {
+            };
+            modelInstance.voteupAnswer = function (answer) {
                 var ans = {
                     id: modelInstance.question.id,
                     answerId: answer.id,
                     "voteup": 'true'
                 }
-                function callback (result)  {
+
+                function callback(result) {
                     _.extend(modelInstance.question, result);
                     _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                 }
-                Answers.save(ans, callback );
+
+                Answers.save(ans, callback);
             }
-            modelInstance.votedownAnswer = function(answer) {
+            modelInstance.votedownAnswer = function (answer) {
                 var ans = {
                     id: modelInstance.question.id,
                     answerId: answer.id,
                     "votedown": 'true'
                 }
-                function callback (result)  {
+
+                function callback(result) {
                     _.extend(modelInstance.question, result);
                     _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                 }
-                Answers.save(ans, callback );
+
+                Answers.save(ans, callback);
             }
 
             modelInstance.addComment = function (comment, success, error) {
@@ -295,13 +331,18 @@ angular.module('modelServices', ['resourceProvider'])
                 };
                 Comments.add(
                     query,
-                    function(results){
+                    function (results) {
                         modelInstance.question.comments = results.comments;
                         _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function(err) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
@@ -316,13 +357,18 @@ angular.module('modelServices', ['resourceProvider'])
                 _.extend(comment, query)
                 Comments.save(
                     comment,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.comments = results.comments;
                         _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 )
             }
@@ -336,13 +382,18 @@ angular.module('modelServices', ['resourceProvider'])
                 };
                 Comments.remove(
                     query,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.comments = results.comments;
                         _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
@@ -354,13 +405,18 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 Comments.save(
                     query,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.comments = results.comments;
                         _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
@@ -372,13 +428,18 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 Comments.save(
                     query,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.comments = results.comments;
                         _.each(modelInstance.question.comments, modelInstance.getVoteStatus);
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
@@ -391,15 +452,20 @@ angular.module('modelServices', ['resourceProvider'])
                     text: comment.text
                 };
                 AnswerComments.add(
-                    query ,
-                    function(results){
+                    query,
+                    function (results) {
                         modelInstance.question.answerComments = results.answerComments;
                         _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                         modelInstance.attachAnswerComments();
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function(err) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
 
@@ -416,14 +482,19 @@ angular.module('modelServices', ['resourceProvider'])
                 _.extend(comment, query)
                 AnswerComments.save(
                     comment,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.answerComments = results.answerComments;
                         _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                         modelInstance.attachAnswerComments();
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 )
             }
@@ -438,14 +509,19 @@ angular.module('modelServices', ['resourceProvider'])
                 };
                 AnswerComments.remove(
                     query,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.answerComments = results.answerComments;
                         _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                         modelInstance.attachAnswerComments();
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
@@ -458,14 +534,19 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 AnswerComments.save(
                     query,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.answerComments = results.answerComments;
                         _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                         modelInstance.attachAnswerComments();
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             }
@@ -478,19 +559,24 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 AnswerComments.save(
                     query,
-                    function( results ) {
+                    function (results) {
                         modelInstance.question.answerComments = results.answerComments;
                         _.each(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                         modelInstance.attachAnswerComments();
-                        if (typeof success != 'undefined') { success(results); }
-                    }, function( err ) {
+                        if (typeof success != 'undefined') {
+                            success(results);
+                        }
+                    }, function (err) {
                         $rootScope.error = err;
-                        if (typeof error != 'undefined') { error(err); };
+                        if (typeof error != 'undefined') {
+                            error(err);
+                        }
+                        ;
                     }
                 );
             };
 
-            function timeLapsed (time) {
+            function timeLapsed(time) {
                 var dt = Date.now() - new Date(time);
                 //console.log(dt);
                 var oneSecond = 1000;
@@ -503,24 +589,25 @@ angular.module('modelServices', ['resourceProvider'])
                 var timeString;
 
                 if (dt >= oneYear) {
-                    timeString = Math.floor(dt/oneYear) + ' 年';
+                    timeString = Math.floor(dt / oneYear) + ' 年';
                 } else if (dt >= oneMonth) {
-                    timeString = Math.floor(dt/oneMonth) + ' 月';
+                    timeString = Math.floor(dt / oneMonth) + ' 月';
                 } else if (dt >= oneWeek) {
-                    timeString = Math.floor(dt/oneWeek) + ' 周';
+                    timeString = Math.floor(dt / oneWeek) + ' 周';
                 } else if (dt >= oneDay) {
-                    timeString = Math.floor(dt/oneDay) + ' 天';
+                    timeString = Math.floor(dt / oneDay) + ' 天';
                 } else if (dt >= oneHour) {
-                    timeString = Math.floor(dt/oneHour) + ' 小时';
+                    timeString = Math.floor(dt / oneHour) + ' 小时';
                 } else if (dt >= oneMinute) {
-                    timeString = Math.floor(dt/oneMinute) + ' 分钟';
+                    timeString = Math.floor(dt / oneMinute) + ' 分钟';
                 } else if (dt >= oneSecond) {
-                    timeString = Math.floor(dt/oneSecond) + ' 秒';
+                    timeString = Math.floor(dt / oneSecond) + ' 秒';
                 }
 
                 //console.log(timeString);
                 return timeString;
             }
+
             var feedTypeDict = {
                 questionGet: {
                     tagText: "阅读",
@@ -547,7 +634,8 @@ angular.module('modelServices', ['resourceProvider'])
                     url: '/questions/'
                 }
             };
-            function feedFormatter () {
+
+            function feedFormatter() {
                 var timeStrings;
                 _.each(
                     modelInstance.userFeed.feeds,
@@ -561,44 +649,65 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 );
             }
+
             modelInstance.getUserFeeds = function (username) {
                 var query = {
                     username: username
                 };
-                function success (feedBucket) {
+
+                function success(feedBucket) {
                     modelInstance.userFeed = feedBucket;
                     feedFormatter();
                 }
-                function error (err) {
+
+                function error(err) {
                     $rootScope.error = err;
                 }
+
                 Users.getFeeds(query, success, error);
             };
             modelInstance.profile = {};
             modelInstance.getUserProfile = function (username) {
+
                 var query = {
                     username: username
                 };
-                function success (student) {
-                    modelInstance.profile = student;
+
+                function success(user) {
+                    modelInstance.profile = user;
                 }
-                function error (err) {
+
+                function error(err) {
                     $rootScope.error = err;
                 }
-                Students.get(query, success, error);
+
+                Users.get(query, success, error);
             };
             modelInstance.updateUserProfile = function (success, error) {
-                var query =  modelInstance.profile;
+                var query = modelInstance.profile;
                 delete query._id;
-                function successCallback (student) {
+                function successCallback(student) {
                     modelInstance.profile = student;
                     success();
                 }
-                function errorCallback (err) {
+
+                function errorCallback(err) {
                     $rootScope.error = err;
                     error(err);
                 }
-                Students.save(query, successCallback, errorCallback);
+
+                Users.save(query, successCallback, errorCallback);
+//                if (modelInstance.profile.role.title == 'student') {
+//                    Students.save(query, successCallback, errorCallback);
+//                } else if (modelInstance.profile.role.title == 'teacher') {
+//                    Teachers.save(query, successCallback, errorCallback);
+//                } else if (modelInstance.profile.role.title == 'parent') {
+//                    Parents.save(query, successCallback, errorCallback);
+//                } else if (modelInstance.profile.role.title == 'admin') {
+//                    Admins.save(query, successCallback, errorCallback);
+//                } else if (modelInstance.profile.role.title == 'superadmin') {
+//                    Superadmins.save(query, successCallback, errorCallback);
+//                }
             };
 
             function bookQueryBuilder(title, authorName) {
@@ -613,27 +722,32 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.getBook = function (authorAndTitle) {
                 var query = bookQueryBuilder(authorAndTitle);
-                function success (book) {
+
+                function success(book) {
                     modelInstance.book = book;
                     console.log(book)
                 }
-                function error (err) {
+
+                function error(err) {
                     $rootScope.error = err;
                 }
+
                 Books.get(query, success, error);
             };
             modelInstance.updateBook = function (success, error) {
-                var query =  modelInstance.book;
+                var query = modelInstance.book;
                 query.id = query._id;
 //                delete query._id;
-                function successCallback (book) {
+                function successCallback(book) {
                     modelInstance.book = book;
                     success();
                 }
-                function errorCallback (err) {
+
+                function errorCallback(err) {
                     $rootScope.error = err;
                     error(err);
                 }
+
                 Books.save(query, successCallback, errorCallback);
             };
 
@@ -652,7 +766,7 @@ angular.module('modelServices', ['resourceProvider'])
              * @param userParam
              */
             modelInstance.getSchools = function (userParam) {
-                if (modelInstance.user.roleTitle!== 'superadmin') {
+                if (modelInstance.user.roleTitle !== 'superadmin') {
                     modelInstance.schools = nameToResource[modelInstance.user.roleTitle].onSchools.get({id: userParam.id});
                 } else {
                     // super admin
@@ -687,10 +801,10 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
 
-                if (modelInstance.user.roleTitle!== ('superadmin' || 'admin')) {
+                if (modelInstance.user.roleTitle !== ('superadmin' || 'admin')) {
                     modelInstance.sections = nameToResource[ modelInstance.user.roleTitle ].onSections.get({id: userParam.id});
                 } else {
-                    if (modelInstance.user.roleTitle== 'admin') {
+                    if (modelInstance.user.roleTitle == 'admin') {
                         // get everything in the schools the admin controls
                         var schools = Admins.onSchools.get({id: userParam.id});
                         modelInstance.sections = getDataHelper('school', '', schools);
@@ -711,43 +825,52 @@ angular.module('modelServices', ['resourceProvider'])
             /**
              * Utilities
              */
-            modelInstance.stripHtml = function(string, maxLength) {
+            modelInstance.stripHtml = function (string, maxLength) {
                 /**
                  * following code from http://www.rishida.net/tools/conversion/conversionfunctions.js
                  * the applet is at: http://www.rishida.net/tools/conversion/
                  * @param n
                  * @returns {string}
                  */
-                function dec2char ( n ) {
+                function dec2char(n) {
                     // converts a single string representing a decimal number to a character
                     // note that no checking is performed to ensure that this is just a hex number, eg. no spaces etc
                     // dec: string, the dec codepoint to be converted
                     var result = '';
-                    if (n <= 0xFFFF) { result += String.fromCharCode(n); }
+                    if (n <= 0xFFFF) {
+                        result += String.fromCharCode(n);
+                    }
                     else if (n <= 0x10FFFF) {
                         n -= 0x10000
                         result += String.fromCharCode(0xD800 | (n >> 10)) + String.fromCharCode(0xDC00 | (n & 0x3FF));
                     }
-                    else { result += 'dec2char error: Code point out of range: '+dec2hex(n); }
+                    else {
+                        result += 'dec2char error: Code point out of range: ' + dec2hex(n);
+                    }
                     return result;
                 }
-                function convertDecNCR2Char ( str ) {
+
+                function convertDecNCR2Char(str) {
                     // converts a string containing &#...; escapes to a string of characters
                     // str: string, the input
 
                     // convert up to 6 digit escapes to characters
                     str = str.replace(/&#([0-9]{1,7});/g,
-                        function(matchstr, parens) {
+                        function (matchstr, parens) {
                             return dec2char(parens);
                         }
                     );
                     return str;
                 }
 
-                if (!string) { return null; }
-                if (!maxLength) { var maxLength = 300 }
+                if (!string) {
+                    return null;
+                }
+                if (!maxLength) {
+                    var maxLength = 300
+                }
                 string = convertDecNCR2Char(string)
-                string = string.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi," ");
+                string = string.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi, " ");
                 return string.slice(0, maxLength);
             }
             return modelInstance;

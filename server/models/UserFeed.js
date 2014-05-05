@@ -31,8 +31,6 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     userId: userId,
                     page: currentPageNumber + 1
                 };
-                console.log('query');
-                console.log(query);
                 var update = {
                     userId: userId,
                     username: username,
@@ -68,7 +66,6 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
                 function repeatAdd (error, doc) {
                     if (error) { return console.log(error); }
-                    console.log(doc);
                     UserFeedM.findOneAndUpdate(
                         query,
                         update,
