@@ -42,7 +42,7 @@ mixin navbar
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
                         a -
                     li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                        a(data-animation='am-fade-and-slide-top', data-placement='center', data-template='/partials/login.html', bs-modal='modal') 登陆 &nbsp &nbsp
+                        a(data-animation='am-fade-and-slide-top', data-placement='center', data-template='/partials/login.html', bs-modal='modal') 登录 &nbsp &nbsp
 
                     li.dropdown(data-access-level="{{ accessLevels.loggedin}}", active-nav)
                         a.dropdown-toggle(bs-dropdown="dropdown", template="/partials/navbar/user-dropdown") {{ user.username }}
