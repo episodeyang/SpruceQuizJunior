@@ -14,11 +14,11 @@
  *          etc.,
  * good luck coding!
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper'],
-    function (_, SchemaModels, rolesHelper) {
+define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelper'],
+    function (_, SchemaModels, UserM, rolesHelper) {
         "use strict";
-        var UserM = SchemaModels.User;
-        var userRoles = rolesHelper.userRoles;
+        var userRoles = rolesHelper.userRoles,
+            accessLevels = rolesHelper.accessLevels;
 
         function capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
@@ -120,13 +120,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                         console.log(error);
                         res.send(404, 'noUserFound' + error);
                     }
-                    userRoot =  user.toObject();
+                    userRoot = user.toObject();
 
                     SchemaModels[capitalize(user.role.title)]
                         .findOne(query).exec(sendSubDoc);
                 }
 
-                UserM.findOne(query).select('_id username role').exec(callback);
+                UserM.findOne(query).select('_id username role').populate('books sessions schools').exec(callback);
             },
             update: function (req, res) {
 
@@ -149,17 +149,80 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                 }
 
                 var query = {
-                        username : req.params.username
+                        username: req.params.username
                     },
                 // to avoid overwriting student/teacher _id with user._id
                     update = _.omit(req.body, '_id');
 
                 SchemaModels[capitalize(req.body.role.title)]
                     .findOneAndUpdate(
-                        query,
-                        update,
-                        callback
-                    );
+                    query,
+                    update,
+                    callback
+                );
+            },
+            addSession: function (req, res) {
+                if (!req.params.username) {
+                    return res.send(400, "noUserSpecified");
+                }
+                var user;
+                if (req.params.username === req.user.username || req) {
+                    //One can always add sessions to oneself.
+                    user = req.user;
+                } else if (accessLevels.admin.bitMask & req.user.role.bitMask) {
+                    //Only admins can add sessions to other students.
+                    //Todo: add more fine-grained control to school administrators.
+                    user = {
+                        username: req.params.username
+                    };
+                } else if (req.user.role.title === 'parent') {
+                    //todo: add parental support for children management.
+                    return res.send(401, 'notAuthorized');
+                } else {
+                    return res.send(401, 'notAuthorized');
+                }
+
+                function callback(error, doc) {
+                    if (error) {
+                        return res.send(500, error);
+                    }
+                    return res.send(201, doc);
+                }
+
+                UserM.addSession(user, req.body, callback);
+            },
+            addBook: function (req, res) {
+                if (!req.params.username) {
+                    return res.send(400, "noUserSpecified");
+                }
+                var user;
+                if (req.params.username === req.user.username || req) {
+                    //One can always add sessions to oneself.
+                    user = req.user;
+                } else if (accessLevels.admin.bitMask & req.user.role.bitMask) {
+                    //Only admins can add sessions to other students.
+                    //Todo: add more fine-grained control to school administrators.
+                    user = {
+                        username: req.params.username
+                    };
+                } else if (req.user.role.title === 'parent') {
+                    //todo: add parental support for children management.
+                    return res.send(401, 'notAuthorized');
+                } else {
+                    return res.send(401, 'notAuthorized');
+                }
+
+                function callback(error, doc) {
+                    if (error) {
+                        return res.send(500, error);
+                    }
+                    return res.send(201, doc);
+                }
+
+                UserM.addBook(user, req.body, callback);
+            },
+            addSchool: function (req, res) {
+                return res.send(501, "notImplemented");
             }
         };
     });

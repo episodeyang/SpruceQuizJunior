@@ -20,27 +20,3 @@ angular.module('SpruceQuizApp')
         });
     };
 }]);
-
-
-angular.module('SpruceQuizApp')
-.controller('PrivateCtrl',
-['$rootScope', function($rootScope) {
-}]);
-
-
-angular.module('SpruceQuizApp')
-.controller('UserAdminCtrl',
-['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
-    $scope.loading = true;
-
-    Users.getAll(function(res) {
-        $scope.users = res;
-        $scope.loading = false;
-    }, function(err) {
-        $rootScope.error = "Failed to fetch users.";
-        $scope.loading = false;
-    });
-
-}]);
-
-

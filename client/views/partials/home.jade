@@ -1,125 +1,166 @@
 include mixins/navbar
 include mixins/footer
-div.background(background-img="/img/collections.jpg")
+link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/feed.css', rel="stylesheet")
+link(href='/css/card.css', rel="stylesheet")
+div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
-.container
+.body(konami='debug.alert()')
     +navbar
-    .row
-        .hidden-xs.col-sm-3.col-md-2(style="text-align:center;")
-            img.img-circle.border-circle(ph-img="130x130", style="margin-top:100%;margin-bottom:20px;margin-left:-15px;", ng-class="'border-circle '+ viewCtrl.panelState")
-            h3 添加错题&nbsp
-                span.glyphicon.glyphicon-plus
-            h3 杉景题库&nbsp
-                span.glyphicon.glyphicon-share-alt
-        .col-sm-9.col-md-10
-            .row(style="padding-top:15%;")
-                #panel-1(ng-class="viewCtrl.panelState", ng-click="viewCtrl.panelState='s1'")
-                    h1 错题本
-                        //-span.glyphicon.glyphicon-chevron-left
-                .panel-content(ng-show="viewCtrl.panelState=='s1'")
-                    h2(ng-repeat-start="erratum in model.errata")
-                        a(ng-href="{{'/errata/'+erratum._id}}") {{erratum.title}}
-                    a.close-button(ng-repeat-end, ng-show="viewCtrl.state == 'editView' ",
-                    ng-click="delete(erratum._id)")
-                        span.glyphicon.glyphicon-remove
-                    h2 {{title}}
-                    .row(ng-show="viewCtrl.state == 'createView' ", style="margin-top:40px;")
+    .alert-box(ng-show='error', ng-click="errorClear()")
+        p.title {{error.title || error}}
+            a.pull-right.small(ng-if="error.details", ng-click="view.error.show=show") 细节
+        .details(ng-hide='view.error.show')
+            p {{error.details}}
+    .container
+        .row
+            .col-sm-7.col-sm-offset-2.col-xs-12
+                ul.nav.nav-pills
+                    li
+                        a(ng-href='/home')
+                            span.glyphicon.glyphicon-home
+                    li.pull-right
+                        a 待回答
+                    li.pull-right
+                        a 用户
+                    li.pull-right
+                        a 分类
+                    li.pull-right
+                        a(ng-href='/questions') 问题
+        .row
+            .col-sm-2.col-xs-3
+                ul.nav.sp-nav.nav-pills.nav-stacked
+                    li(ng-class="{active: view.state=='newsFeed'}")
+                        a.text-center(ng-click="view.state='newsFeed'") 更新和信息
+                    li(ng-class="{active: view.state=='search'}")
+                        a.text-center(ng-click="view.state='search'")
+                            span 搜索 &nbsp
+                            i.fa.fa-search
+                    li(ng-class="{active: view.state=='stats'}")
+                        a.text-center(ng-click="view.state='stats'") 统计数据
+                    li(ng-class="{active: view.state=='answers'}")
+                        a.text-center(ng-click="view.state='answers'") 他的回答
+                    li(ng-class="{active: view.state=='follow'}")
+                        a.text-center(ng-click="view.state='follow'") 他的关注
+                    li(ng-class="{active: view.state=='questions'}")
+                        a.text-center(ng-click="view.state='questions'") 他的提问
+                    li(ng-class="{active: view.state=='comments'}")
+                        a.text-center(ng-click="view.state='comments'") 他的评论
+            .col-sm-7.col-xs-9
+                div
+                    .row
                         .col-xs-12
-                                .form-group
-                                    label.col-xs-4.control-label 学科
-                                    .col-xs-8
-                                        input#input1.form-control(type='subject', placeholder='',ng-model="subject")
-                                .form-group
-                                    label.col-xs-4.control-label 错题本标题
-                                    .col-sm-8
-                                        input#input2.form-control(type='title', placeholder='{{subject}}',ng-model="title")
-                                button.btn.btn-default(ng-click="viewCtrl.state =  'defaultView' ").col-sm-2.col-sm-offset-7 取消
-                                button.btn.btn-default(type='submit', ng-click="createErratum()").col-sm-offset-1.col-sm-2 完成
-                    .row(ng-show="viewCtrl.state == 'defaultView' ")
+                            flip(flipped="view.profile.flipped")
+                                flip-front.card.convex.no-top-margin
+                                    .card-title.bottom-margin
+                                        span.name {{Model.profile.name.split(',').join('')}}
+                                        span.signature ，
+                                        span.signature {{Model.profile.signature}}
+                                    .row
+                                        .col-sm-4.col-xs-12.col-sm-push-8
+                                            div.text-strip.pull-right(ng-click="view.profile.flipped=true")
+                                                span.glyphicon.glyphicon-arrow-right.no-padding
+                                                span 更多信息
+                                        .col-sm-8.col-xs-12.col-sm-pull-4
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-user
+                                                span.separated {{Model.profile.schoolRecord.slice(-1)[0].name}}
+                                                span {{Model.profile.schoolRecord.slice(-1)[0].classYear}}届
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-tags
+                                                span(ng-repeat="major in Model.profile.schoolRecord.slice(-1)[0].majors track by $index").separated {{major}}
+                                                span(ng-repeat="ec in Model.profile.extracurriculars",
+                                                ng-class="{'end' : $index == profile.schoolRecord[0].extracurriculars.length}").separated {{ec}}
+                                            div.text-strip
+                                                span.glyphicon.glyphicon-stats
+                                                span.separated 回答 {{Model.profile.stats.questionCount}}
+                                                span.separated 提问 {{Model.profile.stats.answerCount}}
+                                                span 编辑 {{Model.profile.stats.editCount}}
+                                flip-back.card.convex.no-top-margin
+                                    .card-title.bottom-margin
+                                        span.name(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓, 名...")
+                                        span.signature ，
+                                        span.signature(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.signature", placeholder="简介签名...")
+                                        span.edit.pull-right.fa.fa-pencil(ng-hide="view.profile.edit || user.username !== Model.profile.username", ng-click="editProfile()")
+                                        span.edit.pull-right.fa.fa-check(ng-show="view.profile.edit", ng-click="submitProfile()")
+                                        span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
+                                    .row
+                                        .col-xs-12
+                                            ul.text-strip(ng-click="view.profile.flipped=false")
+                                                li.pull-right 返回
+                                                li.glyphicon.glyphicon-arrow-left.no-padding.pull-right
+                                    .row
+                                        .col-xs-12.text-block-container
+                                            .text-block.title 学校
+                                            .text-block-body
+                                                .unit(ng-repeat-start="school in Model.profile.schoolRecord track by $index")
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].name", placeholder="学校...")
+                                                .unit
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].classYear", placeholder="毕业年份...")
+                                                    span 届
+                                                .unit
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].entrance", placeholder="入学年份...")
+                                                    span 年至
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].left", placeholder="离开年份...")
+                                                    span 年
+                                                .unit
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[$index].type", placeholder="中学、高中、大学、研究生")
+                                                .unit.button
+                                                    span.fa.fa-times(ng-click="Model.profile.schoolRecord.splice($index,1)")
+                                                hr(ng-repeat-end, ng-if="$index !== Model.profile.schoolRecord.length-1")
+                                                .unit.pull-right.button
+                                                    span.fa.fa-plus(ng-click="addEmptySchool()", ng-show='view.profile.edit')
+                                        .col-xs-12.text-block-container
+                                            .text-block.title 专业
+                                            .text-block-body
+                                                .unit(ng-repeat="major in Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors track by $index")
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].majors[$index]", placeholder="目前专业...")
+                                                .unit.pull-right.button
+                                                    span.fa.fa-plus(ng-click="editProfile()")
+                                        .col-xs-12.text-block-container
+                                            .text-block.title 学科特长
+                                            .text-block-body
+                                                .unit(ng-repeat="subject in Model.profile.strongSubjects track by $index")
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.strongSubjects[$index]", placeholder="学科特长...")
+                                                .unit.pull-right.button
+                                                    span.fa.fa-plus(ng-click="editProfile()")
+                                        .col-xs-12.text-block-container
+                                            .text-block.title 课外活动
+                                            .text-block-body
+                                                .unit(ng-repeat="ec in Model.profile.extracurriculars track by $index" )
+                                                    span(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.extracurriculars[$index]", placeholder="课外活动...")
+                                                .unit.pull-right.button
+                                                    span.fa.fa-plus(ng-click="editProfile()")
+                                        .col-xs-12.text-block-container(style="margin-bottom: -15px;")
+                                            .text-block.title
+                                            .text-block-body
+                                                .unit
+                                                    span 回答 {{Model.profile.stats.questionCount}}
+                                                .unit
+                                                    span 提问 {{Model.profile.stats.answerCount}}
+                                                .unit
+                                                    span 编辑 {{Model.profile.stats.editCount}}
                         .col-xs-12
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'createView' ")
-                                span.glyphicon.glyphicon-plus
-                                p 添加
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'editView' ")
-                                span.glyphicon.glyphicon-remove-sign
-                                p 编辑
-                    .row(ng-show="viewCtrl.state == 'editView' ")
-                        .col-xs-12
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'defaultView' ")
-                                span.glyphicon.glyphicon-share-alt
-                                p 完成编辑
-                #panel-2(ng-class="viewCtrl.panelState", ng-click="viewCtrl.panelState='s2'")
-                    h1 最近&nbsp
-                .panel-content(ng-show="viewCtrl.panelState=='s2'")
-                    //-(ng-class="viewCtrl.panelState")
-                    h2(ng-repeat-start="erratum in model.errata")
-                        a(ng-href="{{'/errata/'+erratum._id}}") {{erratum.title}}
-                    a.close-button(ng-repeat-end, ng-show="viewCtrl.state == 'editView' ",
-                    ng-click="delete(erratum._id)")
-                        span.glyphicon.glyphicon-remove
-                    h2 {{title}}
-                    .row(ng-show="viewCtrl.state == 'createView' ", style="margin-top:40px;")
-                        .col-xs-offset-1.col-xs-10
-                            form(role='form').form-horizontal
-                                .form-group
-                                    label.col-xs-4.control-label 学科
-                                    .col-xs-8
-                                        input#input1.form-control(type='subject', placeholder='',ng-model="subject")
-                                .form-group
-                                    label.col-xs-4.control-label 错题本标题
-                                    .col-sm-8
-                                        input#input2.form-control(type='title', placeholder='{{subject}}',ng-model="title")
-                                button.btn.btn-default(ng-click="viewCtrl.state =  'defaultView' ").col-sm-2.col-sm-offset-7 取消
-                                button.btn.btn-default(type='submit', ng-click="createErratum()").col-sm-offset-1.col-sm-2 完成
-                    .row(ng-show="viewCtrl.state == 'defaultView' ")
-                        .col-xs-12
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'createView' ")
-                                span.glyphicon.glyphicon-plus
-                                p 添加
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'editView' ")
-                                span.glyphicon.glyphicon-remove-sign
-                                p 编辑
-                    .row(ng-show="viewCtrl.state == 'editView' ")
-                        .col-xs-12
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'defaultView' ")
-                                span.glyphicon.glyphicon-share-alt
-                                p 完成编辑
-                #panel-3(ng-class="viewCtrl.panelState", ng-click="viewCtrl.panelState='s3'")
-                    h1 复习&nbsp
-                        //-span.glyphicon.glyphicon-chevron-right
-                .panel-content(ng-show="viewCtrl.panelState=='s3'")
-                    //-(ng-class="viewCtrl.panelState")
-                    h2(ng-repeat-start="erratum in model.errata")
-                        a(ng-href="{{'/errata/'+erratum._id}}") {{erratum.title}}
-                    a.close-button(ng-repeat-end, ng-show="viewCtrl.state == 'editView' ",
-                    ng-click="delete(erratum._id)")
-                        span.glyphicon.glyphicon-remove
-                    h2 {{title}}
-                    .row(ng-show="viewCtrl.state == 'createView' ", style="margin-top:40px;")
-                        .col-xs-offset-1.col-xs-10
-                            form(role='form').form-horizontal
-                                .form-group
-                                    label.col-xs-4.control-label 学科
-                                    .col-xs-8
-                                        input#input1.form-control(type='subject', placeholder='',ng-model="subject")
-                                .form-group
-                                    label.col-xs-4.control-label 错题本标题
-                                    .col-sm-8
-                                        input#input2.form-control(type='title', placeholder='{{subject}}',ng-model="title")
-                                button.btn.btn-default(ng-click="viewCtrl.state =  'defaultView' ").col-sm-2.col-sm-offset-7 取消
-                                button.btn.btn-default(type='submit', ng-click="createErratum()").col-sm-offset-1.col-sm-2 完成
-                    .row(ng-show="viewCtrl.state == 'defaultView' ")
-                        .col-xs-12
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'createView' ")
-                                span.glyphicon.glyphicon-plus
-                                p 添加
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'editView' ")
-                                span.glyphicon.glyphicon-remove-sign
-                                p 编辑
-                    .row(ng-show="viewCtrl.state == 'editView' ")
-                        .col-xs-12
-                            h3.h3-verticle(ng-click="viewCtrl.state = 'defaultView' ")
-                                span.glyphicon.glyphicon-share-alt
-                                p 完成编辑
-
-link(href='/css/homePage.css', rel="stylesheet")
+                            .feed-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:view.timeline.predicate:view.timeline.reverse track by $index ")
+                                .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
+                                    .unit {{feed.timeNumber}}
+                                        span.small {{feed.timeUnit}}
+                                .time-header.right-label
+                                    .unit
+                                        span.small {{feed.tagText}}
+                                .time-body.card
+                                    .unit.title
+                                        a(ng-href="{{feed.url}}") “{{feed.data.title}}"
+                                    .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
+                    .flow-container
+                        .row
+                            .col-lg-12
+            .col-sm-3.hidden-xs
+                .panel.panel-info
+                    .panel-heading 他的班级
+                    .panel-body
+                        p(ph-txt='3s')
+                .panel.panel-info
+                    .panel-heading 他的课本
+                    .panel-body
+                        p(ph-txt='3s')

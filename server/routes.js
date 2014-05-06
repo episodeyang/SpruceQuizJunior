@@ -25,7 +25,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 .accessLevel || accessLevels.all;
             if (!(accessLevel.bitMask & role.bitMask)) return res.send(401);
             return next();
-        };
+        }
 
         var routes = [
             {
@@ -177,6 +177,24 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 httpMethod: 'POST',
                 middleware: [UserCtrl.update],
                 accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/users/:username/schools',
+                httpMethod: 'POST',
+                middleware: [UserCtrl.addSchool],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/users/:username/sessions',
+                httpMethod: 'POST',
+                middleware: [UserCtrl.addSession],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/users/:username/books',
+                httpMethod: 'POST',
+                middleware: [UserCtrl.addBook],
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/students/:username',

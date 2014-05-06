@@ -1,123 +1,122 @@
 'use strict';
 /* Controllers */
-
 angular.module('SpruceQuizApp')
-.controller('HomeCtrl',
-['$filter','$rootScope', '$scope', 'Auth', 'Sections','Units','Materials','Students','Model',
-    function($filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
-        $scope.user = Auth.user;
-        $scope.userRoles = Auth.userRoles;
-        $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
+    .controller('HomeCtrl',
+    ['_', '$routeParams', '$location', '$filter', '$rootScope', '$scope', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
+        function (_, $routeParams, $location, $filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
+            //Boiler Plate for authentication info
+            $scope.user = Auth.user;
+            $scope.userRoles = Auth.userRoles;
+            $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
 
-        $scope.model = {}
-        $scope.model.user =$rootScope.user
-        $scope.model.sections=[]
-        $scope.Model = Model;
-        function loadErrata (){
-            Students.onErrata.list(function(res){
-                $scope.model.errata = res;
-            });
-            console.log('loaded data to Errata of student');
-        }
-//        loadErrata();
-
-        $scope.viewCtrl={};
-        $scope.viewCtrl.state = 'defaultView' ;
-        $scope.viewCtrl.panelStates = {'errata':"s1", 'recent':"s2" , 'review':"s3"} ;
-        $scope.viewCtrl.panelState = $scope.viewCtrl.panelStates.errata ;
-
-
-        $scope.form = {
-            subject: "",
-            title: "",
-            url: "fake/url",
-            problems: [],
-            dateCreated: "",
-            dateModified: ""
-        };
-        $scope["subject"] = undefined;
-        $scope.$watch('subject', function() {
-            $scope.title = $scope.subject;
-        });
-        $scope.createErratum = function(){
-            $scope.form.subject = $scope.subject;
-            $scope.form.title = $scope.title;
-            Students.onErrata.create($scope.form
-                ,function(res){
-                    loadErrata();
-                    $scope.subject = "";
-                    $scope.title = "";
+            if (window.location.host.indexOf('youzi') == 0) {
+                $scope.orgTitle = "游子 - ";
+            }
+            ;
+            $scope.debug = {
+                alert: function () {
+                    alert('konami code success');
                 }
-                ,function(err){
-                    console.log(err);
-                }
-            );
-        };
-        $scope.delete = function(id){
-            console.log("id is" + id);
-            Students.onErrata.delete({id: id}
-                , function(res){
-                    loadErrata();
+            };
+            $rootScope.errorClear = function () {
+                $rootScope.error = null;
+            };
+            $scope.Model = Model;
+
+            $scope.view = {
+                state: 'search',
+                profile: {}
+            };
+            $scope.view.profile.edit = false;
+
+            $rootScope.errors = {};
+
+            $scope.view.timeline = {
+                predicate: 'time',
+                reverse: true
+            };
+            Model.getUserProfile($scope.user.username);
+            Model.getUserFeeds($scope.user.username);
+
+            function isArray(obj) {
+                return Object.prototype.toString.call(obj) === '[object Array]';
+            }
+
+            $scope.addEmptySchool = function () {
+                Model.profile.schoolRecord.push({
+                    name: '',
+                    classYear: null,
+                    entrance: null,
+                    left: null,
+                    alumni: null,
+                    type: '',
+                    majors: ['']
                 });
-        };
-        //console.log($scope.user)
-        //console.log($rootScope.userRoles)
-        //console.log($rootScope.accessLevels)
+            };
 
-//        Students.onErrata.get({id: '' }
-//            ,function(results){
-//                $scope.model.sections = results;
-//                console.log('printing out the sections')
-//                console.log($scope.model.sections)
-//            }
-//        )
+            $scope.editProfile = function () {
 
-        //Students.onErrata.create({id:})
+                $scope.view.profile.edit = true;
 
-//        $scope.model.feeds = Sections.onFeeds.get({uuid: 'g1', flim: '50'});
+                function removeNullAddEmptyToEnd(obj, key) {
+                    if (isArray(obj) && key !== 'schoolRecord') {
+                        obj.map(function (value, index) {
+                            if (!value) {
+                                obj.splice(index, 1);
+                            }
+                        });
+                        obj.push('');
+                    }
+                }
 
-        //$rootScope.model.sections = Students.onSections.get({uuid: 'u1'});
+                _.map(Model.profile, removeNullAddEmptyToEnd);
 
-        //console.log($scope.user.userRoles)
-    //    $scope.sectionUnits = Sections.onUnits.get({uuid: this.section.sectionUUID})
-//        $scope.updateSection = function(index){
-//            Sections.onUnits.get({uuid: $scope.model.sections[index].sectionUUID}
-//                ,function(results){
-//                    //console.log(results);
-//                    $scope.model.sections[index].sectionUnits = results;
-//                    $scope.grabMaterials(results[0].unitUUID)
-//
-//                }
-//                ,function(err){
-//                    $rootScope.error = "Failed to fetch sections"
-//                }
-//            );
-//        }
-//
-//        $scope.model.unitID = "d1";
-//        $scope.grabMaterials = function(unitId){
-//            //$scope.model.unitID = unitId;
-//            $scope.model.tempUnit = Units.onUnits.get({uuid: unitId});
-//        };
-//
-//        $scope.createNewSection = function(){
-//            $scope.newSection.sectionUUID = "new";
-//            $scope.newSection.sectionUnits = [];
-//            Sections.onSections.save($scope.newSection);
-//            $scope.list.push($scope.newSection);
-//        };
-//
-//        $scope.closeAlert = function(index) {
-//            $scope.model.feeds.splice(index, 1);
-//            //console.log("print test");
-//        };
-}]);
+                if (Model.profile.role.title === 'student' || true) {
+                    _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNullAddEmptyToEnd);
+                }
 
-//ProblemCtrl.$inject = ['$scope', '$http'];
+            };
+            $scope
+                .$watch(
+                    'Model.profile',
+                    function (newVal, oldVal) {
+                    },
+                    true
+                );
 
+            $scope.submitProfile = function () {
 
-//function PhoneDetailCtrl($scope, $routeParams) {
-//    $scope.phoneId = $routeParams.phoneId;
-//}
+                function removeNull(obj, key) {
+                    if (isArray(obj)) {
+                        obj.map(function (value, index) {
+                            if (!value) {
+                                obj.splice(index, 1);
+                            }
+                        });
+                    }
+                }
 
-//PhoneDetailCtrl.$inject = ['$scope', '$routeParams'];
+                _.map(Model.profile, removeNull);
+
+                if (Model.profile.role.title === 'student' || true) {
+                    var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1];
+                    _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNull);
+
+                    if (school !== undefined) {
+                        if (!school.name) {
+                            Model.profile.schoolRecord.splice(-1);
+                        }
+                    } else {
+                        Model.profile.schoolRecord = [];
+                    }
+                }
+
+                Model.updateUserProfile(
+                    function () {
+                        $scope.view.profile.edit = false;
+                    },
+                    function (error) {
+                    })
+            };
+        }
+    ]);

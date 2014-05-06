@@ -27,6 +27,7 @@ angular.module('SpruceQuizApp')
                             Model.init();
                             Model.queryQuestions();
                             that.$hide();
+                            $location.path('/home');
                         },
                         function (err) {
                             $rootScope.errors.login = "Failed to login";

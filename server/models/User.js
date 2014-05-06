@@ -28,9 +28,11 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
              */
             var strList = string.split('#');
             var params = { email: strList.shift() };
-            function pushKey (item) {
+
+            function pushKey(item) {
                 params[item.split(':')[0]] = item.split(':')[1];
             }
+
             _.each(strList, pushKey);
             return params;
         }
@@ -42,11 +44,12 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
              * @param {object} data
              * @return {string} string
              */
-            function makeString (value, key) {
+            function makeString(value, key) {
                 if (value) {
                     return "#" + key + ":" + value;
                 }
             }
+
             // add the `#` inside the makeString for better
             // null value handling and default `#` prefix.
             return _.map(data, makeString).join('');
@@ -55,7 +58,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
         function capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
-        return {
+
+        var UserMethods = {
 
             addUser: function (username, password, role, params, callback) {
 
@@ -116,6 +120,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         }
                     });
                 }
+
                 UserM.findOne({ username: username }, function (err, duplicate) {
                     if (err) {
                         console.log("An error occurred in checking User database.");
@@ -133,7 +138,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     {username: username},
                     function (err, user) {
                         if (!user || err) {
-                            console.log('User.confirmEmail error: user'+ user + ' error' + err)
+                            console.log('User.confirmEmail error: user' + user + ' error' + err)
                             return callback('userDoesNotExist');
                         }
                         user.populate(user.role.title, function (err, user) {
@@ -208,9 +213,47 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         done(null, false);
                     }
                 });
+            },
+            addToSet : function (key, user, payload, callback) {
+                if (!user.role) {
+                    return callback('noUserRole');
+                }
+
+                function done(error, doc) {
+                    doc.populate('schools', callback);
+                }
+
+                var query = {
+                        username: user.username
+                    },
+                    update = {
+                        $addToSet: {
+                            key: payload._id
+                        }
+                    },
+                    options = {
+                        new: true //return updated document
+                    };
+                SchemaModels[capitalize(user.role.title)]
+                    .findOneAndUpdate(
+                        query,
+                        update,
+                        options,
+                        done
+                    );
+            },
+            addSession: function (user, session, callback) {
+                UserMethods.addToSet('session', user, session, callback);
+            },
+            //todo: not tested;
+            addSchool: function (user, school, callback) {
+                UserMethods.addToSet('session', user, school, callback);
+            },
+            addBook: function (user, book, callback) {
+                UserMethods.addToSet('session', user, book, callback);
             }
         };
-
+        return _.extend(UserM, UserMethods);
     });
 
 

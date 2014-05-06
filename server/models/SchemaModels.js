@@ -252,7 +252,13 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 sessions: [
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
-                studentIds: [
+                schools: [
+                    { type: Schema.Types.ObjectId, ref: 'School' }
+                ],
+                textbooks: [
+                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                ],
+                children: [
                     { type: Schema.Types.ObjectId, ref: 'Student' }
                 ],
                 preferences: {
@@ -276,6 +282,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 schools: [
                     { type: Schema.Types.ObjectId, ref: 'School' }
                 ],
+                textbooks: [
+                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                ],
                 preferences: {
                 }
             },
@@ -295,7 +304,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'schools' }
+                    { type: Schema.Types.ObjectId, ref: 'School' }
+                ],
+                textbooks: [
+                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
                 ],
                 preferences: {
                 }
@@ -316,7 +328,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'schools' }
+                    { type: Schema.Types.ObjectId, ref: 'School' }
+                ],
+                textbooks: [
+                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
                 ],
                 preferences: {
                 }

@@ -33,12 +33,12 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'QuestionCtrl',
                     access: access.all
                 });
-//            $routeProvider.when('/home',
-//                {
-//                    templateUrl: '/partials/home',
-//                    controller: 'HomeCtrl',
-//                    access: access.loggedin
-//                });
+            $routeProvider.when('/home',
+                {
+                    templateUrl: '/partials/home',
+                    controller: 'HomeCtrl',
+                    access: access.loggedin
+                });
 //            $routeProvider.when('/errata/:errataId',
 //                {
 //                    templateUrl: '/partials/errata',
