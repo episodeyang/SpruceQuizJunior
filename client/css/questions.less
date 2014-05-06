@@ -20,13 +20,16 @@ body {
   margin-top: 44px;
   background-color: #e9e4e0;
 }
+
 body {
   font-size: 1.4em;
   font-family: arial, sans-serif;
 }
+
 pre {
   font-size: 1em;
 }
+
 blockquote {
   font-size: 1em;
 }
@@ -66,20 +69,39 @@ blockquote {
 ul.nav.sp-nav {
   height: 34px;
 }
+
 ul.nav.sp-nav > li {
   height: 34px;
 }
-ul.nav.sp-nav.nav-stacked > li > a {
-  padding-top: 7px !important;
-  padding-bottom: 7px !important;
-  padding-left: 7px;
-  padding-right: 7px;
-  height: 34px;
+
+ul.nav.sp-nav.nav-stacked {
+  > li > a {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 34px;
+  }
+  > li.active > a {
+    color: white;
+    background-color: lighten(#428bca, 0%);
+    span { color: white;}
+  }
+  > li:hover > a {
+    color: @gray-dark;
+    background-color: @white-light;
+    span { color: @gray-dark;}
+  }
+  > li:hover.active > a {
+    color: white;
+    background-color: darken(#428bca, 10%);
+    span { color: white;}
+  }
 }
 
 .alert-box {
   min-width: 300px;
-//  max-width: 500px;
+  //  max-width: 500px;
   min-height: 35px;
   position: fixed;
   top: 80px;
@@ -95,7 +117,9 @@ ul.nav.sp-nav.nav-stacked > li > a {
     font-size: 14px;
     color: grey;
   }
-  a { color: rgb(61, 155, 185); }
+  a {
+    color: rgb(61, 155, 185);
+  }
 }
 
 .panel-heading {
@@ -105,7 +129,7 @@ ul.nav.sp-nav.nav-stacked > li > a {
   border-top-left-radius: 3px;
 }
 
-a, a>span {
+a, a > span {
   color: grey;
   cursor: pointer;
 }
@@ -115,11 +139,12 @@ a.white {
   &:hover {
     color: white;
     text-decoration: none;
-    
+
   }
   cursor: pointer;
 
 }
+
 a.spaced {
   margin-left: 5px;
   margin-right: 5px;
@@ -139,12 +164,15 @@ a.blue {
 hr {
   border-top: 1px solid @light-brown;
 }
+
 hr.dotted {
   border-top: 1px dotted @light-brown;
 }
+
 hr.light-dotted {
   border-top: 1px dotted @faint-brown;
 }
+
 .dotted-bottom {
   border-bottom: 1px dotted @light-brown;
 }
@@ -162,15 +190,19 @@ h1.no-margin, h2.no-margin, h3.no-margin, h4.no-margin, h5.no-margin, h6.no-marg
 .no-top-margin, h1.no-top-margin, h2.no-top-margin, h3.no-top-margin, h4.no-top-margin, h5.no-top-margin, h6.no-top-margin, hr.no-top-margin, p.no-top-margin {
   margin-top: 0 !important;
 }
+
 .no-left-margin, h1.no-left-margin, h2.no-left-margin, h3.no-left-margin, h4.no-left-margin, h5.no-left-margin, h6.no-left-margin, hr.no-left-margin, p.no-left-margin {
   margin-left: 0 !important;
 }
+
 .no-padding, h1.no-padding, h2.no-padding, h3.no-padding, h4.no-padding, h5.no-padding, h6.no-padding, hr.no-padding, p.no-padding {
   padding: 0 !important;
 }
+
 h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.bottom-margin, h6.bottom-margin, hr.bottom-margin, p.bottom-margin {
   margin-bottom: 10px;
 }
+
 h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.bottom-margin, h6.bottom-margin, hr.bottom-margin, p.bottom-margin {
   margin-bottom: 10px;
 }
@@ -178,6 +210,7 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 .top-margin {
   margin-top: 15px !important;
 }
+
 .short-top-margin {
   margin-top: 7px !important;
 }
@@ -185,6 +218,7 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 .bottom-margin {
   margin-bottom: 15px;
 }
+
 .short-bottom-margin {
   margin-bottom: 7px;
 }
@@ -192,6 +226,7 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 .right-margin {
   margin-right: 15px;
 }
+
 .left-margin {
   margin-left: 15px;
 }
@@ -199,17 +234,21 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 h1.no-bottom-margin, h2.no-bottom-margin, h3.no-bottom-margin, h4.no-bottom-margin, h5.no-bottom-margin, h6.no-bottom-margin, hr.no-bottom-margin, p.no-bottom-margin {
   margin-bottom: 0;
 }
+
 .no-bottom-margin {
   margin-bottom: 0;
 }
+
 h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.low-margin, hr.low-margin, p.low-margin {
   margin-top: 5;
   margin-bottom: 5;
 }
+
 .margin-right {
   margin-right: 8px;
 }
-.margin-left{
+
+.margin-left {
   margin-left: 8px;
 }
 
@@ -220,11 +259,25 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
   width: 50px;
 }
 
-.bg-blue { background-color: #9ce3ea; }
-.bg-green{ background-color: #9ee8aa; }
-.bg-red { background-color: #f7b9b7; }
-.bg-grey { background-color: #d4d4d4; }
-.bg-grey.transparent { background-color: fade(#d4d4d4, 0%); }
+.bg-blue {
+  background-color: #9ce3ea;
+}
+
+.bg-green {
+  background-color: #9ee8aa;
+}
+
+.bg-red {
+  background-color: #f7b9b7;
+}
+
+.bg-grey {
+  background-color: #d4d4d4;
+}
+
+.bg-grey.transparent {
+  background-color: fade(#d4d4d4, 0%);
+}
 
 div.rounded {
   border-radius: 10px;
@@ -233,7 +286,7 @@ div.rounded {
 .vote-box {
   width: 100%;
   padding: 0px;
-  p,h1,h2,h3,h4,h5 {
+  p, h1, h2, h3, h4, h5 {
     color: grey;
     width: 100%;
     margin: 0 0 0 0;
@@ -253,7 +306,7 @@ div.rounded {
       color: @Yellow;
       .text-outer-glow(@Yellow)
     }
-    .glow-pink{
+    .glow-pink {
       color: @Pink-light;
       .text-outer-glow(@Pink-light)
     }
@@ -292,15 +345,19 @@ div.rounded {
   p {
     min-height: 12;
   }
-  .button { color: transparent; }
+  .button {
+    color: transparent;
+  }
   &:hover {
-    .button { color: @gray-light; }
+    .button {
+      color: @gray-light;
+    }
   }
   .glow-yellow {
     color: @Yellow;
     .text-outer-glow(@Yellow)
   }
-  .glow-pink{
+  .glow-pink {
     color: @Pink-light;
     .text-outer-glow(@Pink-light)
   }
