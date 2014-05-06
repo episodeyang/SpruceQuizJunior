@@ -354,7 +354,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 parents: [String],
                 children: [String],
                 knowledgeTree: { type: Schema.Types.Mixed },
-                tableOfContent: {type: Schema.Types.Mixed }
+                tableOfContent: {type: Schema.Types.Mixed },
+                admins: [subSchema.UserFragment],
+                members: [subSchema.UserFragment],
+                adminsArchive: [subSchema.UserFragment],
+                membersArchive: [subSchema.UserFragment]
             },
             userFeed: {
                 userId: {type: Schema.Types.ObjectId},
@@ -371,6 +375,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 title: String,
                 teachers: [subSchema.UserFragment],
                 members: [subSchema.UserFragment],
+                teachersArchive: [subSchema.UserFragment],
+                membersArchive: [subSchema.UserFragment],
                 school: String,
                 overview: String,
                 created: Date,

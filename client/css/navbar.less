@@ -29,9 +29,9 @@ a.navbar-brand {
 }
 .navbar {min-height:44px !important}
 li.dropdown > a {padding-top: 13px; vertical-align: middle;}
-ul.nav {
-  li {
-    a {
+ul.nav.navbar-nav {
+  >li {
+    >a {
       padding-top: 13px !important;
       padding-bottom: 13px !important;
       padding-left: 11px;
@@ -45,15 +45,17 @@ ul.nav {
       }
     }
   }
-  li:hover {
-    a {
-      color: @white !important;
-      span {
-        color: @white !important;
-      }
+  >li:hover>a {
+    color: @white ;//!important;
+    span {
+      color: @white ;//!important;
     }
   }
+  .dropdown-menum>li>a {
+    color: grey!important;
+  }
 }
+
 
 .navbar-collapse {
   background-color: #604830;
@@ -61,8 +63,8 @@ ul.nav {
 }
 
 .no-left-padding {
-  padding-left: 0px !important;
+  padding-left: 0px ;//!important;
 }
 .no-right-padding {
-  padding-right: 0px !important;
+  padding-right: 0px ;//!important;
 }
