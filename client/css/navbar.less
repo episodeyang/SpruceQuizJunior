@@ -30,25 +30,23 @@ a.navbar-brand {
 .navbar {min-height:44px !important}
 li.dropdown > a {padding-top: 13px; vertical-align: middle;}
 ul.nav.navbar-nav {
-  >li {
-    >a {
-      padding-top: 13px !important;
-      padding-bottom: 13px !important;
-      padding-left: 11px;
-      padding-right: 11px;
-
-//      vertical-align: bottom;
-      font-size: 14px;
-      span.glyphicon {
-        margin-top:2px;
-        color: @white-light;
-      }
+  >li >a {
+    .transition(all 0.15s ease);
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+    padding-left: 11px;
+    padding-right: 11px;
+    font-size: 14px;
+    span.glyphicon {
+      .transition(all 0.15s ease);
+      margin-top:2px;
+      color: @white-light;
     }
   }
   >li:hover>a {
-    color: @white ;//!important;
+    color: @white !important;
     span {
-      color: @white ;//!important;
+      color: @white !important;
     }
   }
   .dropdown-menum>li>a {
