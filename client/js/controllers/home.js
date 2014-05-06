@@ -12,7 +12,6 @@ angular.module('SpruceQuizApp')
             if (window.location.host.indexOf('youzi') == 0) {
                 $scope.orgTitle = "游子 - ";
             }
-            ;
             $scope.debug = {
                 alert: function () {
                     alert('konami code success');
@@ -24,7 +23,7 @@ angular.module('SpruceQuizApp')
             $scope.Model = Model;
 
             $scope.view = {
-                state: 'search',
+                state: 'newsFeed',
                 profile: {}
             };
             $scope.view.profile.edit = false;

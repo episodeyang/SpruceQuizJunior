@@ -32,22 +32,45 @@ div.background(background-img="/img/bg-brown.jpg")
                 ul.nav.sp-nav.nav-pills.nav-stacked
                     li(ng-class="{active: view.state=='newsFeed'}")
                         a.text-center(ng-click="view.state='newsFeed'") 更新和信息
-                    li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'")
-                            span 搜索 &nbsp
-                            i.fa.fa-search
-                    li(ng-class="{active: view.state=='stats'}")
-                        a.text-center(ng-click="view.state='stats'") 统计数据
-                    li(ng-class="{active: view.state=='answers'}")
-                        a.text-center(ng-click="view.state='answers'") 他的回答
-                    li(ng-class="{active: view.state=='follow'}")
-                        a.text-center(ng-click="view.state='follow'") 他的关注
-                    li(ng-class="{active: view.state=='questions'}")
-                        a.text-center(ng-click="view.state='questions'") 他的提问
-                    li(ng-class="{active: view.state=='comments'}")
-                        a.text-center(ng-click="view.state='comments'") 他的评论
+                    //li(ng-class="{active: view.state=='search'}")
+                    //    a.text-center(ng-click="view.state='search'")
+                    //        span 搜索 &nbsp
+                    //        i.fa.fa-search
+                    li(ng-class="{active: view.state=='timeline'}")
+                        a.text-center(ng-click="view.state='timeline'") 我的时间轴
+                    li(ng-class="{active: view.state=='ask'}")
+                        a.text-center(ng-click="view.state='ask'") 提问
+                    //li(ng-class="{active: view.state=='answers'}")
+                    //    a.text-center(ng-click="view.state='answers'") 回答
+                    //li(ng-class="{active: view.state=='follow'}")
+                    //    a.text-center(ng-click="view.state='follow'") 关注
+                    //li(ng-class="{active: view.state=='questions'}")
+                    //    a.text-center(ng-click="view.state='questions'") 提问
+                    //li(ng-class="{active: view.state=='comments'}")
+                    //    a.text-center(ng-click="view.state='comments'") 评论
             .col-sm-7.col-xs-9
-                div
+                div(ng-if="view.state==='newsFeed'")
+                    .row
+                        .col-xs-12
+                            .input-group.bottom-margin
+                                input(type='text').form-control
+                                span.input-group-btn
+                                    button.btn.btn-info(type='button') 搜索
+                    .row
+                        .col-xs-12
+                            .card.bottom-margin
+                                .card-title.bottom-margin
+                                    span.name 杨歌
+                                    span.signature 问了
+                            .card.bottom-margin
+                                .card-title.bottom-margin
+                                    span.name 杨歌
+                                    span.signature 问了
+                            .card.bottom-margin
+                                .card-title.bottom-margin
+                                    span.name 杨歌
+                                    span.signature 问了
+                div(ng-if="view.state==='timeline'")
                     .row
                         .col-xs-12
                             flip(flipped="view.profile.flipped")
