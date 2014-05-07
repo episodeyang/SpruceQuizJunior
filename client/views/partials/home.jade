@@ -3,6 +3,8 @@ include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
+link(href='/css/panel.css', rel="stylesheet")
+link(href='/css/modal.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -180,10 +182,33 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-lg-12
             .col-sm-3.hidden-xs
                 .panel.panel-info
-                    .panel-heading 他的班级
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',
+                    bs-modal='modal', data-template='/partials/sessionEdit.html', data-placement='top') 我的班级
+                        span.pull-right.fa.fa-bars
+                    //.panel-body
+                    table.table
+                        //thead
+                            tr
+                                th
+                        tbody
+                            tr
+                                td
+                                    a(ng-href='/sessions/something') 三年级一班
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    //fa.fa-angle-right
                 .panel.panel-info
-                    .panel-heading 他的课本
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
+                        span.pull-right.fa.fa-bars
+                    //.panel-body
+                    table.table
+                        //thead
+                            tr
+                                th
+                        tbody
+                            tr(ng-click="")
+                                td 你身体里的那条鱼
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    //fa.fa-angle-right
+
