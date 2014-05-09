@@ -23,19 +23,27 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              */
             add: function (req, res) {
                 "use strict";
-                if (!req.params.id) { return res.send(400); }
+                if (!req.params.id) {
+                    return res.send(400);
+                }
                 var answer = {
-                        text: req.body.text,
-                        author: req.user.username
-                    };
+                    text: req.body.text,
+                    author: {
+                        username: req.user.username,
+                        name: req.user.name
+                    }
+                };
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
                     {$push: {answers: answer}},
                     {select: "answers"},
-                    function(err, result){
-                        if (err) {return res.send(403, err)};
+                    function (err, result) {
+                        if (err) {
+                            return res.send(403, err)
+                        }
                         return res.send(201, result);
-                    });
+                    }
+                );
             },
             /**
              * @api {post} /api/questions/:id/answers/:answerId Update Answer
@@ -43,13 +51,16 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions.Answers
              */
             update: function (req, res) {
-                if (!req.params.id || !req.params.answerId) { return res.send(400); }
+                if (!req.params.id || !req.params.answerId) {
+                    return res.send(400);
+                }
                 if (req.body.voteup == 'true' || req.body.votedown == 'true') {
                     var query = {
                         "_id": ObjectId(req.params.id),
                         "answers._id": ObjectId(req.params.answerId)
                     };
-                    function callback (err, result){
+
+                    function callback(err, result) {
                         if (req.body.voteup === 'true') {
                             if (_.contains(result.answers[0].voteup, req.user.username)) {
                                 var update = {
@@ -93,26 +104,35 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                                 answers: result.answers,
                                 nAnswers: result.nAnswers
                             };
-                            if (err) { return res.send(500, err); }
+                            if (err) {
+                                return res.send(500, err);
+                            }
                             else {
-                                return res.send(201, q );
-                            };
+                                return res.send(201, q);
+                            }
+                            ;
                         });
                     }
+
                     QuestionM.findOne(query).select('answers.$').exec(callback);
                 } else {
-                    QuestionM.findOneAndUpdate(
-                        {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) },
+
+                    var query = {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) };
 //                    New $currentDate applicable at mongodb v2.6 upcoming release.
 //                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answer.$.dateEdited": true}},
-                        {$set: {'answers.$.text': req.body.text, 'answer.$.dateEdited': new Date() }},
-                        {select: 'answers answerComments' },
+                    var update = {$set: {'answers.$.text': req.body.text, 'answer.$.dateEdited': new Date() }};
+                    var options = {select: 'answers answerComments' };
+                    QuestionM.findOneAndUpdate(
+                        query,
+                        update,
+                        options,
                         function (err, result) {
                             if (err) {
                                 return res.send(500, err);
                             } else {
                                 return res.send(201, result);
-                            };
+                            }
+                            ;
                         });
 
                 }
@@ -123,10 +143,12 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
              * @apiGroup Questions
              */
             removeById: function (req, res) {
-                if (!req.params.id || !req.params.answerId) { return res.send(400); }
+                if (!req.params.id || !req.params.answerId) {
+                    return res.send(400);
+                }
                 var query = {
-                        _id: ObjectId(req.params.id)
-                    };
+                    _id: ObjectId(req.params.id)
+                };
                 QuestionM.findOneAndUpdate(
                     query,
                     {$pull: {
@@ -139,7 +161,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                             return res.send(500, err);
                         } else {
                             return res.send(201, results);
-                        };
+                        }
+                        ;
                     });
             }
         };
