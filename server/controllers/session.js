@@ -34,6 +34,20 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                     }
                 );
             },
+            search: function (req, res) {
+                if (!req.query.name) {return res.send(401, 'noSessionName'); }
+                var query = res.query;
+                SessionM.find(
+                    {},
+                    keyString,
+                    function (err, sessions) {
+                        if (err) {
+                            return res.json(404, err);
+                        }
+                        return res.json(200, sessions);
+                    }
+                );
+            },
             findOne: function (req, res) {
                 if (!req.params.sessionId) { return res.send(401, 'noSessionNId'); }
                 SessionM.findById(

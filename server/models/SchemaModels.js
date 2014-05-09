@@ -198,6 +198,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 },
                 password: String,
                 role: {title: String, bitMask: Number},
+                schools: [String],
+                sessions: [{type: Schema.Types.ObjectId}],
                 student: { type: Schema.Types.ObjectId, ref: "Student"},
                 parent: { type: Schema.Types.ObjectId, ref: "Parent"},
                 teacher: { type: Schema.Types.ObjectId, ref: "Teacher" },

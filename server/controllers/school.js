@@ -14,6 +14,23 @@ define(['underscore', '../models/School', '../rolesHelper'],
             index: function (req, res) {
                 SchoolM.find(
                     {},
+                    'name type state country degrees tags',
+                    function (err, schools) {
+                        if (err) {
+                            return res.json(404, err);
+                        }
+                        return res.json(200, schools);
+                    }
+                );
+            },
+            search: function (req, res) {
+                if (!req.query.name) { return res.send(401, 'noSchoolName'); }
+                var query = {
+                    name: req.query.name
+                };
+                // console.log(query);
+                SchoolM.find(
+                    query,
                     keyString,
                     function (err, schools) {
                         if (err) {

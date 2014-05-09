@@ -265,6 +265,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
+                path: '/api/schools/search',
+                httpMethod: 'GET',
+                middleware: [SchoolCtrl.search],
+                accessLevel: accessLevels.all
+            },
+            {
                 path: '/api/schools/:name',
                 httpMethod: 'GET',
                 middleware: [SchoolCtrl.get],
@@ -286,6 +292,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/sessions',
                 httpMethod: 'GET',
                 middleware: [SessionCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/search',
+                httpMethod: 'GET',
+                middleware: [SessionCtrl.search],
                 accessLevel: accessLevels.all
             },
             {
