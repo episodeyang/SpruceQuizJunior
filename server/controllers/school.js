@@ -1,0 +1,87 @@
+/**
+ * @fileOverview School Controller
+ * @module School
+ * @type {exports}
+ * implements create, get, and index for schools in the database.
+ */
+define(['underscore', '../models/School', '../rolesHelper'],
+    function (_, SchoolM, rolesHelper) {
+        "use strict";
+        var userRoles = rolesHelper.userRoles;
+        var keyString = 'name type address zipCode state country overview url area foundingYear degrees tags 部委 teachers schools created edited';
+
+        return {
+            index: function (req, res) {
+                SchoolM.find(
+                    {},
+                    keyString,
+                    function (err, schools) {
+                        if (err) {
+                            return res.json(404, err);
+                        }
+                        return res.json(200, schools);
+                    }
+                );
+            },
+            get: function (req, res) {
+                if (!req.params.name) { return res.send(401, 'noSchoolName'); }
+                var query = {
+                    name: req.params.name
+                };
+                SchoolM.findOne(
+                    req.params.name,
+                    keyString,
+                    function (err, school) {
+                        if (err) {
+                            return res.send(404, 'schoolNotFound ' + err);
+                        }
+                        res.send(200, school);
+                    }
+                );
+            },
+            create: function (req, res) {
+                if (!req.body.name) { return res.send(401, 'noSchoolName'); }
+                var data = req.body;
+                SchoolM.add(
+                    data,
+                    function (err, school) {
+                        if (err) {
+                            return res.send(404, 'request error' + err);
+                        } else {
+                            return res.send(201, school);
+                        }
+                    }
+                );
+
+            },
+            update: function (req, res) {
+                if (!req.params.name) { return res.send(401, 'noSchoolName'); }
+                var data = req.body;
+                delete data._id;
+                delete data.name;
+                SchoolM.findOneAndUpdate(
+                    {name: req.params.name},
+                    data,
+                    keyString,
+                    function (err, school) {
+                        if (err) {
+                            return res.send(404, err);
+                        }
+                        res.send(201, school);
+                    }
+                );
+            },
+            //Not routed.
+            remove: function (req, res) {
+                SchoolM.remove(
+                    {_id: req.params.schoolId},
+                    function (err) {
+                        if (err) {
+                            return res.send(404, 'schoolNotFound');
+                        }
+                        res.send(201);
+                    }
+                );
+            }
+        };
+    });

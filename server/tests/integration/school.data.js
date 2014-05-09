@@ -38,7 +38,7 @@ var testData = {
             {
                 name: '北京四中',
                 classYear: 2010,
-                type: 'middleSchool',
+                type: '中学',
                 entrance: 2007,
                 left: 2010,
                 alumni: true
@@ -46,7 +46,7 @@ var testData = {
             {
                 name: '人民大学附属中学',
                 classYear: 2013,
-                type: 'highSchool',
+                type: '高中',
                 entrance: 2010,
                 left: 2013,
                 alumni: true,
@@ -55,7 +55,7 @@ var testData = {
             {
                 name: '清华大学',
                 classYear: 2018,
-                type: 'highSchool',
+                type: '大学',
                 entrance: 2013,
                 left: null,
                 alumni: false,
@@ -68,7 +68,35 @@ var testData = {
             weaknesses: ['缺乏纪律性', '缺乏自控能力']
         }
 
-    }
+    },
+    schools: [
+        {
+            name: '清华大学',
+            type: '高校',
+            address: '北京清华园1号',
+            state: '北京',
+            country: '中国',
+            url: 'http://www.tsinghua.edu.cn',
+            foundingYear: 1911,
+            degrees: ['bachelor', 'master', 'doctor'],
+            tags: ['公立'],
+            '部委': '教育部'
+        },
+        {
+            name: '北京景山学校',
+            type: '小中高',
+            address: '北京市东城区灯市口大街53号 ',
+            zip: '100006',
+            state: '北京',
+            country: '中国',
+            url: 'http://www.bjjsschool.net',
+            foundingYear: 1968,
+            degrees: ['bachelor', 'master', 'doctor'],
+            tags: ['公立'],
+            '部委': '教育部'
+        }
+    ]
+
 };
 
 module.exports = testData;

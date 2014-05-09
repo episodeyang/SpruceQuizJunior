@@ -35,6 +35,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                 );
             },
             findOne: function (req, res) {
+                if (!req.params.sessionId) { return res.send(401, 'noSessionNId'); }
                 SessionM.findById(
                     req.params.sessionId,
                     keyString,
@@ -61,6 +62,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
 
             },
             updateById: function (req, res) {
+                if (!req.params.sessionId) { return res.send(401, 'noSessionNId'); }
                 var data = req.body;
                 delete data._id;
                 SessionM.findOneAndUpdate(
@@ -76,6 +78,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                 );
             },
             remove: function (req, res) {
+                if (!req.params.sessionId) { return res.send(401, 'noSessionNId'); }
                 SessionM.remove(
                     {_id: req.params.sessionId},
                     function (err) {

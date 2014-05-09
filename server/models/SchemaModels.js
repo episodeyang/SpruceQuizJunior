@@ -371,8 +371,30 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     page: -1
                 }
             },
+            school: {
+                name: String,
+                type: String,
+                address: String,
+                zipCode: String,
+                state: String,
+                country: String,
+                overview: String,
+                url: String,
+                foundingYear: Number,
+                degrees: [String],
+                tags: [String],
+                '部委': String,
+                stats: {type: Schema.Types.Mixed},
+                teachers: [subSchema.UserFragment],
+                sessions: [{type: Schema.Types.ObjectId, ref: 'Session'}],
+                created: Date,
+                edited: Date
+            },
             session: {
                 title: String,
+                subject: String,
+                closed: Boolean,
+                tags: [String],
                 teachers: [subSchema.UserFragment],
                 members: [subSchema.UserFragment],
                 teachersArchive: [subSchema.UserFragment],
@@ -381,7 +403,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 overview: String,
                 created: Date,
                 finished: Date,
-                tags: [String],
                 knowledgeTree: { type: Schema.Types.Mixed },
                 syllabus: {type: Schema.Types.Mixed },
                 reviews: [subSchema.CommentPrototype],

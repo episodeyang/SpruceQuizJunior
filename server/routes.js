@@ -8,8 +8,8 @@
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
     './controllers/user', './controllers/userFeed',
         './controllers/student',
-        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/session', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SessionCtrl, MailerCtrl, SpiderCtrl) {
+        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/school', './controllers/session', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SchoolCtrl, SessionCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -257,6 +257,31 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
 //                middleware: [UserCtrl.index],
 //                accessLevel: accessLevels.all
 //            },
+            //School API
+            {// for development only
+                path: '/api/schools',
+                httpMethod: 'GET',
+                middleware: [SchoolCtrl.index],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/schools/:name',
+                httpMethod: 'GET',
+                middleware: [SchoolCtrl.get],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/schools',
+                httpMethod: 'POST',
+                middleware: [SchoolCtrl.create],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/schools/:name',
+                httpMethod: 'POST',
+                middleware: [SchoolCtrl.update],
+                accessLevel: accessLevels.all
+            },
             {
                 path: '/api/sessions',
                 httpMethod: 'GET',
