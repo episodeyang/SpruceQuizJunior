@@ -83,7 +83,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.signature {{Model.profile.signature}}
                                     .row
                                         .col-sm-4.col-xs-12.col-sm-push-8
-                                            div.text-strip.pull-right(ng-click="view.profile.flipped=true")
+                                            div.clickable.text-strip.pull-right(ng-click="view.profile.flipped=true")
                                                 span.glyphicon.glyphicon-arrow-right.no-padding
                                                 span 更多信息
                                         .col-sm-8.col-xs-12.col-sm-pull-4
@@ -111,7 +111,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.edit.pull-right.fa.fa-times(ng-show="view.profile.edit", ng-click="view.profile.edit = false")
                                     .row
                                         .col-xs-12
-                                            ul.text-strip(ng-click="view.profile.flipped=false")
+                                            ul.clickable.text-strip(ng-click="view.profile.flipped=false")
                                                 li.pull-right 返回
                                                 li.glyphicon.glyphicon-arrow-left.no-padding.pull-right
                                     .row

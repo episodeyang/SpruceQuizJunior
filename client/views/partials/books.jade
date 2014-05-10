@@ -52,7 +52,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 span.signature(ng-repeat="author in Model.book.authors") , {{author.name.split(',').reverse().join(' ') || ''}}
                                             .row
                                                 .col-sm-3.col-sm-push-9.col-xs-12
-                                                    div.info-button-dropdown.text-strip.pull-right
+                                                    div.clickable.info-button-dropdown.text-strip.pull-right
                                                         a(ng-click='view.card.flipped=true')
                                                             span.glyphicon.glyphicon-arrow-right.no-padding
                                                             span.end 更多信息
@@ -84,7 +84,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                             span.edit.pull-right.fa.fa-times(ng-show="view.card.edit", ng-click="view.card.edit = false")
                                         .row
                                             .col-xs-12
-                                                .text-strip(ng-click="view.card.flipped=false")
+                                                .clickable.text-strip(ng-click="view.card.flipped=false")
                                                     span.pull-right 返回
                                                     span.glyphicon.glyphicon-arrow-left.no-padding.pull-right
                                         .row
