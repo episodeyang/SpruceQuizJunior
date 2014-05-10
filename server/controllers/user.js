@@ -116,9 +116,9 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 }
 
                 function callback(error, user) {
-                    if (error) {
+                    if (error || !user) {
                         console.log(error);
-                        res.send(404, 'noUserFound' + error);
+                        return res.send(404, 'noUserFound' + error);
                     }
                     userRoot = user.toObject();
 
