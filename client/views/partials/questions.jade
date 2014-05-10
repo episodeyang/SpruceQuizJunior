@@ -154,7 +154,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 p.small
                                     span {{comment.text}}
                                     span &#8212&nbsp
-                                        a.blue {{comment.author}}
+                                        a.blue(ng-href="/users/{{comment.author.username}}") {{comment.author.name || comment.author.username || comment.author}}
                                     a.button(ng-click="removeComment(comment)")
                                         span.pull-right.glyphicon.glyphicon-remove
                         .row
@@ -234,7 +234,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                     p.small
                                         span {{comment.text}}
                                         span &#8212&nbsp
-                                            a.blue {{comment.author}}
+                                            a.blue(ng-href="/users/{{comment.author.username}}") {{comment.author.name || comment.author.username || comment.author}}
                                         a.button(ng-click="removeAnswerComment(comment)")
                                             span.pull-right.glyphicon.glyphicon-remove
                             .row

@@ -27,7 +27,10 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 var comment = {
                     "answerId": req.params.answerId,
                     "text": req.body.text,
-                    "author": req.user.username
+                    "author": {
+                        username: req.user.username,
+                        name: req.user.name
+                    }
                 };
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
