@@ -117,5 +117,9 @@ angular.module('SpruceQuizApp')
                     function (error) {
                     })
             };
+
+            Model.getSchools();
+            Model.getSessions();
+
         }
     ]);

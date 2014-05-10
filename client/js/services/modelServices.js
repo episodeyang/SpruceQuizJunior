@@ -2,7 +2,7 @@
 
 angular.module('modelServices', ['resourceProvider'])
     .factory('Model', ['$rootScope', 'Users', 'Questions', 'Answers', 'Comments', 'AnswerComments', 'Books', 'Sessions', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
-        'Schools', 'Sections', 'Units', 'Materials',
+        'Schools', 'Units', 'Materials',
         /**
          * model factory
          *
@@ -16,7 +16,7 @@ angular.module('modelServices', ['resourceProvider'])
          * @author test
          * @param random
          */
-            function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins, Schools, Sections, Units, Materials) {
+            function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins, Schools, Units, Materials) {
             var modelInstance = {};
 
             // helper mapping
@@ -27,7 +27,7 @@ angular.module('modelServices', ['resourceProvider'])
                 'admin': Admins,
                 'superadmin': Superadmins,
                 'school': Schools,
-                'section': Sections,
+                'session': Sessions,
                 'unit': Units,
                 'material': Materials
             };
@@ -90,7 +90,7 @@ angular.module('modelServices', ['resourceProvider'])
                     sections.push(newSections);
                 }
                 return sections;
-            }
+            };
 
             modelInstance.getVoteStatus = function (model) {
                 if (modelInstance.user) {
@@ -650,14 +650,14 @@ angular.module('modelServices', ['resourceProvider'])
             };
 
             function getTagText(feed) {
-                console.log(feed);
+                // console.log(feed);
                 var refList = feed.actionType.split('.');
                 var ref = feedTypeDict;
                 while (refList.length > 0) {
                     ref = ref[refList.splice(0, 1)];
                 }
                 return ref;
-                console.log(ref);
+                // console.log(ref);
             }
             function feedFormatter() {
                 var timeStrings;
@@ -778,76 +778,25 @@ angular.module('modelServices', ['resourceProvider'])
                 Books.save(query, successCallback, errorCallback);
             };
 
-            // TODO: Model.getSchools(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
-            // TODO: need to understand the undefined case better.
-            //      handle input cases of :
-            //          model == undefined => model = Model.user
-            /**
-             * this one gets the school based on the user object passed in
-             *      note that this doesn't have to be the same as the user object which gives
-             *          flexibility
-             *      also note that the backend database API will implement the constraints
-             *
-             *      could be used for refreshing data upon updating the database.
-             *
-             * @param userParam
-             */
-            modelInstance.getSchools = function (userParam) {
-                if (modelInstance.user.roleTitle !== 'superadmin') {
-                    modelInstance.schools = nameToResource[modelInstance.user.roleTitle].onSchools.get({id: userParam.id});
-                } else {
-                    // super admin
-                    modelInstance.schools = Schools.onSchools.list();
+            modelInstance.getSchools = function () {
+                function success(schools) {
+                    modelInstance.schools = schools;
                 }
+
+                function error(err) {
+                    $rootScope.error = err;
+                }
+                Schools.index({}, success, error);
             };
-
-            //TODO: Model.getSections(Model.user) or () <= function(model){ If (model==undefined) {model = Model.user;}};
-
-            /**
-             * get the sections of different user (each with separate logic)
-             *
-             * for admins, the method is overloaded with the second parameter which specifies the type and the list desired
-             * The subject list must follow the following format:
-             *    subjectList.type is a type, like 'student', or 'unit'
-             *    subjectList.idList is a list of IDs to be looked up
-             * @param userData
-             */
-
-            modelInstance.getSections = function (userParam, subjectList) {
-
-                /*
-                 * get the list of schools
-                 * this shouldn't be an access issue since
-                 *   1. the schools not accessible shouldn't show up
-                 *   2. the resource could control this
-                 */
-
-                if (subjectList !== null) {
-                    modelInstance.sections = getDataHelper(subjectList.type, 'section', subjectList.idList);
-                    return;
+            modelInstance.getSessions = function () {
+                function success(sessions) {
+                    modelInstance.sessions = sessions;
                 }
-
-
-                if (modelInstance.user.roleTitle !== ('superadmin' || 'admin')) {
-                    modelInstance.sections = nameToResource[ modelInstance.user.roleTitle ].onSections.get({id: userParam.id});
-                } else {
-                    if (modelInstance.user.roleTitle == 'admin') {
-                        // get everything in the schools the admin controls
-                        var schools = Admins.onSchools.get({id: userParam.id});
-                        modelInstance.sections = getDataHelper('school', '', schools);
-                    } else {
-                        // must be superadmin, get all sections
-                        Sections.onSelf.list();
-                    }
+                function error(err) {
+                    $rootScope.error = err;
                 }
-            }
-
-            /**
-             * Get students of related students
-             */
-            modelInstance.getStudent = function (userParam, subjectList) {
-
-            }
+                Sessions.index({}, success, error);
+            };
 
             /**
              * Utilities

@@ -99,27 +99,6 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             })
         };
     })
-    .factory('Books', function ($resource) {
-        var Book = $resource('/api/books/:author/:title', {title: '@title', author: '@author'});
-        var Books = $resource('/api/books');
-        var BookById = $resource('/api/books/:id', {id: '@_id'});
-        return {
-            add: Books.create,
-            get: Book.get,
-            save: BookById.save,
-            remove: BookById.remove
-        };
-    })
-    .factory('Sessions', function ($resource) {
-        var Sessions = $resource('/api/sessions');
-        var Session = $resource('/api/sessions/:id', {id: '@_id'});
-        return {
-            add: Sessions.create,
-            get: Session.get,
-            save: Session.save,
-            remove: Session.remove
-        };
-    })
     .factory('Parents', function ($resource) {
         var Parent = $resource('/api/parents/:username', {username: '@username'});
         return {
@@ -179,17 +158,38 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('Schools', function ($resource) {
+        var Schools = $resource('/api/schools');
+        var School = $resource('/api/schools/:name', {name: '@name'});
         return {
-            onSchools: $resource('/api/schools/:uuid', {uuid: '@schoolUUID'}, {
-                list: {method: 'GET', params: {uuid: 'all'}, isArray: true}
-            }),
-            onTeachers: $resource('/api/schools/:uuid/teachers', {uuid: '@schoolUUID'}, {
-            }),
-            onStudents: $resource('/api/schools/:uuid/students', {uuid: '@schoolUUID'}, {
-            }),
-            onSections: $resource('/api/schools/:uuid/sections', {uuid: '@schoolUUID'}, {
-                get: {method: 'GET', params: {uuid: '@uuid'}, isArray: true}
-            })
+            index: Schools.query,
+            search: $resource('/api/schools/:name/search', {id: '@_id'}).get,
+            add: Schools.create,
+            get: School.get,
+            save: School.save,
+            remove: School.remove
+        };
+    })
+    .factory('Sessions', function ($resource) {
+        var Sessions = $resource('/api/sessions');
+        var Session = $resource('/api/sessions/:id', {id: '@_id'});
+        return {
+            index: Sessions.query,
+            search: $resource('/api/sessions/:id/search', {id: '@_id'}).get,
+            add: Sessions.create,
+            get: Session.get,
+            save: Session.save,
+            remove: Session.remove
+        };
+    })
+    .factory('Books', function ($resource) {
+        var Book = $resource('/api/books/:author/:title', {title: '@title', author: '@author'});
+        var Books = $resource('/api/books');
+        var BookById = $resource('/api/books/:id', {id: '@_id'});
+        return {
+            add: Books.create,
+            get: Book.get,
+            save: BookById.save,
+            remove: BookById.remove
         };
     })
     .factory('Sections', function ($resource) {
@@ -239,5 +239,4 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
                 update: {method: 'PUT', params: {uuid: '@problemUUID'}}
             })
         };
-    })
-;
+    });

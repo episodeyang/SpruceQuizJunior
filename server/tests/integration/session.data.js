@@ -22,6 +22,7 @@ var _ = require('underscore')
 var sessionData = {
     session: {
         title: "我们的身体里有一条鱼",
+        subject: '生物',
         teachers: [
             {name: '杨,歌', username: 'yang.ge'}
         ],

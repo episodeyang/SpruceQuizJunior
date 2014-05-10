@@ -58,7 +58,7 @@ describe('Session API test - ', function (done) {
     });
     it('update session', function (done) {
         passportStub.login(studentUser); // login as user
-        session.title = '三年级一班化学';
+        session.title = '生物（三年级一班）';
         session.tags.push('化学');
         request(app).post('/api/sessions/' + session._id).send(session).expect(201).end(function (err, res) {
             SessionUpdated = res.body;

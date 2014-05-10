@@ -19,13 +19,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
         "use strict";
         var UserM = SchemaModels.User;
         var userRoles = rolesHelper.userRoles;
-        var keyString = '_id title teachers members overview schools created finished reviews tags mother children knowledgeTree tableOfContent';
+        var keyString = '_id title subject teachers members overview school created finished reviews tags mother children knowledgeTree tableOfContent';
 
         return {
             index: function (req, res) {
                 SessionM.find(
                     {},
-                    keyString,
+                    '_id title subject school teachers members',
                     function (err, sessions) {
                         if (err) {
                             return res.json(404, err);

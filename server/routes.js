@@ -209,12 +209,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             // todo: student delete api is under development
-//            {
-//                path: '/api/students/:username',
-//                httpMethod: 'DELETE',
-//                middleware: [StudentCtrl.remove],
-//                accessLevel: accessLevels.all
-//            },
+            // {
+            //     path: '/api/students/:username',
+            //     httpMethod: 'DELETE',
+            //     middleware: [StudentCtrl.remove],
+            //     accessLevel: accessLevels.all
+            // },
             {
                 path: '/api/users/:username/feeds',
                 httpMethod: 'GET',
@@ -233,32 +233,32 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 middleware: [UserFeedCtrl.add],
                 accessLevel: accessLevels.superadmin
             },
-//            {
-//                path: '/api/users/:username/questions',
-//                httpMethod: 'GET',
-//                middleware: [UserCtrl.index],
-//                accessLevel: accessLevels.all
-//            },
-//            {
-//                path: '/api/users/:username/answers',
-//                httpMethod: 'GET',
-//                middleware: [UserCtrl.index],
-//                accessLevel: accessLevels.all
-//            },
-//            {
-//                path: '/api/users/:username/comments',
-//                httpMethod: 'GET',
-//                middleware: [UserCtrl.index],
-//                accessLevel: accessLevels.all
-//            },
-//            {
-//                path: '/api/users/:username/edits',
-//                httpMethod: 'GET',
-//                middleware: [UserCtrl.index],
-//                accessLevel: accessLevels.all
-//            },
+            // {
+            //     path: '/api/users/:username/questions',
+            //     httpMethod: 'GET',
+            //     middleware: [UserCtrl.index],
+            //     accessLevel: accessLevels.all
+            // },
+            // {
+            //     path: '/api/users/:username/answers',
+            //     httpMethod: 'GET',
+            //     middleware: [UserCtrl.index],
+            //     accessLevel: accessLevels.all
+            // },
+            // {
+            //     path: '/api/users/:username/comments',
+            //     httpMethod: 'GET',
+            //     middleware: [UserCtrl.index],
+            //     accessLevel: accessLevels.all
+            // },
+            // {
+            //     path: '/api/users/:username/edits',
+            //     httpMethod: 'GET',
+            //     middleware: [UserCtrl.index],
+            //     accessLevel: accessLevels.all
+            // },
             //School API
-            {// for development only
+            {// get list of schools with limited fields
                 path: '/api/schools',
                 httpMethod: 'GET',
                 middleware: [SchoolCtrl.index],
@@ -300,7 +300,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 middleware: [SessionCtrl.search],
                 accessLevel: accessLevels.all
             },
-            {
+            {// get list of sessions with limited fields
                 path: '/api/sessions',
                 httpMethod: 'post',
                 middleware: [SessionCtrl.add],

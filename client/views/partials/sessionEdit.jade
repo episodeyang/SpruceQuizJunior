@@ -1,36 +1,47 @@
 //- for the modal template to work, the top most element
 //- has to be the div.modal in the following format.
-div.modal(tabindex='-1', role='dialog', ng-controller='RegisterCtrl')
+div.modal(tabindex='1', role='dialog')
     .modal-dialog
         .modal-content.header-card
             .modal-body
-                div(contenteditable='true', inline-editable="Model.user.username", placeholder='添加班级。。。')
-                div(contenteditable='true', inline-editable="Model.user.username", placeholder='班级编码。。。')
+                .row
+                    .col-xs-12
+                        form.no-bottom-margin
+                            .input-group
+                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.mySessions.searchText')
+                                span.input-group-btn
+                                    button.btn.btn-info(type='button') 搜索
 
-        .modal-content.top-margin
+        .modal-content.top-margin(ng-repeat="session in Model.user.sessions | filter:view.mySessions.searchText")
             .modal-header
                 button.close(type='button', ng-click="$hide()") ×
-                h4#myModalLabel.modal-title.text-center 数学（三年级一班）
+                h4#myModalLabel.modal-title.text-center {{session.title}}（{{session.subject}}）
             .modal-body
                 .row
                     .col-xs-10.col-xs-offset-1
 
         .modal-content.top-margin
             .modal-header
-                h4.text-center 搜索和添加班级
+                h4.text-center 在数据库中搜索或添加班级
             .modal-body
                 //.unit(contenteditable='true', inline-editable="Model.user.username", placeholder='添加班级。。。')
                 //.unit(contenteditable='true', inline-editable="Model.user.username", placeholder='班级编码。。。')
-                .row
+                .row(ng-if='!view.mySessions.createView')
                     .col-xs-12
-                        form
+                        form.no-bottom-margin
                             .input-group
-                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...')
+                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.sessions.searchText')
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
-                .row
+                .row(ng-if='view.sessions.searchText.length >= 4 && !view.mySessions.createView')
+                    .col-xs-12.top-margin
+                        .unit.short 搜索不到我的班级...
+                        form(role="form")
+                            button.pull-right.btn.btn-warning(ng-click="view.mySessions.createView=true") 创建班级
+
+                .row(ng-if='view.mySessions.createView')
                     .col-xs-12
-                        form(ng-submit="submit()", role="form")
+                        form(ng-submit="submit()", role="form").no-bottom-margin
                             .form-group
                                 input.form-control(type="name", ng-model="registerData.email", placeholder="班级名称...", required)
                             .form-group
@@ -39,13 +50,14 @@ div.modal(tabindex='-1', role='dialog', ng-controller='RegisterCtrl')
                                 input.form-control(type="teachers", ng-model="sessionData.teachers", placeholder="请在这里输入老师的姓名或用户名...", required)
                             .form-group
                                 input.form-control(type="schools", ng-model="sessionData.schools", placeholder="请在这里输入学校的名称...", required)
-                            button.pull-right.btn.btn-info(type='submit') 添加班级！
+                            button.pull-right.btn.btn-success(type='submit') 创建班级！
+                            button.pull-right.btn.btn-default.right-margin(ng-click='view.mySession.show=false') 取消
 
-        .modal-content.top-margin
+        .modal-content.top-margin.yellow(ng-repeat="session in Model.sessions | filter:view.sessions.searchText")
             .modal-body
                 .row
                     .col-xs-12
-                        h4#myModalLabel.modal-title.text-center 数学（三年级一班），汪峰，清华大学
+                        h4#myModalLabel.modal-title.text-center {{session.title}}，{{session.subject}}，{{session.school}}，
 
         .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")
             div.alert.alert-warning.no-bottom-margin
