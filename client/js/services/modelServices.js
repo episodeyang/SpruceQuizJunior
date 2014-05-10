@@ -622,8 +622,22 @@ angular.module('modelServices', ['resourceProvider'])
                     url: '/questions/'
                 },
                 questionVote: {
-                    tagText: "投票",
-                    url: '/questions/'
+                    upVote: {
+                        tagText: "投赞",
+                        url: '/questions/'
+                    },
+                    downVote: {
+                        tagText: "投踩",
+                        url: '/questions/'
+                    },
+                    removeUpVote: {
+                        tagText: "取消",
+                        url: '/questions/'
+                    },
+                    removeDownVote: {
+                        tagText: "取消",
+                        url: '/questions/'
+                    }
                 },
                 answerAdd: {
                     tagText: "回答",
@@ -635,6 +649,16 @@ angular.module('modelServices', ['resourceProvider'])
                 }
             };
 
+            function getTagText(feed) {
+                console.log(feed);
+                var refList = feed.actionType.split('.');
+                var ref = feedTypeDict;
+                while (refList.length > 0) {
+                    ref = ref[refList.splice(0, 1)];
+                }
+                return ref;
+                console.log(ref);
+            }
             function feedFormatter() {
                 var timeStrings;
                 _.each(
@@ -644,8 +668,11 @@ angular.module('modelServices', ['resourceProvider'])
                         feed.timeNumber = timeStrings[0];
                         feed.timeUnit = timeStrings[1];
 
-                        feed.tagText = feedTypeDict[feed.actionType].tagText;
-                        feed.url = feedTypeDict[feed.actionType].url + feed.data.id;
+                        try {
+                            feed.tagText = getTagText(feed).tagText;
+                            feed.url = feedTypeDict[feed.actionType].url + feed.data.id;
+                        } catch (e) {
+                        }
                     }
                 );
             }
