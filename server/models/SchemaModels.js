@@ -393,6 +393,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             session: {
                 name: String,
                 subject: String,
+                courseString: String,
                 closed: Boolean,
                 tags: [String],
                 teachers: [subSchema.UserFragment],

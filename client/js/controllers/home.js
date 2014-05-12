@@ -24,6 +24,7 @@ angular.module('SpruceQuizApp')
 
             $scope.view = {
                 state: 'newsFeed',
+                modalState: 'mySessions',
                 profile: {}
             };
             $scope.view.profile.edit = false;
