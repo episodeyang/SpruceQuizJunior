@@ -3,7 +3,7 @@
 div.modal(tabindex='1', role='dialog')
     .modal-dialog
         .modal-content.header-card
-            .modal-body
+            .modal-body.no-padding
                 .row
                     .col-xs-12
                         form.no-bottom-margin
@@ -19,8 +19,8 @@ div.modal(tabindex='1', role='dialog')
             .modal-body
                 .row
                     .col-xs-10.col-xs-offset-1
-                        .unit {{session.school}}
                         .unit(ng-repeat="tag in session.tags track by $index") {{tag}}
+                        .unit {{session.school}}
 
         .modal-content.top-margin
             .modal-header

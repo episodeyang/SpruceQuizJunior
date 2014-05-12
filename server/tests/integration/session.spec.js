@@ -30,7 +30,7 @@ var studentUser = data.studentUser,
     adminUser = data.adminUser,
     superadminUser = data.superadminUser;
 
-var session, session0, sessionUpdated;
+var session0, session1, session2, sessionUpdated;
 describe('Session API test - ', function (done) {
     beforeEach(function () {
         passportStub.login(studentUser); // login as user
@@ -51,15 +51,15 @@ describe('Session API test - ', function (done) {
     });
     it('add a session', function (done) {
         request(app).post('/api/sessions').send(sessionData.sessions[1]).expect(201).end(function (err, res) {
-            session = res.body;
-            session.name.should.be.eql(sessionData.sessions[1].name);
+            session1 = res.body;
+            session1.name.should.be.eql(sessionData.sessions[1].name);
             done();
         });
     });
     it('add a session', function (done) {
         request(app).post('/api/sessions').send(sessionData.sessions[2]).expect(201).end(function (err, res) {
-            session = res.body;
-            session.name.should.be.eql(sessionData.sessions[2].name);
+            session2 = res.body;
+            session2.name.should.be.eql(sessionData.sessions[2].name);
             done();
         });
     });
@@ -81,13 +81,57 @@ describe('Session API test - ', function (done) {
         });
     });
     it('add a session to user', function (done) {
-        query = {
+        var query = {
             add: {
                 _id: session0._id
             }
         };
         request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
             res.body.sessions.should.containDeep([{_id: session0._id}]);
+            done();
+        });
+    });
+    it('add another session to user', function (done) {
+        var query = {
+            add: {
+                _id: session1._id
+            }
+        };
+        request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
+            res.body.sessions.should.containDeep([{_id: session1._id}]);
+            done();
+        });
+    });
+    it('remove this session from user', function (done) {
+        var query = {
+            remove: {
+                _id: session1._id
+            }
+        };
+        request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
+            res.body.sessions.should.not.containDeep([{_id: session1._id}]);
+            done();
+        });
+    });
+    it('add another session to user', function (done) {
+        var query = {
+            add: {
+                _id: session1._id
+            }
+        };
+        request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
+            res.body.sessions.should.containDeep([{_id: session1._id}]);
+            done();
+        });
+    });
+    it('add another session to user', function (done) {
+        var query = {
+            add: {
+                _id: session2._id
+            }
+        };
+        request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
+            res.body.sessions.should.containDeep([{_id: session2._id}]);
             done();
         });
     });

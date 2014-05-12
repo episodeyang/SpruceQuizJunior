@@ -220,8 +220,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     return callback('noUserRole');
                 }
                 var query = {
-                        username: user.username
-                    };
+                    username: user.username
+                };
                 SchemaModels[capitalize(user.role.title)].findOne(query).select(key).populate(key).exec(callback);
             },
             addOrRemoveFromSet: function (key, addOrRemove, user, payload, callback) {
@@ -237,6 +237,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     }
                     doc.populate(key + 's', callback);
                 }
+
                 var query = {
                         username: user.username
                     },
@@ -245,15 +246,15 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     };
                 var update;
                 if (addOrRemove === "add") {
-                     update = {
+                    update = {
                         $addToSet: {}
                     };
-                    update.$addToSet[key+'s'] = payload._id;
+                    update.$addToSet[key + 's'] = payload._id;
                 } else if (addOrRemove === "pull") {
                     update = {
                         $pullAll: {}
                     };
-                    update.$pullAll[key+'s'] = payload._id;
+                    update.$pullAll[key + 's'] = [payload._id];
                 }
 //                console.log(update);
                 SchemaModels[capitalize(user.role.title)]
