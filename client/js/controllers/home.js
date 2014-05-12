@@ -82,7 +82,6 @@ angular.module('SpruceQuizApp')
                     },
                     true
                 );
-
             $scope.submitProfile = function () {
 
                 function removeNull(obj, key) {
@@ -113,13 +112,55 @@ angular.module('SpruceQuizApp')
                 Model.updateUserProfile(
                     function () {
                         $scope.view.profile.edit = false;
-                    },
-                    function (error) {
                     })
             };
 
             Model.getSchools();
             Model.getSessions();
+            $scope.sessionData = {
+                tags: [],
+                tag: '',
+                teachers: [],
+                teacher: ''
+            };
+            $scope.$watch(
+                'sessionData.tag',
+                function(newVal, oldVal) {
+                    if (!newVal) {return}
+                    if (newVal[newVal.length-1]=="," || newVal[newVal.length-1]=="，" || newVal[newVal.length-1]==" " ) {
+                        $scope.sessionData.tags.push(newVal.slice(0, -1));
+                        $scope.sessionData.tag = '';
+                    }
+                }
+            );
+            $scope.$watch(
+                'sessionData.teacher',
+                function(newVal, oldVal) {
+                    if (!newVal) {return}
+                    if (newVal[newVal.length-1]=="," || newVal[newVal.length-1]=="，" || newVal[newVal.length-1]==" " ) {
+                        $scope.sessionData.teachers.push(
+                            { name: newVal.slice(0, -1) }
+                        );
+                        $scope.sessionData.teacher = '';
+                    }
+                }
+            );
+
+            $scope.submitSession = function(session) {
+                if (!session) { var session = $scope.sessionData; }
+                if (!session.school) { session.school = Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].name; }
+
+                function callback(err, session) {
+                    if (err || !session) {return err || 'noSessionUpdated'; }
+                    if (!session._id) {return $rooteScope.error = 'sessionDoesNotHaveIdField'; }
+                    Model.profile.sessions.push(session._id);
+                    Model.updateUserProfile()
+                }
+
+                delete $scope.sessionData.tag;
+                delete $scope.sessionData.teacher;
+                Model.submitSession(session, callback);
+            }
 
         }
     ]);

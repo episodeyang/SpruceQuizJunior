@@ -50,7 +50,7 @@ angular.module('modelServices', ['resourceProvider'])
              * the user role and specific user settings
              */
             modelInstance.init = function (user) {
-                console.log('model initialized')
+                console.log('model initialized');
                 modelInstance.user = user;
                 modelInstance.question = {};
                 modelInstance.questions = [];
@@ -695,11 +695,12 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.profile = {};
             modelInstance.getUserProfile = function (username) {
-
-                var query = {
-                    username: username
-                };
-
+                var query = {};
+                if (!username) {
+                    query.username = modelInstance.user.username;
+                } else {
+                    query.username = username;
+                }
                 function success(user) {
                     modelInstance.profile = user;
                 }
@@ -715,12 +716,12 @@ angular.module('modelServices', ['resourceProvider'])
                 delete query._id;
                 function successCallback(student) {
                     modelInstance.profile = student;
-                    success();
+                    if (success) {success();}
                 }
 
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    error(err);
+                    if (error) {error(err);}
                 }
 
                 Users.save(query, successCallback, errorCallback);
@@ -735,6 +736,20 @@ angular.module('modelServices', ['resourceProvider'])
 //                } else if (modelInstance.profile.role.title == 'superadmin') {
 //                    Superadmins.save(query, successCallback, errorCallback);
 //                }
+            };
+
+            modelInstance.addSession = function (id, success, error) {
+                var query = { add: { _id: id } };
+                function successCallback(sessions) {
+                    modelInstance.profile = student;
+                    if (success) {success();}
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {error(err);}
+                }
+
+                Users.save(query, successCallback, errorCallback);
             };
 
             function bookQueryBuilder(title, authorName) {
@@ -796,6 +811,29 @@ angular.module('modelServices', ['resourceProvider'])
                     $rootScope.error = err;
                 }
                 Sessions.index({}, success, error);
+            };
+            modelInstance.submitSession = function(session, callback) {
+                function success(session) {
+                    modelInstance.getSessions();
+                    callback(null, session);
+                }
+                function error(err) {
+                    $rootScope.error = err;
+                    callback(err);
+                }
+                function validateAndSave (session) {
+                    if (!session.name) {
+                        return error('sessionHaveNoName');
+                    }
+                    if (!session.subject) {
+                        return error('sessionHaveNoSubject');
+                    }
+                    if (!session.school) {
+                        return error('sessionHaveNoSchool');
+                    }
+                    Sessions.save(session, success, error);
+                }
+                validateAndSave(session);
             };
 
             /**

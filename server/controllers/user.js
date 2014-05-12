@@ -123,22 +123,32 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                     userRoot = user.toObject();
 
                     SchemaModels[capitalize(user.role.title)]
-                        .findOne(query).exec(sendSubDoc);
+                        .findOne(query).populate('books sessions schools').exec(sendSubDoc);
                 }
 
-                UserM.findOne(query).select('_id username role').populate('books sessions schools').exec(callback);
+                UserM.findOne(query).select('_id username role').exec(callback);
             },
             update: function (req, res) {
-
+                if (!req.params.username) {
+                    return res.send(400, "noUserSpecified");
+                }
                 if (!req.body.role || !req.body.role.title) {
                     console.log("no role entry in user payload");
                     return res.send(401, 'needRoleInUserPayload');
                 }
 
                 function callback(err, doc) {
+//                    doc.populate('sessions schools books').exec(responseCallback);
                     if (err) {
                         console.log(err);
-                        return res.send(401, err);
+                        return res.send(500, err);
+                    }
+                }
+
+                function responseCallback(err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err);
                     }
                     // the ordering of the extension matters here,
                     // because we want to keep the _id field of the user object,
@@ -151,20 +161,107 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 var query = {
                         username: req.params.username
                     },
-                // to avoid overwriting student/teacher _id with user._id
-                    update = _.omit(req.body, '_id');
+                    // to avoid overwriting student/teacher _id with user._id
+                    update = _.omit(req.body, ['_id', 'schools', 'sessions', 'books']);
+
+                console.log('the update object');
+                console.log(update);
 
                 SchemaModels[capitalize(req.body.role.title)]
                     .findOneAndUpdate(
-                    query,
-                    update,
-                    callback
-                );
+                        query,
+                        update,
+                        callback
+                    );
             },
-            addSession: function (req, res) {
+            getSessions: function (req, res) {
                 if (!req.params.username) {
                     return res.send(400, "noUserSpecified");
                 }
+                function done(err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err);
+                    }
+                    return res.send(200, doc);
+                }
+
+                if (req.params.username == req.user.username) {
+                    return UserM.getSet('sessions', req.user, done);
+                }
+
+                var query = { username: req.params.username };
+                return UserM.findOne(query).exec(function(error, user) {
+                    if (error) {
+                        console.log(error);
+                        return res.send(500, error);
+                    } else if (!user) {
+                        return res.send(404, 'userNotFound');
+                    }
+                    UserM.getSet('sessions', user, done);
+                });
+            },
+            getSchools: function (req, res) {
+                if (!req.params.username) {
+                    return res.send(400, "noUserSpecified");
+                }
+                function done(err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err);
+                    }
+                    return res.send(200, doc);
+                }
+
+                if (req.params.username == req.user.username) {
+                    return UserM.getSet('schools', req.user, done);
+                }
+
+                var query = { username: req.params.username };
+                return UserM.findOne(query).exec(function(error, user) {
+                    if (error) {
+                        console.log(error);
+                        return res.send(500, error);
+                    } else if (!user) {
+                        return res.send(404, 'userNotFound');
+                    }
+                    UserM.getSet('schools', user, done);
+                });
+            },
+            getBooks: function (req, res) {
+                if (!req.params.username) {
+                    return res.send(400, "noUserSpecified");
+                }
+                function done(err, doc) {
+                    if (err) {
+                        console.log(err);
+                        return res.send(500, err);
+                    }
+                    return res.send(200, doc);
+                }
+
+                if (req.params.username == req.user.username) {
+                    return UserM.getSet('books', req.user, done);
+                }
+
+                var query = { username: req.params.username };
+                return UserM.findOne(query).exec(function(error, user) {
+                    if (error) {
+                        console.log(error);
+                        return res.send(500, error);
+                    } else if (!user) {
+                        return res.send(404, 'userNotFound');
+                    }
+                    UserM.getSet('books', user, done);
+                });
+            },
+            updateSessions: function (req, res) {
+                if (!req.params.username) {
+                    return res.send(400, "noUserSpecified");
+                } else if (!req.body.add && !req.body.remove) {
+                    return res.send(400, "needAddOrRemoveInBody");
+                }
+
                 var user;
                 if (req.params.username === req.user.username || req) {
                     //One can always add sessions to oneself.
@@ -189,12 +286,19 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                     return res.send(201, doc);
                 }
 
-                UserM.addSession(user, req.body, callback);
+                if (req.body.add) {
+                    UserM.addSession(user, req.body.add, callback);
+                } else if (req.body.remove) {
+                    UserM.removeSession(user, req.body.remove, callback);
+                }
             },
-            addBook: function (req, res) {
+            updateBooks: function (req, res) {
                 if (!req.params.username) {
                     return res.send(400, "noUserSpecified");
+                } else if (!req.body.add && !req.body.remove) {
+                    return res.send(400, "needAddOrRemoveInBody");
                 }
+
                 var user;
                 if (req.params.username === req.user.username || req) {
                     //One can always add sessions to oneself.
@@ -219,9 +323,13 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                     return res.send(201, doc);
                 }
 
-                UserM.addBook(user, req.body, callback);
+                if (req.body.add) {
+                    UserM.addBook(user, req.body.add, callback);
+                } else if (req.body.remove) {
+                    UserM.removeBook(user, req.body.remove, callback);
+                }
             },
-            addSchool: function (req, res) {
+            updateSchools: function (req, res) {
                 return res.send(501, "notImplemented");
             }
         };

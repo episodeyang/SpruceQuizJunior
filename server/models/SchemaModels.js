@@ -76,7 +76,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         commentPrototype: {
             text: String,
             author: config_nest.userFragment, //{type: Schema.Types.ObjectId, ref: 'User'},
-            dateOfCreation: Date,
+            dateOfCreation: {type: Date, default: Date.now},
             dateEdited: Date,
             voteup: [String],
             votedown: [String],
@@ -85,7 +85,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     return this._id;
                 },
                 voteGet: function () {
-                    return _.size(this.voteup) - _.size(this.votedown) || ''
+                    return _.size(this.voteup) - _.size(this.votedown) || '';
                 }
             },
             __options__: {
@@ -198,8 +198,6 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 },
                 password: String,
                 role: {title: String, bitMask: Number},
-                schools: [String],
-                sessions: [{type: Schema.Types.ObjectId}],
                 student: { type: Schema.Types.ObjectId, ref: "Student"},
                 parent: { type: Schema.Types.ObjectId, ref: "Parent"},
                 teacher: { type: Schema.Types.ObjectId, ref: "Teacher" },
@@ -233,8 +231,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 schools: [
                     { type: Schema.Types.ObjectId, ref: 'School' }
                 ],
-                textbooks: [
-                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                books: [
+                    { type: Schema.Types.ObjectId, ref: 'Book'}
                 ],
                 preferences: {
                 }
@@ -257,8 +255,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 schools: [
                     { type: Schema.Types.ObjectId, ref: 'School' }
                 ],
-                textbooks: [
-                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                books: [
+                    { type: Schema.Types.ObjectId, ref: 'Book'}
                 ],
                 children: [
                     { type: Schema.Types.ObjectId, ref: 'Student' }
@@ -284,8 +282,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 schools: [
                     { type: Schema.Types.ObjectId, ref: 'School' }
                 ],
-                textbooks: [
-                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                books: [
+                    { type: Schema.Types.ObjectId, ref: 'Book'}
                 ],
                 preferences: {
                 }
@@ -308,8 +306,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 schools: [
                     { type: Schema.Types.ObjectId, ref: 'School' }
                 ],
-                textbooks: [
-                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                books: [
+                    { type: Schema.Types.ObjectId, ref: 'Book'}
                 ],
                 preferences: {
                 }
@@ -332,8 +330,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 schools: [
                     { type: Schema.Types.ObjectId, ref: 'School' }
                 ],
-                textbooks: [
-                    { type: Schema.Types.ObjectId, ref: 'Textbook'}
+                books: [
+                    { type: Schema.Types.ObjectId, ref: 'Book'}
                 ],
                 preferences: {
                 }
@@ -389,11 +387,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 stats: {type: Schema.Types.Mixed},
                 teachers: [subSchema.UserFragment],
                 sessions: [{type: Schema.Types.ObjectId, ref: 'Session'}],
-                created: Date,
+                created: {type: Date, default: Date.now},
                 edited: Date
             },
             session: {
-                title: String,
+                name: String,
                 subject: String,
                 closed: Boolean,
                 tags: [String],
@@ -403,8 +401,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 membersArchive: [subSchema.UserFragment],
                 school: String,
                 overview: String,
-                created: Date,
-                finished: Date,
+                created: {type: Date, default: Date.now},
+                finished: {type: Date, default: null},
                 knowledgeTree: { type: Schema.Types.Mixed },
                 syllabus: {type: Schema.Types.Mixed },
                 reviews: [subSchema.CommentPrototype],
@@ -440,7 +438,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 },
                 feeds: [subSchema.Feed]
             },
-            textbookFeed: {
+            bookFeed: {
                 session: {
                     type: Schema.Types.ObjectId
                 },

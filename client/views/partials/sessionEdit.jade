@@ -12,13 +12,15 @@ div.modal(tabindex='1', role='dialog')
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
 
-        .modal-content.top-margin(ng-repeat="session in Model.user.sessions | filter:view.mySessions.searchText")
+        .modal-content.top-margin(ng-repeat="session in Model.profile.sessions | filter:view.mySessions.searchText")
             .modal-header
                 button.close(type='button', ng-click="$hide()") ×
-                h4#myModalLabel.modal-title.text-center {{session.title}}（{{session.subject}}）
+                h4#myModalLabel.modal-title.text-center {{session.name}}（{{session.subject}}）
             .modal-body
                 .row
                     .col-xs-10.col-xs-offset-1
+                        .unit {{session.school}}
+                        .unit(ng-repeat="tag in session.tags track by $index") {{tag}}
 
         .modal-content.top-margin
             .modal-header
@@ -43,21 +45,31 @@ div.modal(tabindex='1', role='dialog')
                     .col-xs-12
                         form(ng-submit="submit()", role="form").no-bottom-margin
                             .form-group
-                                input.form-control(type="name", ng-model="registerData.email", placeholder="班级名称...", required)
+                                input.form-control(type="text", ng-model="sessionData.name", placeholder="班级名称...", required)
                             .form-group
-                                input.form-control(type="subject", ng-model="registerData.username", placeholder="班级学科...", required)
+                                input.form-control(type="text", ng-model="sessionData.subject", placeholder="所属学科...", required)
                             .form-group
-                                input.form-control(type="teachers", ng-model="sessionData.teachers", placeholder="请在这里输入老师的姓名或用户名...", required)
+                                .blue.right-margin.short-bottom-margin(ng-repeat='teacher in sessionData.teachers track by $index') {{teacher.name}} &nbsp
+                                    span(ng-click="sessionData.teachers.splice($index, 1)").fa.fa-times
+                            .input-group.bottom-margin
+                                input.form-control(type="text", ng-model="sessionData.teacher", placeholder="任课老师姓名或用户名...")
+                                span.input-group-btn
+                                    button.btn.btn-info(type='button') 搜索
                             .form-group
-                                input.form-control(type="schools", ng-model="sessionData.schools", placeholder="请在这里输入学校的名称...", required)
-                            button.pull-right.btn.btn-success(type='submit') 创建班级！
+                                .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='tag in sessionData.tags track by $index') {{tag}} &nbsp
+                                    span(ng-click="sessionData.tags.splice($index, 1)").fa.fa-times
+                            .form-group
+                                input.form-control(type="text", ng-model="sessionData.tag", placeholder="标签, 用逗号分隔...")
+                            .form-group
+                                input.form-control(type="text", ng-model="sessionData.school", placeholder="默认学校：{{Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].name}}")
+                            button.pull-right.btn.btn-success(ng-click='submitSession()') 创建班级！
                             button.pull-right.btn.btn-default.right-margin(ng-click='view.mySession.show=false') 取消
 
         .modal-content.top-margin.yellow(ng-repeat="session in Model.sessions | filter:view.sessions.searchText")
             .modal-body
                 .row
                     .col-xs-12
-                        h4#myModalLabel.modal-title.text-center {{session.title}}，{{session.subject}}，{{session.school}}，
+                        h4#myModalLabel.modal-title.text-center {{session.name}}，{{session.subject}}，{{session.school}}，
 
         .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")
             div.alert.alert-warning.no-bottom-margin

@@ -23,7 +23,6 @@ var testData = {
 // user, register, and login data
     /** student info data for updated student info */
     studentInfo: {
-        school: '清华大学',
         signature: '让知识没有疆界',
         strongSubjects: ['软件开发', '创业学'],
         extracurriculars: ['中长跑', '机器人竞赛'],
