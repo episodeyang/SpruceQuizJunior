@@ -43,10 +43,10 @@ div.background(background-img="/img/bg-brown.jpg")
                         .col-xs-12
                             .card.convex.no-top-margin
                                 .card-title.bottom-margin
-                                    span.name 高中语文
-                                    span.signature ，三年级一班
-                                .row
-                                    .col-sm-4.col-xs-12.col-sm-push-8
+                                    span.name {{Model.session.name}}
+                                    span.signature ，{{Model.session.teachers[0].name.split(',').join('')}}
+                                .row.bottom-margin
+                                    .col-xs-12
                                         div.clickable.info-button-dropdown.text-strip.pull-right
                                             a
                                                 span.glyphicon.glyphicon-arrow-right.no-padding
@@ -55,14 +55,17 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 p 成员
                                                 p 课程资料
                                                 p 知识树
-                                    .col-sm-8.col-xs-12.col-sm-pull-4
-                                        div.text-strip
-                                            span.glyphicon.glyphicon-user
-                                            span 南山区第一中学
-                                            span.end 沈晓燕
-                                        div.text-strip
-                                            span.glyphicon.glyphicon-book
-                                            span.end 语文
+                                .row
+                                    .col-xs-12
+                                        .bottom-margin {{Model.session.overview}}
+                                        div.bottom-margin
+                                            span(ng-repeat="teacher in Model.session.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
+                                            span(ng-repeat="member in Model.session.members track by $index") {{member.name.split(',').join('')}}，
+                                            span 在上这门课程。
+                                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}
+                                //.row
+                                    hr.taper.top-margin.bottom-margin
+                                    .col-xs-12
                                         div.text-strip
                                             span.glyphicon.glyphicon-book
                                             span 回答 265
@@ -75,10 +78,15 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-lg-12
             .col-sm-3.hidden-xs
                 .panel.panel-info
-                    .panel-heading 他的班级
-                    .panel-body
-                        p(ph-txt='3s')
-                .panel.panel-info
-                    .panel-heading 他的课本
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading 相关教材
+                    //-.panel-body
+                    table.table
+                        //-thead
+                            tr
+                                th
+                        tbody
+                            tr(ng-repeat="book in Model.session.books")
+                                td
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    a(ng-href='/books/{{book._id}}') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）

@@ -9,6 +9,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         var User = $resource('/api/users/:username', {username: '@username'});
         var Feeds = $resource('/api/users/:username/feeds', {username: '@username'});
         var FeedsByPage = $resource('/api/users/:username/feeds/:page', {username: '@username', page: '@page'});
+        var Sessions = $resource('/api/users/:username/sessions', {username: '@username'});
         return {
             list: $resource('/api/users'),
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
@@ -17,7 +18,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             get: User.get,
             save: User.save,
             getFeeds: Feeds.get,
-            getFeedsByPage: FeedsByPage.get
+            getFeedsByPage: FeedsByPage.get,
+            updateSessions: Sessions.save
         };
     }])
     .factory('Questions', function ($resource) {
@@ -171,10 +173,10 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     })
     .factory('Sessions', function ($resource) {
         var Sessions = $resource('/api/sessions');
-        var Session = $resource('/api/sessions/:id', {id: '@_id'});
+        var Session = $resource('/api/sessions/:id', {id: '@id'});
         return {
             index: Sessions.query,
-            search: $resource('/api/sessions/:id/search', {id: '@_id'}).get,
+            search: $resource('/api/sessions/:id/search', {id: '@id'}).get,
             add: Sessions.create,
             get: Session.get,
             save: Session.save,

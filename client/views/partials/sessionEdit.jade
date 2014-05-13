@@ -14,7 +14,7 @@ div.modal(tabindex='1', role='dialog')
 
         .modal-content.top-margin(ng-repeat="session in Model.profile.sessions | filter:view.mySessions.searchText", ng-if="view.modalState==='mySessions'")
             .modal-header
-                button.close(type='button', ng-click="$hide()") ×
+                button.close(type='button', ng-click="Model.profile.removeSession(session._id)") ×
                 h4.modal-title.text-center {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
             .modal-body
                 .row
@@ -41,7 +41,7 @@ div.modal(tabindex='1', role='dialog')
                                 input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.sessions.searchText')
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
-                .row(ng-show="view.sessions.searchText.length >= 4 && view.modalState==='searchSessions'")
+                .row(ng-show="view.sessions.searchText.length >= 2 && view.modalState==='searchSessions'")
                     .col-xs-12.top-margin
                         .unit.short 搜索不到我的班级...
                         form(role="form")
@@ -73,8 +73,8 @@ div.modal(tabindex='1', role='dialog')
 
         .modal-content.top-margin(ng-repeat="session in Model.sessions | filter:view.sessions.searchText", ng-if="view.modalState==='searchSessions'", ng-class="{yellow: Model.sessions[$index].selected}")
             .modal-header
-                button.close(type='button', ng-if="!Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=true").fa.fa-plus
-                button.close(type='button', ng-if="Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=false").fa.fa-times
+                button.close(type='button', ng-if="!Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=true; Model.profile.addSession(session._id)").fa.fa-plus
+                button.close(type='button', ng-if="Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=false; Model.profile.removeSession(session._id)").fa.fa-times
                 h4.modal-title.text-center {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
             .modal-body
                 .row

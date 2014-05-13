@@ -27,7 +27,8 @@ angular.module('SpruceQuizApp')
                 };
                 $rootScope.errors = {};
 
-                if ($routeParams.username) {
+                if ($routeParams.sessionId) {
+                    Model.getSession($routeParams.sessionId);
                 }
             }
         ]);

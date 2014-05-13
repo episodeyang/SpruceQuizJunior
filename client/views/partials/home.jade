@@ -191,12 +191,11 @@ div.background(background-img="/img/bg-brown.jpg")
                             tr
                                 th
                         tbody
-                            tr
+                            tr(ng-repeat="session in Model.profile.sessions")
                                 td
-                                    a(ng-href='/sessions/something') 数学（三年级一班）
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    //fa.fa-angle-right
+                                    a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
                 .panel.panel-info
                     .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
                         span.pull-right.fa.fa-bars

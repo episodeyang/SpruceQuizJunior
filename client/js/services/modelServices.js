@@ -693,7 +693,36 @@ angular.module('modelServices', ['resourceProvider'])
 
                 Users.getFeeds(query, success, error);
             };
-            modelInstance.profile = {};
+            function addSession (id, success, error) {
+                var query = {
+                    add: { _id: id } ,
+                    username: modelInstance.profile.username
+                };
+                function successCallback(profile) {
+                    modelInstance.profile.sessions = profile.sessions;
+                    if (success) {success();}
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {error(err);}
+                }
+                Users.updateSessions(query, successCallback, errorCallback);
+            }
+            function removeSession (id, success, error) {
+                var query = {
+                    remove: { _id: id } ,
+                    username: modelInstance.profile.username
+                };
+                function successCallback(profile) {
+                    modelInstance.profile.sessions = profile.sessions;
+                    if (success) {success();}
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {error(err);}
+                }
+                Users.updateSessions(query, successCallback, errorCallback);
+            }
             modelInstance.getUserProfile = function (username) {
                 var query = {};
                 if (!username) {
@@ -702,7 +731,11 @@ angular.module('modelServices', ['resourceProvider'])
                     query.username = username;
                 }
                 function success(user) {
-                    modelInstance.profile = user;
+                    modelInstance.profile = {
+                        addSession: addSession,
+                        removeSession: removeSession
+                    };
+                    _.extend(modelInstance.profile, user);
                 }
 
                 function error(err) {
@@ -714,42 +747,32 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.updateUserProfile = function (success, error) {
                 var query = modelInstance.profile;
                 delete query._id;
-                function successCallback(student) {
-                    modelInstance.profile = student;
+                function successCallback(user) {
+                    modelInstance.profile = {
+                        addSession: addSession,
+                        removeSession: removeSession
+                    };
+                    _.extend(modelInstance.profile, user);
                     if (success) {success();}
                 }
-
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (error) {error(err);}
                 }
-
                 Users.save(query, successCallback, errorCallback);
-//                if (modelInstance.profile.role.title == 'student') {
-//                    Students.save(query, successCallback, errorCallback);
-//                } else if (modelInstance.profile.role.title == 'teacher') {
-//                    Teachers.save(query, successCallback, errorCallback);
-//                } else if (modelInstance.profile.role.title == 'parent') {
-//                    Parents.save(query, successCallback, errorCallback);
-//                } else if (modelInstance.profile.role.title == 'admin') {
-//                    Admins.save(query, successCallback, errorCallback);
-//                } else if (modelInstance.profile.role.title == 'superadmin') {
-//                    Superadmins.save(query, successCallback, errorCallback);
-//                }
             };
 
-            modelInstance.addSession = function (id, success, error) {
-                var query = { add: { _id: id } };
-                function successCallback(sessions) {
-                    modelInstance.profile = student;
-                    if (success) {success();}
+            modelInstance.getSession = function (id, success, error) {
+                var query = {  id: id };
+                function successCallback(session) {
+                    modelInstance.session = session;
+                    if (success) {success(session);}
                 }
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (error) {error(err);}
                 }
-
-                Users.save(query, successCallback, errorCallback);
+                Sessions.get(query, successCallback, errorCallback);
             };
 
             function bookQueryBuilder(title, authorName) {

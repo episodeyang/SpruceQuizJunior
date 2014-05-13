@@ -154,14 +154,12 @@ angular.module('SpruceQuizApp')
                 function callback(err, session) {
                     if (err || !session) {return err || 'noSessionUpdated'; }
                     if (!session._id) {return $rooteScope.error = 'sessionDoesNotHaveIdField'; }
-                    Model.profile.sessions.push(session._id);
-                    Model.updateUserProfile()
+                    Model.profile.addSession(session._id);
                 }
 
                 delete $scope.sessionData.tag;
                 delete $scope.sessionData.teacher;
                 Model.submitSession(session, callback);
-            }
-
+            };
         }
     ]);
