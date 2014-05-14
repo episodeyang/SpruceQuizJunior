@@ -100,7 +100,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                     .short-bottom-margin.top-margin
                                         .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}&nbsp
                                             span(ng-click="Model.session.tags.splice($index, 1)").fa.fa-times
-                                    .row(ng-show="{{true}}")
+                                    .row(ng-show="view.session.edit")
                                         .col-xs-12.no-margin
                                             .form-group.no-margin
                                                 input.form-control.no-margin(push-to="Model.session.tags", type="text", ng-Model="ngModel", placeholder="标签, 用逗号分隔...")
