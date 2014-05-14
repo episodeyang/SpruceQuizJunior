@@ -763,7 +763,7 @@ angular.module('modelServices', ['resourceProvider'])
             };
 
             modelInstance.getSession = function (id, success, error) {
-                var query = {  id: id };
+                var query = { sessionId: id };
                 function successCallback(session) {
                     modelInstance.session = session;
                     if (success) {success(session);}
@@ -773,6 +773,24 @@ angular.module('modelServices', ['resourceProvider'])
                     if (error) {error(err);}
                 }
                 Sessions.get(query, successCallback, errorCallback);
+            };
+            modelInstance.saveSession = function (id, success, error) {
+                var query = {
+                    id: id,
+                    name: Model.session.name,
+                    teachers: Model.session.teachers,
+                    overview: Model.session.overview,
+                    tags: Model.session.tags
+                };
+                function successCallback(session) {
+                    modelInstance.session = session;
+                    if (success) {success(session);}
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {error(err);}
+                }
+                Sessions.save(query, successCallback, errorCallback);
             };
 
             function bookQueryBuilder(title, authorName) {

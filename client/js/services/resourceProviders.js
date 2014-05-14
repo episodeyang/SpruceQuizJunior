@@ -173,10 +173,10 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     })
     .factory('Sessions', function ($resource) {
         var Sessions = $resource('/api/sessions');
-        var Session = $resource('/api/sessions/:id', {id: '@id'});
+        var Session = $resource('/api/sessions/:sessionId', {sessionId: '@_id'});
         return {
             index: Sessions.query,
-            search: $resource('/api/sessions/:id/search', {id: '@id'}).get,
+            search: $resource('/api/sessions/search').get,
             add: Sessions.create,
             get: Session.get,
             save: Session.save,

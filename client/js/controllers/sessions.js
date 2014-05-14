@@ -34,9 +34,21 @@ angular.module('SpruceQuizApp')
                     Model.getSession($routeParams.sessionId);
                 }
 
+
                 $scope.addTeacher = function (index) {
                     console.log(index);
 //                    Model.session.save();
+                };
+                $scope.updateSession = function () {
+                    Model.session.$save(
+                        Model.session,
+                        function() {
+                            $scope.view.session.edit = false;
+                        },
+                        function (error) {
+                            $rootScope.error=error;
+                        }
+                    );
                 };
             }
         ]);

@@ -48,7 +48,6 @@ div.background(background-img="/img/bg-brown.jpg")
                                             span.name {{Model.session.name}}
                                             span.signature.small(ng-repeat="teacher in Model.session.teachers track by $index")
                                                 span ，{{Model.session.teachers[$index].name.split(',').join('')}}
-                                            span.edit.clickable.fa.fa-pencil.pull-right(ng-click='view.session.edit=true')
                                         .row.short-bottom-margin
                                             .col-xs-12
                                                 div.clickable.info-button-dropdown.text-strip.pull-right(ng-click="view.card.flipped=true")
@@ -83,8 +82,9 @@ div.background(background-img="/img/bg-brown.jpg")
                                             span.signature(ng-repeat="teacher in Model.session.teachers track by $index") ，
                                                 span.small(contenteditable="{{view.session.edit}}", inline-editable, ng-model="Model.session.teachers[$index].name", placeholder="教师姓名...", submit="addTeacher($index)")
                                             span(ng-if="view.session.edit", ng-click="Model.session.teachers.push({name:''})").edit.clickable.fa.fa-plus.left-margin
-                                            span.edit.clickable.fa.fa-check.pull-right(ng-click='view.session.edit=true')
-                                            span.edit.clickable.fa.fa-times.pull-right(ng-click='view.session.edit=false')
+                                            span.edit.clickable.fa.fa-pencil.pull-right(ng-if="!view.session.edit", ng-click='view.session.edit=true')
+                                            span.edit.clickable.fa.fa-check.pull-right(ng-if="view.session.edit", ng-click='updateSession()')
+                                            span.edit.clickable.fa.fa-times.pull-right(ng-if="view.session.edit", ng-click='view.session.edit=false')
                                         .row.short-bottom-margin
                                             .col-xs-12
                                                 div.clickable.info-button-dropdown.text-strip.pull-right(ng-click="view.card.flipped=false")
@@ -94,16 +94,16 @@ div.background(background-img="/img/bg-brown.jpg")
                                         .row.top-margin
                                             .col-xs-12
                                                 div(ng-if="!Model.session.overview && !view.session.edit").placeholder.short 暂无课程简介
-                                                div(ng-if="view.session.edit", inline-editable, contenteditable='{{view.session.edit}}', ng-model="Model.session.overview", ng-class="{placeholder: !Model.session.overview, short: !(Model.session.overview.length >= 70)}", placeholder="添加课程简介...")
+                                                div(ng-if="Model.session.overview", inline-editable, contenteditable='{{view.session.edit===true}}', ng-model="Model.session.overview", ng-class="{placeholder: !Model.session.overview, short: !(Model.session.overview.length >= 70)}", placeholder="添加课程简介...")
 
                                     //.card.convex.top-margin
                                     .short-bottom-margin.top-margin
                                         .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}&nbsp
-                                            span(ng-click="sessionData.tags.splice($index, 1)").fa.fa-times
+                                            span(ng-click="Model.session.tags.splice($index, 1)").fa.fa-times
                                     .row(ng-show="{{true}}")
                                         .col-xs-12.no-margin
                                             .form-group.no-margin
-                                                input.form-control.no-margin(type="text", ng-model="sessionData.tag", placeholder="标签, 用逗号分隔...")
+                                                input.form-control.no-margin(push-to="Model.session.tags", type="text", ng-Model="ngModel", placeholder="标签, 用逗号分隔...")
 
                     .flow-container
                         .row
