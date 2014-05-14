@@ -91,7 +91,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     a
                                                         span.glyphicon.glyphicon-arrow-left.no-padding
                                                         span.end 返回
-                                        .row.top-margin
+                                        .row.top-margin(ng-if="view.session.edit")
                                             .col-xs-12
                                                 div(ng-if="!Model.session.overview && !view.session.edit").placeholder.short 暂无课程简介
                                                 div(ng-if="Model.session.overview || view.session.edit", inline-editable, contenteditable='{{view.session.edit===true}}', ng-model="Model.session.overview", ng-class="{placeholder: !Model.session.overview, short: !(Model.session.overview.length >= 70)}", placeholder="添加课程简介...")
