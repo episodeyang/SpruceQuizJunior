@@ -94,7 +94,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         .row.top-margin
                                             .col-xs-12
                                                 div(ng-if="!Model.session.overview && !view.session.edit").placeholder.short 暂无课程简介
-                                                div(ng-if="Model.session.overview", inline-editable, contenteditable='{{view.session.edit===true}}', ng-model="Model.session.overview", ng-class="{placeholder: !Model.session.overview, short: !(Model.session.overview.length >= 70)}", placeholder="添加课程简介...")
+                                                div(ng-if="Model.session.overview || view.session.edit", inline-editable, contenteditable='{{view.session.edit===true}}', ng-model="Model.session.overview", ng-class="{placeholder: !Model.session.overview, short: !(Model.session.overview.length >= 70)}", placeholder="添加课程简介...")
 
                                     //.card.convex.top-margin
                                     .short-bottom-margin.top-margin
