@@ -19,13 +19,15 @@ div.modal(tabindex='1', role='dialog')
             .modal-body
                 .row
                     .col-xs-12
-                        .bottom-margin {{session.overview}}
+                        div(ng-if="session.overview") {{session.overview}}
+                        div(ng-if="!session.overview").placeholder.short 没有课程简介。添加点
+                            a(ng-href="/sessions/{{session._id}}").blue 这里
                         //hr.taper
-                        div.bottom-margin
+                        div.top-margin
                             span(ng-repeat="teacher in session.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
                             span(ng-repeat="member in session.members track by $index") {{member.name.split(',').join('')}}，
-                            span 在上这门课程。
-                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in session.tags track by $index")  {{tag}}
+                            span(ng-if="session.teachers || session.members") 在上这门课程。
+                        .badge.right-margin.short-top-margin(ng-repeat="tag in session.tags track by $index")  {{tag}}
 
         .modal-content(ng-class="{'top-margin': view.modalState==='mySessions'}")
             .modal-header
@@ -54,13 +56,13 @@ div.modal(tabindex='1', role='dialog')
                                 input.form-control(type="text", ng-model="sessionData.name", placeholder="班级名称...", required)
                             .form-group
                                 input.form-control(type="text", ng-model="sessionData.subject", placeholder="所属学科...", required)
-                            .form-group
-                                .blue.right-margin.short-bottom-margin(ng-repeat='teacher in sessionData.teachers track by $index') {{teacher.name}} &nbsp
-                                    span(ng-click="sessionData.teachers.splice($index, 1)").fa.fa-times
-                            .input-group.bottom-margin
-                                input.form-control(type="text", ng-model="sessionData.teacher", placeholder="任课老师姓名或用户名...")
-                                span.input-group-btn
-                                    button.btn.btn-info(type='button') 搜索
+                            //.form-group
+                            //    .blue.right-margin.short-bottom-margin(ng-repeat='teacher in sessionData.teachers track by $index') {{teacher.name}} &nbsp
+                            //        span(ng-click="sessionData.teachers.splice($index, 1)").fa.fa-times
+                            //.input-group.bottom-margin
+                            //    input.form-control(type="text", ng-model="sessionData.teacher", placeholder="任课老师姓名或用户名...")
+                            //    span.input-group-btn
+                            //        button.btn.btn-info(type='button') 搜索
                             .form-group
                                 .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='tag in sessionData.tags track by $index') {{tag}} &nbsp
                                     span(ng-click="sessionData.tags.splice($index, 1)").fa.fa-times

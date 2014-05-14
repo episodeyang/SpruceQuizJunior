@@ -7,6 +7,10 @@ var spApp = angular.module('SpruceQuizApp');
 spApp.directive('inlineEditable', function () {
     return {
         require: 'ngModel',
+        scope: {
+            submit: '&',
+            cancel: '&'
+        },
         link: function (scope, element, attrs, ngModel) {
             if (!ngModel) return; // do nothing if no ng-model
 
@@ -21,8 +25,13 @@ spApp.directive('inlineEditable', function () {
                     enter = event.which == 13,
                     el = event.target;
 
-                if (esc || enter) {
+                if (enter) {
                     el.blur();
+                    scope.submit('something here');
+                    console.log('just called back');
+                } else if (esc) {
+                    el.blur();
+                    scope.cancel();
                 }
 
                 scope.$apply(read);

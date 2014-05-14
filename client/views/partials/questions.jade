@@ -67,8 +67,8 @@ div.background(background-img="/img/bg-brown.jpg")
                     //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                     text-angular.tall(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
 
-                    div.bottom-margin.top-margin
-                        .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
+                    .short-bottom-margin.top-margin
+                        .badge.short-bottom-margin(ng-repeat='tag in editor.data.tags track by $index').right-margin
                             span.white {{tag}} &nbsp
                             a.white(ng-click='editor.data.tags.splice($index, 1)') &times
                     input(type='text', placeholder="问题标签--请用逗号分隔不同标签", ng-model="editor.tagText").form-control.bottom-margin
@@ -87,8 +87,8 @@ div.background(background-img="/img/bg-brown.jpg")
                         //form.card.tall.top-margin(name = 'questionEditorForm')
                         //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
                         text-angular.tall.top-margin(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
-                        div.bottom-margin.top-margin
-                            .badge(ng-repeat='tag in editor.data.tags track by $index').right-margin
+                        .short-bottom-margin.top-margin
+                            .badge.short-bottom-margin(ng-repeat='tag in editor.data.tags track by $index').right-margin
                                 span.white {{tag}} &nbsp
                                 a.white(ng-click='Model.question.tags.splice($index, 1)') &times
                         input(type='text', placeholder="问题标签--请用逗号分隔不同标签", ng-model="editor.tagText").form-control.bottom-margin
@@ -115,9 +115,9 @@ div.background(background-img="/img/bg-brown.jpg")
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": Model.question.voteddown}')
                             //-div.editor-inner(compile="'<mathjax>' + Model.question.text + '</mathjax>'")
                             div.editor-inner(math-html="Model.question.text")
-                        div.bottom-margin.top-margin
-                            a.badge(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
-                            a.badge.bg-turquoise(ng-repeat='book in Model.question.books track by $index').right-margin {{book}}
+                        .short-bottom-margin.top-margin
+                            a.badge.short-bottom-margin(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
+                            a.badge.short-bottom-margin(ng-repeat='book in Model.question.books track by $index').right-margin {{book}}
                         .row
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题

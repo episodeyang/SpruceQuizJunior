@@ -154,7 +154,9 @@ angular.module('SpruceQuizApp')
                 function callback(err, session) {
                     if (err || !session) {return err || 'noSessionUpdated'; }
                     if (!session._id) {return $rooteScope.error = 'sessionDoesNotHaveIdField'; }
-                    Model.profile.addSession(session._id);
+                    Model.profile.addSession(session._id, function() {
+                        $scope.view.modalState='searchSessions';
+                    });
                 }
 
                 delete $scope.sessionData.tag;

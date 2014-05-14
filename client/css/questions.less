@@ -223,7 +223,6 @@ h1.bottom-margin, h2.bottom-margin, h3.bottom-margin, h4.bottom-margin, h5.botto
 .short-bottom-margin {
   margin-bottom: 7px;
 }
-
 .right-margin {
   margin-right: 15px;
 }
@@ -282,6 +281,26 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
 
 div.rounded {
   border-radius: 10px;
+}
+.round {
+  border-radius: 3px;
+}
+.placeholder {
+  background-color: fadeOut(@gray-light, 90%);
+  border-radius: 3px;
+  text-align: center;
+  color: grey;
+//  .transition(min-height 0.3s ease);
+}
+.short {
+  min-height: 80px;
+}
+.placeholder.short {
+  min-height: 80px;
+  padding: 30px!important;
+}
+.min-height {
+  min-height: 80px;
 }
 
 .vote-box {
