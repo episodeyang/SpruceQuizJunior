@@ -160,10 +160,32 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-lg-12
             .col-sm-3.hidden-xs
                 .panel.panel-info
-                    .panel-heading 他的班级
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',
+                    bs-modal='modal', data-template='/partials/sessionEdit.html', data-placement='top') 我的课程
+                        span.pull-right.fa.fa-bars
+                    //.panel-body
+                    table.table
+                        //thead
+                            tr
+                                th
+                        tbody
+                            tr(ng-repeat="session in Model.profile.sessions")
+                                td
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
                 .panel.panel-info
-                    .panel-heading 他的课本
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
+                        span.pull-right.fa.fa-bars
+                    //.panel-body
+                    table.table
+                        //thead
+                            tr
+                                th
+                        tbody
+                            tr(ng-click="")
+                                td 你身体里的那条鱼
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    //fa.fa-angle-right
+
