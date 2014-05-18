@@ -117,7 +117,8 @@ var testData = {
         params: {
             name: '张力',
             DOB: new Date(1960, 6, 13),
-            email: 'ge.ike.yang@gmail.com'
+            email: 'ge.ike.yang@gmail.com',
+            schoolName: '耶鲁大学'
         }
     },
     /** parent login data*/

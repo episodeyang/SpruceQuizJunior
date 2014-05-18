@@ -229,7 +229,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'School' }
+                    { type: String, ref: 'School' }
                 ],
                 books: [
                     { type: Schema.Types.ObjectId, ref: 'Book'}
@@ -253,7 +253,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'School' }
+                    { type: String, ref: 'School' }
                 ],
                 books: [
                     { type: Schema.Types.ObjectId, ref: 'Book'}
@@ -280,7 +280,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'School' }
+                    { type: String, ref: 'School' }
                 ],
                 books: [
                     { type: Schema.Types.ObjectId, ref: 'Book'}
@@ -304,7 +304,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'School' }
+                    { type: String, ref: 'School' }
                 ],
                 books: [
                     { type: Schema.Types.ObjectId, ref: 'Book'}
@@ -328,7 +328,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     { type: Schema.Types.ObjectId, ref: 'Session' }
                 ],
                 schools: [
-                    { type: Schema.Types.ObjectId, ref: 'School' }
+                    { type: String, ref: 'School' }
                 ],
                 books: [
                     { type: Schema.Types.ObjectId, ref: 'Book'}
@@ -372,7 +372,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 }
             },
             school: {
-                name: String,
+                name: {type: String, unique: true},
                 type: String,
                 address: String,
                 zipCode: String,

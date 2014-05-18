@@ -82,6 +82,20 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         email: email,
                         DOB: params.DOB
                     };
+                    if (params.schoolName) {
+                        subUser.schools = [params.schoolName]
+                    }
+
+                    console.log("subUser");
+                    console.log(subUser);
+
+                    function validate(user) {
+                        return true;
+                    }
+
+                    if (!validate(subUser)) {
+                        return callback('badRequest');
+                    }
 
                     var userObject;
                     if (role.bitMask === userRoles.student.bitMask) {
@@ -259,11 +273,11 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 //                console.log(update);
                 SchemaModels[capitalize(user.role.title)]
                     .findOneAndUpdate(
-                        query,
-                        update,
-                        options,
-                        done
-                    );
+                    query,
+                    update,
+                    options,
+                    done
+                );
             },
             addSession: function (user, session, callback) {
                 UserMethods.addOrRemoveFromSet('session', 'add', user, session, callback);

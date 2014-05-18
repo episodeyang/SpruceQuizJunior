@@ -34,8 +34,8 @@ define(['underscore', '../rolesHelper', './UserFeed'],
                     text: question.text,
                     tags: question.tags
                 };
-                console.log("snippet");
-                console.log(snippet);
+                // console.log("snippet");
+                // console.log(snippet);
                 UserFeedM.addFeed(user._id, user.username, "questionEdit", snippet, errorLog);
             },
             questionGet: function(user, question) {
