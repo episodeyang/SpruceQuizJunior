@@ -123,7 +123,7 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                     userRoot = user.toObject();
 
                     SchemaModels[capitalize(user.role.title)]
-                        .findOne(query).populate('books sessions schools').exec(sendSubDoc);
+                        .findOne(query).populate('books sessions').exec(sendSubDoc);
                 }
 
                 UserM.findOne(query).select('_id username role').exec(callback);

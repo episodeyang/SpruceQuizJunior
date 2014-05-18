@@ -50,6 +50,7 @@ define(['underscore', '../models/School', '../rolesHelper'],
                     keyString,
                     function (err, school) {
                         if (err) {
+                            console.log(err);
                             return res.send(404, 'schoolNotFound ' + err);
                         }
                         res.send(200, school);
@@ -59,10 +60,12 @@ define(['underscore', '../models/School', '../rolesHelper'],
             create: function (req, res) {
                 if (!req.body.name) { return res.send(401, 'noSchoolName'); }
                 var data = req.body;
+                data._id = data.name;
                 SchoolM.add(
                     data,
                     function (err, school) {
                         if (err) {
+                            console.log(err);
                             return res.send(404, 'request error' + err);
                         } else {
                             return res.send(201, school);
@@ -77,11 +80,12 @@ define(['underscore', '../models/School', '../rolesHelper'],
                 delete data._id;
                 delete data.name;
                 SchoolM.findOneAndUpdate(
-                    {name: req.params.name},
+                    {_id: req.params.name},
                     data,
                     keyString,
                     function (err, school) {
                         if (err) {
+                            console.log(err);
                             return res.send(404, err);
                         }
                         res.send(201, school);
@@ -94,6 +98,7 @@ define(['underscore', '../models/School', '../rolesHelper'],
                     {_id: req.params.schoolId},
                     function (err) {
                         if (err) {
+                            console.log(err);
                             return res.send(404, 'schoolNotFound');
                         }
                         res.send(201);

@@ -372,7 +372,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 }
             },
             school: {
-                name: {type: String, unique: true},
+                _id: {type: String, unique: true}, //In fact this is the name of the school
                 type: String,
                 address: String,
                 zipCode: String,
@@ -388,7 +388,28 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 teachers: [subSchema.UserFragment],
                 sessions: [{type: Schema.Types.ObjectId, ref: 'Session'}],
                 created: {type: Date, default: Date.now},
-                edited: Date
+                edited: Date,
+                __virtuals__: {
+                    nameGet: function () {
+                        return this._id;
+                    },
+                    nameSet: function () {
+                        this._id = this.name;
+                    }
+                },
+                __options__: {
+                    toJSON: {
+                        getters: true,
+                        virtuals: true
+//                        transform: function (doc, rtn, options) {
+//                            delete rtn._id;
+//                        }
+                    },
+                    toObject: {
+                        getters: true,
+                        virtuals: true
+                    }
+                }
             },
             session: {
                 name: String,
