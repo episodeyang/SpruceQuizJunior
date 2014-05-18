@@ -168,8 +168,8 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                 $location.path(current);
                 $rootScope.error = "access prohibited.";
                 if (Auth.isLoggedIn()) {
-//                    $location.path('/');
-//                    console.log('is logged in');
+                    $location.path('/home');
+                    console.log('is logged in');
                 }
                 else {
                     $location.path('/');
