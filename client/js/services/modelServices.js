@@ -787,10 +787,10 @@ angular.module('modelServices', ['resourceProvider'])
                 var query = { sessionId: id };
 
                 function addQuestion (questionId) {
-                    Sessions.updateQuestions({add: {id: questionId}}, successCallback, errorCallback)
+                    Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
                 function removeQuestion (questionId) {
-                    Sessions.updateQuestions({pull: {id: questionId}}, successCallback, errorCallback)
+                    Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
                 function successCallback(session, extend) {
                     if (!extend) {

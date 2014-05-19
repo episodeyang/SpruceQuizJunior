@@ -27,8 +27,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});
-        var onSessions = $resource('/api/questions/:id/sessions');
-        var onBooks = $resource('/api/questions/:id/books');
+        var onSessions = $resource('/api/questions/:id/sessions', {id: '@id'});
+        var onBooks = $resource('/api/questions/:id/books', {id: '@id'});
         return {
             get: Question.get,
             query: Questions.query,
@@ -180,8 +180,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     .factory('Sessions', function ($resource) {
         var Sessions = $resource('/api/sessions');
         var Session = $resource('/api/sessions/:sessionId', {sessionId: '@_id'});
-        var onQuestions = $resource('/api/sessions/:sessionId/questions');
-        var onBooks = $resource('/api/sessions/:sessionId/books');
+        var onQuestions = $resource('/api/sessions/:sessionId/questions', {sessionId: '@sessionId'});
+        var onBooks = $resource('/api/sessions/:sessionId/books', {sessionId: '@sessionId'});
         return {
             index: Sessions.query,
             search: $resource('/api/sessions/search').get,
