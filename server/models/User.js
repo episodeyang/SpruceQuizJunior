@@ -83,7 +83,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         DOB: params.DOB
                     };
                     if (params.schoolName) {
-                        subUser.schools = [params.schoolName]
+                        subUser.schools = [params.schoolName];
                     }
 
                     console.log("subUser");

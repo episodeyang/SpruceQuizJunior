@@ -336,6 +336,18 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
+                path: '/api/sessions/:sessionId/questions',
+                httpMethod: 'post',
+                middleware: [SessionCtrl.updateQuestions],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/:sessionId/books',
+                httpMethod: 'post',
+                middleware: [SessionCtrl.updateBooks],
+                accessLevel: accessLevels.all
+            },
+            {
                 path: '/api/sessions/:sessionId',
                 httpMethod: 'delete',
                 middleware: [SessionCtrl.remove],

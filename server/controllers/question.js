@@ -12,9 +12,9 @@
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", "../models/FeedAPI"],
-    function (_, SchemaModels, rolesHelper, mongoose, FeedAPI) {
-        var QuestionM = SchemaModels.Question;
+define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesHelper', "mongoose", "../models/FeedAPI"],
+    function (_, SchemaModels, QuestionM, rolesHelper, mongoose, FeedAPI) {
+        //var QuestionM = SchemaModels.Question;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
         return {

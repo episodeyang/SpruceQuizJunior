@@ -168,30 +168,28 @@ angular.module('modelServices', ['resourceProvider'])
                     if (typeof success != 'undefined') {
                         success(result);
                     }
-                    ;
                 }, function (err) {
                     $rootScope.error = err;
                     if (typeof error != 'undefined') {
                         error(err);
                     }
-                    ;
                 });
             };
             modelInstance.saveQuestion = function (question, success, error) {
 //                if (question.id) {$rootScope.error = "udpate does not have object id."}
-                Questions.save(question, function (q) {
-                    _.extend(modelInstance.question, q);
-                    if (typeof success != 'undefined') {
-                        success(q)
-                    }
-                    ;
-                }, function (err) {
-                    $rootScope.error = err;
-                    if (typeof error != 'undefined') {
-                        error(err)
-                    }
-                    ;
-                });
+                Questions.save(
+                    question,
+                    function (q) {
+                        _.extend(modelInstance.question, q);
+                        if (typeof success != 'undefined') {
+                            success(q)
+                        }
+                    }, function (err) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') {
+                            error(err)
+                        }
+                    });
             };
             modelInstance.removeQuestion = function (question, success, error) {
                 Questions.remove(question, function (res) {
@@ -659,6 +657,7 @@ angular.module('modelServices', ['resourceProvider'])
                 return ref;
                 // console.log(ref);
             }
+
             function feedFormatter() {
                 var timeStrings;
                 _.each(
@@ -693,36 +692,52 @@ angular.module('modelServices', ['resourceProvider'])
 
                 Users.getFeeds(query, success, error);
             };
-            function addSession (id, success, error) {
+            function addSession(id, success, error) {
                 var query = {
-                    add: { _id: id } ,
+                    add: { _id: id },
                     username: modelInstance.profile.username
                 };
+
                 function successCallback(profile) {
                     modelInstance.profile.sessions = profile.sessions;
-                    if (success) {success();}
+                    if (success) {
+                        success();
+                    }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    if (error) {error(err);}
+                    if (error) {
+                        error(err);
+                    }
                 }
+
                 Users.updateSessions(query, successCallback, errorCallback);
             }
-            function removeSession (id, success, error) {
+
+            function removeSession(id, success, error) {
                 var query = {
-                    remove: { _id: id } ,
+                    remove: { _id: id },
                     username: modelInstance.profile.username
                 };
+
                 function successCallback(profile) {
                     modelInstance.profile.sessions = profile.sessions;
-                    if (success) {success();}
+                    if (success) {
+                        success();
+                    }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    if (error) {error(err);}
+                    if (error) {
+                        error(err);
+                    }
                 }
+
                 Users.updateSessions(query, successCallback, errorCallback);
             }
+
             modelInstance.getUserProfile = function (username) {
                 var query = {};
                 if (!username) {
@@ -753,25 +768,49 @@ angular.module('modelServices', ['resourceProvider'])
                         removeSession: removeSession
                     };
                     _.extend(modelInstance.profile, user);
-                    if (success) {success();}
+                    if (success) {
+                        success();
+                    }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    if (error) {error(err);}
+                    if (error) {
+                        error(err);
+                    }
                 }
+
                 Users.save(query, successCallback, errorCallback);
             };
 
             modelInstance.getSession = function (id, success, error) {
                 var query = { sessionId: id };
-                function successCallback(session) {
-                    modelInstance.session = session;
-                    if (success) {success(session);}
+
+                function addQuestion (questionId) {
+                    Sessions.updateQuestions({add: {id: questionId}}, successCallback, errorCallback)
                 }
+                function removeQuestion (questionId) {
+                    Sessions.updateQuestions({pull: {id: questionId}}, successCallback, errorCallback)
+                }
+                function successCallback(session, extend) {
+                    if (!extend) {
+                        modelInstance.session = session;
+                    } else {
+                        modelInstance.session = _.extend({}, modelInstance.session, session);
+                    }
+                    modelInstance.session = _.extend({addQuestion: addQuestion, removeQuestion:removeQuestion}, modelInstance.session);
+                    if (success) {
+                        success(modelInstance.session);
+                    }
+                }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    if (error) {error(err);}
+                    if (error) {
+                        error(err);
+                    }
                 }
+
                 Sessions.get(query, successCallback, errorCallback);
             };
             modelInstance.saveSession = function (id, success, error) {
@@ -782,14 +821,21 @@ angular.module('modelServices', ['resourceProvider'])
                     overview: Model.session.overview,
                     tags: Model.session.tags
                 };
+
                 function successCallback(session) {
                     modelInstance.session = session;
-                    if (success) {success(session);}
+                    if (success) {
+                        success(session);
+                    }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    if (error) {error(err);}
+                    if (error) {
+                        error(err);
+                    }
                 }
+
                 Sessions.save(query, successCallback, errorCallback);
             };
 
@@ -842,27 +888,32 @@ angular.module('modelServices', ['resourceProvider'])
                 function error(err) {
                     $rootScope.error = err;
                 }
+
                 Schools.index({}, success, error);
             };
             modelInstance.getSessions = function () {
                 function success(sessions) {
                     modelInstance.sessions = sessions;
                 }
+
                 function error(err) {
                     $rootScope.error = err;
                 }
+
                 Sessions.index({}, success, error);
             };
-            modelInstance.submitSession = function(session, callback) {
+            modelInstance.submitSession = function (session, callback) {
                 function success(session) {
                     modelInstance.getSessions();
                     callback(null, session);
                 }
+
                 function error(err) {
                     $rootScope.error = err;
                     callback(err);
                 }
-                function validateAndSave (session) {
+
+                function validateAndSave(session) {
                     if (!session.name) {
                         return error('sessionHaveNoName');
                     }
@@ -874,6 +925,7 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                     Sessions.save(session, success, error);
                 }
+
                 validateAndSave(session);
             };
 

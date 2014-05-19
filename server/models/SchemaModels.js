@@ -430,9 +430,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 syllabus: {type: Schema.Types.Mixed },
                 reviews: [subSchema.CommentPrototype],
                 books: [ subSchema.Book ],
-                booksExt: [
-                    {type: Schema.Types.ObjectId, ref: "Book"}
-                ],
+                questions: [{ type: Schema.Types.ObjectId, ref: 'Question'}],
                 mother: [ { type: Schema.Types.ObjectId, ref: 'Session'}],
                 children: [ { type: Schema.Types.ObjectId, ref: 'Session'}],
                 //This one makes retrieving convenient.

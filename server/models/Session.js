@@ -27,6 +27,61 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         return callback(null, session);
                     }
                 });
+            },
+            // todo: not tested not used
+            getSet: function (key, session, callback) {
+                if (!session._id) {
+                    return callback('noSessionId');
+                }
+                SessionM.findById(session._id).select(key).populate(key).exec(callback);
+            },
+            addOrRemoveFromSet: function (key, addOrRemove, session, payload, callback) {
+                if (!payload) {
+                    return callback('noPayload');
+                }
+
+                function done(error, doc) {
+                    if (error) {
+                        console.log(error);
+                        return error;
+                    }
+                    doc.populate(key, callback);
+                }
+
+                var options = { new: true };
+                var update;
+
+                if (addOrRemove === "add") {
+                    update = {
+                        $addToSet: {}
+                    };
+                    update.$addToSet[key] = payload;
+                } else if (addOrRemove === "pull") {
+                    update = {
+                        $pullAll: {}
+                    };
+                    update.$pullAll[key] = [payload];
+                }
+                SessionM.findByIdAndUpdate(
+                    session._id,
+                    update,
+                    options,
+                    done
+                );
+            },
+            addQuestion: function (session, question, callback) {
+                SessionMethods.addOrRemoveFromSet('questions', 'add', session, question, callback);
+            },
+            removeQuestion: function (session, question, callback) {
+                SessionMethods.addOrRemoveFromSet('questions', 'pull', session, question, callback);
+            },
+            //Todo: not used not tested, and is NOT going to work.
+            // Book schema uses book fragment.
+            addBook: function (question, book, callback) {
+                SessionMethods.addOrRemoveFromSet('books', 'add', question, book, callback);
+            },
+            removeBook: function (question, book, callback) {
+                SessionMethods.addOrRemoveFromSet('books', 'pull', question, book, callback);
             }
         };
         _.extend(SessionM, SessionMethods);

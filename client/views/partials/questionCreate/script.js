@@ -91,8 +91,9 @@ angular.module('SpruceQuizApp')
                 if (!$rootScope.error) {
                     Model.createQuestion(
                         $scope.editor.data,
-                        function(){
+                        function(question){
                             $rootScope.error = '';
+                            Model.session.addQuestion(question.id);
                             $location.path('/questions/'+Model.question.id);
                             mixpanel.track("submitted question");
                         }
@@ -110,7 +111,7 @@ angular.module('SpruceQuizApp')
                 if (!$rootScope.error) {
                     Model.saveQuestion(
                         update,
-                        function () {
+                        function (question) {
                             $rootScope.error = '';
                             $scope.view.state = 'question';
                         },

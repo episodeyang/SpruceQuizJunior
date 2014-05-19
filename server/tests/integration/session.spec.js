@@ -135,7 +135,25 @@ describe('Session API test - ', function (done) {
             done();
         });
     });
-//    it('add a session to user', function (done) {
-//    });
+    var questions;
+    it('get quesitons id\'s', function (done) {
+        request(app).get('/api/questions').expect(200).end(function (err, res) {
+            console.log(res.body);
+            questions = res.body;
+            done();
+        });
+    });
+    it('add question to session and get the question populated on it\'s way back', function (done) {
+        var query = {
+            add: {
+                id: questions[0].id
+            }
+        };
+        request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
+            console.log(res.body);
+            res.body.questions.should.containDeep([{id: questions[0].id}]);
+            done();
+        });
+    });
 });
 

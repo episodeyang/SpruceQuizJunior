@@ -91,6 +91,50 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                     }
                 );
             },
+            /**
+             * upadate question field of session.
+             * @param req
+             * @param res
+             * @returns {*}
+             * @example req = { add: { id: 34523452345254 } }
+             * @example req = { remove: { id: 34523452345254 } }
+             */
+            updateQuestions: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                var data = req.body;
+                var session = { _id: req.params.sessionId };
+
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(201, session);
+                }
+
+                if (data.add) {
+                    SessionM.addQuestion(session, data.add.id, done);
+                } else if (data.pull) {
+                    SessionM.removeQuestion(session, data.pull.id, done);
+                } else {
+                    return res.send(400, 'badPayloadFormat');
+                }
+            },
+            updateBooks: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                var data = req.body;
+                var session = { _id: req.params.sessionId };
+
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(201, session);
+                }
+
+                if (data.add) {
+                    SessionM.addBook(session, data.add, done);
+                } else if (data.pull) {
+                    SessionM.removeBook(session, data.pull, done);
+                } else {
+                    return res.send(400, 'requestHasNoAddNorPullField');
+                }
+            },
             remove: function (req, res) {
                 if (!req.params.sessionId) { return res.send(400, 'noSessionId'); }
                 SessionM.remove(

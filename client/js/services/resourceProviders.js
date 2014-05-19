@@ -27,12 +27,18 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});
+        var onSessions = $resource('/api/questions/:id/sessions');
+        var onBooks = $resource('/api/questions/:id/books');
         return {
             get: Question.get,
             query: Questions.query,
             create: Questions.create,
             save: Question.save,
-            remove: Question.remove
+            remove: Question.remove,
+            updateSession: onSessions.save,
+            getSessions: onSessions.query,
+            updateBook: onBooks.save,
+            getBooks: onBooks.query
         };
     })
     .factory('Answers', function ($resource) {
@@ -174,13 +180,19 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     .factory('Sessions', function ($resource) {
         var Sessions = $resource('/api/sessions');
         var Session = $resource('/api/sessions/:sessionId', {sessionId: '@_id'});
+        var onQuestions = $resource('/api/sessions/:sessionId/questions');
+        var onBooks = $resource('/api/sessions/:sessionId/books');
         return {
             index: Sessions.query,
             search: $resource('/api/sessions/search').get,
             add: Sessions.create,
             get: Session.get,
             save: Session.save,
-            remove: Session.remove
+            remove: Session.remove,
+            updateQuestions: onQuestions.save,
+            getQuestions: onQuestions.query,
+            updateBook: onBooks.save,
+            getBooks: onBooks.query
         };
     })
     .factory('Books', function ($resource) {
