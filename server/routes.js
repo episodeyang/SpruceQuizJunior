@@ -8,8 +8,8 @@
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
     './controllers/user', './controllers/userFeed',
         './controllers/student',
-        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/school', './controllers/session', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SchoolCtrl, SessionCtrl, MailerCtrl, SpiderCtrl) {
+        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/school', './controllers/session', './controllers/sessionFeed', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, SchoolCtrl, SessionCtrl, SessionFeedCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -342,9 +342,21 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
+                path: '/api/sessions/:sessionId/questions',
+                httpMethod: 'get',
+                middleware: [SessionCtrl.getQuestions],
+                accessLevel: accessLevels.all
+            },
+            {
                 path: '/api/sessions/:sessionId/books',
                 httpMethod: 'post',
                 middleware: [SessionCtrl.updateBooks],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/:sessionId/books',
+                httpMethod: 'get',
+                middleware: [SessionCtrl.getBooks],
                 accessLevel: accessLevels.all
             },
             {
@@ -354,9 +366,15 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/session/:sessionId/feeds',
+                path: '/api/sessions/:sessionId/feeds',
                 httpMethod: 'GET',
-                middleware: [SessionCtrl.index],
+                middleware: [SessionFeedCtrl.getByPage],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/sessions/:sessionId/feeds/:page',
+                httpMethod: 'GET',
+                middleware: [SessionFeedCtrl.getByPage],
                 accessLevel: accessLevels.all
             },
             {

@@ -448,7 +448,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 }
             },
             sessionFeed: {
-                session: {
+                sessionId: {
                     type: Schema.Types.ObjectId
                 },
                 page: {
@@ -457,7 +457,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 count: {
                     type: Number, index: false
                 },
-                feeds: [subSchema.Feed]
+                feeds: [subSchema.Feed],
+                __index__: {
+                    userId: 1,
+                    page: -1
+                }
             },
             bookFeed: {
                 session: {
@@ -469,7 +473,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 count: {
                     type: Number, index: false
                 },
-                feeds: [subSchema.Feed]
+                feeds: [subSchema.Feed],
+                __index__: {
+                    userId: 1,
+                    page: -1
+                }
             },
             question: {
                 title: String,

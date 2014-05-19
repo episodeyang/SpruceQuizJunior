@@ -29,11 +29,20 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 });
             },
             // todo: not tested not used
-            getSet: function (key, session, callback) {
-                if (!session._id) {
+            getSet: function (key, sessionId, callback) {
+                if (!sessionId) {
                     return callback('noSessionId');
                 }
-                SessionM.findById(session._id).select(key).populate(key).exec(callback);
+                SessionM.findById(sessionId).select(key).populate(key).exec(callback);
+            },
+            getQuestions: function (sessionId, callback) {
+                SessionMethods.getSet('questions', sessionId, callback);
+            },
+            getBooks: function (sessionId, callback) {
+                if (!sessionId) {
+                    return callback('noSessionId');
+                }
+                SessionM.findById(sessionId).select('books').exec(callback);
             },
             addOrRemoveFromSet: function (key, addOrRemove, session, payload, callback) {
                 if (!payload) {

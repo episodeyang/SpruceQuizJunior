@@ -36,9 +36,9 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             save: Question.save,
             remove: Question.remove,
             updateSession: onSessions.save,
-            getSessions: onSessions.query,
+            getSessions: onSessions.get,
             updateBook: onBooks.save,
-            getBooks: onBooks.query
+            getBooks: onBooks.get
         };
     })
     .factory('Answers', function ($resource) {
@@ -182,17 +182,19 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         var Session = $resource('/api/sessions/:sessionId', {sessionId: '@_id'});
         var onQuestions = $resource('/api/sessions/:sessionId/questions', {sessionId: '@sessionId'});
         var onBooks = $resource('/api/sessions/:sessionId/books', {sessionId: '@sessionId'});
+        var Feeds = $resource('/api/sessions/:sessionId/feeds', {sessionId: '@sessionId'});
         return {
             index: Sessions.query,
             search: $resource('/api/sessions/search').get,
             add: Sessions.create,
             get: Session.get,
+            getFeeds: Feeds.get,
             save: Session.save,
             remove: Session.remove,
             updateQuestions: onQuestions.save,
-            getQuestions: onQuestions.query,
+            getQuestions: onQuestions.get, //return session object with questions populated. not an array.
             updateBook: onBooks.save,
-            getBooks: onBooks.query
+            getBooks: onBooks.get
         };
     })
     .factory('Books', function ($resource) {

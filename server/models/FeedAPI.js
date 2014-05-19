@@ -5,8 +5,8 @@
  * @type {exports}
  */
 
-define(['underscore', '../rolesHelper', './UserFeed'],
-    function (_, rolesHelper, UserFeedM) {
+define(['underscore', '../rolesHelper', './UserFeed', './SessionFeed'],
+    function (_, rolesHelper, UserFeedM, SessionFeedM) {
         var userRoles = rolesHelper.userRoles;
         function errorLog(error, doc) {
             if (error) {
@@ -24,6 +24,16 @@ define(['underscore', '../rolesHelper', './UserFeed'],
                     text: question.text,
                     tags: question.tags
                 };
+                if (question.sessions) {
+                    snippet.username = user.username;
+                    SessionFeedM.addFeed(question.sessions[0], "questionAdd", snippet, errorLog);
+                    delete snippet.username;
+                    snippet.sessionId = question.sessions[0];
+                }
+//                if (question.books) {
+                      // might need to iterate through multiple books, because there migh be many.
+//                    BookFeedM.addFeed(question.books[0], "questionAdd", snippet, errorLog);
+//                }
                 UserFeedM.addFeed(user._id, user.username, "questionAdd", snippet, errorLog);
             },
             questionEdit: function(user, question) {
@@ -44,6 +54,14 @@ define(['underscore', '../rolesHelper', './UserFeed'],
                     id : question._id,
                     title: question.title
                 };
+                console.log(question);
+                if (question.sessions) {
+                    console.log(question.sessions);
+                    snippet.username = user.username;
+                    SessionFeedM.addFeed(question.sessions[0], "questionGet", snippet, errorLog);
+                    delete snippet.username;
+                    snippet.sessionId = question.sessions[0];
+                }
                 UserFeedM.addFeed(user._id, user.username, "questionGet", snippet, errorLog);
             },
             questionVote: function(user, question) {
@@ -53,15 +71,39 @@ define(['underscore', '../rolesHelper', './UserFeed'],
                     title: question.title
                 };
                 function removeUpVote() {
+                    if (question.sessions) {
+                        snippet.username = user.username;
+                        SessionFeedM.addFeed(question.sessions[0], "questionVote.removeUpVote", snippet, errorLog);
+                        delete snippet.username;
+                        snippet.sessionId = question.sessions[0];
+                    }
                     UserFeedM.addFeed(user._id, user.username, "questionVote.removeUpVote", snippet, errorLog);
                 }
                 function upVote() {
+                    if (question.sessions) {
+                        snippet.username = user.username;
+                        SessionFeedM.addFeed(question.sessions[0], "questionVote.upVote", snippet, errorLog);
+                        delete snippet.username;
+                        snippet.sessionId = question.sessions[0];
+                    }
                     UserFeedM.addFeed(user._id, user.username, "questionVote.upVote", snippet, errorLog);
                 }
                 function removeDownVote() {
+                    if (question.sessions) {
+                        snippet.username = user.username;
+                        SessionFeedM.addFeed(question.sessions[0], "questionVote.removeDownVote", snippet, errorLog);
+                        delete snippet.username;
+                        snippet.sessionId = question.sessions[0];
+                    }
                     UserFeedM.addFeed(user._id, user.username, "questionVote.removeDownVote", snippet, errorLog);
                 }
                 function downVote() {
+                    if (question.sessions) {
+                        snippet.username = user.username;
+                        SessionFeedM.addFeed(question.sessions[0], "questionVote.downVote", snippet, errorLog);
+                        delete snippet.username;
+                        snippet.sessionId = question.sessions[0];
+                    }
                     UserFeedM.addFeed(user._id, user.username, "questionVote.downVote", snippet, errorLog);
                 }
                 return {

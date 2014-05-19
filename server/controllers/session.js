@@ -19,13 +19,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
         "use strict";
         var UserM = SchemaModels.User;
         var userRoles = rolesHelper.userRoles;
-        var keyString = '_id name subject courseString teachers members overview school created finished reviews tags mother children knowledgeTree tableOfContent';
+        var keyString = '_id name subject courseString teachers members overview school books questions created finished reviews tags mother children knowledgeTree tableOfContent';
 
         return {
             index: function (req, res) {
                 SessionM.find(
                     {},
-                    '_id name subject courseString school teachers members overview reviews tags',
+                    '_id name subject courseString school books questions teachers members overview reviews tags',
                     function (err, sessions) {
                         if (err) {
                             return res.json(400, err);
@@ -90,6 +90,22 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                         res.send(201, session);
                     }
                 );
+            },
+            getQuestions: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(200, session);
+                }
+                SessionM.getQuestions(req.params.sessionId, done);
+            },
+            getBooks: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(200, session);
+                }
+                SessionM.getBooks(req.params.sessionId, done);
             },
             /**
              * upadate question field of session.

@@ -785,20 +785,48 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.getSession = function (id, success, error) {
                 var query = { sessionId: id };
+                var extend = true;
 
+                function successCallback (session) {
+                    _.extend(modelInstance.session, session);
+                    if (success) {
+                        success(modelInstance.session)
+                    }
+                }
                 function addQuestion (questionId) {
                     Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
                 function removeQuestion (questionId) {
                     Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
-                function successCallback(session, extend) {
-                    if (!extend) {
-                        modelInstance.session = session;
-                    } else {
-                        modelInstance.session = _.extend({}, modelInstance.session, session);
+                function getQuestions () {
+                    Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
+                    console.log('id is ');
+                    console.log(id);
+                }
+
+                function getFeeds () {
+                    function callback (feeds) {
+                        modelInstance.session.feeds = feeds;
+                        if (success) {
+                            success(modelInstance.session);
+                        }
                     }
-                    modelInstance.session = _.extend({addQuestion: addQuestion, removeQuestion:removeQuestion}, modelInstance.session);
+                    Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
+                }
+
+                function getCallback(session) {
+                    modelInstance.session = _.extend(
+                        {
+                            addQuestion: addQuestion,
+                            removeQuestion:removeQuestion,
+                            getQuestions: getQuestions,
+                            getFeeds: getFeeds
+                        },
+                        session);
+
+                    getFeeds();
+
                     if (success) {
                         success(modelInstance.session);
                     }
@@ -811,7 +839,7 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 }
 
-                Sessions.get(query, successCallback, errorCallback);
+                Sessions.get(query, getCallback, errorCallback);
             };
             modelInstance.saveSession = function (id, success, error) {
                 var query = {

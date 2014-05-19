@@ -15,7 +15,7 @@ angular.module('SpruceQuizApp')
 
             $scope.Model = Model;
 
-            $rootScope.errorClear = function(){
+            $rootScope.errorClear = function () {
                 $rootScope.error = null;
             };
 
@@ -37,9 +37,11 @@ angular.module('SpruceQuizApp')
 
             $scope.editor.toolbar = [
                 ['redo', 'undo', 'clear'],
-                ['h3', 'h4'], ['p', 'pre', 'quote'],
-                ['bold', 'italics', 'underline'], ['ul', 'ol'],
-                ['justifyLeft','justifyCenter','justifyRight'],
+                ['h3', 'h4'],
+                ['p', 'pre', 'quote'],
+                ['bold', 'italics', 'underline'],
+                ['ul', 'ol'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight'],
                 ['insertImage', 'insertLink', 'unlink'],
                 ['html']
             ];
@@ -56,28 +58,29 @@ angular.module('SpruceQuizApp')
                 mixpanel.track("toggleHtml");
             };
 
-            var appendQuestion = function (data) {
-                // To Session
+            function onSession (data) {
                 if ($routeParams.sessionId) {
                     data.sessions = [$routeParams.sessionId];
                 }
+            };
+            function onBook (data) {
                 //Todo: not tested yet.
-                // To Book
                 if ($routeParams.bookTitle) {
-                    data.books = [{
-                        _id: Model.book.id || Model.book._id,
-                        title: Model.book.title,
-                        authors: Model.book.authors
-                    }
+                    data.books = [
+                        {
+                            _id: Model.book.id || Model.book._id,
+                            title: Model.book.title,
+                            authors: Model.book.authors
+                        }
                     ];
                 }
             };
 
-            var validator = function(data) {
+            var validator = function (data) {
                 if (data.title.length < 10) {
                     return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
                     mixpanel.track("question title too short");
-                };
+                }
                 if (data.text.length < 50) {
                     return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
                     mixpanel.track("question too short");
@@ -85,17 +88,18 @@ angular.module('SpruceQuizApp')
             };
 
             // submission and update
-            $scope.editor.submit = function() {
-                appendQuestion($scope.editor.data);
+            $scope.editor.submit = function () {
+                onSession($scope.editor.data);
+                onBook($scope.editor.data);
                 validator($scope.editor.data);
                 if (!$rootScope.error) {
                     Model.createQuestion(
                         $scope.editor.data,
-                        function(question){
+                        function (question) {
                             $rootScope.error = '';
                             Model.session.addQuestion(question.id);
-                            $location.path('/questions/'+Model.question.id);
-                            mixpanel.track("submitted question");
+                            $location.path('/questions/' + Model.question.id);
+                            mixpanel.track("submitted question to session");
                         }
                     );
                 }

@@ -1,6 +1,7 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/editor.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
@@ -34,7 +35,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         a.text-center(ng-click="view.state='info'") 新鲜事
                     li(ng-class="{active: view.state=='questions'}")
                         a.text-center(ng-click="view.state='questions'") 问题
-                    li(ng-class="{active: view.state=='answers'}")
+                    //li(ng-class="{active: view.state=='answers'}")
                         a.text-center(ng-click="view.state='answers'") 回答
                     li(ng-class="{active: view.state=='ask'}")
                         a.text-center(ng-click="view.state='ask'") 提问
@@ -109,7 +110,18 @@ div.background(background-img="/img/bg-brown.jpg")
 
                     .flow-container
                         .row
-                            .col-lg-12
+                            .col-xs-12
+                                .feed-container(ng-repeat="feed in Model.session.feeds | orderBy:view.timeline.predicate:view.timeline.reverse track by $index ")
+                                    .time-header.separator(ng-class="{last: $index==Model.sessionFeed.count-1}")
+                                        .unit {{feed.timeNumber}}
+                                            span.small {{feed.timeUnit}}
+                                    .time-header.right-label
+                                        .unit
+                                            span.small {{feed.tagText}}
+                                    .time-body.card
+                                        .unit.title
+                                            a(ng-href="{{feed.url}}") “{{feed.data.title}}"
+                                        .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
 
                 .row(ng-if="view.state!='info'")
                     .col-xs-12
@@ -120,7 +132,21 @@ div.background(background-img="/img/bg-brown.jpg")
                                     span ，{{Model.session.teachers[$index].name.split(',').join('')}}
                 div(ng-if="view.state=='ask'")
                     div(ng-include="'/partials/questionCreate/index'")
-                div(ng-if="view.state=='quesitons'")
+                div(ng-if="view.state=='questions'")
+                    a.card.short.bottom-margin(ng-repeat="question in Model.session.questions track by $index", ng-href="/questions/{{question.id}}")
+                        .row
+                            div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
+                                h4.no-top-margin.bottom-margin
+                                    b {{question.title}}
+                                //hr.low-margin
+                                div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
+                            .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
+                                .rounded.bg-blue.stat-box(ng-class="{'bg-red':question.vote < 0 , 'bg-blue': question.vote > 0 }")
+                                    h4.no-bottom-margin.text-center {{question.vote}}
+                                    p.no-top-margin.text-center.small 投票
+                                .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
+                                    p.no-bottom-margin.text-center.small {{question.nAnswers}}
+                                    p.no-top-margin.text-center.small 回答
 
 
             .col-sm-3.hidden-xs

@@ -150,7 +150,13 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
-            console.log(res.body);
+            res.body.questions.should.containDeep([{id: questions[0].id}]);
+            done();
+        });
+    });
+    // the get session api does not contain populated sessions field.
+    it('now get questions', function (done) {
+        request(app).get('/api/sessions/' + session2._id + '/questions').expect(201).end(function (err, res) {
             res.body.questions.should.containDeep([{id: questions[0].id}]);
             done();
         });
