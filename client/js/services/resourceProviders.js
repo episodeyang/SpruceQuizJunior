@@ -179,7 +179,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     })
     .factory('Sessions', function ($resource) {
         var Sessions = $resource('/api/sessions');
-        var Session = $resource('/api/sessions/:sessionId', {sessionId: '@_id'});
+        var Session = $resource('/api/sessions/:sessionId', {sessionId: '@sessionId'});
         var onQuestions = $resource('/api/sessions/:sessionId/questions', {sessionId: '@sessionId'});
         var onBooks = $resource('/api/sessions/:sessionId/books', {sessionId: '@sessionId'});
         var Feeds = $resource('/api/sessions/:sessionId/feeds', {sessionId: '@sessionId'});

@@ -788,42 +788,48 @@ angular.module('modelServices', ['resourceProvider'])
                 var query = { sessionId: id };
                 var extend = true;
 
-                function successCallback (session) {
+                function successCallback(session) {
                     _.extend(modelInstance.session, session);
                     if (success) {
                         success(modelInstance.session)
                     }
                 }
-                function addQuestion (questionId) {
+
+                function addQuestion(questionId) {
                     Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
-                function removeQuestion (questionId) {
+
+                function removeQuestion(questionId) {
                     Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
-                function getQuestions () {
+
+                function getQuestions() {
                     Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
                     console.log('id is ');
                     console.log(id);
                 }
 
-                function getFeeds () {
-                    function callback (feeds) {
+                function getFeeds() {
+                    function callback(feeds) {
                         modelInstance.sessionFeeds = feeds;
                         feedFormatter(modelInstance.sessionFeeds.feeds);
                         if (success) {
                             success(modelInstance.sessionFeeds);
                         }
                     }
+
                     Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
                 }
 
                 function getCallback(session) {
                     modelInstance.session = _.extend(
                         {
-                            addQuestion: addQuestion,
-                            removeQuestion:removeQuestion,
-                            getQuestions: getQuestions,
-                            getFeeds: getFeeds
+                            $:{
+                                addQuestion: addQuestion,
+                                removeQuestion: removeQuestion,
+                                getQuestions: getQuestions,
+                                getFeeds: getFeeds
+                            }
                         },
                         session);
 
@@ -843,14 +849,16 @@ angular.module('modelServices', ['resourceProvider'])
 
                 Sessions.get(query, getCallback, errorCallback);
             };
-            modelInstance.saveSession = function (id, success, error) {
+            modelInstance.saveSession = function (success, error) {
+
                 var query = {
-                    id: id,
-                    name: Model.session.name,
-                    teachers: Model.session.teachers,
-                    overview: Model.session.overview,
-                    tags: Model.session.tags
+                    sessionId: modelInstance.session._id,
+                    name: modelInstance.session.name,
+                    teachers: modelInstance.session.teachers,
+                    overview: modelInstance.session.overview,
+                    tags: modelInstance.session.tags
                 };
+                console.log(query);
 
                 function successCallback(session) {
                     modelInstance.session = session;

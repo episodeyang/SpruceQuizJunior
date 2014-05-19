@@ -40,13 +40,9 @@ angular.module('SpruceQuizApp')
 //                    Model.session.save();
             };
             $scope.updateSession = function () {
-                Model.session.$save(
-                    Model.session,
+                Model.saveSession(
                     function () {
                         $scope.view.session.edit = false;
-                    },
-                    function (error) {
-                        $rootScope.error = error;
                     }
                 );
             };
