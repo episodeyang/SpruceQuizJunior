@@ -112,7 +112,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row
                             .col-xs-12
                                 .feed-container(ng-repeat="feed in Model.sessionFeeds.feeds | orderBy:view.timeline.predicate:view.timeline.reverse track by $index ")
-                                    .time-header.separator(ng-class="{last: $index==Model.sessionFeeds.feeds.count-1}")
+                                    .time-header.separator(ng-class="{last: $index==Model.sessionFeeds.count-1}")
                                         .unit {{feed.timeNumber}}
                                             span.small {{feed.timeUnit}}
                                     .time-header.right-label
