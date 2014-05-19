@@ -98,7 +98,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", ".
                 }
                 QuestionM.findById(
                     req.params.id,
-                    'id title text author tags vote voteup votedown comments answers answerComments dateEdited dateCreated',
+                    'id title text author tags sessions books vote voteup votedown comments answers answerComments dateEdited dateCreated',
                     function (err, question) {
                         if (err) {
                             return res.send(403, err);

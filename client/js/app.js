@@ -40,48 +40,6 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'HomeCtrl',
                     access: access.loggedin
                 });
-//            $routeProvider.when('/errata/:errataId',
-//                {
-//                    templateUrl: '/partials/errata',
-//                    controller: 'ErrataCtrl',
-//                    access: access.loggedin
-//                });
-//            $routeProvider.when('/public/login',
-//                {
-//                    templateUrl: '/partials/public/login',
-//                    controller: 'LoginCtrl',
-//                    access: access.anon
-//                });
-//            $routeProvider.when('/public/register',
-//                {
-//                    templateUrl: '/partials/public/register',
-//                    controller: 'LoginCtrl',
-//                    access: access.anon
-//                });
-//            $routeProvider.when('/auth/twitter',
-//                {
-//                    templateUrl: '/partials/register',
-//                    controller: 'RegisterCtrl',
-//                    access: access.anon
-//                });
-//            $routeProvider.when('/private',
-//                {
-//                    templateUrl: '/partials/private',
-//                    controller: 'PrivateCtrl',
-//                    access: access.loggedin
-//                });
-//            $routeProvider.when('/admin',
-//                {
-//                    templateUrl: '/partials/admin',
-//                    controller: 'AdminCtrl',
-//                    access: access.superuser
-//                });
-//            $routeProvider.when('/sections',
-//                {
-//                    templateUrl: '/partials/sections',
-//                    controller: 'SectionCtrl',
-//                    access: access.loggedin
-//                });
             $routeProvider.when('/questions/:questionId',
                 {
                     templateUrl: '/partials/questions',
@@ -94,7 +52,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'UserCtrl',
                     access: access.all
                 });
-            $routeProvider.when('/books/:title',
+            $routeProvider.when('/books/:bookTitle',
                 {
                     templateUrl: '/partials/books',
                     controller: 'BookCtrl',
@@ -161,20 +119,18 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
         }])
 
     .run(['$rootScope', '$location', '$route', 'Auth', function ($rootScope, $location, $route, Auth) {
-
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
                 // event.preventDefault();
                 $rootScope.error = "access prohibited.";
                 if (Auth.isLoggedIn()) {
-                     $location.path('/home');
-                }
-                else {
-                     $location.path('/');
+                    $location.path('/home');
+                } else {
+                    $location.path('/');
                 }
             } else {
-                $route.path(next);
+                // $location.path(next);
             }
         });
 

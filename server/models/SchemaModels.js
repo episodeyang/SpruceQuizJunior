@@ -177,8 +177,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             majors: [String]
         },
         book: {
+            _id: {type: Schema.Types.ObjectId, default: null},
             title: String,
-            author: { name: String, username: String},
+            authors: [subSchema.UserFragment],
             coverUrl: String
         }
     };
@@ -477,6 +478,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 text: String,
                 author: config_nest.userFragment, //Here I am just sharing the definition, but not the schema. Subschema without array is currently not supported in mongoose.
                 tags: Array,
+                sessions: [{ type: Schema.Types.ObjectId, default: [], ref: 'Session'}],
+                books: {
+                    type: [subSchema.Book], default: []
+                },
                 comments: {
                     type: [subSchema.CommentPrototype], default: []
                 },
