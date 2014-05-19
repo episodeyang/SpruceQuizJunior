@@ -160,21 +160,21 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 
         }])
 
-    .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
+    .run(['$rootScope', '$location', '$route', 'Auth', function ($rootScope, $location, $route, Auth) {
 
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
-                $location.path(current);
+                // event.preventDefault();
                 $rootScope.error = "access prohibited.";
                 if (Auth.isLoggedIn()) {
-                    $location.path('/home');
-                    console.log('is logged in');
+                     $location.path('/home');
                 }
                 else {
-                    $location.path('/');
-                    console.log('not logged in');
+                     $location.path('/');
                 }
+            } else {
+                $route.path(next);
             }
         });
 
