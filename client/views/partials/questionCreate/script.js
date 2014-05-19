@@ -97,7 +97,9 @@ angular.module('SpruceQuizApp')
                         $scope.editor.data,
                         function (question) {
                             $rootScope.error = '';
-                            Model.session.addQuestion(question.id);
+                            if (question.sessions.length>=1) {
+                                Model.session.$.addQuestion(question.id);
+                            }
                             $location.path('/questions/' + Model.question.id);
                             mixpanel.track("submitted question to session");
                         }

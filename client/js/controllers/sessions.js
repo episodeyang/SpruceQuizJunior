@@ -49,11 +49,11 @@ angular.module('SpruceQuizApp')
 
             $scope.$watch('view.state', function (newVal, oldVal) {
                 if (newVal === "questions") {
-                    Model.session.getQuestions();
+                    Model.session.$.getQuestions();
                     console.log('detected view state change to questions');
                 }
                 if (newVal === "info" && Model.session) {
-                    Model.session.getFeeds();
+                    Model.session.$.getFeeds();
                     console.log('detected view state change to questions');
                 }
             });
