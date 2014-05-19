@@ -576,7 +576,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             function timeLapsed(time) {
                 var dt = Date.now() - new Date(time);
-                //console.log(dt);
+                // console.log(dt);
                 var oneSecond = 1000;
                 var oneMinute = oneSecond * 60;
                 var oneHour = oneMinute * 60;
@@ -602,7 +602,7 @@ angular.module('modelServices', ['resourceProvider'])
                     timeString = Math.floor(dt / oneSecond) + ' 秒';
                 }
 
-                //console.log(timeString);
+                // console.log(timeString);
                 return timeString;
             }
 
@@ -658,11 +658,12 @@ angular.module('modelServices', ['resourceProvider'])
                 // console.log(ref);
             }
 
-            function feedFormatter() {
+            function feedFormatter(feeds) {
                 var timeStrings;
                 _.each(
-                    modelInstance.userFeed.feeds,
+                    feeds,
                     function (feed) {
+//                        console.log(feed);
                         timeStrings = timeLapsed(feed.time).split(' ');
                         feed.timeNumber = timeStrings[0];
                         feed.timeUnit = timeStrings[1];
@@ -683,7 +684,7 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function success(feedBucket) {
                     modelInstance.userFeed = feedBucket;
-                    feedFormatter();
+                    feedFormatter(modelInstance.userFeed.feeds);
                 }
 
                 function error(err) {
@@ -807,9 +808,10 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function getFeeds () {
                     function callback (feeds) {
-                        modelInstance.session.feeds = feeds;
+                        modelInstance.sessionFeeds = feeds;
+                        feedFormatter(modelInstance.sessionFeeds.feeds);
                         if (success) {
-                            success(modelInstance.session);
+                            success(modelInstance.sessionFeeds);
                         }
                     }
                     Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)

@@ -56,7 +56,7 @@ angular.module('SpruceQuizApp')
                     Model.session.getQuestions();
                     console.log('detected view state change to questions');
                 }
-                if (newVal === "info") {
+                if (newVal === "info" && Model.session) {
                     Model.session.getFeeds();
                     console.log('detected view state change to questions');
                 }
