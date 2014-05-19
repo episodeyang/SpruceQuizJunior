@@ -32,14 +32,12 @@ div.background(background-img="/img/bg-brown.jpg")
                 ul.nav.sp-nav.nav-pills.nav-stacked
                     li(ng-class="{active: view.state=='info'}")
                         a.text-center(ng-click="view.state='info'") 新鲜事
-                    li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'") 搜索
-                    li(ng-class="{active: view.state=='ask'}")
-                        a.text-center(ng-click="view.state='ask'") 提问
                     li(ng-class="{active: view.state=='questions'}")
                         a.text-center(ng-click="view.state='questions'") 问题
                     li(ng-class="{active: view.state=='answers'}")
                         a.text-center(ng-click="view.state='answers'") 回答
+                    li(ng-class="{active: view.state=='ask'}")
+                        a.text-center(ng-click="view.state='ask'") 提问
             .col-sm-7.col-xs-9
                 div(ng-if="view.state=='info'")
                     .row
@@ -112,16 +110,18 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                div(ng-if="view.state=='ask'")
-                    .row
-                        .col-xs-12
-                            .card.no-top-margin.bottom-margin.bg-semi-transparent
-                                .card-title
-                                    span.name {{Model.session.name}}
-                                    span.signature.small(ng-repeat="teacher in Model.session.teachers track by $index")
-                                        span ，{{Model.session.teachers[$index].name.split(',').join('')}}
 
+                .row(ng-if="view.state!='info'")
+                    .col-xs-12
+                        .card.no-top-margin.bottom-margin.bg-semi-transparent
+                            .card-title
+                                span.name {{Model.session.name}}
+                                span.signature.small(ng-repeat="teacher in Model.session.teachers track by $index")
+                                    span ，{{Model.session.teachers[$index].name.split(',').join('')}}
+                div(ng-if="view.state=='ask'")
                     div(ng-include="'/partials/questionCreate/index'")
+                div(ng-if="view.state=='quesitons'")
+
 
             .col-sm-3.hidden-xs
                 .panel.panel-info
