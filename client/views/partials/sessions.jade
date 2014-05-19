@@ -98,7 +98,8 @@ div.background(background-img="/img/bg-brown.jpg")
 
                                     //.card.convex.top-margin
                                     .short-bottom-margin.top-margin
-                                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}&nbsp
+                                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}
+                                            span(ng-if="view.session.edit") &nbsp
                                             span(ng-if="view.session.edit", ng-click="Model.session.tags.splice($index, 1)").fa.fa-times
                                     .row(ng-show="view.session.edit")
                                         .col-xs-12.no-margin
