@@ -1,0 +1,83 @@
+//- for the modal template to work, the top most element
+//- has to be the div.modal in the following format.
+div.modal(tabindex='1', role='dialog')
+    .modal-dialog
+        .modal-content.header-card(ng-if="view.modalState==='list'")
+            .modal-body.no-padding
+                .row
+                    .col-xs-12
+                        form.no-bottom-margin
+                            .input-group
+                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.list.searchText')
+                                span.input-group-btn
+                                    button.btn.btn-info(type='button') 搜索
+
+        .modal-content.top-margin(ng-repeat="book in Model.session.books | filter:view.list.searchText", ng-if="view.modalState==='list'")
+            .modal-header
+                button.close(type='button', ng-click="Model.session.removeBook(book._id)") ×
+                h4.modal-title.text-center {{book.name}}（{{book.teachers[0].name.split(',').join('') || book.subject}}）
+            .modal-body
+                .row
+                    .col-xs-12
+                        div(ng-if="book.overview") {{book.overview}}
+                        div(ng-if="!book.overview").placeholder.short 没有课程简介。添加点
+                            a(ng-href="/books/{{book._id}}").blue 这里
+                        //hr.taper
+                        div.top-margin
+                            span(ng-repeat="teacher in book.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
+                            span(ng-repeat="member in book.members track by $index") {{member.name.split(',').join('')}}，
+                            span(ng-if="book.teachers || book.members") 在上这门课程。
+                        .badge.right-margin.short-top-margin(ng-repeat="tag in book.tags track by $index")  {{tag}}
+
+        .modal-content(ng-class="{'top-margin': view.modalState==='list'}")
+            .modal-header
+                button.close(type='button', ng-click="view.modalState='list'") ×
+                h4.modal-title.text-center 在数据库中
+                    span(ng-if="view.modalState!='create'") 搜索或
+                    span 添加图书
+            .modal-body.clickable
+                .row(ng-show="view.modalState!=='create'", ng-click="view.modalState='searchBooks'")
+                    .col-xs-12
+                        form.no-bottom-margin
+                            .input-group
+                                input.form-control(type='text', placeholder='标题，作者...', ng-model='view.searchText')
+                                span.input-group-btn
+                                    button.btn.btn-info(type='button') 搜索
+                .row(ng-show="view.searchText.length >= 2 && view.modalState==='searchBooks'")
+                    .col-xs-12.top-margin
+                        .unit.short 搜索不到我的书...
+                        form(role="form")
+                            button.pull-right.btn.btn-warning(ng-click="view.modalState='create'") 创建书籍页面
+
+                .row(ng-show="view.modalState==='create'")
+                    .col-xs-12
+                        form(ng-submit="submit()", role="form").no-bottom-margin
+                            .form-group
+                                input.form-control(type="text", ng-model="bookData.title", placeholder="图书标题...", required)
+                            .form-group
+                                .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='author in bookData.authors track by $index') {{tag}} &nbsp
+                                    span(ng-click="bookData.tags.splice($index, 1)").fa.fa-times
+                            .form-group
+                                input.form-control(push-to="bookData.authors", type="text", ng-model="authorText", placeholder="作者姓名，用逗号分隔...")
+                            button.pull-right.btn.btn-success(ng-click='submitBook()') 创建书籍页面！
+                            button.pull-right.btn.btn-default.right-margin(ng-click="view.modalState='searchBooks'") 取消
+
+        .modal-content.top-margin(ng-repeat="book in Model.books | filter:view.searchText", ng-if="view.modalState==='searchBooks'", ng-class="{yellow: Model.books[$index].selected}")
+            .modal-header
+                button.close(type='button', ng-if="!Model.books[$index].selected", ng-click="Model.books[$index].selected=true; Model.session.addBook(book._id)").fa.fa-plus
+                button.close(type='button', ng-if="Model.books[$index].selected", ng-click="Model.books[$index].selected=false; Model.session.removeBook(book._id)").fa.fa-times
+                h4.modal-title.text-center {{book.name}}（{{book.teachers[0].name.split(',').join('') || book.subject}}）
+            .modal-body
+                .row
+                    .col-xs-12
+                        .bottom-margin {{book.overview}}
+                        //hr.taper
+                        div.bottom-margin
+                            span(ng-repeat="teacher in book.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
+                            span(ng-repeat="member in book.members track by $index") {{member.name.split(',').join('')}}，
+                            span 在上这门课程。
+                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in book.tags track by $index")  {{tag}}
+
+        .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")
+            div.alert.alert-warning.no-bottom-margin
+                p {{view.error}}

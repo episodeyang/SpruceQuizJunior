@@ -4,6 +4,7 @@ link(href='/css/questions.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/editor.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
+link(href='/css/panel.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -164,7 +165,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.glyphicon.glyphicon-arrow-right
                                     a(ng-href='/books/{{book._id}}') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
                             tr
-                                td
+                                td.clickable(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/partials/bookEdit.html', data-placement='top')
                                     .pull-right
                                         span.glyphicon.glyphicon-plus
-                                    a 添加教材
+                                    span 添加教材
