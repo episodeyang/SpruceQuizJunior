@@ -29,21 +29,19 @@ var studentUser = data.studentUser,
     adminUser = data.adminUser,
     superadminUser = data.superadminUser;
 
-describe('Student API test - ', function (done) {
+describe('User API test - ', function (done) {
     beforeEach(function () {
-        passportStub.logout(); // logout after each test
+        passportStub.login(studentUser); // logout after each test
     });
     afterEach(function () {
         passportStub.logout(); // logout after each test
     });
-    it("doesn't need to login to access", function (done) {
-        request(app).get('/api/students/' + studentUser.username).expect(200, done);
-    });
-    it('update student', function (done) {
-        passportStub.login(studentUser); // login as user
-        request(app).post('/api/students/' + studentUser.username).send(data.studentInfo).expect(201).end(function (err, res) {
-            student = res.body;
-            student.signature.should.eql(data.studentInfo.signature);
+    it('update user', function (done) {
+        // api requires role entry to exist in the payload.
+        data.studentInfo.role = data.studentUser.role;
+        request(app).post('/api/users/' + studentUser.username).send(data.studentInfo).expect(201).end(function (err, res) {
+            user = res.body;
+            user.signature.should.eql(data.studentInfo.signature);
             done();
         });
     });

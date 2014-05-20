@@ -805,8 +805,6 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function getQuestions() {
                     Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
-                    console.log('id is ');
-                    console.log(id);
                 }
 
                 function getFeeds() {
