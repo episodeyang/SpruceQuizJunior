@@ -161,5 +161,44 @@ describe('Session API test - ', function (done) {
             done();
         });
     });
+    var book = {
+                title: "你身体里的那条鱼",
+                authors: [{name: 'schubin,Neil'}],
+                coverUrl: 'http://douban.com/34523452.jpg'
+            };
+    it('add books to a session via /api/session{POST}', function (done) {
+        var query = {
+            books: [book]
+        };
+        request(app).post('/api/sessions/' + session2._id).send(query).expect(201).end(function (err, res) {
+            res.body.books.should.containDeep([{title: query.books[0].title}]);
+            done();
+        });
+    });
+    it('remove the book from a session via the session/books API', function (done) {
+        // query works, as long as the authors field with
+        // is an array is not included.
+        var query = {
+            pull: {
+                title: book.title,
+                coverUrl: book.coverUrl
+            }
+        };
+        request(app).post('/api/sessions/' + session2._id + '/books').send(query).expect(201).end(function (err, res) {
+            res.body.books.should.not.containDeep([{title: book.title}]);
+            console.log(res.body);
+            done();
+        });
+    });
+    it('add the book back to the session via the session/books API', function (done) {
+        var query = {
+            add: book
+        };
+        request(app).post('/api/sessions/' + session2._id + '/books').send(query).expect(201).end(function (err, res) {
+            res.body.books.should.containDeep([{title: book.title}]);
+            console.log(res.body);
+            done();
+        });
+    });
 });
 
