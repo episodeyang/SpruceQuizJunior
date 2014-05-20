@@ -138,11 +138,12 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 }
 
                 function callback(err, doc) {
-//                    doc.populate('sessions schools books').exec(responseCallback);
                     if (err) {
                         console.log(err);
                         return res.send(500, err);
                     }
+                    doc.populate('sessions schools books', responseCallback);
+                    // responseCallback();
                 }
 
                 function responseCallback(err, doc) {

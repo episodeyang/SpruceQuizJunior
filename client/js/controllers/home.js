@@ -31,10 +31,6 @@ angular.module('SpruceQuizApp')
 
             $rootScope.errors = {};
 
-            $scope.view.timeline = {
-                predicate: 'time',
-                reverse: true
-            };
             Model.getUserProfile($scope.user.username);
             Model.getUserFeeds($scope.user.username);
 
@@ -113,7 +109,8 @@ angular.module('SpruceQuizApp')
                 Model.updateUserProfile(
                     function () {
                         $scope.view.profile.edit = false;
-                    })
+                    }
+                )
             };
 
             Model.getSchools();
