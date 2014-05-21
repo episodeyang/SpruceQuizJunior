@@ -20,5 +20,6 @@ angular.module('SpruceQuizApp')
                 Model.getSession($routeParams.sessionId);
             }
 
+
         }
     ]);
