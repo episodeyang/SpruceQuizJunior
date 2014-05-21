@@ -38,6 +38,16 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 }],
                 accessLevel: accessLevels.all
             },
+            {
+                path: '/widgets/*',
+                httpMethod: 'GET',
+                middleware: [function (req, res) {
+                    var url = /^.*(?=\.html\s*$)/g.exec(req.url) || [req.url];
+                    var requestedView = path.join('./', url[0]);
+                    res.render(requestedView);
+                }],
+                accessLevel: accessLevels.all
+            },
             {   //Need to give more fine-grained control to the client side scripts,
                 //so that not all client side scripts are exposed to anonymous users.
                 path: '/js/mathJax/*',

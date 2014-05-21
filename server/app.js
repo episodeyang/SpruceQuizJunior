@@ -36,7 +36,7 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
             var __dirname = path.dirname(module.uri) + '/';
         } else {
             var __dirname = path.dirname(module.filename) + '/';
-        };
+        }
 
         app.set('views', __dirname + '../client/views');
         app.set('view engine', 'jade');
@@ -69,4 +69,4 @@ define(['module', 'express', 'http', 'mongoose', 'passport', 'path', 'less-middl
         app.set('port', process.env.PORT);
 
         return app;
-    })
+    });

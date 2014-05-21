@@ -197,7 +197,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.glyphicon.glyphicon-arrow-right
                                     a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
                 .panel.panel-info
-                    .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
+                    .panel-heading(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/partials/bookEdit.html', data-placement='top') 我的课本
                         span.pull-right.fa.fa-bars
                     //.panel-body
                     table.table

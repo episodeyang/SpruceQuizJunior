@@ -885,19 +885,38 @@ angular.module('modelServices', ['resourceProvider'])
                 return query
             }
 
-            modelInstance.getBook = function (authorAndTitle) {
+            modelInstance.createBook = function (title, authors, success, error) {
+                var query = {
+                    title: title,
+                    authors: authors
+                };
+
+                function successCallback(book) {
+                    modelInstance.book = book;
+                    if (success) {return success(book);}
+                }
+
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {return error(err);}
+                }
+
+                Books.create(query, successCallback, errorCallback);
+            };
+            modelInstance.getBook = function (authorAndTitle, success, error) {
                 var query = bookQueryBuilder(authorAndTitle);
 
-                function success(book) {
+                function successCallback(book) {
                     modelInstance.book = book;
-                    console.log(book)
+                    if (success) {return success(book);}
                 }
 
-                function error(err) {
+                function errorCallback (err) {
                     $rootScope.error = err;
+                    if (error) {return error(err);}
                 }
 
-                Books.get(query, success, error);
+                Books.get(query, successCallback, errorCallback);
             };
             modelInstance.updateBook = function (success, error) {
                 var query = modelInstance.book;
@@ -905,12 +924,12 @@ angular.module('modelServices', ['resourceProvider'])
 //                delete query._id;
                 function successCallback(book) {
                     modelInstance.book = book;
-                    success();
+                    if (success) {return success(book);}
                 }
 
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    error(err);
+                    if (error) {return error(err);}
                 }
 
                 Books.save(query, successCallback, errorCallback);

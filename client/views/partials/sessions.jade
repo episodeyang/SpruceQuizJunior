@@ -132,7 +132,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 span.signature.small(ng-repeat="teacher in Model.session.teachers track by $index")
                                     span ，{{Model.session.teachers[$index].name.split(',').join('')}}
                 div(ng-if="view.state=='ask'")
-                    div(ng-include="'/partials/questionCreate/index'")
+                    div(ng-include="'/widgets/questionCreate'")
                 div(ng-if="view.state=='questions'")
                     a.card.short.bottom-margin(ng-repeat="question in Model.session.questions track by $index", ng-href="/questions/{{question.id}}")
                         .row
