@@ -340,6 +340,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             book: {
                 title: String,
                 authors: [subSchema.UserFragment],
+                overview: String,
                 category: String,
                 coverUrl: String,
                 editions: [String],

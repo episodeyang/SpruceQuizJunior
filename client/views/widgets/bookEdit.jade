@@ -8,13 +8,13 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
                     .col-xs-12
                         form.no-bottom-margin
                             .input-group
-                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.list.searchText')
+                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.searchText')
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
 
-        .modal-content.top-margin(ng-repeat="book in Model.session.books | filter:view.list.searchText", ng-if="view.modalState==='list'")
+        .modal-content.top-margin(ng-repeat="book in view.books | filter:view.searchText", ng-if="view.modalState==='list'")
             .modal-header
-                button.close(type='button', ng-click="Model.session.removeBook(book._id)") ×
+                button.close(type='button', ng-click="view.removeBook(book._id)") ×
                 h4.modal-title.text-center {{book.name}}（{{book.teachers[0].name.split(',').join('') || book.subject}}）
             .modal-body
                 .row
@@ -24,9 +24,9 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
                             a(ng-href="/books/{{book._id}}").blue 这里
                         //hr.taper
                         div.top-margin
-                            span(ng-repeat="teacher in book.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
+                            span(ng-repeat="admin in book.admins track by $index").blue {{admin.name.split(',').join('')}}，
                             span(ng-repeat="member in book.members track by $index") {{member.name.split(',').join('')}}，
-                            span(ng-if="book.teachers || book.members") 在上这门课程。
+                            span(ng-if="book.admins || book.members") 在上这门课程。
                         .badge.right-margin.short-top-margin(ng-repeat="tag in book.tags track by $index")  {{tag}}
 
         .modal-content(ng-class="{'top-margin': view.modalState==='list'}")
