@@ -29,16 +29,10 @@ angular.module('SpruceQuizApp')
                     flipped: false
                 }
             };
-            console.log($scope.view);
             $rootScope.errors = {};
 
-            if ($routeParams.bookId) {
-                Model.getBook($routeParams.bookId, null, null);
-            } else if ($routeParams.title && !$routeParams.authorName) {
-                Model.getBook(null, $routeParams.title);
-            } else if ($routeParams.title && $routeParams.authorName) {
-                Model.getBook(null, $routeParams.title, $routeParams.authorName);
-            }
+
+            Model.getBook($routeParams.bookId, $routeParams.title, $routeParams.authorName);
 
             $scope.submitBook = Model.book.save;
             function isArray(obj) {

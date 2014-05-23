@@ -201,7 +201,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     })
     .factory('Books', function ($resource) {
         var Books = $resource('/api/books');
-        var book = $resource('/api/books/:id', {id: '@_id'});
+        var book = $resource('/api/books/:bookId', {bookId: '@_id'});
         return {
             create: Books.save,
             query: Books.query,

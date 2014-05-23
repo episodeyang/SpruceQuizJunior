@@ -725,7 +725,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 function getCallbackConstructor(success) {
                     return function (user) {
-                        console.log(user);
+                        //console.log(user);
                         modelInstance.profile = _.extend(
                             {
                                 addSession: addSession,
@@ -934,12 +934,13 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.getBook = function (bookId, title, authorName, success, error) {
                 var query = {};
-                var getFn;
                 if (bookId) {
+                    console.log('getting the book! ');
                     query = {bookId: bookId};
                     setup(getCallback, error);
                     Books.get(query, successCallback, errorCallback);
                 } else if (title) {
+                    console.log('querrying the books! ');
                     query.title = title;
                     if (authorName) {
                         query.authorName = authorName;
