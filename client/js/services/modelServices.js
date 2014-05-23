@@ -937,14 +937,15 @@ angular.module('modelServices', ['resourceProvider'])
                 var getFn;
                 if (bookId) {
                     query = {bookId: bookId};
-                    getFn = Books.getById;
+                    setup(getCallback, error);
+                    Books.get(query, successCallback, errorCallback);
                 } else if (title) {
-                    query["title"] = title;
-                    getFn = Books.getByTitle;
+                    query.title = title;
                     if (authorName) {
-                        query.author = {name: authorName}
-                        getFn = Books.getByAuthorAndTitle;
+                        query.authorName = authorName;
                     }
+                    setup(queryCallback, error);
+                    Books.query(query, successCallback, errorCallback);
                 }
 
                 var callbackStack;
@@ -986,9 +987,18 @@ angular.module('modelServices', ['resourceProvider'])
                         return success(book);
                     }
                 }
+                function queryCallback(books) {
+                    modelInstance.book = _.extend(
+                        {
+                            save: save
+                        },
+                        books[0]);
 
-                setup(getCallback, error);
-                getFn(query, successCallback, errorCallback);
+                    if (success) {
+                        return success(books[0]);
+                    }
+                }
+
             };
 
             modelInstance.getSchools = function () {

@@ -27,9 +27,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
                 var query = {};
 
                 if (req.query.title) {
-                    console.log('see query.title');
-                    console.log(req.query.title);
-                    console.log(req.query);
+                    // console.log('see query.title');
+                    // console.log(req.query.title);
+                    // console.log(req.query);
                     query.title = req.query.title;
                     if (req.query.authorName) {
                         query.authors = {
