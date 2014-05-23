@@ -20,13 +20,13 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
                 .row
                     .col-xs-12
                         div(ng-if="book.overview") {{book.overview}}
-                        div(ng-if="!book.overview").placeholder.short 没有课程简介。添加点
-                            a(ng-href="/books/{{book._id}}").blue 这里
+                        div(ng-if="!book.overview").placeholder.short 创建这本书的人很懒：P 帮助我们添加简介请点
+                            a(ng-href="/books/id/{{book._id}}").blue 这里
                         //hr.taper
                         div.top-margin
                             span(ng-repeat="admin in book.admins track by $index").blue {{admin.name.split(',').join('')}}，
                             span(ng-repeat="member in book.members track by $index") {{member.name.split(',').join('')}}，
-                            span(ng-if="book.admins || book.members") 在上这门课程。
+                            span(ng-if="book.admins || book.members") 在使用这本书。
                         .badge.right-margin.short-top-margin(ng-repeat="tag in book.tags track by $index")  {{tag}}
 
         .modal-content(ng-class="{'top-margin': view.modalState==='list'}")
@@ -55,11 +55,11 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
                             .form-group
                                 input.form-control(type="text", ng-model="bookData.title", placeholder="图书标题...", required)
                             .form-group
-                                .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='author in bookData.authors track by $index') {{tag}} &nbsp
-                                    span(ng-click="bookData.tags.splice($index, 1)").fa.fa-times
+                                .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='author in bookData.authors track by $index') {{author.name}} &nbsp
+                                    span(ng-click="bookData.authors.splice($index, 1)").fa.fa-times
                             .form-group
-                                input.form-control(push-to="bookData.authors", type="text", ng-model="authorText", placeholder="作者姓名，用逗号分隔...")
-                            button.pull-right.btn.btn-success(ng-click='submitBook()') 创建书籍页面！
+                                input.form-control(push-to="bookData.authors", field="name", type="text", ng-model="authorText", placeholder="作者姓名，用逗号分隔...")
+                            button.pull-right.btn.btn-success(ng-click='view.submitBook(bookData)') 创建书籍！
                             button.pull-right.btn.btn-default.right-margin(ng-click="view.modalState='searchBooks'") 取消
 
         .modal-content.top-margin(ng-repeat="book in Model.books | filter:view.searchText", ng-if="view.modalState==='searchBooks'", ng-class="{yellow: Model.books[$index].selected}")
@@ -75,7 +75,7 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
                         div.bottom-margin(ng-if="book.admins || book.members")
                             span(ng-repeat="admin in book.admins track by $index").blue {{admin.name.split(',').join('')}}，
                             span(ng-repeat="member in book.members track by $index") {{member.name.split(',').join('')}}，
-                            span 在上这门课程。
+                            span 在使用这本书。
                         .badge.right-margin.short-bottom-margin(ng-repeat="tag in book.tags track by $index")  {{tag}}
 
         .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")

@@ -394,15 +394,9 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/books/:title',
+                path: '/api/books/:bookId',
                 httpMethod: 'GET',
-                middleware: [BookCtrl.findOneByTitle],
-                accessLevel: accessLevels.all
-            },
-            {
-                path: '/api/books/:author/:title',
-                httpMethod: 'GET',
-                middleware: [BookCtrl.findOneByAuthorAndTitle],
+                middleware: [BookCtrl.findOne],
                 accessLevel: accessLevels.all
             },
             {
@@ -418,7 +412,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
-                path: '/api/books/:title/feeds',
+                path: '/api/books/:id/feeds',
                 httpMethod: 'GET',
                 middleware: [BookCtrl.index],
                 accessLevel: accessLevels.all

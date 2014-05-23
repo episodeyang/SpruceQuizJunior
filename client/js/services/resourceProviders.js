@@ -188,7 +188,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         return {
             index: Sessions.query,
             search: $resource('/api/sessions/search').get,
-            add: Sessions.create,
+            create: Sessions.save,
             get: Session.get,
             getFeeds: Feeds.get,
             save: Session.save,
@@ -200,15 +200,19 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('Books', function ($resource) {
-        var Book = $resource('/api/books/:author/:title', {title: '@title', author: '@author'});
+        var BookById = $resource('/api/books/id/:bookId');
+        var BookByTitle = $resource('/api/books/t/:title');
+        var BookByAuthorAndTitle = $resource('/api/books/a/:authorName/t/:title');
         var Books = $resource('/api/books');
-        var BookById = $resource('/api/books/:id', {id: '@_id'});
+        var postBookById = $resource('/api/books/:id', {id: '@_id'});
         return {
-            add: Books.create,
+            create: Books.save,
             query: Books.query,
-            get: Book.get,
-            save: BookById.save,
-            remove: BookById.remove
+            getById: BookById.get,
+            getByTitle: BookByTitle.get,
+            getByAuthorAndTitle: BookByAuthorAndTitle.get,
+            save: postBookById.save,
+            remove: postBookById.remove
         };
     })
     .factory('Sections', function ($resource) {

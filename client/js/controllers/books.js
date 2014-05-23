@@ -32,9 +32,15 @@ angular.module('SpruceQuizApp')
                 console.log($scope.view);
                 $rootScope.errors = {};
 
-                Model.getBook($routeParams.title, $routeParams.authorName);
+                if ($routeParams.bookId) {
+                    Model.getBook($routeParams.bookId, null, null);
+                } else if ($routeParams.title && !$routeParams.authorName) {
+                    Model.getBook(null,  $routeParams.title);
+                } else if ($routeParams.title && $routeParams.authorName) {
+                    Model.getBook(null,  $routeParams.title, $routeParams.authorName);
+                }
 
-                $scope.submitBook = Model.updateBook;
+                $scope.submitBook = Model.book.save;
                 function isArray(obj) {
                     return Object.prototype.toString.call(obj) === '[object Array]';
                 }
@@ -79,7 +85,7 @@ angular.module('SpruceQuizApp')
 
                     _.map(Model.book, removeNull);
 
-                    Model.updateBook(
+                    Model.book.save(
                         function () {
                             $scope.view.card.edit = false;
                             if (changed === true) {

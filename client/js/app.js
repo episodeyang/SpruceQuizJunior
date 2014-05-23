@@ -52,6 +52,16 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'UserCtrl',
                     access: access.all
                 });
+            /**
+             * This ordering of the route is very important. Otherwise the id field
+             * would be recognized as a book authorName.
+             */
+            $routeProvider.when('/books/id/:bookId',
+                {
+                    templateUrl: '/partials/books',
+                    controller: 'BookCtrl',
+                    access: access.all
+                });
             $routeProvider.when('/books/:bookTitle',
                 {
                     templateUrl: '/partials/books',

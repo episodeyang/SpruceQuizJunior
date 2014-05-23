@@ -148,6 +148,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
                                     p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                     p.no-top-margin.text-center.small 回答
+                    div.placeholder.short(ng-if="!Model.session.questions || Model.session.questions.length===0")
+                        | 这个班级中还没有添加任何问题：）
 
 
             .col-sm-3.hidden-xs

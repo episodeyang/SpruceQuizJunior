@@ -16,6 +16,10 @@ angular.module('SpruceQuizApp')
                 books: []
             };
 
+            // this is the create new book model.
+            $scope.bookData = {
+                authors: []
+            };
 
             console.log($location.url());
 
@@ -44,18 +48,34 @@ angular.module('SpruceQuizApp')
                             Model.books[index].selected = true;
                         }
                         $scope.view.books = Model.profile.books;
-                    };
+                    }
+
                     Model.profile.addBook(book, success);
-                };
+                }
                 $scope.view.removeBook = function (book, index) {
                     function success(books) {
                         if (index !== undefined) {
                             Model.books[index].selected = false;
                         }
                         $scope.view.books = Model.profile.books;
-                    };
+                    }
+
                     Model.profile.removeBook(book, success);
-                };
+                }
+                $scope.view.submitBook = function (bookData) {
+                    var bookCreated;
+                    function createSuccess(book) {
+                        bookCreated = book;
+                        Model.profile.addBook(book, addSuccess);
+                    }
+                    function addSuccess() {
+                        $location.path('/books/' + bookCreated.authors[0].name + '/' + bookCreated.title);
+                        $scope.apply();
+                    }
+
+                    console.log(bookData);
+                    Model.createBook(bookData.title, bookData.authors, createSuccess);
+                }
             }
 
         }

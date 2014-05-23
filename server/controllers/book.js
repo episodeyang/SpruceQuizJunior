@@ -24,51 +24,49 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
 
         return {
             index: function (req, res) {
-                BookM.find(
-                    {},
-                    keyString,
-                    function (err, books) {
-                        if (err) {
-                            return res.json(404, err);
-                        }
-                        return res.json(200, books);
-                    }
-                );
-            },
-            findOneByTitle: function (req, res) {
-                BookM.findOne(
-                    {
-                        title: req.params.title
-                    },
-                    keyString,
-                    function (err, user) {
-                        if (err) {
-                            return res.send(404, 'bookNotFound ' + err);
-                        }
-                        res.send(200, user);
-                    }
-                );
-            },
-            findOneByAuthorAndTitle: function (req, res) {
-                BookM.findOne(
-                    {
-                        title: req.params.title,
-                        authors: {
+                var query = {};
+
+                if (req.query.title) {
+                    console.log('see query.title');
+                    console.log(req.query.title);
+                    console.log(req.query);
+                    query.title = req.query.title;
+                    if (req.query.authorName) {
+                        query.authors = {
                             $elemMatch: {
-                                name: req.params.author
+                                name: req.query.authorName
                             }
-                        }
-                    },
-                    keyString,
-                    function (err, book) {
-                        if (err) {
-                            return res.send(404, 'bookNotFound ' + err);
-                        } else {
-                            return res.send(200, book);
-                        }
+                        };
                     }
-                )
-                ;
+                }
+
+                function callback(err, books) {
+                    if (err) {
+                        return res.json(404, err);
+                    }
+                    return res.json(200, books);
+                }
+
+                BookM.find(query, keyString, callback);
+            },
+            findOne: function (req, res) {
+                var query;
+                if (req.params.bookId) {
+                    BookM.findById(
+                        req.params.bookId,
+                        keyString,
+                        callback
+                    );
+                } else {
+                    return res.send(400, 'needBookId');
+                }
+
+                function callback(err, book) {
+                    if (err) {
+                        return res.send(404, 'bookNotFound ' + err);
+                    }
+                    res.send(200, book);
+                }
             },
             add: function (req, res) {
                 var data = req.body;
@@ -111,6 +109,5 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
                     }
                 );
             }
-        }
-            ;
-    })
+        };
+    });

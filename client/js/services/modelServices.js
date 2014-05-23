@@ -911,6 +911,8 @@ angular.module('modelServices', ['resourceProvider'])
                 setup(getCallback(success), error);
                 Books.query(query, successCallback, errorCallback);
             }
+
+            modelInstance.book = {};
             modelInstance.createBook = function (title, authors, success, error) {
                 var query = {
                     title: title,
@@ -930,19 +932,20 @@ angular.module('modelServices', ['resourceProvider'])
                 }
                 Books.create(query, successCallback, errorCallback);
             };
-
-            modelInstance.book = {};
-            modelInstance.getBook = function (authorAndTitle, success, error) {
-                function bookQueryBuilder(title, authorName) {
-                    var query = {
-                        title: title
-                    };
+            modelInstance.getBook = function (bookId, title, authorName, success, error) {
+                var query = {};
+                var getFn;
+                if (bookId) {
+                    query = {bookId: bookId};
+                    getFn = Books.getById;
+                } else if (title) {
+                    query["title"] = title;
+                    getFn = Books.getByTitle;
                     if (authorName) {
                         query.author = {name: authorName}
+                        getFn = Books.getByAuthorAndTitle;
                     }
-                    return query
                 }
-                var query = bookQueryBuilder(authorAndTitle);
 
                 var callbackStack;
                 function setup(success, error) {
@@ -985,7 +988,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 setup(getCallback, error);
-                Books.get(query, successCallback, errorCallback);
+                getFn(query, successCallback, errorCallback);
             };
 
             modelInstance.getSchools = function () {
@@ -999,6 +1002,7 @@ angular.module('modelServices', ['resourceProvider'])
 
                 Schools.index({}, success, error);
             };
+
             modelInstance.getSessions = function () {
                 function success(sessions) {
                     modelInstance.sessions = sessions;
@@ -1010,7 +1014,8 @@ angular.module('modelServices', ['resourceProvider'])
 
                 Sessions.index({}, success, error);
             };
-            modelInstance.submitSession = function (session, callback) {
+
+            modelInstance.createSession = function (session, callback) {
                 function success(session) {
                     modelInstance.getSessions();
                     callback(null, session);

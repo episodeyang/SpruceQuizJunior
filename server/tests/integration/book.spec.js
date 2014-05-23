@@ -33,23 +33,54 @@ var studentUser = data.studentUser,
 var book, bookUpdated;
 describe('Book API test - ', function (done) {
     beforeEach(function () {
-        passportStub.logout(); // logout after each test
+        passportStub.login(studentUser); // login as user
     });
     afterEach(function () {
         passportStub.logout(); // logout after each test
     });
     it("doesn't need to login to access", function (done) {
-        request(app).get('/api/books/' + studentUser.username).expect(200, done);
+        passportStub.logout(); // logout after each test
+        request(app).get('/api/books').expect(200, done);
     });
     it('add a book', function (done) {
-        passportStub.login(studentUser); // login as user
         request(app).post('/api/books').send(bookData.book).expect(201).end(function (err, res) {
             book = res.body;
+            console.log(book);
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
             done();
         });
     });
+    it("doesn't need to login to access", function (done) {
+        passportStub.logout(); // logout after each test
+        request(app).get('/api/books/' + book._id).expect(200, done);
+    });
+    it('get a book via id', function (done) {
+        request(app).get('/api/books/' + book._id).expect(200).end(function (err, res) {
+            book = res.body;
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
+            done();
+        });
+    });
+    it('get a book via title', function (done) {
+        request(app).get('/api/books?title=' + book.title).expect(200).end(function (err, res) {
+            book = res.body[0];
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
+            done();
+        });
+    });
+    it('get a book via author and title', function (done) {
+        request(app).get('/api/books?authorName=' + book.authors[0].name + 'title=' + book.title).expect(200).end(function (err, res) {
+            book = res.body[0];
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
+            done();
+        });
+    });
+//    });
     it('update book', function (done) {
-        passportStub.login(studentUser); // login as user
         book.title = 'Your Inner Fish';
         request(app).post('/api/books/' + book._id).send(book).expect(201).end(function (err, res) {
             BookUpdated = res.body;
