@@ -14,8 +14,8 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
 
         .modal-content.top-margin(ng-repeat="book in view.books | filter:view.searchText", ng-if="view.modalState==='list'")
             .modal-header
-                button.close(type='button', ng-click="view.removeBook(book._id)") ×
-                h4.modal-title.text-center {{book.name}}（{{book.teachers[0].name.split(',').join('') || book.subject}}）
+                button.close(type='button', ng-click="view.removeBook(book)") ×
+                h4.modal-title.text-center {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
             .modal-body
                 .row
                     .col-xs-12
@@ -64,16 +64,16 @@ div.modal(tabindex='1', role='dialog', ng-controller="BookEditCtrl")
 
         .modal-content.top-margin(ng-repeat="book in Model.books | filter:view.searchText", ng-if="view.modalState==='searchBooks'", ng-class="{yellow: Model.books[$index].selected}")
             .modal-header
-                button.close(type='button', ng-if="!Model.books[$index].selected", ng-click="Model.books[$index].selected=true; Model.session.addBook(book._id)").fa.fa-plus
-                button.close(type='button', ng-if="Model.books[$index].selected", ng-click="Model.books[$index].selected=false; Model.session.removeBook(book._id)").fa.fa-times
-                h4.modal-title.text-center {{book.name}}（{{book.teachers[0].name.split(',').join('') || book.subject}}）
+                button.close(type='button', ng-if="!Model.books[$index].selected", ng-click="view.addBook(book, $index)").fa.fa-plus
+                button.close(type='button', ng-if="Model.books[$index].selected", ng-click="view.removeBook(book, $index)").fa.fa-times
+                h4.modal-title.text-center {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
             .modal-body
                 .row
                     .col-xs-12
-                        .bottom-margin {{book.overview}}
+                        .bottom-margin(ng-if="book.overview") {{book.overview}}
                         //hr.taper
-                        div.bottom-margin
-                            span(ng-repeat="teacher in book.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
+                        div.bottom-margin(ng-if="book.admins || book.members")
+                            span(ng-repeat="admin in book.admins track by $index").blue {{admin.name.split(',').join('')}}，
                             span(ng-repeat="member in book.members track by $index") {{member.name.split(',').join('')}}，
                             span 在上这门课程。
                         .badge.right-margin.short-bottom-margin(ng-repeat="tag in book.tags track by $index")  {{tag}}

@@ -9,7 +9,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         var User = $resource('/api/users/:username', {username: '@username'});
         var Feeds = $resource('/api/users/:username/feeds', {username: '@username'});
         var FeedsByPage = $resource('/api/users/:username/feeds/:page', {username: '@username', page: '@page'});
-        var Sessions = $resource('/api/users/:username/sessions', {username: '@username'});
+        var onSessions = $resource('/api/users/:username/sessions', {username: '@username'});
+        var onBooks = $resource('/api/users/:username/books', {username: '@username'});
         return {
             list: $resource('/api/users'),
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
@@ -19,7 +20,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             save: User.save,
             getFeeds: Feeds.get,
             getFeedsByPage: FeedsByPage.get,
-            updateSessions: Sessions.save
+            updateSessions: onSessions.save,
+            updateBooks: onBooks.save
         };
     }])
     .factory('Questions', function ($resource) {
@@ -203,6 +205,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         var BookById = $resource('/api/books/:id', {id: '@_id'});
         return {
             add: Books.create,
+            query: Books.query,
             get: Book.get,
             save: BookById.save,
             remove: BookById.remove

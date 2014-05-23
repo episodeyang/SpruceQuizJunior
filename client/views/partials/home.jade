@@ -205,9 +205,9 @@ div.background(background-img="/img/bg-brown.jpg")
                             tr
                                 th
                         tbody
-                            tr(ng-click="")
-                                td 你身体里的那条鱼
+                            tr(ng-repeat="book in Model.profile.books")
+                                td
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    //fa.fa-angle-right
+                                    a(ng-href="/books/{{book.authors[0].name}}/{{book.title}}") {{book.title}}
 

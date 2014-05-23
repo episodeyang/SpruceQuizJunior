@@ -249,26 +249,27 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         console.log(error);
                         return error;
                     }
-                    doc.populate(key + 's', callback);
+                    doc.populate(key, callback);
                 }
 
                 var query = {
                         username: user.username
                     },
                     options = {
-                        new: true //return updated document
+                        new: true, //return updated document
+                        select: key
                     };
                 var update;
                 if (addOrRemove === "add") {
                     update = {
                         $addToSet: {}
                     };
-                    update.$addToSet[key + 's'] = payload._id;
+                    update.$addToSet[key] = payload._id;
                 } else if (addOrRemove === "pull") {
                     update = {
                         $pullAll: {}
                     };
-                    update.$pullAll[key + 's'] = [payload._id];
+                    update.$pullAll[key] = [payload._id];
                 }
 //                console.log(update);
                 SchemaModels[capitalize(user.role.title)]
@@ -280,23 +281,23 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 );
             },
             addSession: function (user, session, callback) {
-                UserMethods.addOrRemoveFromSet('session', 'add', user, session, callback);
+                UserMethods.addOrRemoveFromSet('sessions', 'add', user, session, callback);
             },
             removeSession: function (user, session, callback) {
-                UserMethods.addOrRemoveFromSet('session', 'pull', user, session, callback);
+                UserMethods.addOrRemoveFromSet('sessions', 'pull', user, session, callback);
             },
             //todo: not tested;
             addSchool: function (user, school, callback) {
-                UserMethods.addOrRemoveFromSet('session', 'add', user, school, callback);
+                UserMethods.addOrRemoveFromSet('sessions', 'add', user, school, callback);
             },
             removeSchool: function (user, school, callback) {
-                UserMethods.addOrRemoveFromSet('session', 'pull', user, school, callback);
+                UserMethods.addOrRemoveFromSet('sessions', 'pull', user, school, callback);
             },
             addBook: function (user, book, callback) {
-                UserMethods.addOrRemoveFromSet('book', 'add', user, book, callback);
+                UserMethods.addOrRemoveFromSet('books', 'add', user, book, callback);
             },
             removeBook: function (user, book, callback) {
-                UserMethods.addOrRemoveFromSet('book', 'pull', user, book, callback);
+                UserMethods.addOrRemoveFromSet('books', 'pull', user, book, callback);
             }
         };
         return _.extend(UserM, UserMethods);

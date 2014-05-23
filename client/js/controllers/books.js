@@ -57,12 +57,13 @@ angular.module('SpruceQuizApp')
 
 
                 };
+
                 var changed = false;
                 $scope.$watch('Model.book',
                     function (newVal, oldVal) {
                         if (newVal.title != oldVal.title) {changed = true;}
                     },
-                    true)
+                    true);
 
                 $scope.submitBook = function () {
 
