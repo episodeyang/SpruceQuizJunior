@@ -935,12 +935,12 @@ angular.module('modelServices', ['resourceProvider'])
             modelInstance.getBook = function (bookId, title, authorName, success, error) {
                 var query = {};
                 if (bookId) {
-                    console.log('getting the book! ');
+                    // console.log('getting the book! ');
                     query = {bookId: bookId};
                     setup(getCallback, error);
                     Books.get(query, successCallback, errorCallback);
                 } else if (title) {
-                    console.log('querrying the books! ');
+                    // console.log('querrying the books! ');
                     query.title = title;
                     if (authorName) {
                         query.authorName = authorName;

@@ -39,7 +39,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 );
             },
             addFeed: function (sessionId, type, data, callback) {
-                if (!sessionId) {return callback('noSessionId'); }
+                if (!sessionId) {return callback('addFeedFailedNoSessionId'); }
                 if (!type) {return callback('noFeedType'); }
                 if (!data) {return callback('noFeedData'); }
                 var query = {

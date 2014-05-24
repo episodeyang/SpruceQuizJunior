@@ -5,6 +5,7 @@ link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
 link(href='/css/panel.css', rel="stylesheet")
 link(href='/css/modal.css', rel="stylesheet")
+link(href='/css/editor.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -180,6 +181,8 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
+                div(ng-if="view.state=='ask'")
+                    div(ng-include="'/widgets/questionCreate'")
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',

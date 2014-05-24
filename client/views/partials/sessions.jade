@@ -165,7 +165,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 td
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    a(ng-href='/books/{{book._id}}') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
+                                    a(ng-href='/books/{{book.authors[0].name}}/{{book.title}}/') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
                             tr
                                 td.clickable(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top')
                                     .pull-right
