@@ -657,6 +657,7 @@ angular.module('modelServices', ['resourceProvider'])
                 return ref;
                 // console.log(ref);
             }
+
             function feedFormatter(feeds) {
                 var timeStrings;
                 _.each(
@@ -675,6 +676,7 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 );
             }
+
             modelInstance.getUserFeeds = function (username) {
                 var query = {
                     username: username
@@ -702,6 +704,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 var callbackStack;
+
                 function setup(success, error) {
                     callbackStack = {};
                     if (success) {
@@ -711,18 +714,21 @@ angular.module('modelServices', ['resourceProvider'])
                         callbackStack.error = error;
                     }
                 }
+
                 function successCallback(user) {
                     _.extend(modelInstance.profile, user);
                     if (callbackStack.success) {
                         callbackStack.success(user)
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (callbackStack.error) {
                         callbackStack.error(err);
                     }
                 }
+
                 function getCallbackConstructor(success) {
                     return function (user) {
                         //console.log(user);
@@ -750,6 +756,7 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Users.updateSessions(query, successCallback, errorCallback);
                 }
+
                 function removeSession(id, success, error) {
                     var query = {
                         remove: { _id: id },
@@ -758,6 +765,7 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Users.updateSessions(query, successCallback, errorCallback);
                 }
+
                 function addBook(bookData, success, error) {
                     var query = {
                         add: {
@@ -768,6 +776,7 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Users.updateBooks(query, successCallback, errorCallback);
                 }
+
                 function removeBook(bookData, success, error) {
                     var query = {
                         remove: { _id: bookData._id },
@@ -776,11 +785,12 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Users.updateBooks(query, successCallback, errorCallback);
                 }
+
                 function save(success, error) {
                     var query = _.omit(
                         modelInstance.profile,
                         ['_id', 'save', 'addSession', 'removeSession',
-                         'addBook', 'removeBook']
+                            'addBook', 'removeBook']
                     );
 
                     setup(getCallbackConstructor(success), error);
@@ -796,6 +806,7 @@ angular.module('modelServices', ['resourceProvider'])
                 var query = { sessionId: id };
 
                 var callbackStack;
+
                 function setup(success, error) {
                     callbackStack = {};
                     if (success) {
@@ -805,18 +816,21 @@ angular.module('modelServices', ['resourceProvider'])
                         callbackStack.error = error;
                     }
                 }
+
                 function successCallback(session) {
                     _.extend(modelInstance.session, session);
                     if (callbackStack.success) {
                         callbackStack.success(session)
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (callbackStack.error) {
                         callbackStack.error(err);
                     }
                 }
+
                 function getCallback(session) {
                     modelInstance.session = _.extend(
                         {
@@ -837,14 +851,17 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
+
                 function removeQuestion(questionId, success, error) {
                     setup(success, error);
                     Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
                 }
+
                 function getQuestions(success, error) {
                     setup(success, error);
                     Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
                 }
+
                 function getFeeds(success, error) {
                     setup(success, error);
                     function callback(feeds) {
@@ -855,8 +872,10 @@ angular.module('modelServices', ['resourceProvider'])
                         }
                     }
 
+                    setup(null, error);
                     Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
                 }
+
                 function save(success, error) {
                     setup(success, error);
                     var query = {
@@ -875,8 +894,9 @@ angular.module('modelServices', ['resourceProvider'])
             };
 
             modelInstance.books = {};
-            modelInstance.getBooks = function(query, success, error) {
+            modelInstance.getBooks = function (query, success, error) {
                 var callbackStack;
+
                 function setup(success, error) {
                     callbackStack = {};
                     if (success) {
@@ -886,18 +906,21 @@ angular.module('modelServices', ['resourceProvider'])
                         callbackStack.error = error;
                     }
                 }
+
                 function successCallback(books) {
                     _.extend(modelInstance.books, books);
                     if (callbackStack.success) {
                         callbackStack.success(books)
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (callbackStack.error) {
                         callbackStack.error(err);
                     }
                 }
+
                 function getCallback(success) {
                     return function (books) {
                         modelInstance.books = _.extend(
@@ -908,6 +931,7 @@ angular.module('modelServices', ['resourceProvider'])
                         }
                     };
                 }
+
                 setup(getCallback(success), error);
                 Books.query(query, successCallback, errorCallback);
             }
@@ -918,18 +942,21 @@ angular.module('modelServices', ['resourceProvider'])
                     title: title,
                     authors: authors
                 };
+
                 function successCallback(book) {
                     modelInstance.book = book;
                     if (success) {
                         return success(book);
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (error) {
                         return error(err);
                     }
                 }
+
                 Books.create(query, successCallback, errorCallback);
             };
             modelInstance.getBook = function (bookId, title, authorName, success, error) {
@@ -969,6 +996,28 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 }
 
+                var methods = {
+                    save: save,
+                    addQuestion: addQuestion,
+                    removeQuestion: removeQuestion,
+                    getQuestions: getQuestions,
+                    getFeeds: getFeeds
+                };
+                function getCallback(book) {
+                    modelInstance.book = _.extend(methods, book);
+
+                    if (success) {
+                        return success(book);
+                    }
+                }
+                function queryCallback(books) {
+                    modelInstance.book = _.extend(methods, books[0]);
+
+                    if (success) {
+                        return success(books[0]);
+                    }
+                }
+
                 function save(success, error) {
                     var query = modelInstance.book;
                     query.id = query._id;
@@ -976,28 +1025,34 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Books.save(query, successCallback, errorCallback);
                 }
-
-                function getCallback(book) {
-                    modelInstance.book = _.extend(
-                        {
-                            save: save
-                        },
-                        book);
-
-                    if (success) {
-                        return success(book);
-                    }
+                function addQuestion(questionId, success, error) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    setup(success, error);
+                    Books.updateQuestions({add: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback)
                 }
-                function queryCallback(books) {
-                    modelInstance.book = _.extend(
-                        {
-                            save: save
-                        },
-                        books[0]);
-
-                    if (success) {
-                        return success(books[0]);
+                function removeQuestion(questionId, success, error) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    setup(success, error);
+                    Books.updateQuestions({pull: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback)
+                }
+                function getQuestions(success, error) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    setup(success, error);
+                    Books.getQuestions({bookId: modelInstance.book._id}, successCallback, errorCallback);
+                }
+                function getFeeds(success, error) {
+                    setup(success, error);
+                    function callback(feeds) {
+                        modelInstance.bookFeeds = feeds;
+                        feedFormatter(modelInstance.bookFeeds.feeds);
+                        if (success) {
+                            success(modelInstance.bookFeeds);
+                        }
                     }
+
+                    setup(null, error);
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    Books.getFeeds({bookId: modelInstance.book._id}, callback, errorCallback)
                 }
 
             };

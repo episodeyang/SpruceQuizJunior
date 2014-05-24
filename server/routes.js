@@ -412,6 +412,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
+                path: '/api/books/:id/questions',
+                httpMethod: 'POST',
+                middleware: [BookCtrl.updateQuestions],
+                accessLevel: accessLevels.all
+            },
+            {
                 path: '/api/books/:id/feeds',
                 httpMethod: 'GET',
                 middleware: [BookCtrl.index],

@@ -23,7 +23,7 @@ angular.module('SpruceQuizApp')
             $scope.Model = Model;
 
             $scope.view = {
-                state: 'search',
+                state: 'newsFeed',
                 card: {
                     edit: false,
                     flipped: false
@@ -32,7 +32,7 @@ angular.module('SpruceQuizApp')
             $rootScope.errors = {};
 
 
-            Model.getBook($routeParams.bookId, $routeParams.title, $routeParams.authorName);
+            Model.getBook($routeParams.bookId, $routeParams.bookTitle, $routeParams.authorName);
 
             $scope.submitBook = Model.book.save;
             function isArray(obj) {

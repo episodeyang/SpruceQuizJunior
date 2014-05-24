@@ -350,6 +350,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 coverUrl: String,
                 editions: [String],
                 related: [String],
+                questions: [{type: Schema.Types.ObjectId, ref: 'Question'}],
                 metaData: {
                     publisher: String,
                     yearOfPublication: Number,

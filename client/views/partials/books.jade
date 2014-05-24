@@ -1,7 +1,10 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/feed.css', rel="stylesheet")
+link(href='/css/editor.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
+link(href='/css/panel.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -31,14 +34,14 @@ div.background(background-img="/img/bg-brown.jpg")
                 ul.nav.sp-nav.nav-pills.nav-stacked
                     li(ng-class="{active: view.state=='info'}")
                         a.text-center(ng-click="view.state='info'") 信息
-                    li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'") 搜索
+                    li(ng-class="{active: view.state=='newsFeed'}")
+                        a.text-center(ng-click="view.state='newsFeed'") 新鲜事
                     li(ng-class="{active: view.state=='questions'}")
-                        a.text-center(ng-click="view.state='questions'") 提问
-                    li(ng-class="{active: view.state=='answers'}")
-                        a.text-center(ng-click="view.state='answers'") 回答
+                        a.text-center(ng-click="view.state='questions'") 相关问题
+                    li(ng-class="{active: view.state=='ask'}")
+                        a.text-center(ng-click="view.state='ask'") 提问
             .col-sm-7.col-xs-9
-                div
+                div(ng-if="view.state==='newsFeed' || view.state==='info'")
                     .row
                         .col-xs-12
                             div
@@ -122,11 +125,25 @@ div.background(background-img="/img/bg-brown.jpg")
                                                         span 提问 {{Model.book.stats.answerCount}}
                                                     .unit
                                                         span 编辑 {{Model.book.stats.editCount}}
-                            .card.bottom-margin
-                                p test this now
-                            .card.bottom-margin
-                                p test this now
-
+                div(ng-if="view.state=='questions'")
+                    a.card.short.bottom-margin(ng-repeat="question in Model.session.questions track by $index", ng-href="/questions/{{question.id}}")
+                        .row
+                            div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
+                                h4.no-top-margin.bottom-margin
+                                    b {{question.title}}
+                                //hr.low-margin
+                                div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
+                            .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
+                                .rounded.bg-blue.stat-box(ng-class="{'bg-red':question.vote < 0 , 'bg-blue': question.vote > 0 }")
+                                    h4.no-bottom-margin.text-center {{question.vote}}
+                                    p.no-top-margin.text-center.small 投票
+                                .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
+                                    p.no-bottom-margin.text-center.small {{question.nAnswers}}
+                                    p.no-top-margin.text-center.small 回答
+                    div.placeholder.short(ng-if="!Model.session.questions || Model.session.questions.length===0")
+                        | 这个班级中还没有添加任何问题：）
+                div(ng-if="view.state=='ask'")
+                    div(ng-include="'/widgets/questionCreate'")
 
             .col-sm-3.hidden-xs
                 .panel.panel-info

@@ -161,6 +161,17 @@ describe('Session API test - ', function (done) {
             done();
         });
     });
+    it('pull question from session', function (done) {
+        var query = {
+            pull: {
+                id: questions[0].id
+            }
+        };
+        request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
+            res.body.questions.should.not.containDeep([{id: questions[0].id}]);
+            done();
+        });
+    });
     var book = {
                 title: "你身体里的那条鱼",
                 authors: [{name: 'schubin,Neil'}],

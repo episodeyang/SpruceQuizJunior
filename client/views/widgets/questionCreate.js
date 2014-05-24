@@ -58,14 +58,14 @@ angular.module('SpruceQuizApp')
                 mixpanel.track("toggleHtml");
             };
 
-            function onSession (data) {
+            function onSession(data) {
                 if ($routeParams.sessionId) {
                     data.sessions = [$routeParams.sessionId];
                 }
-            };
-            function onBook (data) {
-                //Todo: not tested yet.
-                if ($routeParams.bookTitle) {
+            }
+
+            function onBook(data) {
+                if ($routeParams.bookTitle || $routeParams.bookId) {
                     data.books = [
                         {
                             _id: Model.book.id || Model.book._id,
@@ -74,7 +74,7 @@ angular.module('SpruceQuizApp')
                         }
                     ];
                 }
-            };
+            }
 
             var validator = function (data) {
                 if (data.title.length < 10) {
@@ -97,8 +97,12 @@ angular.module('SpruceQuizApp')
                         $scope.editor.data,
                         function (question) {
                             $rootScope.error = '';
-                            if (question.sessions.length>=1) {
+                            if (question.sessions.length >= 1) {
                                 Model.session.addQuestion(question.id);
+                            }
+                            if (question.books.length >= 1) {
+                                console.log('I am here adding the question to the book!')
+                                Model.book.addQuestion(question.id);
                             }
                             $location.path('/questions/' + Model.question.id);
                             mixpanel.track("submitted question to session");

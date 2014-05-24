@@ -20,16 +20,14 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
         var UserM = SchemaModels.User;
 //        var BookM = SchemaModels.Book;
         var userRoles = rolesHelper.userRoles;
-        var keyString = 'title authors category coverUrl editions related metaData publisher reviews tags parents children knowledgeTree tableOfContent';
+        var keyString = 'title authors questions category coverUrl editions related metaData publisher reviews tags parents children knowledgeTree tableOfContent';
 
         return {
             index: function (req, res) {
                 var query = {};
-
+                var options;
                 if (req.query.title) {
-                    // console.log('see query.title');
-                    // console.log(req.query.title);
-                    // console.log(req.query);
+                    options = {populate: 'questions'};
                     query.title = req.query.title;
                     if (req.query.authorName) {
                         query.authors = {
@@ -47,14 +45,16 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
                     return res.json(200, books);
                 }
 
-                BookM.find(query, keyString, callback);
+                BookM.find(query, keyString, options, callback);
             },
             findOne: function (req, res) {
                 var query;
+                var options = {populate: 'questions'};
                 if (req.params.bookId) {
                     BookM.findById(
                         req.params.bookId,
                         keyString,
+                        options,
                         callback
                     );
                 } else {
@@ -97,6 +97,32 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
                         res.send(201, book);
                     }
                 );
+            },
+            /**
+             * upadate questions field of book.
+             * @param req
+             * @param res
+             * @returns {*}
+             * @example req = { add: { id: 34523452345254 } }
+             * @example req = { remove: { id: 34523452345254 } }
+             */
+            updateQuestions: function (req, res) {
+                if (!req.params.id) {return res.send(400, 'noBookId'); }
+                var data = req.body;
+                var book = { _id: req.params.id };
+
+                function done(err, book) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(201, book);
+                }
+
+                if (data.add) {
+                    BookM.addQuestion(book, data.add.id, done);
+                } else if (data.pull) {
+                    BookM.removeQuestion(book, data.pull.id, done);
+                } else {
+                    return res.send(400, 'badPayloadFormat');
+                }
             },
             remove: function (req, res) {
                 BookM.remove(

@@ -88,5 +88,35 @@ describe('Book API test - ', function (done) {
             done();
         });
     });
+    var question = {};
+    it('get quesitons id\'s', function (done) {
+        request(app).get('/api/questions').expect(200).end(function (err, res) {
+            console.log(res.body);
+            question = res.body[0];
+            done();
+        });
+    });
+    it('add question to book and get the question populated on it\'s way back', function (done) {
+        var query = {
+            add: {
+                id: question.id
+            }
+        };
+        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
+            res.body.questions.should.containDeep([{id: question.id}]);
+            done();
+        });
+    });
+    it('pull question from book', function (done) {
+        var query = {
+            pull: {
+                id: question.id
+            }
+        };
+        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
+            res.body.questions.should.not.containDeep([{id: question.id}]);
+            done();
+        });
+    });
 });
 

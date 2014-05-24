@@ -202,11 +202,13 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     .factory('Books', function ($resource) {
         var Books = $resource('/api/books');
         var book = $resource('/api/books/:bookId', {bookId: '@_id'});
+        var onQuestions = $resource('/api/books/:bookId/questions', {bookId: '@bookId'});
         return {
             create: Books.save,
             query: Books.query,
             get: book.get,
             save: book.save,
+            updateQuestions: onQuestions.save,
             remove: book.remove
         };
     })

@@ -44,7 +44,7 @@ angular.module('SpruceQuizApp')
                 $scope.view.addBook = function (book, index) {
                     function success(books) {
                         if (index !== undefined) {
-                            console.log('success!!');
+                            //console.log('success!!');
                             Model.books[index].selected = true;
                         }
                         $scope.view.books = Model.profile.books;

@@ -117,7 +117,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             div.editor-inner(math-html="Model.question.text")
                         .short-bottom-margin.top-margin
                             a.badge.short-bottom-margin(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
-                            a.badge.short-bottom-margin(ng-repeat='book in Model.question.books track by $index').right-margin {{book}}
+                            a.badge.bg-blue.short-bottom-margin(ng-repeat='book in Model.question.books track by $index', ng-href="/books/id/{{book.id}}").right-margin {{book.title}}
                         .row
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题

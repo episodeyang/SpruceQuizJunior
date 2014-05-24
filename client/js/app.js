@@ -68,7 +68,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'BookCtrl',
                     access: access.all
                 });
-            $routeProvider.when('/books/:authorName/:title',
+            $routeProvider.when('/books/:authorName/:bookTitle',
                 {
                     templateUrl: '/partials/books',
                     controller: 'BookCtrl',
