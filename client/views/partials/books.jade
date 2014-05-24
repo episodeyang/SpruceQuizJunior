@@ -126,7 +126,14 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     .unit
                                                         span 编辑 {{Model.book.stats.editCount}}
                 div(ng-if="view.state=='questions'")
-                    a.card.short.bottom-margin(ng-repeat="question in Model.session.questions track by $index", ng-href="/questions/{{question.id}}")
+                    .row
+                        .col-xs-12
+                            .card.no-top-margin.bottom-margin.bg-semi-transparent
+                                .card-title
+                                    span.name {{Model.book.title}}
+                                    span.signature(ng-repeat="author in Model.book.authors") , {{author.name.split(',').reverse().join(' ') || ''}}
+                div(ng-if="view.state=='questions'")
+                    a.card.short.bottom-margin(ng-repeat="question in Model.book.questions track by $index", ng-href="/questions/{{question.id}}")
                         .row
                             div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                 h4.no-top-margin.bottom-margin
@@ -140,7 +147,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
                                     p.no-bottom-margin.text-center.small {{question.nAnswers}}
                                     p.no-top-margin.text-center.small 回答
-                    div.placeholder.short(ng-if="!Model.session.questions || Model.session.questions.length===0")
+                    div.placeholder.short(ng-if="!Model.book.questions || Model.book.questions.length===0")
                         | 这个班级中还没有添加任何问题：）
                 div(ng-if="view.state=='ask'")
                     div(ng-include="'/widgets/questionCreate'")
