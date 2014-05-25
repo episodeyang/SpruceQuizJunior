@@ -75,8 +75,8 @@ div.modal(tabindex='1', role='dialog')
 
         .modal-content.top-margin(ng-repeat="session in Model.sessions | filter:view.sessions.searchText", ng-if="view.modalState==='searchSessions'", ng-class="{yellow: Model.sessions[$index].selected}")
             .modal-header
-                button.close(type='button', ng-if="!Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=true; Model.profile.addSession(session._id)").fa.fa-plus
-                button.close(type='button', ng-if="Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=false; Model.profile.removeSession(session._id)").fa.fa-times
+                button.close(type='button', ng-if="!Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=true; Model.profile.addSession(session._id);").fa.fa-plus
+                button.close(type='button', ng-if="Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=false; Model.profile.removeSession(session._id);").fa.fa-times
                 h4.modal-title.text-center {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
             .modal-body
                 .row

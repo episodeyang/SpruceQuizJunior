@@ -45,10 +45,6 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 SessionM.findById(sessionId).select('books').exec(callback);
             },
             addOrRemoveFromSet: function (key, addOrRemove, session, payload, callback, noRef) {
-                console.log('session');
-                console.log(session);
-                console.log('payload');
-                console.log(payload);
                 if (!payload) {
                     return callback('noPayload');
                 }
@@ -66,7 +62,6 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     } else {
                         return doc.populate(key, callback);
                     }
-                    return;
                 }
 
                 var update;

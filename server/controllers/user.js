@@ -290,26 +290,23 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                     UserM.getRef(user, 'name username', next);
                 }
                 function updateSession(user, next) {
-                    var user = user.toObject();
-                    console.log('user');
-                    console.log(user);
+                    var userObject = user.toObject();
                     if (req.body.add) {
                         if (req.body.teacher) {
-                            SessionM.addTeacher(req.body.add, user, next);
+                            SessionM.addTeacher(req.body.add, userObject, next);
                         } else {
-                            SessionM.addMember(req.body.add, user, next);
+                            SessionM.addMember(req.body.add, userObject, next);
                         }
                     } else if (req.body.remove) {
-                        delete user.name;
+                        delete userObject.name;
                         if (req.body.teacher) {
-                            SessionM.removeTeacher(req.body.remove, user, next);
+                            SessionM.removeTeacher(req.body.remove, userObject, next);
                         } else {
-                            SessionM.removeMember(req.body.remove, user, next);
+                            SessionM.removeMember(req.body.remove, userObject, next);
                         }
                     }
                 }
                 function updateUser(session, next) {
-                    var session = session.toObject();
                     if (req.body.add) {
                         return UserM.addSession(user, req.body.add, next);
                     } else if (req.body.remove) {
