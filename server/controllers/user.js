@@ -323,23 +323,6 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                 }
 
                 async.waterfall([getUser, updateSession, updateUser], callback);
-
-//                function nothing (error, doc) { return; }
-//                if (req.body.add) {
-//                    if (req.body.teacher) {
-//                        SessionM.addTeacher(req.body.add, user, nothing);
-//                    } else {
-//                        SessionM.addMember(req.body.add, user, nothing);
-//                    }
-//                    return UserM.addSession(user, req.body.add, callback);
-//                } else if (req.body.remove) {
-//                    if (req.body.teacher) {
-//                        SessionM.removeTeacher(req.body.remove, user, nothing);
-//                    } else {
-//                        SessionM.removeMember(req.body.remove, user, nothing);
-//                    }
-//                    return UserM.removeSession(user, req.body.remove, callback);
-//                }
             },
             updateBooks: function (req, res) {
                 if (!req.params.username) {
