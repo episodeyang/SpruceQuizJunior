@@ -81,6 +81,18 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
             },
             removeQuestion: function (book, question, callback) {
                 BookMethods.addOrRemoveFromSet('questions', 'pull', book, question, callback);
+            },
+            addAdmin: function (book, user, callback) {
+                BookMethods.addOrRemoveFromSet('questions', 'add', book, user, callback, true);
+            },
+            removeAdmin: function (book, user, callback) {
+                BookMethods.addOrRemoveFromSet('questions', 'pull', book, user, callback, true);
+            },
+            addMember: function (book, user, callback) {
+                BookMethods.addOrRemoveFromSet('questions', 'add', book, user, callback, true);
+            },
+            removeMember: function (book, user, callback) {
+                BookMethods.addOrRemoveFromSet('questions', 'pull', book, user, callback, true);
             }
         };
         _.extend(BookM, BookMethods);

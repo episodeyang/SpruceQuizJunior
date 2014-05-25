@@ -14,8 +14,8 @@
  *          etc.,
  * good luck coding!
  */
-define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../models/Session', '../rolesHelper'],
-    function (_, async, SchemaModels, UserM, SessionM, rolesHelper) {
+define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../models/Session', '../models/Book', '../rolesHelper'],
+    function (_, async, SchemaModels, UserM, SessionM, BookM, rolesHelper) {
         "use strict";
         var userRoles = rolesHelper.userRoles,
             accessLevels = rolesHelper.accessLevels;
@@ -348,6 +348,34 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                     return res.send(401, 'notAuthorized');
                 }
 
+                function getUser(next) {
+                    UserM.getRef(user, 'name username', next);
+                }
+                function updateBook(user, next) {
+                    var userObject = user.toObject();
+                    if (req.body.add) {
+                        if (req.body.admin) {
+                            BookM.addAdmin(req.body.add, userObject, next);
+                        } else {
+                            BookM.addMember(req.body.add, userObject, next);
+                        }
+                    } else if (req.body.remove) {
+                        delete userObject.name;
+                        if (req.body.admin) {
+                            BookM.removeAdmin(req.body.remove, userObject, next);
+                        } else {
+                            BookM.removeMember(req.body.remove, userObject, next);
+                        }
+                    }
+                }
+                function updateUser(book, next) {
+                    if (req.body.add) {
+                        UserM.addBook(user, req.body.add, next);
+                    } else if (req.body.remove) {
+                        UserM.removeBook(user, req.body.remove, next);
+                    }
+                }
+
                 function callback(error, doc) {
                     if (error) {
                         return res.send(500, error);
@@ -355,11 +383,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                     return res.send(201, doc);
                 }
 
-                if (req.body.add) {
-                    UserM.addBook(user, req.body.add, callback);
-                } else if (req.body.remove) {
-                    UserM.removeBook(user, req.body.remove, callback);
-                }
+                async.waterfall([getUser, updateBook, updateUser], callback);
             },
             updateSchools: function (req, res) {
                 return res.send(501, "notImplemented");
