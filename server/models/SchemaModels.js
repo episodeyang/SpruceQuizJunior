@@ -29,8 +29,12 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             var options = schema.__options__;
             delete schema.__options__;
         }
-        // create subdocument without the `_id` key
-        subSchema[capitalize(title)] = new mongoose.Schema(schema);//, {_id: false});
+        if (options && options._id === false) {
+            subSchema[capitalize(title)] = new mongoose.Schema(schema, {_id: false});
+            delete options._id;
+        } else {
+            subSchema[capitalize(title)] = new mongoose.Schema(schema);//, {_id: false});
+        }
         if (methods) {
             _.each(methods, function (method, methodKey) {
                 subSchema[capitalize(title)].methods[methodKey] = method;
@@ -67,7 +71,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         },
         userFragment: {
             username: String,
-            name: String
+            name: String,
+            __options__: {
+                _id: false
+            }
         }
     };
     _.each(config_nest, subSchemaBuilder);
@@ -471,7 +478,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 }
             },
             bookFeed: {
-                session: {
+                bookId: {
                     type: Schema.Types.ObjectId
                 },
                 page: {

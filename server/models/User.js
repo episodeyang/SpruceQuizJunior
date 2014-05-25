@@ -146,7 +146,9 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     }
                 });
             },
-
+            getRef: function (user, fieldString, callback) {
+                SchemaModels[capitalize(user.role.title)].findOne({username: user.username}).select(fieldString).exec(callback);
+            },
             confirmEmail: function (username, code, email, callback) {
                 UserM.findOne(
                     {username: username},

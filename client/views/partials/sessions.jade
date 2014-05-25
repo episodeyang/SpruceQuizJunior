@@ -66,8 +66,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 div(ng-if="Model.session.overview") {{Model.session.overview}}
                                                 div(ng-if="!Model.session.overview").placeholder.short 暂无课程简介
                                                 div.top-margin
-                                                    span(ng-repeat="teacher in Model.session.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
-                                                    span(ng-repeat="member in Model.session.members track by $index") {{member.name.split(',').join('')}}，
+                                                    span(ng-repeat="teacher in Model.session.teachers track by $index").blue {{teacher.name.split(',').join('') || member.username}}，
+                                                    span(ng-repeat="member in Model.session.members track by $index") {{member.name.split(',').join('') || member.username}}，
                                                     span(ng-if="Model.session.teachers || Model.session.members") 在上这门课程。
                                                 .badge.right-margin.short-top-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}
                                         //.row

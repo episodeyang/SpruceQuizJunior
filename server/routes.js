@@ -186,7 +186,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/users/:username',
                 httpMethod: 'POST',
                 middleware: [UserCtrl.update],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/users/:username/schools',
@@ -234,7 +234,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/students/:username',
                 httpMethod: 'post',
                 middleware: [StudentCtrl.update],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             // {// todo: student delete api is under development
             //     path: '/api/students/:username',
@@ -313,7 +313,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/schools/:name',
                 httpMethod: 'POST',
                 middleware: [SchoolCtrl.update],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {// get list of sessions with limited fields
                 path: '/api/sessions',
@@ -343,13 +343,13 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/sessions/:sessionId',
                 httpMethod: 'post',
                 middleware: [SessionCtrl.updateById],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/sessions/:sessionId/questions',
                 httpMethod: 'post',
                 middleware: [SessionCtrl.updateQuestions],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/sessions/:sessionId/questions',
@@ -361,7 +361,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/sessions/:sessionId/books',
                 httpMethod: 'post',
                 middleware: [SessionCtrl.updateBooks],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/sessions/:sessionId/books',
@@ -409,13 +409,13 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/books/:id',
                 httpMethod: 'POST',
                 middleware: [BookCtrl.updateById],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/books/:id/questions',
                 httpMethod: 'POST',
                 middleware: [BookCtrl.updateQuestions],
-                accessLevel: accessLevels.all
+                accessLevel: accessLevels.loggedin
             },
             {
                 path: '/api/books/:id/feeds',

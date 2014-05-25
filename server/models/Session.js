@@ -45,20 +45,28 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 SessionM.findById(sessionId).select('books').exec(callback);
             },
             addOrRemoveFromSet: function (key, addOrRemove, session, payload, callback, noRef) {
+                console.log('session');
+                console.log(session);
+                console.log('payload');
+                console.log(payload);
                 if (!payload) {
                     return callback('noPayload');
+                }
+                if (!session._id) {
+                    return callback('noSessionId');
                 }
 
                 function done(error, doc) {
                     if (error) {
-                        console.log(error);
-                        return error;
+                        return callback(error);
                     }
+
                     if (noRef) {
-                        callback(error, doc);
+                        return callback(error, doc);
                     } else {
-                        doc.populate(key, callback);
+                        return doc.populate(key, callback);
                     }
+                    return;
                 }
 
                 var update;
@@ -78,7 +86,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     new: true,
                     multi: true
                 };
-                SessionM.findByIdAndUpdate(
+                return SessionM.findByIdAndUpdate(
                     session._id,
                     update,
                     options,
@@ -86,17 +94,31 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 );
             },
             addQuestion: function (session, question, callback) {
-                SessionMethods.addOrRemoveFromSet('questions', 'add', session, question, callback);
+                return SessionMethods.addOrRemoveFromSet('questions', 'add', session, question, callback);
             },
             removeQuestion: function (session, question, callback) {
-                SessionMethods.addOrRemoveFromSet('questions', 'pull', session, question, callback);
+                return SessionMethods.addOrRemoveFromSet('questions', 'pull', session, question, callback);
             },
             // Book schema uses book fragment.
-            addBook: function (question, book, callback) {
-                SessionMethods.addOrRemoveFromSet('books', 'add', question, book, callback, true);
+            addBook: function (session, book, callback) {
+                return SessionMethods.addOrRemoveFromSet('books', 'add', session, book, callback, true);
             },
-            removeBook: function (question, book, callback) {
-                SessionMethods.addOrRemoveFromSet('books', 'pull', question, book, callback, true);
+            removeBook: function (session, book, callback) {
+                return SessionMethods.addOrRemoveFromSet('books', 'pull', session, book, callback, true);
+            },
+            // Member schema uses user fragment.
+            addMember: function (session, user, callback) {
+                return SessionMethods.addOrRemoveFromSet('members', 'add', session, user, callback, true);
+            },
+            removeMember: function (session, user, callback) {
+                return SessionMethods.addOrRemoveFromSet('members', 'pull', session, user, callback, true);
+            },
+            // Admin schema uses user fragment.
+            addTeacher: function (session, teacher, callback) {
+                return SessionMethods.addOrRemoveFromSet('teachers', 'add', session, teacher, callback, true);
+            },
+            removeTeacher: function (session, teacher, callback) {
+                return SessionMethods.addOrRemoveFromSet('teachers', 'pull', session, teacher, callback, true);
             }
         };
         _.extend(SessionM, SessionMethods);

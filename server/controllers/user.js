@@ -14,8 +14,8 @@
  *          etc.,
  * good luck coding!
  */
-define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelper'],
-    function (_, SchemaModels, UserM, rolesHelper) {
+define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../models/Session', '../rolesHelper'],
+    function (_, async, SchemaModels, UserM, SessionM, rolesHelper) {
         "use strict";
         var userRoles = rolesHelper.userRoles,
             accessLevels = rolesHelper.accessLevels;
@@ -162,7 +162,7 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 var query = {
                         username: req.params.username
                     },
-                    // to avoid overwriting student/teacher _id with user._id
+                // to avoid overwriting student/teacher _id with user._id
                     update = _.omit(req.body, ['_id', 'schools', 'sessions', 'books']);
 
                 console.log('the update object');
@@ -170,10 +170,10 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
 
                 SchemaModels[capitalize(req.body.role.title)]
                     .findOneAndUpdate(
-                        query,
-                        update,
-                        callback
-                    );
+                    query,
+                    update,
+                    callback
+                );
             },
             getSessions: function (req, res) {
                 if (!req.params.username) {
@@ -192,7 +192,7 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 }
 
                 var query = { username: req.params.username };
-                return UserM.findOne(query).exec(function(error, user) {
+                return UserM.findOne(query).exec(function (error, user) {
                     if (error) {
                         console.log(error);
                         return res.send(500, error);
@@ -219,7 +219,7 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 }
 
                 var query = { username: req.params.username };
-                return UserM.findOne(query).exec(function(error, user) {
+                return UserM.findOne(query).exec(function (error, user) {
                     if (error) {
                         console.log(error);
                         return res.send(500, error);
@@ -246,7 +246,7 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                 }
 
                 var query = { username: req.params.username };
-                return UserM.findOne(query).exec(function(error, user) {
+                return UserM.findOne(query).exec(function (error, user) {
                     if (error) {
                         console.log(error);
                         return res.send(500, error);
@@ -265,8 +265,14 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
 
                 var user;
                 if (req.params.username === req.user.username || req) {
-                    //One can always add sessions to oneself.
-                    user = req.user;
+                    // One can always add sessions to oneself.
+                    // in testing the user does not have toObject() method;
+                    // this is to prevent passing in the doc object, and cause callStack overflow.
+                    if (req.user.toObject) {
+                        user = req.user.toObject();
+                    } else {
+                        user = req.user;
+                    }
                 } else if (accessLevels.admin.bitMask & req.user.role.bitMask) {
                     //Only admins can add sessions to other students.
                     //Todo: add more fine-grained control to school administrators.
@@ -280,18 +286,63 @@ define(['underscore', '../models/SchemaModels', '../models/User', '../rolesHelpe
                     return res.send(401, 'notAuthorized');
                 }
 
-                function callback(error, doc) {
-                    if (error) {
-                        return res.send(500, error);
+                function getUser(next) {
+                    UserM.getRef(user, 'name username', next);
+                }
+                function updateSession(user, next) {
+                    var user = user.toObject();
+                    console.log('user');
+                    console.log(user);
+                    if (req.body.add) {
+                        if (req.body.teacher) {
+                            SessionM.addTeacher(req.body.add, user, next);
+                        } else {
+                            SessionM.addMember(req.body.add, user, next);
+                        }
+                    } else if (req.body.remove) {
+                        delete user.name;
+                        if (req.body.teacher) {
+                            SessionM.removeTeacher(req.body.remove, user, next);
+                        } else {
+                            SessionM.removeMember(req.body.remove, user, next);
+                        }
                     }
-                    return res.send(201, doc);
+                }
+                function updateUser(session, next) {
+                    var session = session.toObject();
+                    if (req.body.add) {
+                        return UserM.addSession(user, req.body.add, next);
+                    } else if (req.body.remove) {
+                        return UserM.removeSession(user, req.body.remove, next);
+                    }
                 }
 
-                if (req.body.add) {
-                    UserM.addSession(user, req.body.add, callback);
-                } else if (req.body.remove) {
-                    UserM.removeSession(user, req.body.remove, callback);
+                function callback(error, session) {
+                    if (error) {
+                        console.log(error);
+                        return res.send(500, error);
+                    }
+                    return res.send(201, session);
                 }
+
+                async.waterfall([getUser, updateSession, updateUser], callback);
+
+//                function nothing (error, doc) { return; }
+//                if (req.body.add) {
+//                    if (req.body.teacher) {
+//                        SessionM.addTeacher(req.body.add, user, nothing);
+//                    } else {
+//                        SessionM.addMember(req.body.add, user, nothing);
+//                    }
+//                    return UserM.addSession(user, req.body.add, callback);
+//                } else if (req.body.remove) {
+//                    if (req.body.teacher) {
+//                        SessionM.removeTeacher(req.body.remove, user, nothing);
+//                    } else {
+//                        SessionM.removeMember(req.body.remove, user, nothing);
+//                    }
+//                    return UserM.removeSession(user, req.body.remove, callback);
+//                }
             },
             updateBooks: function (req, res) {
                 if (!req.params.username) {
