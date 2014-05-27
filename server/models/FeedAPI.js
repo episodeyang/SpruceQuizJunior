@@ -32,7 +32,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var typeString = 'questionAdd';
                 var stack = [];
                 var data = {
-                    username: user.username,
+                    user: _.pick(user, ['username', 'name']),
                     question: {
                         _id : question._id,
                         title: question.title,
@@ -43,16 +43,17 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     }
                 };
 
+                if (!sessions) { delete data.sessions; }
+                if (!books) { delete data.books; }
+
                 function userAdd(callback) {
-                    if (sessions) { data.sessions = sessions; }
-                    if (books) { data.books = books; }
-                    return UserFeedM.addFeed(user.username, typeString, _.omit(data, ['userId', 'username']), callback);
+                    return UserFeedM.addFeed(user.username, typeString, _.omit(data, 'user'), callback);
                 }
                 stack.push(userAdd);
 
                 function makeSessionCallback(sessionId) {
                     function sessionAdd(callback) {
-                        return SessionFeedM.addFeed(sessionId, typeString, _.omit(data, 'sessions'), callback);
+                        return SessionFeedM.addFeed(sessionId, typeString, data, callback);
                     }
                     stack.push(sessionAdd);
                 }
@@ -62,50 +63,115 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
 
                 function makeBookCallback(book) {
                     function bookAdd(callback) {
-                        return BookFeedM.addFeed(question.books[0], typeString, _.omit(data, 'session'), callback);
+                        return BookFeedM.addFeed(book._id, typeString, data, callback);
                     }
                     stack.push(bookAdd);
                 }
                 if (books) {
-                    _.each(question.books, makeBookCallback);
+                    _.each(books, makeBookCallback);
                 }
 
                 async.series(stack, errorLog);
             },
-            questionEdit: function(user, question) {
-                if (!user || !question) { return }
+            questionEdit: function(user, question, sessions, books) {
+                if (!user || !question) { return; }
                 var typeString = 'questionEdit';
+                var stack = [];
                 var data = {
-                    id : question._id,
-                    title: question.title,
-                    text: question.text,
-                    tags: question.tags
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id : question._id,
+                        title: question.title,
+                        text: question.text,
+                        tags: question.tags,
+                        sessions: sessions,
+                        books: books
+                    }
                 };
-                UserFeedM.addFeed(user._id, user.username, typeString, data, errorLog);
-            },
-            questionGet: function(user, question) {
-                if (!user || !question) { return }
-                var typeString = "questionGet";
-                var data = {
-                    id : question._id,
-                    title: question.title
-                };
-                console.log(question);
-                if (question.sessions) {
-                    console.log(question.sessions);
-                    data.username = user.username;
-                    SessionFeedM.addFeed(question.sessions[0], typeString, data, errorLog);
-                    delete data.username;
-                    data.sessionId = question.sessions[0];
+
+                if (!sessions) { delete data.sessions; }
+                if (!books) { delete data.books; }
+
+                function userAdd(callback) {
+                    return UserFeedM.addFeed(user.username, typeString, _.omit(data, 'user'), callback);
                 }
-                UserFeedM.addFeed(user._id, user.username, typeString, data, errorLog);
+                stack.push(userAdd);
+
+                function makeSessionCallback(sessionId) {
+                    function sessionAdd(callback) {
+                        return SessionFeedM.addFeed(sessionId, typeString, data, callback);
+                    }
+                    stack.push(sessionAdd);
+                }
+                if (sessions) {
+                    _.each(sessions, makeSessionCallback);
+                }
+
+                function makeBookCallback(book) {
+                    function bookAdd(callback) {
+                        return BookFeedM.addFeed(book._id, typeString, data, callback);
+                    }
+                    stack.push(bookAdd);
+                }
+                if (books) {
+                    _.each(books, makeBookCallback);
+                }
+
+                async.series(stack, errorLog);
+            },
+            questionGet: function(user, question, sessions, books) {
+                if (!user || !question) { return; }
+                var typeString = "questionGet";
+                var stack = [];
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id : question._id,
+                        title: question.title
+                    }
+                };
+
+                if (!sessions) { delete data.sessions; }
+                if (!books) { delete data.books; }
+
+                function userAdd(callback) {
+                    return UserFeedM.addFeed(user.username, typeString, _.omit(data, 'user'), callback);
+                }
+                stack.push(userAdd);
+
+                function makeSessionCallback(sessionId) {
+                    function sessionAdd(callback) {
+                        return SessionFeedM.addFeed(sessionId, typeString, data, callback);
+                    }
+                    stack.push(sessionAdd);
+                }
+                if (sessions) {
+                    _.each(sessions, makeSessionCallback);
+                }
+
+                function makeBookCallback(book) {
+                    function bookAdd(callback) {
+                        console.log(book);
+                        return BookFeedM.addFeed(book._id, typeString, data, callback);
+                    }
+                    stack.push(bookAdd);
+                }
+                if (books) {
+                    _.each(books, makeBookCallback);
+                }
+
+                async.series(stack, errorLog);
             },
             questionVote: function(user, question) {
-                if (!user || !question) { return }
+                if (!user || !question) { return; }
                 var typeString = "questionVote";
+                var stack = [];
                 var data = {
-                    id : question._id,
-                    title: question.title
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id : question._id,
+                        title: question.title
+                    }
                 };
                 function removeUpVote() {
                     if (question.sessions) {
@@ -114,7 +180,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                         delete data.username;
                         data.sessionId = question.sessions[0];
                     }
-                    UserFeedM.addFeed(user._id, user.username, typeString + ".removeUpVote", data, errorLog);
+                    UserFeedM.addFeed(user.username, typeString + ".removeUpVote", data, errorLog);
                 }
                 function upVote() {
                     if (question.sessions) {
@@ -123,7 +189,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                         delete data.username;
                         data.sessionId = question.sessions[0];
                     }
-                    UserFeedM.addFeed(user._id, user.username, typeString + ".upVote", data, errorLog);
+                    UserFeedM.addFeed(user.username, typeString + ".upVote", data, errorLog);
                 }
                 function removeDownVote() {
                     if (question.sessions) {
@@ -132,7 +198,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                         delete data.username;
                         data.sessionId = question.sessions[0];
                     }
-                    UserFeedM.addFeed(user._id, user.username, typeString + ".removeDownVote", data, errorLog);
+                    UserFeedM.addFeed(user.username, typeString + ".removeDownVote", data, errorLog);
                 }
                 function downVote() {
                     if (question.sessions) {
@@ -141,7 +207,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                         delete data.username;
                         data.sessionId = question.sessions[0];
                     }
-                    UserFeedM.addFeed(user._id, user.username,  typeString + ".downVote", data, errorLog);
+                    UserFeedM.addFeed(user.username,  typeString + ".downVote", data, errorLog);
                 }
                 return {
                     removeUpVote: removeUpVote,
@@ -157,7 +223,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     id : comment._id,
                     title: comment.text
                 };
-                UserFeedM.addFeed(user._id, user.username, typeString, data, errorLog);
+                UserFeedM.addFeed(user.username, typeString, data, errorLog);
             },
             answer: function(user, answer) {},
             answerComment: function(user, comment) {},
