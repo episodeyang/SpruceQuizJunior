@@ -109,7 +109,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
             },
             /**
              * upadate question field of session.
-             * @param req
+             * @param req : { add/pull: { id: <ObjectId> } }
              * @param res
              * @returns {*}
              * @example req = { add: { id: 34523452345254 } }
@@ -126,9 +126,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                 }
 
                 if (data.add) {
-                    SessionM.addQuestion(session, data.add.id, done);
+                    SessionM.addQuestion(session, data.add._id, done);
                 } else if (data.pull) {
-                    SessionM.removeQuestion(session, data.pull.id, done);
+                    SessionM.removeQuestion(session, data.pull._id, done);
                 } else {
                     return res.send(400, 'badPayloadFormat');
                 }

@@ -256,6 +256,17 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                     UserM.getSet('books', user, done);
                 });
             },
+            /**
+             * take in inpurt of the form:
+             * req: {
+             *          add: {
+             *                  _id: <ObjectId>,
+             *               }
+             *       }
+             * @param req
+             * @param res
+             * @returns {*}
+             */
             updateSessions: function (req, res) {
                 if (!req.params.username) {
                     return res.send(400, "noUserSpecified");

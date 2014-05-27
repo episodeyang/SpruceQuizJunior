@@ -174,7 +174,7 @@ describe('Session API test - ', function (done) {
     it('add question to session and get the question populated on it\'s way back', function (done) {
         var query = {
             add: {
-                id: questions[0]._id
+                _id: questions[0]._id
             }
         };
         request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
@@ -196,7 +196,7 @@ describe('Session API test - ', function (done) {
     it('pull question from session', function (done) {
         var query = {
             pull: {
-                id: questions[0]._id
+                _id: questions[0]._id
             }
         };
         request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {

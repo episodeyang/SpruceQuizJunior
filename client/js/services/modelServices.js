@@ -176,7 +176,7 @@ angular.module('modelServices', ['resourceProvider'])
                 });
             };
             modelInstance.saveQuestion = function (question, success, error) {
-//                if (question.id) {$rootScope.error = "udpate does not have object id."}
+//                if (question._id) {$rootScope.error = "udpate does not have object id."}
                 Questions.save(
                     question,
                     function (q) {
@@ -209,14 +209,14 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.voteup = function (question) {
                 var q = {
-                    id: question.id,
+                    id: question._id,
                     voteup: 'true'
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
             modelInstance.votedown = function (question) {
                 var q = {
-                    id: question.id,
+                    id: question._id,
                     votedown: 'true'
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
@@ -230,7 +230,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.addAnswer = function (answer, success, error) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     text: answer.text
                 };
                 Answers.add(
@@ -252,7 +252,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.updateAnswer = function (answer, success, error) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     text: answer.text
                 };
@@ -274,7 +274,7 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.removeAnswer = function (answer, success, error) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id
                 };
                 Answers.remove(
@@ -295,7 +295,7 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.voteupAnswer = function (answer) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     "voteup": 'true'
                 }
@@ -309,7 +309,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.votedownAnswer = function (answer) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     "votedown": 'true'
                 }
@@ -324,7 +324,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.addComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     text: comment.text
                 };
                 Comments.add(
@@ -349,7 +349,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id,
                 };
                 _.extend(comment, query)
@@ -375,7 +375,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id
                 };
                 Comments.remove(
@@ -397,7 +397,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.voteupComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id,
                     "voteup": 'true'
                 }
@@ -420,7 +420,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.votedownComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id,
                     "votedown": 'true'
                 }
@@ -445,7 +445,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.addAnswerComment = function (comment, answer, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     text: comment.text
                 };
@@ -473,7 +473,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                 };
@@ -501,7 +501,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id
                 };
@@ -525,7 +525,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.voteupAnswerComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                     "voteup": 'true'
@@ -550,7 +550,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.votedownAnswerComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                     "votedown": 'true'
