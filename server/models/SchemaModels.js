@@ -210,6 +210,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 type: String,
                 unique: true
             },
+            name: String,
             password: String,
             role: {title: String, bitMask: Number},
             student: { type: Schema.Types.ObjectId, ref: "Student"},
@@ -526,6 +527,24 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             },
             dateEdited: {
                 type: Date
+            },
+            __virtuals__: {
+                voteGet: function () {
+                    return _.size(this.voteup) - _.size(this.votedown) || 0;
+                },
+                nAnswersGet: function () {
+                    return _.size(this.answers);
+                }
+            },
+            __options__: {
+                toJSON: {
+                    getters: true,
+                    virtuals: true
+                },
+                toObject: {
+                    getters: true,
+                    virtuals: true
+                }
             }
         }
     };

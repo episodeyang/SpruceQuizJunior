@@ -68,6 +68,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         username: username,
                         password: password,
                         role: role,
+                        name: params.name,
                         student: null,
                         parent: null,
                         teacher: null,
@@ -97,7 +98,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         return callback('badRequest');
                     }
 
-                    var userObject;
+                    var userObject = {};
                     if (role.bitMask === userRoles.student.bitMask) {
                         userObject = new StudentM(subUser);
                         userObject.save();

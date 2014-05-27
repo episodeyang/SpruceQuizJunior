@@ -99,12 +99,12 @@ angular.module('SpruceQuizApp')
                             $rootScope.error = '';
                             if (question.sessions.length >= 1) {
                                 // this is now done in the backend.
-                                // Model.session.addQuestion(question.id);
+                                // Model.session.addQuestion(question._id);
                             }
                             if (question.books.length >= 1) {
-                                // Model.book.addQuestion(question.id);
+                                // Model.book.addQuestion(question._id);
                             }
-                            $location.path('/questions/' + Model.question.id);
+                            $location.path('/questions/' + Model.question._id);
                             mixpanel.track("submitted question to session");
                         }
                     );
@@ -112,7 +112,7 @@ angular.module('SpruceQuizApp')
             };
             $scope.editor.updateQuestion = function () {
                 var update = {
-                    id: $scope.editor.data.id,
+                    _id: $scope.editor.data._id,
                     title: $scope.editor.data.title,
                     text: $scope.editor.data.text,
                     tags: $scope.editor.data.tags

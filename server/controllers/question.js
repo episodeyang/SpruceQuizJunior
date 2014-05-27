@@ -72,7 +72,10 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     delete question.votedown;
                     delete question.comments;
                     delete question.answers;
-                    question.author = { username: req.user.username };
+                    question.author = {
+                        username: req.user.username,
+                        name: req.user.name
+                    };
                 }
 
                 console.log("req.body");

@@ -36,12 +36,14 @@ var testData = {
     /** Student login data */
     studentLogin: {
         username: 'student',
-        password: 'password'
+        password: 'password',
+        name: '杨歌'
     },
     /** Student login data for passportStub*/
     studentUser: {
         username: 'student',
-        role: userRoles.student
+        role: userRoles.student,
+        name: '杨歌'
     },
     /** superadmin registration data */
     superadminRegister: {
@@ -58,12 +60,14 @@ var testData = {
     /** superadmin login data */
     superadminLogin: {
         username: 'superadmin',
-        password: 'password'
+        password: 'password',
+        name: '欧洁瑜'
     },
     /** superadmin login data for passportStub*/
     superadminUser: {
         username: 'superadmin',
-        role: userRoles.superadmin
+        role: userRoles.superadmin,
+        name: '欧洁瑜'
     },
     /** admin registration data */
     adminRegister: {
@@ -80,12 +84,14 @@ var testData = {
     /** admin login data*/
     adminLogin: {
         username: 'admin',
-        password: 'password'
+        password: 'password',
+        name: '李新伟'
     },
     /** admin login data for passportStub*/
     adminUser: {
         username: 'admin',
-        role: userRoles.admin
+        role: userRoles.admin,
+        name: '李新伟'
     },
     /** teacher registration data*/
     teacherRegister: {
@@ -102,12 +108,14 @@ var testData = {
     /** teacher login data*/
     teacherLogin: {
         username: 'teacher',
-        password: 'password'
+        password: 'password',
+        name: '欧丽'
     },
     /** teacher login data for passportStub*/
     teacherUser: {
         username: 'teacher',
-        role: userRoles.teacher
+        role: userRoles.teacher,
+        name: '欧丽'
     },
     /** parent registration data*/
     parentRegister: {
@@ -124,27 +132,35 @@ var testData = {
     /** parent login data*/
     parentLogin: {
         username: 'parent',
-        password: 'password'
+        password: 'password',
+        name: '张力'
     },
     /** parent login data for passportStub*/
     parentUser: {
         username: 'parent',
-        role: userRoles.parent
+        role: userRoles.parent,
+        name: '张力'
     },
 //question data
     questionCreate: {
         title: '行程问题解法',
         text: 'some example text here',
         author: {
-            name: '王小一个',
-            username: 'thelittleone'
+            name: '张力',
+            username: 'parent'
         },
         tags: ['三年级', '数学', '二元一次方程'],
         comments: [
-            {text: '这个问题很有趣', author: 'authorName'}
+            {
+                text: '这个问题很有趣',
+                author: {
+                    name: "张力",
+                    username: 'parent'
+                }
+            }
         ],
         answers: [
-            {text: '这道题的解法应该是这样的：', author: 'authorName2', upvote: 0, downvote: 0 }
+            {text: '这道题的解法应该是这样的：', author: { name: '欧洁瑜', username: 'superadmin'}, upvote: 0, downvote: 0 }
         ]
     },
     questionCreate2: {
@@ -155,14 +171,16 @@ var testData = {
             username: 'thelittleone'
         },
         tags: ['三年级', '数学', '二元一次方程'],
-        voteup: [],
-        votedown: [],
         comments: [
-            {text: '这个问题很有趣', author: 'authorName'}
+            {text: '这个问题很有趣',
+                author: {
+                    name: "张力",
+                    username: 'parent'
+                }
+            }
         ],
-        answerComments: [],
         answers: [
-            {text: '这道题的解法应该是这样的：', author: 'authorName2', upvote: 0, downvote: 0 }
+            {text: '这道题的解法应该是这样的：', author: { name: '欧洁瑜', username: 'superadmin'}, upvote: 0, downvote: 0 }
         ]
 
     }

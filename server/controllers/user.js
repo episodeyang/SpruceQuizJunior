@@ -97,7 +97,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                 var query = {
                         username: req.params.username
                     },
-                    userRoot = {};
+                    userObject;
 
                 function sendSubDoc(error, user) {
                     var userFull = {};
@@ -110,7 +110,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                     // not the student/teacher/admin etc. subdoc.
                     // UPDATE: A safer thing to to is to just get rid of the _id
                     // field all together.
-                    _.extend(userFull, user.toObject(), userRoot);
+                    _.extend(userFull, user.toObject(), userObject);
                     delete userFull._id;
                     return res.json(200, userFull);
                 }
@@ -120,13 +120,13 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                         console.log(error);
                         return res.send(404, 'noUserFound' + error);
                     }
-                    userRoot = user.toObject();
+                    userObject = user.toObject();
 
                     SchemaModels[capitalize(user.role.title)]
                         .findOne(query).populate('books sessions').exec(sendSubDoc);
                 }
 
-                UserM.findOne(query).select('_id username role').exec(callback);
+                UserM.findOne(query).select('_id username role name').exec(callback);
             },
             update: function (req, res) {
                 if (!req.params.username) {
@@ -165,15 +165,19 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
                 // to avoid overwriting student/teacher _id with user._id
                     update = _.omit(req.body, ['_id', 'schools', 'sessions', 'books']);
 
-                console.log('the update object');
-                console.log(update);
-
                 SchemaModels[capitalize(req.body.role.title)]
                     .findOneAndUpdate(
                     query,
                     update,
                     callback
                 );
+
+                if (update.name !== req.user.name) {
+                    UserM.findOneAndUpdate(
+                        query,
+                        update
+                    );
+                }
             },
             getSessions: function (req, res) {
                 if (!req.params.username) {
