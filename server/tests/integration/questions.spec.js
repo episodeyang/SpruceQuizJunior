@@ -71,69 +71,69 @@ describe('Question API test - ', function (done) {
     it("doesn't need to login to access", function (done) {
 //        console.log('show the question before using it to access');
 //        console.log(question);
-        request(app).get('/api/questions/' + question.id).expect(200, done);
+        request(app).get('/api/questions/' + question._id).expect(200, done);
     });
     it('get question by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).get('/api/questions/' + question.id).expect(200).end(function (err, res){
-            res.body.id.should.eql(question.id);
+        request(app).get('/api/questions/' + question._id).expect(200).end(function (err, res){
+            res.body._id.should.eql(question._id);
             done();
         });
     });
     it('needs to login to access', function (done) {
 //        console.log('I am actually here')
         passportStub.logout(); // logout after each test
-        request(app).post('/api/questions/' + question.id).send({}).expect(401, done);
+        request(app).post('/api/questions/' + question._id).send({}).expect(401, done);
     });
     it('update question title by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question.id).send({title: 'updatedTitle'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question._id).send({title: 'updatedTitle'}).expect(201).end(function (err, res){
             res.body.title.should.eql('updatedTitle');
             done();
         });
     });
     it('update question text by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question.id).send({text: 'updatedText'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question._id).send({text: 'updatedText'}).expect(201).end(function (err, res){
             res.body.text.should.eql('updatedText');
             done();
         });
     });
     it('update question tags by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question.id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question._id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res){
             res.body.tags.should.eql(['updated tag 1', 'updated tag 2', 'updated tag 3']);
             done();
         });
     });
     it('needs to login to delete', function (done) {
-        request(app).del('/api/questions/' + question.id).expect(401, done);
+        request(app).del('/api/questions/' + question._id).expect(401, done);
     });
     it('delete question by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).del('/api/questions/' + question.id).expect(204, done);
+        request(app).del('/api/questions/' + question._id).expect(204, done);
     });
     it('upvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res){
             res.body.voteup.should.containEql(studentUser.username);
             done();
         });
     });
     it('downvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2.id).send({votedown: 'true'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question2._id).send({votedown: 'true'}).expect(201).end(function (err, res){
             res.body.votedown.should.containEql(studentUser.username);
             done();
         });
     });
     it('upvote the question2 again', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201, done);
+        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201, done);
     });
     it('remove upvote from question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res){
             res.body.voteup.should.not.containEql(studentUser.username);
             done();
         });

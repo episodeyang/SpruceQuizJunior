@@ -64,7 +64,7 @@ describe('Session API test - ', function (done) {
         });
     });
     it('get a session', function (done) {
-        request(app).get('/api/sessions/'+session0._id).expect(200).end(function (err, res) {
+        request(app).get('/api/sessions/' + session0._id).expect(200).end(function (err, res) {
             sessionData.sessions[0].name.should.be.eql(res.body.name);
             done();
         });
@@ -87,7 +87,9 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
-            res.body.sessions.should.containDeep([{_id: session0._id}]);
+            res.body.sessions.should.containDeep([
+                {_id: session0._id}
+            ]);
             done();
         });
     });
@@ -98,7 +100,9 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
-            res.body.sessions.should.containDeep([{_id: session1._id}]);
+            res.body.sessions.should.containDeep([
+                {_id: session1._id}
+            ]);
             done();
         });
     });
@@ -109,7 +113,9 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
-            res.body.sessions.should.not.containDeep([{_id: session1._id}]);
+            res.body.sessions.should.not.containDeep([
+                {_id: session1._id}
+            ]);
             done();
         });
     });
@@ -120,7 +126,9 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
-            res.body.sessions.should.containDeep([{_id: session1._id}]);
+            res.body.sessions.should.containDeep([
+                {_id: session1._id}
+            ]);
             done();
         });
     });
@@ -131,11 +139,31 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/users/' + studentUser.username + '/sessions').send(query).expect(201).end(function (err, res) {
-            res.body.sessions.should.containDeep([{_id: session2._id}]);
+            res.body.sessions.should.containDeep([
+                {_id: session2._id}
+            ]);
             done();
         });
     });
     var questions;
+    var question;
+    it('create new question with sessionId', function (done) {
+        "use strict";
+        question = data.questionCreate;
+        question.sessions = [session0._id];
+        request(app).post('/api/questions').send(question).expect(201).end(function (err, res) {
+            res.body.sessions.should.containEql(session0._id);
+            question = res.body;
+            done();
+        });
+    });
+    it('now get session to check if the question is there.', function (done) {
+        request(app).get('/api/sessions/' + session0._id).expect(200).end(function (err, res) {
+            console.log(res.body);
+            res.body.questions.should.containEql(question._id);
+            done();
+        });
+    });
     it('get quesitons id\'s', function (done) {
         request(app).get('/api/questions').expect(200).end(function (err, res) {
             console.log(res.body);
@@ -146,43 +174,53 @@ describe('Session API test - ', function (done) {
     it('add question to session and get the question populated on it\'s way back', function (done) {
         var query = {
             add: {
-                id: questions[0].id
+                id: questions[0]._id
             }
         };
         request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.containDeep([{id: questions[0].id}]);
+            res.body.questions.should.containDeep([
+                {_id: questions[0]._id}
+            ]);
             done();
         });
     });
     // the get session api does not contain populated sessions field.
     it('now get questions', function (done) {
         request(app).get('/api/sessions/' + session2._id + '/questions').expect(201).end(function (err, res) {
-            res.body.questions.should.containDeep([{id: questions[0].id}]);
+            res.body.questions.should.containDeep([
+                {_id: questions[0]._id}
+            ]);
             done();
         });
     });
     it('pull question from session', function (done) {
         var query = {
             pull: {
-                id: questions[0].id
+                id: questions[0]._id
             }
         };
         request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.not.containDeep([{id: questions[0].id}]);
+            res.body.questions.should.not.containDeep([
+                {_id: questions[0]._id}
+            ]);
             done();
         });
     });
     var book = {
-                title: "你身体里的那条鱼",
-                authors: [{name: 'schubin,Neil'}],
-                coverUrl: 'http://douban.com/34523452.jpg'
-            };
+        title: "你身体里的那条鱼",
+        authors: [
+            {name: 'schubin,Neil'}
+        ],
+        coverUrl: 'http://douban.com/34523452.jpg'
+    };
     it('add books to a session via /api/session{POST}', function (done) {
         var query = {
             books: [book]
         };
         request(app).post('/api/sessions/' + session2._id).send(query).expect(201).end(function (err, res) {
-            res.body.books.should.containDeep([{title: query.books[0].title}]);
+            res.body.books.should.containDeep([
+                {title: query.books[0].title}
+            ]);
             done();
         });
     });
@@ -196,7 +234,9 @@ describe('Session API test - ', function (done) {
             }
         };
         request(app).post('/api/sessions/' + session2._id + '/books').send(query).expect(201).end(function (err, res) {
-            res.body.books.should.not.containDeep([{title: book.title}]);
+            res.body.books.should.not.containDeep([
+                {title: book.title}
+            ]);
             console.log(res.body);
             done();
         });
@@ -206,7 +246,9 @@ describe('Session API test - ', function (done) {
             add: book
         };
         request(app).post('/api/sessions/' + session2._id + '/books').send(query).expect(201).end(function (err, res) {
-            res.body.books.should.containDeep([{title: book.title}]);
+            res.body.books.should.containDeep([
+                {title: book.title}
+            ]);
             console.log(res.body);
             done();
         });

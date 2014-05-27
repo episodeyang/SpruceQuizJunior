@@ -14,7 +14,6 @@
  */
 define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesHelper', "mongoose"],
     function (_, SchemaModels, UserFeedM, rolesHelper, mongoose) {
-//        var UserFeedM = SchemaModels.UserFeed;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
         var fieldString = "_id userId username page count feeds";

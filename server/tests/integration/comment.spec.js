@@ -45,7 +45,7 @@ describe('Comment API test - ', function (done) {
     it('add comment to question', function (done) {
         var commentText = '我是一个有趣的答案。你看得到我吗？';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/comments')
+        request(app).post('/api/questions/' + question._id + '/comments')
             .send(
                 {text: commentText}
             )
@@ -58,7 +58,7 @@ describe('Comment API test - ', function (done) {
     it('update comment in a question', function (done) {
         var comment = '这是更新后的答案，请查收';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/comments/' + question.comments[0].id)
+        request(app).post('/api/questions/' + question._id + '/comments/' + question.comments[0].id)
             .send({text: comment})
             .expect(201).end(function (err, res){
                 res.body.comments[0].text.should.eql(comment);
@@ -70,7 +70,7 @@ describe('Comment API test - ', function (done) {
             voteup: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/comments/' + question.comments[0].id)
+        request(app).post('/api/questions/' + question._id + '/comments/' + question.comments[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.comments[0].voteup.should.containEql(studentUser.username);
@@ -83,7 +83,7 @@ describe('Comment API test - ', function (done) {
             voteup: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/comments/' + question.comments[0].id)
+        request(app).post('/api/questions/' + question._id + '/comments/' + question.comments[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.comments[0].voteup.should.not.containEql(studentUser.username);
@@ -96,7 +96,7 @@ describe('Comment API test - ', function (done) {
             votedown: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/comments/' + question.comments[0].id)
+        request(app).post('/api/questions/' + question._id + '/comments/' + question.comments[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.comments[0].votedown.should.containEql(studentUser.username);
@@ -109,7 +109,7 @@ describe('Comment API test - ', function (done) {
             votedown: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/comments/' + question.comments[0].id)
+        request(app).post('/api/questions/' + question._id + '/comments/' + question.comments[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.comments[0].votedown.should.not.containEql(studentUser.username);
@@ -120,7 +120,7 @@ describe('Comment API test - ', function (done) {
     it('delete answer in a question', function (done) {
         var originalLength = _.size(question.comments);
         passportStub.login(studentUser);
-        request(app).del('/api/questions/' + question.id + '/comments/' + question.comments[0].id)
+        request(app).del('/api/questions/' + question._id + '/comments/' + question.comments[0].id)
             .expect(201).end(function (err, res){
                 _.size(res.body.comments).should.eql(originalLength-1);
                 done();

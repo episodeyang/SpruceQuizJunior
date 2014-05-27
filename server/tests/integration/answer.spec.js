@@ -45,7 +45,7 @@ describe('Answer API test - ', function (done) {
     it('add answer to question', function (done) {
         var ansText = '我是一个有趣的答案。你看得到我吗？';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers')
+        request(app).post('/api/questions/' + question._id + '/answers')
             .send(
                 {text: ansText}
             )
@@ -58,7 +58,7 @@ describe('Answer API test - ', function (done) {
     it('update answer in a question', function (done) {
         var ansText = '这是更新后的答案，请查收';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id)
             .send({text: ansText})
             .expect(201).end(function (err, res){
                 res.body.answers[0].text.should.eql(ansText);
@@ -70,7 +70,7 @@ describe('Answer API test - ', function (done) {
             voteup: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answers[0].voteup.should.containEql(studentUser.username);
@@ -83,7 +83,7 @@ describe('Answer API test - ', function (done) {
             voteup: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answers[0].voteup.should.not.containEql(studentUser.username);
@@ -96,7 +96,7 @@ describe('Answer API test - ', function (done) {
             votedown: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answers[0].votedown.should.containEql(studentUser.username);
@@ -109,7 +109,7 @@ describe('Answer API test - ', function (done) {
             votedown: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answers[0].votedown.should.not.containEql(studentUser.username);
@@ -120,7 +120,7 @@ describe('Answer API test - ', function (done) {
     it('delete answer in a question', function (done) {
         var originalLength = _.size(question.answers);
         passportStub.login(studentUser);
-        request(app).del('/api/questions/' + question.id + '/answers/' + question.answers[0].id)
+        request(app).del('/api/questions/' + question._id + '/answers/' + question.answers[0].id)
             .expect(201).end(function (err, res){
                 _.size(res.body.answers).should.eql(originalLength-1);
                 done();

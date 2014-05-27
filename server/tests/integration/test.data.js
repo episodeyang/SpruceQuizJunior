@@ -146,7 +146,6 @@ var testData = {
         answers: [
             {text: '这道题的解法应该是这样的：', author: 'authorName2', upvote: 0, downvote: 0 }
         ]
-
     },
     questionCreate2: {
         title: '行程问题解法',

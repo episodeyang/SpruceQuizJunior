@@ -12,11 +12,12 @@
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesHelper', "mongoose", "../models/FeedAPI"],
-    function (_, SchemaModels, QuestionM, rolesHelper, mongoose, FeedAPI) {
-        //var QuestionM = SchemaModels.Question;
+define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '../models/Session', '../models/Book', '../rolesHelper', "mongoose", "../models/FeedAPI"],
+    function (_, async, SchemaModels, QuestionM, SessionM, BookM, rolesHelper, mongoose, FeedAPI) {
+
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
+        var fieldString = '_id title text author tags sessions books vote voteup votedown comments answers answerComments dateEdited dateCreated';
         return {
             /**
              *
@@ -32,13 +33,13 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
              *       answers: [],
              *       comments: [],
              *       tags: [ '三年级', '数学', '二元一次方程' ],
-             *       id: '52f6e14da7e331ff15fb4d13' },
+             *       _id: '52f6e14da7e331ff15fb4d13' },
              *      { title: '行程问题解法',
              *        text: 'some example text here',
              *        answers: [],
              *        comments: [],
              *       tags: [ '三年级', '数学', '二元一次方程' ],
-             *       id: '52f6e5ff8021572716e3ee8f' },
+             *       _id: '52f6e5ff8021572716e3ee8f' },
              *     ]
              * @apiError UserNotFound The id of the User was not found.
              * @apiErrorExample Error-Response:
@@ -48,7 +49,6 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
              *     }
              */
             index: function (req, res) {
-//                console.log('got request to /api/problems, processing now.');
                 QuestionM
                     .find({}, function (err, docs) {
                         if (err) {
@@ -74,17 +74,51 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
                     delete question.answers;
                     question.author = { username: req.user.username };
                 }
+
+                console.log("req.body");
+                console.log(req.body);
                 QuestionM
-                    .create(question, function (err, results) {
+                    .create(question, function (err, question) {
                         if (err) {
                             console.log(err);
                             return res.send(500, err);
                         }
-                    })
-                    .then(function (question) {
-                        res.location(req.route.path + '/' + question.id);
-                        FeedAPI.questionAdd(req.user, question);
-                        return res.send(201, question);
+                        var stack = [];
+                        question = question.toObject();
+                        function callback(error, result) {
+                            if (error) {
+                                console.log(error);
+                            }
+                        }
+
+                        if (question.sessions) {
+                            _.each(
+                                question.sessions,
+                                function (sessionId) {
+                                    stack.push(function (callback) {
+                                        SessionM.addQuestion({_id: sessionId}, question, callback);
+                                    });
+                                }
+                            );
+                        }
+                        if (question.books) {
+                            _.each(
+                                question.books,
+                                function (book) {
+                                    stack.push(function (callback) {
+                                        BookM.addQuestion(book, question, callback);
+                                    });
+                                }
+                            );
+                        }
+                        function done(callback) {
+                            res.location(req.route.path + '/' + question._id);
+                            FeedAPI.questionAdd(req.user, question, question.sessions, question.books);
+                            return res.send(201, question);
+                        }
+
+                        stack.push(done);
+                        async.series(stack, callback);
                     });
             },
             /**
@@ -93,17 +127,15 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
              * @apiGroup Questions
              */
             findOne: function (req, res) {
-                if (!req.params.id) {
+                if (!req.params.id || req.params.id === "undefined") {
                     return res.send(400);
                 }
-                QuestionM.findById(
-                    req.params.id,
-                    'id title text author tags sessions books vote voteup votedown comments answers answerComments dateEdited dateCreated',
+                QuestionM.findById(req.params.id).select(fieldString).populate('sessions', 'name').exec(
                     function (err, question) {
                         if (err) {
-                            return res.send(403, err);
+                            return res.send(400, err);
                         } else {
-                            FeedAPI.questionGet(req.user, question);
+//                            FeedAPI.questionGet(req.user, question);
                             return res.send(200, question);
                         }
                     }
@@ -117,7 +149,7 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
             update: function (req, res) {
                 //console.log('request user object:')
                 //console.log(req.user);
-                if (!req.params.id) {
+                if (!req.params.id || req.params.id === "undefined") {
                     return res.send(400, 'noQuestionId');
                 }
                 var actionType;
@@ -179,7 +211,7 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
                             if (err) {
                                 return res.send(500, err);
                             } else {
-                                FeedAPI.questionVote(req.user, result)[actionType]();
+//                                FeedAPI.questionVote(req.user, result)[actionType]();
                                 return res.send(201, q);
                             }
                         }
@@ -225,7 +257,7 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
                             if (err) {
                                 return res.send(500, err);
                             } else {
-                                FeedAPI.questionEdit(req.user, result);
+//                                FeedAPI.questionEdit(req.user, result);
                                 return res.send(201, result);
                             }
                         }
@@ -238,7 +270,7 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
              * @apiGroup Questions
              */
             removeById: function (req, res) {
-                if (!req.params.id) {
+                if (!req.params.id || req.params.id === "undefined") {
                     return res.send(400);
                 }
                 QuestionM.findByIdAndRemove(
@@ -247,7 +279,6 @@ define(['underscore', '../models/SchemaModels', '../models/Question', '../rolesH
                         if (err) {
                             return res.send(403, err)
                         }
-                        ;
                         return res.send(204);
                     });
             }

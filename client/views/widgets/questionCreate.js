@@ -98,11 +98,11 @@ angular.module('SpruceQuizApp')
                         function (question) {
                             $rootScope.error = '';
                             if (question.sessions.length >= 1) {
-                                Model.session.addQuestion(question.id);
+                                // this is now done in the backend.
+                                // Model.session.addQuestion(question.id);
                             }
                             if (question.books.length >= 1) {
-                                console.log('I am here adding the question to the book!')
-                                Model.book.addQuestion(question.id);
+                                // Model.book.addQuestion(question.id);
                             }
                             $location.path('/questions/' + Model.question.id);
                             mixpanel.track("submitted question to session");

@@ -1,7 +1,7 @@
 'use strict';
 /**
- * @fileOverview User Model
- * @memberOf User
+ * @fileOverview Book Model
+ * @memberOf Book
  * @type {exports}
  */
 
@@ -9,22 +9,21 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
         './SchemaModels'],
     function (crypto, _, passport, passportLocal, validator, rolesHelper, SchemaModels) {
 
-        var UserFeedM = SchemaModels.UserFeed;
+        var BookFeedM = SchemaModels.BookFeed;
 
         var maxCount = 1000;
-        var UserFeedMethods = {
-            newFeedBucket: function (userId, username, currentPageNumber, callback) {
+        var BookFeedMethods = {
+            newFeedBucket: function (bookId, currentPageNumber, callback) {
                 var query = {
-                    userId: userId,
+                    bookId: bookId,
                     page: currentPageNumber + 1
                 };
                 var update = {
-                    userId: userId,
-                    username: username,
+                    bookId: bookId,
                     page: currentPageNumber + 1,
                     count: 0
                 };
-                UserFeedM.findOneAndUpdate(
+                BookFeedM.findOneAndUpdate(
                     query,
                     update,
                     {
@@ -34,12 +33,12 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     callback
                 );
             },
-            addFeed: function (userId, username, type, data, callback) {
-                if (!userId) {return callback('noUserId'); }
+            addFeed: function (bookId, bookname, type, data, callback) {
+                if (!bookId) {return callback('noBookId'); }
                 if (!type) {return callback('noFeedType'); }
                 if (!data) {return callback('noFeedData'); }
                 var query = {
-                    userId: userId
+                    bookId: bookId
                 };
                 var feed = {
                     actionType: type,
@@ -53,7 +52,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
                 function repeatAdd (error, doc) {
                     if (error) { return console.log(error); }
-                    UserFeedM.findOneAndUpdate(
+                    BookFeedM.findOneAndUpdate(
                         query,
                         update,
                         {  sort: {page: -1} },//To make sure to find the largest one.
@@ -68,18 +67,18 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         return callback(error);
                     }
                     if (!doc) {
-                        console.log('creating first feed bucket for user');
+                        console.log('creating first feed bucket for book');
                         var currentPageNumber = -1;
-                        return UserFeedMethods.newFeedBucket(userId, username, currentPageNumber, repeatAdd);
+                        return BookFeedMethods.newFeedBucket(bookId, bookname, currentPageNumber, repeatAdd);
                     } else if (doc.count >= maxCount) {
                         var currentPageNumber = doc.page;
-                        return UserFeedMethods.newFeedBucket(userId, username, currentPageNumber, callback);
+                        return BookFeedMethods.newFeedBucket(bookId, bookname, currentPageNumber, callback);
                     } else {
                         return callback(null, doc);
                     }
                 }
 
-                UserFeedM.findOneAndUpdate(
+                BookFeedM.findOneAndUpdate(
                     query,
                     update,
                     {
@@ -89,8 +88,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 );
             }
         };
-        _.extend(UserFeedM, UserFeedMethods);
-        return UserFeedM;
+        _.extend(BookFeedM, BookFeedMethods);
+        return BookFeedM;
     });
 
 

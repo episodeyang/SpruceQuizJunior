@@ -99,22 +99,42 @@ describe('Book API test - ', function (done) {
     it('add question to book and get the question populated on it\'s way back', function (done) {
         var query = {
             add: {
-                id: question.id
+                id: question._id
             }
         };
         request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.containDeep([{id: question.id}]);
+            res.body.questions.should.containDeep([{_id: question._id}]);
             done();
         });
     });
     it('pull question from book', function (done) {
         var query = {
             pull: {
-                id: question.id
+                id: question._id
             }
         };
         request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.not.containDeep([{id: question.id}]);
+            res.body.questions.should.not.containDeep([{id: question._id}]);
+            done();
+        });
+    });
+    var question;
+    it('create new question with sessionId', function (done) {
+        "use strict";
+        question = data.questionCreate;
+        question.books = [BookUpdated];
+        request(app).post('/api/questions').send(question).expect(201).end(function (err, res) {
+            console.log(BookUpdated);
+            console.log(res.body);
+            res.body.books.should.containDeep([{title: BookUpdated.title}]);
+            question = res.body;
+            done();
+        });
+    });
+    it('now get the book to check if the question is there.', function (done) {
+        request(app).get('/api/books/' + BookUpdated._id).expect(200).end(function (err, res) {
+            console.log(res.body);
+            res.body.questions.should.containDeep([{_id:question._id}]);
             done();
         });
     });

@@ -8,13 +8,7 @@
 define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../rolesHelper',
         './SchemaModels'],
     function (crypto, _, passport, passportLocal, validator, rolesHelper, SchemaModels) {
-        var LocalStrategy = passportLocal.Strategy;
-        var userRoles = rolesHelper.userRoles;
         var SessionFeedM = SchemaModels.SessionFeed;
-
-        function capitalize(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
 
         var maxCount = 1000;
         var SessionFeedMethods = {
@@ -47,9 +41,9 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 };
                 var feed = {
                     actionType: type,
-                    time: new Date(),
-                    data: data
+                    time: new Date()
                 };
+                _.extend(feed, data);
                 var update = {
                     $inc: {count: 1},
                     $push: {feeds: feed}
