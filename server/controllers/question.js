@@ -138,7 +138,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                         if (err) {
                             return res.send(400, err);
                         } else {
-//                            FeedAPI.questionGet(req.user, question);
+                            FeedAPI.questionGet(req.user, question, question.sessions, question.books);
                             return res.send(200, question);
                         }
                     }
@@ -214,7 +214,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             if (err) {
                                 return res.send(500, err);
                             } else {
-//                                FeedAPI.questionVote(req.user, result)[actionType]();
+                                FeedAPI.questionVote(req.user, question, question.sessions, question.books)[actionType]();
                                 return res.send(201, q);
                             }
                         }
@@ -233,6 +233,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     }
                 } else {
                     var update = {};
+                    var question = req.body;
                     var fieldString = 'title ';
                     if (req.body.title) {
                         update.title = req.body.title;
@@ -256,11 +257,11 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             select: fieldString,
                             $currentDate: {dateEdited: true}
                         },
-                        function (err, result, n) {
+                        function (err, result) {
                             if (err) {
                                 return res.send(500, err);
                             } else {
-//                                FeedAPI.questionEdit(req.user, result);
+                                FeedAPI.questionEdit(req.user, result.toObject(), result.sessions, result.books);
                                 return res.send(201, result);
                             }
                         }
@@ -276,13 +277,23 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 if (!req.params.id || req.params.id === "undefined") {
                     return res.send(400);
                 }
-                QuestionM.findByIdAndRemove(
+                QuestionM.findById(
                     ObjectId(req.params.id),
-                    function (err, results) {
-                        if (err) {
-                            return res.send(403, err)
+                    function (err, question) {
+
+                        function done(error) {
+                            if (error) {
+                                return res.send(403, error);
+                            }
+                            FeedAPI.questionRemove(req.user, question.toObject(), question.sessions, question.books);
+                            return res.send(204);
                         }
-                        return res.send(204);
+
+                        if (question.answers.length >= 1 || question.comments.length >= 1) {
+                            return done('canNotRemove:HasAnswersOrComments');
+                        } else {
+                            question.remove(done);
+                        }
                     });
             }
         };

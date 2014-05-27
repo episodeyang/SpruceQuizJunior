@@ -644,6 +644,10 @@ angular.module('modelServices', ['resourceProvider'])
                 commentAdd: {
                     tagText: "评论",
                     url: '/questions/'
+                },
+                questionRemove: {
+                    tagText: '删除',
+                    url: '/questions/deleted/'
                 }
             };
 

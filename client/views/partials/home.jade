@@ -166,18 +166,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span 提问 {{Model.profile.stats.answerCount}}
                                                 .unit
                                                     span 编辑 {{Model.profile.stats.editCount}}
-                        .col-xs-12
-                            .feed-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:'time':true track by $index ")
-                                .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
-                                    .unit {{feed.timeNumber}}
-                                        span.small {{feed.timeUnit}}
-                                .time-header.right-label
-                                    .unit
-                                        span.small {{feed.tagText}}
-                                .time-body.card
-                                    .unit.title
-                                        a(ng-href="{{feed.url}}") “{{feed.data.title}}"
-                                    .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
+                        .col-xs-12(ng-include="'/widgets/timeline'")
                     .flow-container
                         .row
                             .col-lg-12
