@@ -13,13 +13,12 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
         var maxCount = 1000;
         var UserFeedMethods = {
-            newFeedBucket: function (userId, username, currentPageNumber, callback) {
+            newFeedBucket: function (username, currentPageNumber, callback) {
                 var query = {
-                    userId: userId,
+                    username: username,
                     page: currentPageNumber + 1
                 };
                 var update = {
-                    userId: userId,
                     username: username,
                     page: currentPageNumber + 1,
                     count: 0
@@ -34,12 +33,12 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     callback
                 );
             },
-            addFeed: function (userId, username, type, data, callback) {
-                if (!userId) {return callback('noUserId'); }
+            addFeed: function (username, type, data, callback) {
+                if (!username) {return callback('userFeedNoUsername'); }
                 if (!type) {return callback('noFeedType'); }
                 if (!data) {return callback('noFeedData'); }
                 var query = {
-                    userId: userId
+                    username: username
                 };
                 var feed = {
                     actionType: type,
@@ -63,17 +62,16 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
                 function checkCount(error, doc) {
                     if (error) {
-                        console.log('error in checkCount call back function');
-                        console.log(error);
+                        console.log('error in userFeed checkCount call back function', error);
                         return callback(error);
                     }
                     if (!doc) {
                         console.log('creating first feed bucket for user');
                         var currentPageNumber = -1;
-                        return UserFeedMethods.newFeedBucket(userId, username, currentPageNumber, repeatAdd);
+                        return UserFeedMethods.newFeedBucket(username, currentPageNumber, repeatAdd);
                     } else if (doc.count >= maxCount) {
                         var currentPageNumber = doc.page;
-                        return UserFeedMethods.newFeedBucket(userId, username, currentPageNumber, callback);
+                        return UserFeedMethods.newFeedBucket(username, currentPageNumber, callback);
                     } else {
                         return callback(null, doc);
                     }

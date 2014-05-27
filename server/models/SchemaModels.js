@@ -229,13 +229,12 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             }
         },
         userFeed: {
-            userId: {type: Schema.Types.ObjectId},
-            username: String,
-            page: {type: Number, index: true, default: 0},
+            username: {type: String, index: true},
+            page: {type: Number, index: true, unique: true, default: 0},
             count: {type: Number},
             feeds: [subSchema.Feed],
             __index__: {
-                userId: 1,
+                username: 1,
                 page: -1
             }
         },
@@ -399,15 +398,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             bookId: {
                 type: Schema.Types.ObjectId
             },
-            page: {
-                type: Number, index: true
-            },
-            count: {
-                type: Number, index: false
-            },
+            page: { type: Number, index: true, unique: true },
+            count: { type: Number, index: false },
             feeds: [subSchema.Feed],
             __index__: {
-                userId: 1,
+                bookId: 1,
                 page: -1
             }
         },
@@ -485,15 +480,11 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             sessionId: {
                 type: Schema.Types.ObjectId
             },
-            page: {
-                type: Number, index: true
-            },
-            count: {
-                type: Number, index: false
-            },
+            page: { type: Number, index: true, unique: true },
+            count: { type: Number, index: false },
             feeds: [subSchema.Feed],
             __index__: {
-                userId: 1,
+                sessionId: 1,
                 page: -1
             }
         },

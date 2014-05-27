@@ -32,27 +32,27 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var typeString = 'questionAdd';
                 var stack = [];
                 var data = {
-                    userId: user._id,
                     username: user.username,
                     question: {
-                        id : question._id,
+                        _id : question._id,
                         title: question.title,
                         text: question.text,
-                        tags: question.tags
-                    },
-                    sessions: sessions,
-                    books: books
+                        tags: question.tags,
+                        sessions: sessions,
+                        books: books
+                    }
                 };
 
                 function userAdd(callback) {
-                    return UserFeedM.addFeed(user._id, user.username, typeString, _.omit(data, ['userId', 'username']), callback);
+                    if (sessions) { data.sessions = sessions; }
+                    if (books) { data.books = books; }
+                    return UserFeedM.addFeed(user.username, typeString, _.omit(data, ['userId', 'username']), callback);
                 }
                 stack.push(userAdd);
 
-                function makeSessionCallback(session) {
-                    data.session = _.pick(session, ['id']);
+                function makeSessionCallback(sessionId) {
                     function sessionAdd(callback) {
-                        return SessionFeedM.addFeed(session, typeString, _.omit(data, 'book'), callback);
+                        return SessionFeedM.addFeed(sessionId, typeString, _.omit(data, 'sessions'), callback);
                     }
                     stack.push(sessionAdd);
                 }

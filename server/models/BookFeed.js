@@ -33,7 +33,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     callback
                 );
             },
-            addFeed: function (bookId, bookname, type, data, callback) {
+            addFeed: function (bookId, type, data, callback) {
                 if (!bookId) {return callback('noBookId'); }
                 if (!type) {return callback('noFeedType'); }
                 if (!data) {return callback('noFeedData'); }
@@ -62,17 +62,16 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
                 function checkCount(error, doc) {
                     if (error) {
-                        console.log('error in checkCount call back function');
-                        console.log(error);
+                        console.log('error in bookFeed checkCount call back function', error);
                         return callback(error);
                     }
                     if (!doc) {
                         console.log('creating first feed bucket for book');
                         var currentPageNumber = -1;
-                        return BookFeedMethods.newFeedBucket(bookId, bookname, currentPageNumber, repeatAdd);
+                        return BookFeedMethods.newFeedBucket(bookId, currentPageNumber, repeatAdd);
                     } else if (doc.count >= maxCount) {
                         var currentPageNumber = doc.page;
-                        return BookFeedMethods.newFeedBucket(bookId, bookname, currentPageNumber, callback);
+                        return BookFeedMethods.newFeedBucket(bookId, currentPageNumber, callback);
                     } else {
                         return callback(null, doc);
                     }

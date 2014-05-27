@@ -61,12 +61,11 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
                 function checkCount(error, doc) {
                     if (error) {
-                        console.log('error in checkCount call back function');
-                        console.log(error);
+                        console.log('error in sessionFeed checkCount call back function', error);
                         return callback(error);
                     }
                     if (!doc) {
-                        console.log('creating first feed bucket for user');
+                        console.log('creating first feed bucket for Session');
                         var currentPageNumber = -1;
                         return SessionFeedMethods.newFeedBucket(sessionId, currentPageNumber, repeatAdd);
                     } else if (doc.count >= maxCount) {
