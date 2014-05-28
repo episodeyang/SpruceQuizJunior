@@ -38,7 +38,6 @@ angular.module('SpruceQuizApp')
                  * - view.removeBook(book): remove book event hook
                  */
                 Model.getBooks();
-                console.log(Model.profile);
                 $scope.view.books = Model.profile.books;
 
                 $scope.view.addBook = function (book, index) {
@@ -51,7 +50,7 @@ angular.module('SpruceQuizApp')
                     }
 
                     Model.profile.addBook(book, success);
-                }
+                };
                 $scope.view.removeBook = function (book, index) {
                     function success(books) {
                         if (index !== undefined) {
@@ -61,13 +60,15 @@ angular.module('SpruceQuizApp')
                     }
 
                     Model.profile.removeBook(book, success);
-                }
+                };
                 $scope.view.submitBook = function (bookData) {
                     var bookCreated;
+
                     function createSuccess(book) {
                         bookCreated = book;
                         Model.profile.addBook(book, addSuccess);
                     }
+
                     function addSuccess() {
                         $location.path('/books/' + bookCreated.authors[0].name + '/' + bookCreated.title);
                         $scope.apply();

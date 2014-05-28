@@ -805,97 +805,6 @@ angular.module('modelServices', ['resourceProvider'])
                 Users.get(query, successCallback, errorCallback);
             };
 
-            modelInstance.session = {};
-            modelInstance.getSession = function (id, success, error) {
-                var query = { sessionId: id };
-
-                var callbackStack;
-
-                function setup(success, error) {
-                    callbackStack = {};
-                    if (success) {
-                        callbackStack.success = success;
-                    }
-                    if (error) {
-                        callbackStack.error = error;
-                    }
-                }
-
-                function successCallback(session) {
-                    _.extend(modelInstance.session, session);
-                    if (callbackStack.success) {
-                        callbackStack.success(session)
-                    }
-                }
-
-                function errorCallback(err) {
-                    $rootScope.error = err;
-                    if (callbackStack.error) {
-                        callbackStack.error(err);
-                    }
-                }
-
-                function getCallback(session) {
-                    modelInstance.session = _.extend(
-                        {
-                            save: save,
-                            addQuestion: addQuestion,
-                            removeQuestion: removeQuestion,
-                            getQuestions: getQuestions,
-                            getFeeds: getFeeds
-                        },
-                        session);
-
-                    if (success) {
-                        success(session);
-                    }
-                }
-
-                function addQuestion(questionId, success, error) {
-                    setup(success, error);
-                    Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
-                }
-
-                function removeQuestion(questionId, success, error) {
-                    setup(success, error);
-                    Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
-                }
-
-                function getQuestions(success, error) {
-                    setup(success, error);
-                    Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
-                }
-
-                function getFeeds(success, error) {
-                    setup(success, error);
-                    function callback(feeds) {
-                        modelInstance.sessionFeeds = feeds;
-                        feedFormatter(modelInstance.sessionFeeds.feeds);
-                        if (success) {
-                            success(modelInstance.sessionFeeds);
-                        }
-                    }
-
-                    setup(null, error);
-                    Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
-                }
-
-                function save(success, error) {
-                    setup(success, error);
-                    var query = {
-                        sessionId: modelInstance.session._id,
-                        name: modelInstance.session.name,
-                        teachers: modelInstance.session.teachers,
-                        overview: modelInstance.session.overview,
-                        tags: modelInstance.session.tags
-                    };
-
-                    Sessions.save(query, successCallback, errorCallback);
-                }
-
-                setup(getCallback, error);
-                Sessions.get(query, successCallback, errorCallback);
-            };
 
             modelInstance.books = {};
             modelInstance.getBooks = function (query, success, error) {
@@ -1085,6 +994,7 @@ angular.module('modelServices', ['resourceProvider'])
                 Sessions.index({}, success, error);
             };
 
+            modelInstance.session = {};
             modelInstance.createSession = function (session, callback) {
                 function success(session) {
                     modelInstance.getSessions();
@@ -1110,6 +1020,96 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 validateAndSave(session);
+            };
+            modelInstance.getSession = function (id, success, error) {
+                var query = { sessionId: id };
+
+                var callbackStack;
+
+                function setup(success, error) {
+                    callbackStack = {};
+                    if (success) {
+                        callbackStack.success = success;
+                    }
+                    if (error) {
+                        callbackStack.error = error;
+                    }
+                }
+
+                function successCallback(session) {
+                    _.extend(modelInstance.session, session);
+                    if (callbackStack.success) {
+                        callbackStack.success(session)
+                    }
+                }
+
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (callbackStack.error) {
+                        callbackStack.error(err);
+                    }
+                }
+
+                function getCallback(session) {
+                    modelInstance.session = _.extend(
+                        {
+                            save: save,
+                            addQuestion: addQuestion,
+                            removeQuestion: removeQuestion,
+                            getQuestions: getQuestions,
+                            getFeeds: getFeeds
+                        },
+                        session);
+
+                    if (success) {
+                        success(session);
+                    }
+                }
+
+                function addQuestion(questionId, success, error) {
+                    setup(success, error);
+                    Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
+                }
+
+                function removeQuestion(questionId, success, error) {
+                    setup(success, error);
+                    Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
+                }
+
+                function getQuestions(success, error) {
+                    setup(success, error);
+                    Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
+                }
+
+                function getFeeds(success, error) {
+                    setup(success, error);
+                    function callback(feeds) {
+                        modelInstance.sessionFeeds = feeds;
+                        feedFormatter(modelInstance.sessionFeeds.feeds);
+                        if (success) {
+                            success(modelInstance.sessionFeeds);
+                        }
+                    }
+
+                    setup(null, error);
+                    Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
+                }
+
+                function save(success, error) {
+                    setup(success, error);
+                    var query = {
+                        sessionId: modelInstance.session._id,
+                        name: modelInstance.session.name,
+                        teachers: modelInstance.session.teachers,
+                        overview: modelInstance.session.overview,
+                        tags: modelInstance.session.tags
+                    };
+
+                    Sessions.save(query, successCallback, errorCallback);
+                }
+
+                setup(getCallback, error);
+                Sessions.get(query, successCallback, errorCallback);
             };
 
             /**

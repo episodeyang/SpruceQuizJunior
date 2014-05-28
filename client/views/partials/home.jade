@@ -61,19 +61,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
                     .row
-                        .col-xs-12
-                            .card.bottom-margin
-                                .card-title.bottom-margin
-                                    span.name 杨歌
-                                    span.signature 问了
-                            .card.bottom-margin
-                                .card-title.bottom-margin
-                                    span.name 杨歌
-                                    span.signature 问了
-                            .card.bottom-margin
-                                .card-title.bottom-margin
-                                    span.name 杨歌
-                                    span.signature 问了
+                        .col-xs-12(ng-include="'/widgets/newsFeed'")
                 div(ng-if="view.state==='timeline'")
                     .row
                         .col-xs-12
