@@ -1,6 +1,7 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/timeline.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/editor.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
@@ -111,18 +112,8 @@ div.background(background-img="/img/bg-brown.jpg")
 
                     .flow-container
                         .row
-                            .col-xs-12
-                                .feed-container(ng-repeat="feed in Model.sessionFeeds.feeds | orderBy:'time':true track by $index ")
-                                    .time-header.separator(ng-class="{last: $index==Model.sessionFeeds.count-1}")
-                                        .unit {{feed.timeNumber}}
-                                            span.small {{feed.timeUnit}}
-                                    .time-header.right-label
-                                        .unit
-                                            span.small {{feed.tagText}}
-                                    .time-body.card
-                                        .unit.title
-                                            a(ng-href="{{feed.url}}") “{{feed.data.title}}"
-                                        .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
+                            .col-xs-12(ng-include="'/widgets/newsFeed'")
+
 
                 .row(ng-if="view.state!='info'")
                     .col-xs-12

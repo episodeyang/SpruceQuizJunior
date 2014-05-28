@@ -1,6 +1,7 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/timeline.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/editor.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
@@ -149,6 +150,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                     p.no-top-margin.text-center.small 回答
                     div.placeholder.short(ng-if="!Model.book.questions || Model.book.questions.length===0")
                         | 这个班级中还没有添加任何问题：）
+                div(ng-if="view.state=='newsFeed'")
+                    .flow-container
+                        .row
+                            .col-xs-12(ng-include="'/widgets/newsFeed'")
+
                 div(ng-if="view.state=='ask'")
                     div(ng-include="'/widgets/questionCreate'")
 

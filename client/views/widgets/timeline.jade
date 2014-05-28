@@ -1,6 +1,6 @@
 //
    Created by ge on 5/27/14.
-.feed-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:'time':true track by $index ")
+.timeline-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:'time':true track by $index ")
     .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
         .unit {{feed.timeNumber}}
             span.small {{feed.timeUnit}}

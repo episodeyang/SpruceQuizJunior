@@ -212,6 +212,69 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 stackMaker(typeString, stack, data, user, sessions, books);
                 async.series(stack, errorLog);
             },
+            commentEdit: function (user, comment, sessions, books) {
+                if (!user || !comment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "commentEdit";
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id: question._id,
+                        title: question.title
+                    },
+                    comment: _.pick(comment, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                async.series(stack, errorLog);
+            },
+            commentVote: function (user, comment, sessions, books) {
+                if (!user || !comment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "commentEdit";
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id: question._id,
+                        title: question.title
+                    },
+                    comment: _.pick(comment, ['_id', 'text'])
+                };
+
+                function removeUpVote() {
+                    typeString += ".removeUpVote";
+                    stackMaker(typeString, stack, data, user, sessions, books);
+                    async.series(stack, errorLog);
+                }
+
+                function upVote() {
+                    typeString += ".upVote";
+                    stackMaker(typeString, stack, data, user, sessions, books);
+                    async.series(stack, errorLog);
+                }
+
+                function removeDownVote() {
+                    typeString += ".removeDownVote";
+                    stackMaker(typeString, stack, data, user, sessions, books);
+                    async.series(stack, errorLog);
+                }
+
+                function downVote() {
+                    typeString += ".downVote";
+                    stackMaker(typeString, stack, data, user, sessions, books);
+                    async.series(stack, errorLog);
+                }
+
+                return {
+                    removeUpVote: removeUpVote,
+                    upVote: upVote,
+                    removeDownVote: removeDownVote,
+                    downVote: downVote
+                };
+            },
             // todo: answer skeleton code
             answer: function (user, answer, sessions, books) {
                 if (!user || !answer) {

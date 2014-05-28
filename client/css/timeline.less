@@ -1,0 +1,113 @@
+@import "elements.less";
+@import "mixins.less";
+@import "variables.less";
+
+@dark-blue: #428bca;
+.timeline-container {
+  width: 100%;
+  position: relative;
+  padding-top: 15px;
+
+  .time-header{
+    position: absolute;
+    height: 100%;
+    float: left;
+    margin-top: -15px;
+    width: 90px;
+    padding-top: 15px;
+    box-sizing: border-box;
+    color: grey;
+    background-color: transparent;
+    font-size: 1.4em;
+    .unit {
+      span.small {
+        position: relative;
+        font-size: 75%;
+        top: -1px;
+      }
+    }
+  }
+  .time-header.separator {
+    .unit {
+      float: right;
+      padding-right: 20px;
+    }
+    &:after {
+      content: " ";
+      position: absolute;
+      left: 85px;
+      margin-top: -15px;
+      border-width: 0;
+      background-color: @dark-blue;
+      width: 2px;
+      height: 100%;
+    }
+    &:before {
+      content: " ";
+      position: absolute;
+      margin-top: -15px;
+      border-width: 0;
+      background-color: @dark-blue;
+      width: 8px;
+      height: 8px;
+      .transform(translateX(82px) translateY(31px) rotate(45deg));
+      z-index: 1;
+    }
+  }
+  .time-header.separator.last {
+    &:after {
+      height: 30px;
+    }
+  }
+  .time-header.right-label {
+    margin-left: 100px;
+    .unit {
+      float: none;
+      span.small {
+        font-size: 75%;
+        top: 1px;
+      }
+    }
+  }
+  .time-body {
+    margin-left: 160px;
+    position: relative;
+    .unit.title {
+      float: none;
+//      line-height: 2.0em;
+      color: @dark-blue;
+      padding-bottom: 0;
+      span, a {
+        color: inherit;
+      }
+    }
+    .unit {
+      float: none;
+      position: relative;
+      height: auto;
+//      line-height: 2.0em;
+      color: #717171;
+      span.small {
+        font-size: 75%;
+      }
+    }
+  }
+  .time-body.card {
+    padding: 0;
+  }
+}
+@highlight-dark-blue: #55adff;
+.timeline-container:hover {
+  .time-header{
+    color: #575757;
+  }
+  .time-header.separator {
+
+    &:before {
+      background-color: @highlight-dark-blue;
+      .box-shadow(inset 0 0 10px 0 darken(@highlight-dark-blue, 40%) );
+//      .transform(translateX(78px) translateY(24px) rotate(45deg));
+      .transition( all 0.25s ease);
+    }
+  }
+}

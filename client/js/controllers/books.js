@@ -32,7 +32,16 @@ angular.module('SpruceQuizApp')
             $rootScope.errors = {};
 
 
-            Model.getBook($routeParams.bookId, $routeParams.bookTitle, $routeParams.authorName);
+            Model.getBook(
+                $routeParams.bookId,
+                $routeParams.bookTitle,
+                $routeParams.authorName,
+                function () {
+                    Model.book.getFeeds(function () {
+                        $scope.view.feedBucket = Model.bookFeeds;
+                    })
+                }
+            );
 
             $scope.submitBook = Model.book.save;
             function isArray(obj) {
