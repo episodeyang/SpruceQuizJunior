@@ -31,8 +31,19 @@ angular.module('SpruceQuizApp')
 
             $rootScope.errors = {};
 
-            Model.getUserProfile($scope.user.username);
+            Model.getSession();
+            Model.getBook();
+            Model.getUserProfile($scope.user.username, function(){
+                Model.session.getFeeds(
+                    function () {
+                        $scope.view.feedBucket = Model.sessionFeeds;
+                    },
+                    null,
+                    Model.profile.sessions[0]._id
+                );
+            });
             Model.getUserFeeds($scope.user.username);
+
 
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';
@@ -74,11 +85,11 @@ angular.module('SpruceQuizApp')
             };
             $scope
                 .$watch(
-                    'Model.profile',
-                    function (newVal, oldVal) {
-                    },
-                    true
-                );
+                'Model.profile',
+                function (newVal, oldVal) {
+                },
+                true
+            );
             $scope.submitProfile = function () {
 
                 function removeNull(obj, key) {

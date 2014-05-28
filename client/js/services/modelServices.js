@@ -887,6 +887,8 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                     setup(queryCallback, error);
                     Books.query(query, successCallback, errorCallback);
+                } else {
+                    getCallback();
                 }
 
                 var callbackStack;
@@ -953,7 +955,7 @@ angular.module('modelServices', ['resourceProvider'])
                     setup(success, error);
                     Books.getQuestions({bookId: modelInstance.book._id}, successCallback, errorCallback);
                 }
-                function getFeeds(success, error) {
+                function getFeeds(success, error, bookId) {
                     setup(success, error);
                     function callback(feeds) {
                         modelInstance.bookFeeds = feeds;
@@ -964,8 +966,12 @@ angular.module('modelServices', ['resourceProvider'])
                     }
 
                     setup(null, error);
-                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
-                    Books.getFeeds({bookId: modelInstance.book._id}, callback, errorCallback)
+                    if (!bookId) {
+                        console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                        Books.getFeeds({bookId: modelInstance.book._id}, callback, errorCallback)
+                    } else {
+                        Books.getFeeds({bookId: bookId}, callback, errorCallback)
+                    }
                 }
 
             };
@@ -1064,6 +1070,7 @@ angular.module('modelServices', ['resourceProvider'])
                     if (success) {
                         success(session);
                     }
+                    return modelInstance.session;
                 }
 
                 function addQuestion(questionId, success, error) {
@@ -1081,7 +1088,7 @@ angular.module('modelServices', ['resourceProvider'])
                     Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
                 }
 
-                function getFeeds(success, error) {
+                function getFeeds(success, error, sessionId) {
                     setup(success, error);
                     function callback(feeds) {
                         modelInstance.sessionFeeds = feeds;
@@ -1091,8 +1098,13 @@ angular.module('modelServices', ['resourceProvider'])
                         }
                     }
 
-                    setup(null, error);
-                    Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
+                    if (!sessionId) {
+                        setup(null, error);
+                        console.assert(modelInstance.session._id, "model.session doesn't have _id field");
+                        Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback)
+                    } else {
+                        Sessions.getFeeds({sessionId: sessionId}, callback, errorCallback)
+                    }
                 }
 
                 function save(success, error) {
@@ -1109,7 +1121,11 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 setup(getCallback, error);
-                Sessions.get(query, successCallback, errorCallback);
+                if (id) {
+                    return Sessions.get(query, successCallback, errorCallback);
+                } else {
+                    return getCallback();
+                }
             };
 
             /**

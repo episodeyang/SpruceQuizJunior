@@ -56,11 +56,10 @@ div.background(background-img="/img/bg-brown.jpg")
                 div(ng-if="view.state==='newsFeed'")
                     .row
                         .col-xs-12
-                            .input-group.bottom-margin
+                            .input-group.no-bottom-margin
                                 input(type='text').form-control
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
-                    .row
                         .col-xs-12(ng-include="'/widgets/newsFeed'")
                 div(ng-if="view.state==='timeline'")
                     .row
