@@ -1,10 +1,12 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/timeline.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
 link(href='/css/panel.css', rel="stylesheet")
 link(href='/css/modal.css', rel="stylesheet")
+link(href='/css/editor.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -34,22 +36,38 @@ div.background(background-img="/img/bg-brown.jpg")
                 ul.nav.sp-nav.nav-pills.nav-stacked
                     li(ng-class="{active: view.state=='newsFeed'}")
                         a.text-center(ng-click="view.state='newsFeed'") 更新和信息
-                    li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'")
-                            span 搜索 &nbsp
-                            i.fa.fa-search
-                    li(ng-class="{active: view.state=='stats'}")
-                        a.text-center(ng-click="view.state='stats'") 统计数据
-                    li(ng-class="{active: view.state=='answers'}")
-                        a.text-center(ng-click="view.state='answers'") 他的回答
-                    li(ng-class="{active: view.state=='follow'}")
-                        a.text-center(ng-click="view.state='follow'") 他的关注
-                    li(ng-class="{active: view.state=='questions'}")
-                        a.text-center(ng-click="view.state='questions'") 他的提问
-                    li(ng-class="{active: view.state=='comments'}")
-                        a.text-center(ng-click="view.state='comments'") 他的评论
+                    //li(ng-class="{active: view.state=='search'}")
+                    //    a.text-center(ng-click="view.state='search'")
+                    //        span 搜索 &nbsp
+                    //        i.fa.fa-search
+                    li(ng-class="{active: view.state=='timeline'}")
+                        a.text-center(ng-click="view.state='timeline'")
+                            span(ng-if="Model.profile.gender != 'female'") 他
+                            span(ng-if="Model.profile.gender == 'female'") 她
+                            span 的时间轴
+                    li(ng-class="{active: view.state=='ask'}")
+                        a.text-center(ng-click="view.state='ask'")
+                            span(ng-if="Model.profile.gender != 'female'") 他
+                            span(ng-if="Model.profile.gender == 'female'") 她
+                            span 的提问
+                    //li(ng-class="{active: view.state=='answers'}")
+                    //    a.text-center(ng-click="view.state='answers'") 回答
+                    //li(ng-class="{active: view.state=='follow'}")
+                    //    a.text-center(ng-click="view.state='follow'") 关注
+                    //li(ng-class="{active: view.state=='questions'}")
+                    //    a.text-center(ng-click="view.state='questions'") 提问
+                    //li(ng-class="{active: view.state=='comments'}")
+                    //    a.text-center(ng-click="view.state='comments'") 评论
             .col-sm-7.col-xs-9
-                div
+                div(ng-if="view.state==='newsFeed'")
+                    .row
+                        .col-xs-12
+                            .input-group.no-bottom-margin
+                                input(type='text').form-control
+                                span.input-group-btn
+                                    button.btn.btn-info(type='button') 搜索
+                        .col-xs-12(ng-include="'/widgets/newsFeed'")
+                div(ng-if="view.state==='timeline'")
                     .row
                         .col-xs-12
                             flip(flipped="view.profile.flipped")
@@ -72,13 +90,12 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 span.glyphicon.glyphicon-tags
                                                 span(ng-repeat="major in Model.profile.schoolRecord.slice(-1)[0].majors track by $index").separated {{major}}
                                                 span(ng-repeat="ec in Model.profile.extracurriculars",
-                                                    ng-class="{'end' : $index == profile.schoolRecord[0].extracurriculars.length}").separated {{ec}}
+                                                ng-class="{'end' : $index == profile.schoolRecord[0].extracurriculars.length}").separated {{ec}}
                                             div.text-strip
                                                 span.glyphicon.glyphicon-stats
                                                 span.separated 回答 {{Model.profile.stats.questionCount}}
                                                 span.separated 提问 {{Model.profile.stats.answerCount}}
                                                 span 编辑 {{Model.profile.stats.editCount}}
-
                                 flip-back.card.convex.no-top-margin
                                     .card-title.bottom-margin
                                         span.name(inline-editable, contenteditable="{{view.profile.edit}}", ng-model="Model.profile.name", placeholder="姓, 名...")
@@ -144,10 +161,11 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 .unit
                                                     span 编辑 {{Model.profile.stats.editCount}}
                         .col-xs-12(ng-include="'/widgets/timeline'")
-
                     .flow-container
                         .row
                             .col-lg-12
+                div(ng-if="view.state=='ask'")
+                    div(ng-include="'/widgets/questionCreate'")
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',
@@ -165,7 +183,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.glyphicon.glyphicon-arrow-right
                                     a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
                 .panel.panel-info
-                    .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
+                    .panel-heading(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top') 我的课本
                         span.pull-right.fa.fa-bars
                     //.panel-body
                     table.table
@@ -173,9 +191,8 @@ div.background(background-img="/img/bg-brown.jpg")
                             tr
                                 th
                         tbody
-                            tr(ng-click="")
-                                td 你身体里的那条鱼
+                            tr(ng-repeat="book in Model.profile.books")
+                                td
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    //fa.fa-angle-right
-
+                                    a(ng-href="/books/{{book.authors[0].name}}/{{book.title}}") {{book.title}}

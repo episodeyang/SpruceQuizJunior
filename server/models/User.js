@@ -81,7 +81,9 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         name: params.name,
                         username: username,
                         email: email,
-                        DOB: params.DOB
+                        DOB: params.DOB,
+                        gender: params.gender,
+                        domain: params.domain
                     };
                     if (params.schoolName) {
                         subUser.schools = [params.schoolName];

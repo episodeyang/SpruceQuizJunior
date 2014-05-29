@@ -26,9 +26,6 @@ div.modal(tabindex='-1', role='dialog', ng-controller='RegisterCtrl')
                                 .col-xs-6
                                     input.form-control(type="text", ng-model="registerData.birthdayString", placeholder="生日 1995 05 03", required)
                             .form-group
-                                //-button.btn.btn-default(type='button', ng-model='userRole',data-html='0',  placeholder="您是学生，老师，还是家长？", ng-options='role.value as role.title for role in roleList', bs-select='bs-select')
-                                //-    | Action
-                                //-    span.caret
                                 .row
                                     .col-xs-4
                                         label.btn.no-left-padding
@@ -44,6 +41,19 @@ div.modal(tabindex='-1', role='dialog', ng-controller='RegisterCtrl')
                                             label.btn.btn-default
                                                 input.btn.btn-default(type='radio', value='parent')
                                                 | 家长
+                            .form-group
+                                .row
+                                    .col-xs-12.short-bottom-margin
+                                        label.btn.no-left-padding
+                                            span 我们是应该用“他”，还是“她”呢？ ：）
+                                    .col-xs-8.col-xs-offset-4
+                                        .btn-group.btn-group-justified.pull-right(ng-model='registerData.gender', bs-radio-group='bs-radio-group')
+                                            label.btn.btn-default
+                                                input.btn.btn-default(type='radio', value='male')
+                                                | 我是男生~
+                                            label.btn.btn-default
+                                                input.btn.btn-default(type='radio', value='female')
+                                                | 我是女生！
                             .form-group
                                 input.form-control(type="text", ng-model="registerData.schoolName", placeholder="你的学校叫什么名字？")
                             //-    .warining

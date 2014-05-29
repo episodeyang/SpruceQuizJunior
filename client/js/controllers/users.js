@@ -24,99 +24,18 @@ angular.module('SpruceQuizApp')
             $scope.Model = Model;
 
             $scope.view = {
-                state: 'search',
+                state: 'timeline',
+                modalState: 'mySessions',
                 profile: {}
             };
+
             $scope.view.profile.edit = false;
 
             $rootScope.errors = {};
 
-            $scope.view.timeline = {
-                predicate: 'time',
-                reverse: true
-            };
             Model.getUserProfile($routeParams.username);
             Model.getUserFeeds($routeParams.username);
+            $scope.feedBucket = Model.userFeed;
 
-            function isArray(obj) {
-                return Object.prototype.toString.call(obj) === '[object Array]';
-            }
-
-            $scope.addEmptySchool = function () {
-                Model.profile.schoolRecord.push({
-                    name: '',
-                    classYear: null,
-                    entrance: null,
-                    left: null,
-                    alumni: null,
-                    type: '',
-                    majors: ['']
-                });
-            };
-
-            $scope.editProfile = function () {
-
-                $scope.view.profile.edit = true;
-
-                function removeNullAddEmptyToEnd(obj, key) {
-                    if (isArray(obj) && key !== 'schoolRecord') {
-                        obj.map(function (value, index) {
-                            if (!value) {
-                                obj.splice(index, 1);
-                            }
-                        });
-                        obj.push('');
-                    }
-                }
-
-                _.map(Model.profile, removeNullAddEmptyToEnd);
-
-                if (Model.profile.role.title === 'student' || true) {
-                    _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNullAddEmptyToEnd);
-                }
-
-            };
-            $scope
-                .$watch(
-                    'Model.profile',
-                    function (newVal, oldVal) {
-                    },
-                    true
-                );
-
-            $scope.submitProfile = function () {
-
-                function removeNull(obj, key) {
-                    if (isArray(obj)) {
-                        obj.map(function (value, index) {
-                            if (!value) {
-                                obj.splice(index, 1);
-                            }
-                        });
-                    }
-                }
-
-                _.map(Model.profile, removeNull);
-
-                if (Model.profile.role.title === 'student' || true) {
-                    var school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1];
-                    _.map(Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1], removeNull);
-
-                    if (school !== undefined) {
-                        if (!school.name) {
-                            Model.profile.schoolRecord.splice(-1);
-                        }
-                    } else {
-                        Model.profile.schoolRecord = [];
-                    }
-                }
-
-                Model.updateUserProfile(
-                    function () {
-                        $scope.view.profile.edit = false;
-                    },
-                    function (error) {
-                    })
-            };
         }
     ]);

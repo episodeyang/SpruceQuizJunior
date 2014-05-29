@@ -30,7 +30,9 @@ var testData = {
             schoolName: '北京景山学校',
             name: '杨歌',
             DOB: new Date(1987, 4, 6, 9, 0, 0),
-            email: 'yangge1987@gmail.com'
+            email: 'yangge1987@gmail.com',
+            gender: 'male',
+            domain: 'nantijiazi.com'
         }
     },
     /** Student login data */
@@ -54,7 +56,9 @@ var testData = {
             schoolName: '南山区实验中学',
             name: '欧洁瑜',
             DOB: new Date(1990, 12, 20),
-            email: 'yangge@sprucelearning.com'
+            email: 'yangge@sprucelearning.com',
+            gender: 'male',
+            domain: 'nantijiazi.com'
         }
     },
     /** superadmin login data */
@@ -78,7 +82,9 @@ var testData = {
             schoolName: '北京四中',
             name: '李新伟',
             DOB: new Date(1960, 1, 1),
-            email: 'yangge@sunshine-library.com'
+            email: 'yangge@sunshine-library.com',
+            gender: 'male',
+            domain: 'nantijiazi.com'
         }
     },
     /** admin login data*/
@@ -102,7 +108,9 @@ var testData = {
             schoolName: '北京景山学校',
             name: '欧丽',
             DOB: new Date(1970, 1, 1),
-            email: 'issac.hofstadter@gmail.com'
+            email: 'issac.hofstadter@gmail.com',
+            gender: 'female',
+            domain: 'nantijiazi.com'
         }
     },
     /** teacher login data*/
@@ -126,7 +134,9 @@ var testData = {
             name: '张力',
             DOB: new Date(1960, 6, 13),
             email: 'ge.ike.yang@gmail.com',
-            schoolName: '耶鲁大学'
+            schoolName: '耶鲁大学',
+            gender: 'male',
+            domain: 'nantijiazi.com'
         }
     },
     /** parent login data*/

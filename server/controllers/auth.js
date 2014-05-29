@@ -3,8 +3,8 @@
  * @name auth
  */
 'use strict';
-define(['passport', '../models/User', '../mailer/mailer', '../models/SchemaModels'],
-    function (passport, User, mailer, SchemaModels) {
+define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../models/SchemaModels'],
+    function (_, passport, User, mailer, SchemaModels) {
         var StudentM = SchemaModels.Student;
         var ParentM = SchemaModels.Parent;
         var TeacherM = SchemaModels.Teacher;
@@ -64,11 +64,12 @@ define(['passport', '../models/User', '../mailer/mailer', '../models/SchemaModel
                     });
                 }
 
+                var params = _.extend({doman: req.headers.host}, req.body.params);
                 User.addUser(
                     req.body.username,
                     req.body.password,
                     req.body.role,
-                    req.body.params,
+                    params,
                     loginCallback
                 );
             },

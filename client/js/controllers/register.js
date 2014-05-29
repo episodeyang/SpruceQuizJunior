@@ -86,7 +86,8 @@ angular.module('SpruceQuizApp')
                                     email: $scope.registerData.email,
                                     schoolName: $scope.registerData.schoolName,
                                     name: $scope.registerData.lastName+','+$scope.registerData.firstName,
-                                    DOB: $scope.registerData.dateOfBirth
+                                    DOB: $scope.registerData.dateOfBirth,
+                                    gender: $scope.registerData.gender
                                 }
                             };
                         console.log(query)
