@@ -31,19 +31,63 @@ angular.module('SpruceQuizApp')
 
             $rootScope.errors = {};
 
-            Model.getSession();
-            Model.getBook();
-            Model.getUserProfile($scope.user.username, function(){
-                Model.session.getFeeds(
-                    function () {
-                        $scope.view.feedBucket = Model.sessionFeeds;
-                    },
-                    null,
-                    Model.profile.sessions[0]._id
-                );
-            });
-            Model.getUserFeeds($scope.user.username);
+            $scope.view.bookFeedBuckets = [];
+            $scope.view.sessionFeedBuckets = [];
+            $scope.view.feedBucket = {feeds: []};
+            function newsFeedAssembler (bucket) {
+                var ext;
+                if (bucket.username && bucket.username===$scope.user.username) {
+                    ext = {
+                        user: $scope.user
+                    };
+                } else if (bucket.sessionId) {
+                    console.assert(bucket.session, 'need session in bucket');
+                    ext = {
+                        session: bucket.session
+                    };
+                } else if (bucket.bookId) {
+                    console.assert(bucket.book, 'need book in bucket');
+                    ext = {
+                        book: bucket.book
+                    };
+                }
+                var feeds = _.map(bucket.feeds, function(feed) {
+                    return _.extend(feed, ext);
+                });
+                $scope.view.feedBucket.feeds.push.apply($scope.view.feedBucket.feeds, feeds);
+            };
+            // These are to construct the stand-alone getBookFeeds and getSessionFeeds method.
+            Model.getUserProfile($scope.user.username)
+                .then(function (me) {
+                    var promise = Model.getUserFeeds($scope.user.username);
 
+                    function bookPromiseHelper(book) {
+                        promise.then(function () {
+                            Model.getBookFeeds(book._id)
+                                .then(function () {
+                                    Model.bookFeeds.book = book;
+//                                    $scope.view.bookFeedBuckets.push(Model.sessionFeeds);
+                                    newsFeedAssembler(Model.bookFeeds);
+                                });
+                        });
+                    }
+
+                    function sessionPromiseHelper(session) {
+                        promise.then(function () {
+                            Model.getSessionFeeds(session._id)
+                                .then(function () {
+                                    Model.sessionFeeds.session = session;
+//                                    $scope.view.sessionFeedBuckets.push(Model.sessionFeeds);
+                                    newsFeedAssembler(Model.sessionFeeds);
+                                });
+                        });
+                    }
+
+                    _.each(Model.profile.sessions, sessionPromiseHelper);
+                    _.each(Model.profile.books, bookPromiseHelper);
+
+                    return promise;
+                });
 
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';
