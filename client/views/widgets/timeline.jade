@@ -9,6 +9,6 @@
             span.small {{feed.tagText}}
     .time-body.card
         .unit.title
-            a(ng-href="{{feed.url}}") “{{ feed.question.title }}"
+            a(ng-href="/questions/{{feed.question._id}}") “{{ feed.question.title }}"
         .unit(ng-if="feed.question.text") {{Model.stripHtml(feed.question.text, 90) + '...'}}
 

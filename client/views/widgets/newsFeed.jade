@@ -11,6 +11,8 @@
             span.small {{ feed.tagText }}:
     .feed-text(ng-if="feed.question.text")
         p {{Model.stripHtml(feed.question.text, 90) + '...'}}
+    .feed-text(ng-if="feed.comment.text")
+        p {{Model.stripHtml(feed.comment.text, 90) + '...'}}
     .feed-body
         .bubble.card
             .unit.title
