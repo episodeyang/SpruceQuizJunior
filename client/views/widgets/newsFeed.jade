@@ -18,5 +18,5 @@
             .unit.title
                 a(ng-href="/questions/{{feed.question._id}}") “{{ feed.question.title }}"
 
-.top-margin.placeholder.short(ng-if="!view.feedBucket.feeds || view.feedBucket.feeds===[]") 欢迎来到难题夹子！这里暂时没有新鲜事...
+.top-margin.placeholder.short(ng-if="!view.feedBucket.feeds || view.feedBucket.feeds.length==0") 欢迎来到难题夹子！这里暂时没有新鲜事...
 
