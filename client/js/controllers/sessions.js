@@ -32,7 +32,8 @@ angular.module('SpruceQuizApp')
 
             if ($routeParams.sessionId) {
                 Model.getSession($routeParams.sessionId, function () {
-                    Model.getSessionFeeds(function(){
+                    Model.getSessionFeeds()
+                        .then(function(){
                         $scope.view.feedBucket = Model.sessionFeeds;
                     });
                 });
@@ -56,7 +57,7 @@ angular.module('SpruceQuizApp')
                     Model.session.getQuestions();
                     console.log('detected view state change to questions');
                 }
-                if (newVal === "info" ) {
+                if (newVal === "info" && Model.session._id) {
                     Model.getSessionFeeds();
                     $scope.view.feedBucket = Model.sessionFeeds;
                     console.log('detected view state change to questions');

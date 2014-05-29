@@ -35,13 +35,13 @@ angular.module('SpruceQuizApp')
             Model.getBook(
                 $routeParams.bookId,
                 $routeParams.bookTitle,
-                $routeParams.authorName,
-                function () {
-                    Model.book.getFeeds(function () {
-                        $scope.view.feedBucket = Model.bookFeeds;
-                    })
-                }
-            );
+                $routeParams.authorName
+            ).then(function () {
+                    Model.getBookFeeds()
+                        .then(function () {
+                            $scope.view.feedBucket = Model.bookFeeds;
+                        });
+                });
 
             $scope.submitBook = Model.book.save;
             function isArray(obj) {

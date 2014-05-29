@@ -872,7 +872,7 @@ angular.module('modelServices', ['resourceProvider'])
 
                 Books.create(query, successCallback, errorCallback);
             };
-            modelInstance.getBookFeeds = function getFeeds(bookId, success, error) {
+            modelInstance.getBookFeeds = function (bookId, success, error) {
                 function callback(feeds) {
                     modelInstance.bookFeeds = feeds;
                     feedFormatter(modelInstance.bookFeeds.feeds);
@@ -950,8 +950,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 function queryCallback(books) {
-                    modelInstance.book = _.extend(methods, books[0]);
-
+                    modelInstance.book = _.extend({}, methods, books[0]);
                     if (success) {
                         return success(books[0]);
                     }
@@ -1036,7 +1035,7 @@ angular.module('modelServices', ['resourceProvider'])
                 validateAndSave(session);
             };
 
-            modelInstance.getSessionFeeds = function getFeeds(sessionId, success, error) {
+            modelInstance.getSessionFeeds = function (sessionId, success, error) {
                 function callback(feeds) {
                     modelInstance.sessionFeeds = feeds;
                     feedFormatter(modelInstance.sessionFeeds.feeds);
@@ -1053,7 +1052,7 @@ angular.module('modelServices', ['resourceProvider'])
 
                 if (!sessionId) {
                     console.assert(modelInstance.session._id, "model.session doesn't have _id field");
-                    return Sessions.getFeeds({sessionId: query.sessionId}, callback, errorCallback).$promise;
+                    return Sessions.getFeeds({sessionId: modelInstance.session._id}, callback, errorCallback).$promise;
                 } else {
                     return Sessions.getFeeds({sessionId: sessionId}, callback, errorCallback).$promise;
                 }
@@ -1077,6 +1076,12 @@ angular.module('modelServices', ['resourceProvider'])
                     _.extend(modelInstance.session, session);
                     if (callbackStack.success) {
                         callbackStack.success(session)
+                    }
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (callbackStack.error) {
+                        callbackStack.error(err);
                     }
                 }
 
