@@ -9,7 +9,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         var User = $resource('/api/users/:username', {username: '@username'});
         var Feeds = $resource('/api/users/:username/feeds', {username: '@username'});
         var FeedsByPage = $resource('/api/users/:username/feeds/:page', {username: '@username', page: '@page'});
-        var Sessions = $resource('/api/users/:username/sessions', {username: '@username'});
+        var onSessions = $resource('/api/users/:username/sessions', {username: '@username'});
+        var onBooks = $resource('/api/users/:username/books', {username: '@username'});
         return {
             list: $resource('/api/users'),
             onUsers: $resource('/api/users/:uuid', {uuid: '@id'}, {
@@ -19,7 +20,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             save: User.save,
             getFeeds: Feeds.get,
             getFeedsByPage: FeedsByPage.get,
-            updateSessions: Sessions.save
+            updateSessions: onSessions.save,
+            updateBooks: onBooks.save
         };
     }])
     .factory('Questions', function ($resource) {
@@ -27,12 +29,18 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});
+        var onSessions = $resource('/api/questions/:id/sessions', {id: '@id'});
+        var onBooks = $resource('/api/questions/:id/books', {id: '@id'});
         return {
             get: Question.get,
             query: Questions.query,
             create: Questions.create,
             save: Question.save,
-            remove: Question.remove
+            remove: Question.remove,
+            updateSession: onSessions.save,
+            getSessions: onSessions.get,
+            updateBook: onBooks.save,
+            getBooks: onBooks.get
         };
     })
     .factory('Answers', function ($resource) {
@@ -173,25 +181,41 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     })
     .factory('Sessions', function ($resource) {
         var Sessions = $resource('/api/sessions');
-        var Session = $resource('/api/sessions/:sessionId', {sessionId: '@_id'});
+        var Session = $resource('/api/sessions/:sessionId', {sessionId: '@sessionId'});
+        var onQuestions = $resource('/api/sessions/:sessionId/questions', {sessionId: '@sessionId'});
+        var onBooks = $resource('/api/sessions/:sessionId/books', {sessionId: '@sessionId'});
+        var Feeds = $resource('/api/sessions/:sessionId/feeds', {sessionId: '@sessionId'});
         return {
             index: Sessions.query,
             search: $resource('/api/sessions/search').get,
-            add: Sessions.create,
+            create: Sessions.save,
             get: Session.get,
+            getFeeds: Feeds.get, //get one bucket, so is not array.
             save: Session.save,
-            remove: Session.remove
+            remove: Session.remove,
+            updateQuestions: onQuestions.save,
+            getQuestions: onQuestions.get, //return session object with questions populated. not an array.
+            updateBook: onBooks.save,
+            getBooks: onBooks.get
         };
     })
     .factory('Books', function ($resource) {
-        var Book = $resource('/api/books/:author/:title', {title: '@title', author: '@author'});
         var Books = $resource('/api/books');
-        var BookById = $resource('/api/books/:id', {id: '@_id'});
+        var Book = $resource('/api/books/:bookId', {bookId: '@_id'});
+        var onQuestions = $resource('/api/books/:bookId/questions', {bookId: '@_id'});
+        var onSessions = $resource('/api/books/:bookId/sessions', {bookId: '@_id'});
+        var Feeds = $resource('/api/books/:bookId/feeds', {bookId: '@_id'});
         return {
-            add: Books.create,
+            create: Books.save,
+            query: Books.query,
             get: Book.get,
-            save: BookById.save,
-            remove: BookById.remove
+            getFeeds: Feeds.get, //get one bucket, so is not array.
+            save: Book.save,
+            remove: Book.remove,
+            updateQuestions: onQuestions.save,
+            getQuestions: onQuestions.get,
+            updateSessions: onSessions.save,
+            getSessions: onSessions.get
         };
     })
     .factory('Sections', function ($resource) {

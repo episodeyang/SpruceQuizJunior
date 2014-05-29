@@ -1,0 +1,14 @@
+//
+   Created by ge on 5/27/14.
+.timeline-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:'time':true track by $index ")
+    .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
+        .unit {{feed.timeNumber}}
+            span.small {{feed.timeUnit}}
+    .time-header.right-label
+        .unit
+            span.small {{feed.tagText}}
+    .time-body.card
+        .unit.title
+            a(ng-href="/questions/{{feed.question._id}}") “{{ feed.question.title }}"
+        .unit(ng-if="feed.question.text") {{Model.stripHtml(feed.question.text, 90) + '...'}}
+

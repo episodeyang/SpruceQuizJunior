@@ -10,7 +10,8 @@ angular.module('SpruceQuizApp')
             require: 'ngModel',
             scope: {
                 pushTo: '=',
-                ngModel: '=ngModel'
+                ngModel: '=ngModel',
+                field: '@?'
             },
             link: function (scope, element, attrs, ngModel) {
                 if(!ngModel) return;
@@ -46,7 +47,13 @@ angular.module('SpruceQuizApp')
                     function(newVal, oldVal) {
                         if (!newVal) {return}
                         if (newVal[newVal.length-1]=="," || newVal[newVal.length-1]=="，" || newVal[newVal.length-1]==" " ) {
-                            scope.pushTo.push(ngModel.$modelValue.split(',').join('').split('，').join(''));
+                            if (!scope.field) {
+                                scope.pushTo.push(ngModel.$modelValue.split(',').join('').split('，').join(''));
+                            } else {
+                                var data = {};
+                                data[scope.field] = ngModel.$modelValue.split(',').join('').split('，').join('');
+                                scope.pushTo.push(data);
+                            }
                             scope.ngModel = '';
                         }
                     }

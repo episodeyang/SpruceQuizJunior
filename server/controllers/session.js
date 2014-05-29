@@ -19,13 +19,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
         "use strict";
         var UserM = SchemaModels.User;
         var userRoles = rolesHelper.userRoles;
-        var keyString = '_id name subject courseString teachers members overview school created finished reviews tags mother children knowledgeTree tableOfContent';
+        var keyString = '_id name subject courseString teachers members overview school books questions created finished reviews tags mother children knowledgeTree tableOfContent';
 
         return {
             index: function (req, res) {
                 SessionM.find(
                     {},
-                    '_id name subject courseString school teachers members overview reviews tags',
+                    '_id name subject courseString school books questions teachers members overview reviews tags',
                     function (err, sessions) {
                         if (err) {
                             return res.json(400, err);
@@ -90,6 +90,66 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                         res.send(201, session);
                     }
                 );
+            },
+            getQuestions: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(200, session);
+                }
+                SessionM.getQuestions(req.params.sessionId, done);
+            },
+            getBooks: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(200, session);
+                }
+                SessionM.getBooks(req.params.sessionId, done);
+            },
+            /**
+             * upadate question field of session.
+             * @param req : { add/pull: { id: <ObjectId> } }
+             * @param res
+             * @returns {*}
+             * @example req = { add: { id: 34523452345254 } }
+             * @example req = { remove: { id: 34523452345254 } }
+             */
+            updateQuestions: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                var data = req.body;
+                var session = { _id: req.params.sessionId };
+
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(201, session);
+                }
+
+                if (data.add) {
+                    SessionM.addQuestion(session, data.add._id, done);
+                } else if (data.pull) {
+                    SessionM.removeQuestion(session, data.pull._id, done);
+                } else {
+                    return res.send(400, 'badPayloadFormat');
+                }
+            },
+            updateBooks: function (req, res) {
+                if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }
+                var data = req.body;
+                var session = { _id: req.params.sessionId };
+
+                function done(err, session) {
+                    if (err) {return res.send(500, err); }
+                    return res.send(201, session);
+                }
+
+                if (data.add) {
+                    SessionM.addBook(session, data.add, done);
+                } else if (data.pull) {
+                    SessionM.removeBook(session, data.pull, done);
+                } else {
+                    return res.send(400, 'requestHasNoAddNorPullField');
+                }
             },
             remove: function (req, res) {
                 if (!req.params.sessionId) { return res.send(400, 'noSessionId'); }

@@ -1,10 +1,12 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/timeline.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
 link(href='/css/panel.css', rel="stylesheet")
 link(href='/css/modal.css', rel="stylesheet")
+link(href='/css/editor.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -54,24 +56,11 @@ div.background(background-img="/img/bg-brown.jpg")
                 div(ng-if="view.state==='newsFeed'")
                     .row
                         .col-xs-12
-                            .input-group.bottom-margin
+                            .input-group.no-bottom-margin
                                 input(type='text').form-control
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
-                    .row
-                        .col-xs-12
-                            .card.bottom-margin
-                                .card-title.bottom-margin
-                                    span.name 杨歌
-                                    span.signature 问了
-                            .card.bottom-margin
-                                .card-title.bottom-margin
-                                    span.name 杨歌
-                                    span.signature 问了
-                            .card.bottom-margin
-                                .card-title.bottom-margin
-                                    span.name 杨歌
-                                    span.signature 问了
+                        .col-xs-12(ng-include="'/widgets/newsFeed'")
                 div(ng-if="view.state==='timeline'")
                     .row
                         .col-xs-12
@@ -165,21 +154,12 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span 提问 {{Model.profile.stats.answerCount}}
                                                 .unit
                                                     span 编辑 {{Model.profile.stats.editCount}}
-                        .col-xs-12
-                            .feed-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:view.timeline.predicate:view.timeline.reverse track by $index ")
-                                .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
-                                    .unit {{feed.timeNumber}}
-                                        span.small {{feed.timeUnit}}
-                                .time-header.right-label
-                                    .unit
-                                        span.small {{feed.tagText}}
-                                .time-body.card
-                                    .unit.title
-                                        a(ng-href="{{feed.url}}") “{{feed.data.title}}"
-                                    .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
+                        .col-xs-12(ng-include="'/widgets/timeline'")
                     .flow-container
                         .row
                             .col-lg-12
+                div(ng-if="view.state=='ask'")
+                    div(ng-include="'/widgets/questionCreate'")
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',
@@ -197,7 +177,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                         span.glyphicon.glyphicon-arrow-right
                                     a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
                 .panel.panel-info
-                    .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
+                    .panel-heading(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top') 我的课本
                         span.pull-right.fa.fa-bars
                     //.panel-body
                     table.table
@@ -205,9 +185,9 @@ div.background(background-img="/img/bg-brown.jpg")
                             tr
                                 th
                         tbody
-                            tr(ng-click="")
-                                td 你身体里的那条鱼
+                            tr(ng-repeat="book in Model.profile.books")
+                                td
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    //fa.fa-angle-right
+                                    a(ng-href="/books/{{book.authors[0].name}}/{{book.title}}") {{book.title}}
 

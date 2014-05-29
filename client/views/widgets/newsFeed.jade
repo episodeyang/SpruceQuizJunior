@@ -1,0 +1,22 @@
+//
+   Created by ge on 5/27/14.
+.feed-container.card.top-margin(ng-repeat="feed in view.feedBucket.feeds | orderBy:'time':true track by $index ")
+    .feed-header(ng-class="{last: $index==view.feedBucket.count-1}")
+        span.pull-right.clickable.glyphicon.glyphicon-chevron-down
+        p
+            a(ng-href="/users/{{feed.user.username}}").blue {{ feed.user.name || feed.user.username }}
+            span &nbsp
+            span {{feed.timeNumber}}
+            span.small {{feed.timeUnit}}前&nbsp
+            span.small {{ feed.tagText }}:
+    .feed-text(ng-if="feed.question.text")
+        p {{Model.stripHtml(feed.question.text, 90) + '...'}}
+    .feed-text(ng-if="feed.comment.text")
+        p {{Model.stripHtml(feed.comment.text, 90) + '...'}}
+    .feed-body
+        .bubble.card
+            .unit.title
+                a(ng-href="/questions/{{feed.question._id}}") “{{ feed.question.title }}"
+
+.top-margin.placeholder.short(ng-if="!view.feedBucket.feeds || view.feedBucket.feeds.length==0") 欢迎来到难题夹子！这里暂时没有新鲜事...
+

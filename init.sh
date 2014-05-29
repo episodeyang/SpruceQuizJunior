@@ -1,3 +1,4 @@
+rm -rf client/lib
 npm install 
 npm update 
 bower install 

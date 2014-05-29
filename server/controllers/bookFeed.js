@@ -2,29 +2,34 @@
  * @fileOverview User Controller
  * @module User
  * @type {exports}
- * This `QuestionCtrl` module takes care of userFeed related operations, such as
- *              userFeed.index(),
- *              userFeed.add(:id),
- *              userFeed.findOne(:id, payload)
- *              userFeed.update(:id, payload)
- *              userFeed.remove(:id)
+ * This `QuestionCtrl` module takes care of sessionFeed related operations, such as
+ *              sessionFeed.index(),
+ *              sessionFeed.add(:id),
+ *              sessionFeed.findOne(:id, payload)
+ *              sessionFeed.update(:id, payload)
+ *              sessionFeed.remove(:id)
  *              etc.,
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesHelper', "mongoose"],
-    function (_, SchemaModels, UserFeedM, rolesHelper, mongoose) {
+define(['underscore', '../models/SchemaModels', '../models/BookFeed', '../rolesHelper', "mongoose"],
+    function (_, SchemaModels, BookFeedM, rolesHelper, mongoose) {
+//        var BookFeedM = SchemaModels.BookFeed;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
-        var fieldString = "_id userId username page count feeds";
+        var fieldString = "_id bookId page count feeds";
 
         return {
             /**
-             * @api {post} /api/userFeeds Create Question
-             * @apiName CreateQuestion
-             * @apiGroup Questions
+             * @api {post} /api/sessionFeeds Create Question
+             * @apiName CreateBookFeed
+             * @apiGroup BookFeed
              */
+            // todo: Not being used. All feed added from back end, not from client.
             add: function (req, res) {
+                if (!req.params.bookId) {
+                    return res.send(400, 'noBookIdInRequest');
+                }
                 function callback (err, doc) {
                     if (err) {
                         console.log(err);
@@ -33,11 +38,11 @@ define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesH
                         return res.send(200, doc);
                     }
                 }
-                UserFeedM.addFeed(req.body.userId, user.username, req.body.type, req.body.data, callback);
+                BookFeedM.addFeed(req.params.bookId, req.body.type, req.body.data, callback);
             },
             /**
-             * @api {get} /api/users/:username/feeds Get A Specific Question
-             * @apiName GetUserFeed
+             * @api {get} /api/sessions/:bookId/feeds Get A Specific Question
+             * @apiName GetBookFeed
              * @apiGroup Questions
              */
             getByPage: function (req, res) {
@@ -49,16 +54,16 @@ define(['underscore', '../models/SchemaModels', '../models/UserFeed', '../rolesH
                         return res.send(200, doc);
                     }
                 }
-                if (!req.params.username) {
-                    return res.send(400, 'noUsernameInRequest');
+                if (!req.params.bookId) {
+                    return res.send(400, 'noBookIdInRequest');
                 }
                 var query = {
-                    username: req.params.username
+                    bookId: req.params.bookId
                 };
                 if (req.params.page) {
                     query.page = req.params.page;
                 }
-                UserFeedM.findOne(
+                BookFeedM.findOne(
                     query,
                     null, // the field selection placeholder
                     { sort: {page: -1}},

@@ -33,23 +33,54 @@ var studentUser = data.studentUser,
 var book, bookUpdated;
 describe('Book API test - ', function (done) {
     beforeEach(function () {
-        passportStub.logout(); // logout after each test
+        passportStub.login(studentUser); // login as user
     });
     afterEach(function () {
         passportStub.logout(); // logout after each test
     });
     it("doesn't need to login to access", function (done) {
-        request(app).get('/api/books/' + studentUser.username).expect(200, done);
+        passportStub.logout(); // logout after each test
+        request(app).get('/api/books').expect(200, done);
     });
     it('add a book', function (done) {
-        passportStub.login(studentUser); // login as user
         request(app).post('/api/books').send(bookData.book).expect(201).end(function (err, res) {
             book = res.body;
+            console.log(book);
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
             done();
         });
     });
+    it("doesn't need to login to access", function (done) {
+        passportStub.logout(); // logout after each test
+        request(app).get('/api/books/' + book._id).expect(200, done);
+    });
+    it('get a book via id', function (done) {
+        request(app).get('/api/books/' + book._id).expect(200).end(function (err, res) {
+            book = res.body;
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
+            done();
+        });
+    });
+    it('get a book via title', function (done) {
+        request(app).get('/api/books?title=' + book.title).expect(200).end(function (err, res) {
+            book = res.body[0];
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
+            done();
+        });
+    });
+    it('get a book via author and title', function (done) {
+        request(app).get('/api/books?authorName=' + book.authors[0].name + 'title=' + book.title).expect(200).end(function (err, res) {
+            book = res.body[0];
+            book.title.should.be.eql(bookData.book.title);
+            book.authors[0].name.should.be.eql(bookData.book.authors[0].name);
+            done();
+        });
+    });
+//    });
     it('update book', function (done) {
-        passportStub.login(studentUser); // login as user
         book.title = 'Your Inner Fish';
         request(app).post('/api/books/' + book._id).send(book).expect(201).end(function (err, res) {
             BookUpdated = res.body;
@@ -57,97 +88,55 @@ describe('Book API test - ', function (done) {
             done();
         });
     });
-//    it('create another question', function (done) {
-//        passportStub.login(superadminUser); // login as user
-//        request(app).post('/api/questions').send(data.questionCreate2).expect(201).end(function (err, res) {
-//            question2 = res.body;
-//            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
-//            done();
-//        });
-//    });
-//    it('create question as superadmin', function (done) {
-//        passportStub.login(superadminUser); // login as user
-//        request(app).post('/api/questions').send(data.questionCreate2).expect(201, done);
-//    });
-//    it("doesn't need to login to access", function (done) {
-//        request(app).get('/api/questions').expect(200, done);
-//    });
-//    it('get questions', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).get('/api/questions').expect(200).end(function (err, res) {
-//            _.size(res.body).should.be.greaterThan(0);
-//            done();
-//        });
-//    });
-//    it("doesn't need to login to access", function (done) {
-////        console.log('show the question before using it to access');
-////        console.log(question);
-//        request(app).get('/api/questions/' + question.id).expect(200, done);
-//    });
-//    it('get question by Id', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).get('/api/questions/' + question.id).expect(200).end(function (err, res){
-//            res.body.id.should.eql(question.id);
-//            done();
-//        });
-//    });
-//    it('needs to login to access', function (done) {
-////        console.log('I am actually here')
-//        passportStub.logout(); // logout after each test
-//        request(app).post('/api/questions/' + question.id).send({}).expect(401, done);
-//    });
-//    it('update question title by Id', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question.id).send({title: 'updatedTitle'}).expect(201).end(function (err, res){
-//            res.body.title.should.eql('updatedTitle');
-//            done();
-//        });
-//    });
-//    it('update question text by Id', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question.id).send({text: 'updatedText'}).expect(201).end(function (err, res){
-//            res.body.text.should.eql('updatedText');
-//            done();
-//        });
-//    });
-//    it('update question tags by Id', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question.id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res){
-//            res.body.tags.should.eql(['updated tag 1', 'updated tag 2', 'updated tag 3']);
-//            done();
-//        });
-//    });
-//    it('needs to login to delete', function (done) {
-//        request(app).del('/api/questions/' + question.id).expect(401, done);
-//    });
-//    it('delete question by Id', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).del('/api/questions/' + question.id).expect(204, done);
-//    });
-//    it('upvote the question2', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
-//            res.body.voteup.should.containEql(studentUser.username);
-//            done();
-//        });
-//    });
-//    it('downvote the question2', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question2.id).send({votedown: 'true'}).expect(201).end(function (err, res){
-//            res.body.votedown.should.containEql(studentUser.username);
-//            done();
-//        });
-//    });
-//    it('upvote the question2 again', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201, done);
-//    });
-//    it('remove upvote from question2', function (done) {
-//        passportStub.login(studentUser); // login as user
-//        request(app).post('/api/questions/' + question2.id).send({voteup: 'true'}).expect(201).end(function (err, res){
-//            res.body.voteup.should.not.containEql(studentUser.username);
-//            done();
-//        });
-//    });
+    var question = {};
+    it('get quesitons id\'s', function (done) {
+        request(app).get('/api/questions').expect(200).end(function (err, res) {
+            console.log(res.body);
+            question = res.body[0];
+            done();
+        });
+    });
+    it('add question to book and get the question populated on it\'s way back', function (done) {
+        var query = {
+            add: {
+                id: question._id
+            }
+        };
+        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
+            res.body.questions.should.containDeep([{_id: question._id}]);
+            done();
+        });
+    });
+    it('pull question from book', function (done) {
+        var query = {
+            pull: {
+                id: question._id
+            }
+        };
+        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
+            res.body.questions.should.not.containDeep([{id: question._id}]);
+            done();
+        });
+    });
+    var question;
+    it('create new question with sessionId', function (done) {
+        "use strict";
+        question = data.questionCreate;
+        question.books = [BookUpdated];
+        request(app).post('/api/questions').send(question).expect(201).end(function (err, res) {
+            console.log(BookUpdated);
+            console.log(res.body);
+            res.body.books.should.containDeep([{title: BookUpdated.title}]);
+            question = res.body;
+            done();
+        });
+    });
+    it('now get the book to check if the question is there.', function (done) {
+        request(app).get('/api/books/' + BookUpdated._id).expect(200).end(function (err, res) {
+            console.log(res.body);
+            res.body.questions.should.containDeep([{_id:question._id}]);
+            done();
+        });
+    });
 });
 

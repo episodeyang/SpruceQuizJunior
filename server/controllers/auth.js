@@ -42,7 +42,7 @@ define(['passport', '../models/User', '../mailer/mailer', '../models/SchemaModel
                     };
 
 //                    console.log(locals);
-                    mailer.register (
+                    mailer.register(
                         locals.email,
                         locals,
                         function (error, response) {
@@ -50,7 +50,6 @@ define(['passport', '../models/User', '../mailer/mailer', '../models/SchemaModel
                                 //todo: add #sent tag to the user email entry.
                                 //user.email = user.email + "#sent:true";
                             }
-
                         }
                     );
 

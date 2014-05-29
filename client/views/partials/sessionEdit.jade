@@ -1,20 +1,20 @@
 //- for the modal template to work, the top most element
 //- has to be the div.modal in the following format.
-div.modal(tabindex='1', role='dialog')
+div.modal(tabindex='1', role='dialog', ng-controller="SessionEditCtrl")
     .modal-dialog
-        .modal-content.header-card(ng-if="view.modalState==='mySessions'")
+        .modal-content.header-card(ng-if="view.modalState==='list'")
             .modal-body.no-padding
                 .row
                     .col-xs-12
                         form.no-bottom-margin
                             .input-group
-                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.mySessions.searchText')
+                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.list.searchText')
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
 
-        .modal-content.top-margin(ng-repeat="session in Model.profile.sessions | filter:view.mySessions.searchText", ng-if="view.modalState==='mySessions'")
+        .modal-content.top-margin(ng-repeat="session in view.sessions | filter:view.searchText", ng-if="view.modalState==='list'")
             .modal-header
-                button.close(type='button', ng-click="Model.profile.removeSession(session._id)") ×
+                button.close(type='button', ng-click="view.removeSession(session._id)") ×
                 h4.modal-title.text-center {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
             .modal-body
                 .row
@@ -29,54 +29,46 @@ div.modal(tabindex='1', role='dialog')
                             span(ng-if="session.teachers || session.members") 在上这门课程。
                         .badge.right-margin.short-top-margin(ng-repeat="tag in session.tags track by $index")  {{tag}}
 
-        .modal-content(ng-class="{'top-margin': view.modalState==='mySessions'}")
+        .modal-content(ng-class="{'top-margin': view.modalState==='list'}")
             .modal-header
-                button.close(type='button', ng-click="view.modalState='mySessions'") ×
+                button.close(type='button', ng-click="view.modalState='list'") ×
                 h4.modal-title.text-center 在数据库中搜索或添加班级
             .modal-body.clickable
                 //.unit(contenteditable='true', inline-editable="Model.user.username", placeholder='添加班级。。。')
                 //.unit(contenteditable='true', inline-editable="Model.user.username", placeholder='班级编码。。。')
-                .row(ng-show="view.modalState!=='createSessions'", ng-click="view.modalState='searchSessions'")
+                .row(ng-show="view.modalState!=='create'", ng-click="view.modalState='searchSessions'")
                     .col-xs-12
                         form.no-bottom-margin
                             .input-group
-                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.sessions.searchText')
+                                input.form-control(type='text', placeholder='班级名称，ID编号，学校...', ng-model='view.searchText')
                                 span.input-group-btn
                                     button.btn.btn-info(type='button') 搜索
-                .row(ng-show="view.sessions.searchText.length >= 2 && view.modalState==='searchSessions'")
+                .row(ng-show="view.searchText.length >= 2 && view.modalState==='searchSessions'")
                     .col-xs-12.top-margin
                         .unit.short 搜索不到我的班级...
                         form(role="form")
-                            button.pull-right.btn.btn-warning(ng-click="view.modalState='createSessions'") 创建班级
+                            button.pull-right.btn.btn-warning(ng-click="view.modalState='create'") 创建班级
 
-                .row(ng-show="view.modalState==='createSessions'")
+                .row(ng-show="view.modalState==='create'")
                     .col-xs-12
                         form(ng-submit="submit()", role="form").no-bottom-margin
                             .form-group
                                 input.form-control(type="text", ng-model="sessionData.name", placeholder="班级名称...", required)
                             .form-group
                                 input.form-control(type="text", ng-model="sessionData.subject", placeholder="所属学科...", required)
-                            //.form-group
-                            //    .blue.right-margin.short-bottom-margin(ng-repeat='teacher in sessionData.teachers track by $index') {{teacher.name}} &nbsp
-                            //        span(ng-click="sessionData.teachers.splice($index, 1)").fa.fa-times
-                            //.input-group.bottom-margin
-                            //    input.form-control(type="text", ng-model="sessionData.teacher", placeholder="任课老师姓名或用户名...")
-                            //    span.input-group-btn
-                            //        button.btn.btn-info(type='button') 搜索
+                            .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='tag in sessionData.tags track by $index') {{tag}} &nbsp
+                                span(ng-click="sessionData.tags.splice($index, 1)").fa.fa-times
+                            .form-group.short-top-margin
+                                input.form-control(push-to="sessionData.tags", type="text", ng-model="tag", placeholder="标签, 用逗号分隔...")
                             .form-group
-                                .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='tag in sessionData.tags track by $index') {{tag}} &nbsp
-                                    span(ng-click="sessionData.tags.splice($index, 1)").fa.fa-times
-                            .form-group
-                                input.form-control(type="text", ng-model="sessionData.tag", placeholder="标签, 用逗号分隔...")
-                            .form-group
-                                input.form-control(type="text", ng-model="sessionData.school", placeholder="默认学校：{{Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].name}}")
-                            button.pull-right.btn.btn-success(ng-click='submitSession()') 创建班级！
+                                input.form-control(type="text", ng-model="sessionData.school", placeholder="默认学校：{{Model.profile.schoolRecord[view.schoolRecord.length-1].name}}")
+                            button.pull-right.btn.btn-success(ng-click='view.submitSession()') 创建班级！
                             button.pull-right.btn.btn-default.right-margin(ng-click="view.modalState='searchSessions'") 取消
 
-        .modal-content.top-margin(ng-repeat="session in Model.sessions | filter:view.sessions.searchText", ng-if="view.modalState==='searchSessions'", ng-class="{yellow: Model.sessions[$index].selected}")
+        .modal-content.top-margin(ng-repeat="session in Model.sessions | filter:view.searchText", ng-if="view.modalState==='searchSessions'", ng-class="{yellow: Model.sessions[$index].selected}")
             .modal-header
-                button.close(type='button', ng-if="!Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=true; Model.profile.addSession(session._id)").fa.fa-plus
-                button.close(type='button', ng-if="Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=false; Model.profile.removeSession(session._id)").fa.fa-times
+                button.close(type='button', ng-if="!Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=true; view.addSession(session._id);").fa.fa-plus
+                button.close(type='button', ng-if="Model.sessions[$index].selected", ng-click="Model.sessions[$index].selected=false; view.removeSession(session._id);").fa.fa-times
                 h4.modal-title.text-center {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
             .modal-body
                 .row

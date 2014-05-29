@@ -47,7 +47,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     .flow-container
                         .row
                             .col-lg-12
-                                a.card.short.top-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question.id}}")
+                                a.card.short.top-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question._id}}")
                                     .row
                                         div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
                                             h4.no-top-margin.bottom-margin
@@ -117,7 +117,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             div.editor-inner(math-html="Model.question.text")
                         .short-bottom-margin.top-margin
                             a.badge.short-bottom-margin(ng-repeat='tag in Model.question.tags track by $index').right-margin {{tag}}
-                            a.badge.short-bottom-margin(ng-repeat='book in Model.question.books track by $index').right-margin {{book}}
+                            a.badge.bg-blue.short-bottom-margin(ng-repeat='book in Model.question.books track by $index', ng-href="/books/id/{{book._id}}").right-margin {{book.title}}
                         .row
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editor.showEditView()") 编辑问题
@@ -204,7 +204,7 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-xs-12
                                 a.right-spaced.small(ng-click="editAnswer(answer)") 编辑回答
                                 a.right-spaced.small(ng-click="showCommentEditor(answer)") 评论
-                                a.right-spaced.small(ng-if="answer.author == user.username", ng-click="removeAnswer(answer)") 删除回答
+                                a.right-spaced.small(ng-if="answer.author.name == user.username", ng-click="removeAnswer(answer)") 删除回答
                                 p.pull-right
                                     span {{ answer.dateCreated | date:yy-MM-dd }} 由
                                     a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}

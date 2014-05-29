@@ -3,6 +3,8 @@ include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
 link(href='/css/feed.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
+link(href='/css/panel.css', rel="stylesheet")
+link(href='/css/modal.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -141,28 +143,39 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span 提问 {{Model.profile.stats.answerCount}}
                                                 .unit
                                                     span 编辑 {{Model.profile.stats.editCount}}
-                        .col-xs-12
-                            .feed-container(ng-repeat="feed in Model.userFeed.feeds | orderBy:view.timeline.predicate:view.timeline.reverse track by $index ")
-                                .time-header.separator(ng-class="{last: $index==Model.userFeed.count-1}")
-                                    .unit {{feed.timeNumber}}
-                                        span.small {{feed.timeUnit}}
-                                .time-header.right-label
-                                    .unit
-                                        span.small {{feed.tagText}}
-                                .time-body.card
-                                    .unit.title
-                                        a(ng-href="{{feed.url}}") “{{feed.data.title}}"
-                                    .unit(ng-if="feed.data.text") {{Model.stripHtml(feed.data.text, 90) + '...'}}
+                        .col-xs-12(ng-include="'/widgets/timeline'")
 
                     .flow-container
                         .row
                             .col-lg-12
             .col-sm-3.hidden-xs
                 .panel.panel-info
-                    .panel-heading 他的班级
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',
+                    bs-modal='modal', data-template='/partials/sessionEdit.html', data-placement='top') 我的课程
+                        span.pull-right.fa.fa-bars
+                    //.panel-body
+                    table.table
+                        //thead
+                            tr
+                                th
+                        tbody
+                            tr(ng-repeat="session in Model.profile.sessions")
+                                td
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
                 .panel.panel-info
-                    .panel-heading 他的课本
-                    .panel-body
-                        p(ph-txt='3s')
+                    .panel-heading(ng-click='view.sessionModal.state=true') 我的课本
+                        span.pull-right.fa.fa-bars
+                    //.panel-body
+                    table.table
+                        //thead
+                            tr
+                                th
+                        tbody
+                            tr(ng-click="")
+                                td 你身体里的那条鱼
+                                    .pull-right
+                                        span.glyphicon.glyphicon-arrow-right
+                                    //fa.fa-angle-right
+

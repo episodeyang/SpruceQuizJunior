@@ -48,7 +48,7 @@ describe('AnswerComment API test - ', function (done) {
     it('add answer to question', function (done) {
         var ansText = '我是通过 answerComment 测试模块添加的答案。';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers')
+        request(app).post('/api/questions/' + question._id + '/answers')
             .send({text: ansText})
             .expect(201).end(function (err, res){
                 res.body.answers.slice(-1)[0].should.containEql({text: ansText});
@@ -59,7 +59,7 @@ describe('AnswerComment API test - ', function (done) {
     it('add comment to an answer in a question', function (done) {
         var commentText = '我是通过 answerComment 测试模块添加的，答案下面的评论。';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments')
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments')
             .send({text: commentText})
             .expect(201).end(function (err, res){
                 res.body.answerComments[0].should.containEql({text: commentText});
@@ -71,7 +71,7 @@ describe('AnswerComment API test - ', function (done) {
     it('update answer comment in a question', function (done) {
         var comment = '这是更新后的评论，请查收';
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
             .send({text: comment})
             .expect(201).end(function (err, res){
                 res.body.answerComments[0].text.should.eql(comment);
@@ -83,7 +83,7 @@ describe('AnswerComment API test - ', function (done) {
             voteup: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answerComments[0].voteup.should.containEql(studentUser.username);
@@ -96,7 +96,7 @@ describe('AnswerComment API test - ', function (done) {
             voteup: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answerComments[0].voteup.should.not.containEql(studentUser.username);
@@ -109,7 +109,7 @@ describe('AnswerComment API test - ', function (done) {
             votedown: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answerComments[0].votedown.should.containEql(studentUser.username);
@@ -122,7 +122,7 @@ describe('AnswerComment API test - ', function (done) {
             votedown: 'true'
         };
         passportStub.login(studentUser);
-        request(app).post('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
+        request(app).post('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
             .send(query)
             .expect(201).end(function (err, res){
                 res.body.answerComments[0].votedown.should.not.containEql(studentUser.username);
@@ -134,7 +134,7 @@ describe('AnswerComment API test - ', function (done) {
         var newLength = _.size(question.answerComments) - 1;
         if (newLength == 0) {newLength = 0; };
         passportStub.login(studentUser);
-        request(app).del('/api/questions/' + question.id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
+        request(app).del('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/comments/' + answerComment.id)
             .expect(201).end(function (err, res){
                 _.size(res.body.answerComments).should.eql(newLength);
                 done();

@@ -168,30 +168,28 @@ angular.module('modelServices', ['resourceProvider'])
                     if (typeof success != 'undefined') {
                         success(result);
                     }
-                    ;
                 }, function (err) {
                     $rootScope.error = err;
                     if (typeof error != 'undefined') {
                         error(err);
                     }
-                    ;
                 });
             };
             modelInstance.saveQuestion = function (question, success, error) {
-//                if (question.id) {$rootScope.error = "udpate does not have object id."}
-                Questions.save(question, function (q) {
-                    _.extend(modelInstance.question, q);
-                    if (typeof success != 'undefined') {
-                        success(q)
-                    }
-                    ;
-                }, function (err) {
-                    $rootScope.error = err;
-                    if (typeof error != 'undefined') {
-                        error(err)
-                    }
-                    ;
-                });
+//                if (question._id) {$rootScope.error = "udpate does not have object id."}
+                Questions.save(
+                    question,
+                    function (q) {
+                        _.extend(modelInstance.question, q);
+                        if (typeof success != 'undefined') {
+                            success(q)
+                        }
+                    }, function (err) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') {
+                            error(err)
+                        }
+                    });
             };
             modelInstance.removeQuestion = function (question, success, error) {
                 Questions.remove(question, function (res) {
@@ -211,14 +209,14 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.voteup = function (question) {
                 var q = {
-                    id: question.id,
+                    id: question._id,
                     voteup: 'true'
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
             }
             modelInstance.votedown = function (question) {
                 var q = {
-                    id: question.id,
+                    id: question._id,
                     votedown: 'true'
                 }
                 modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
@@ -232,7 +230,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.addAnswer = function (answer, success, error) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     text: answer.text
                 };
                 Answers.add(
@@ -254,7 +252,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.updateAnswer = function (answer, success, error) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     text: answer.text
                 };
@@ -276,7 +274,7 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.removeAnswer = function (answer, success, error) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id
                 };
                 Answers.remove(
@@ -297,7 +295,7 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.voteupAnswer = function (answer) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     "voteup": 'true'
                 }
@@ -311,7 +309,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.votedownAnswer = function (answer) {
                 var ans = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     "votedown": 'true'
                 }
@@ -326,7 +324,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.addComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     text: comment.text
                 };
                 Comments.add(
@@ -351,7 +349,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id,
                 };
                 _.extend(comment, query)
@@ -377,7 +375,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id
                 };
                 Comments.remove(
@@ -399,7 +397,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.voteupComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id,
                     "voteup": 'true'
                 }
@@ -422,7 +420,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.votedownComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     commentId: comment.id,
                     "votedown": 'true'
                 }
@@ -447,7 +445,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.addAnswerComment = function (comment, answer, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: answer.id,
                     text: comment.text
                 };
@@ -475,7 +473,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                 };
@@ -503,7 +501,7 @@ angular.module('modelServices', ['resourceProvider'])
                  * extend the comment object with the query id, then post to the api call.
                  */
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id
                 };
@@ -527,7 +525,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.voteupAnswerComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                     "voteup": 'true'
@@ -552,7 +550,7 @@ angular.module('modelServices', ['resourceProvider'])
             }
             modelInstance.votedownAnswerComment = function (comment, success, error) {
                 var query = {
-                    id: modelInstance.question.id,
+                    id: modelInstance.question._id,
                     answerId: comment.answerId,
                     commentId: comment.id,
                     "votedown": 'true'
@@ -578,7 +576,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             function timeLapsed(time) {
                 var dt = Date.now() - new Date(time);
-                //console.log(dt);
+                // console.log(dt);
                 var oneSecond = 1000;
                 var oneMinute = oneSecond * 60;
                 var oneHour = oneMinute * 60;
@@ -604,7 +602,7 @@ angular.module('modelServices', ['resourceProvider'])
                     timeString = Math.floor(dt / oneSecond) + ' 秒';
                 }
 
-                //console.log(timeString);
+                // console.log(timeString);
                 return timeString;
             }
 
@@ -646,6 +644,10 @@ angular.module('modelServices', ['resourceProvider'])
                 commentAdd: {
                     tagText: "评论",
                     url: '/questions/'
+                },
+                questionRemove: {
+                    tagText: '删除',
+                    url: '/questions/deleted/'
                 }
             };
 
@@ -659,11 +661,13 @@ angular.module('modelServices', ['resourceProvider'])
                 return ref;
                 // console.log(ref);
             }
-            function feedFormatter() {
+
+            function feedFormatter(feeds) {
                 var timeStrings;
                 _.each(
-                    modelInstance.userFeed.feeds,
+                    feeds,
                     function (feed) {
+//                        console.log(feed);
                         timeStrings = timeLapsed(feed.time).split(' ');
                         feed.timeNumber = timeStrings[0];
                         feed.timeUnit = timeStrings[1];
@@ -684,154 +688,299 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function success(feedBucket) {
                     modelInstance.userFeed = feedBucket;
-                    feedFormatter();
+                    feedFormatter(modelInstance.userFeed.feeds);
                 }
 
                 function error(err) {
                     $rootScope.error = err;
                 }
 
-                Users.getFeeds(query, success, error);
+                return Users.getFeeds(query, success, error).$promise;
             };
-            function addSession (id, success, error) {
-                var query = {
-                    add: { _id: id } ,
-                    username: modelInstance.profile.username
-                };
-                function successCallback(profile) {
-                    modelInstance.profile.sessions = profile.sessions;
-                    if (success) {success();}
-                }
-                function errorCallback(err) {
-                    $rootScope.error = err;
-                    if (error) {error(err);}
-                }
-                Users.updateSessions(query, successCallback, errorCallback);
-            }
-            function removeSession (id, success, error) {
-                var query = {
-                    remove: { _id: id } ,
-                    username: modelInstance.profile.username
-                };
-                function successCallback(profile) {
-                    modelInstance.profile.sessions = profile.sessions;
-                    if (success) {success();}
-                }
-                function errorCallback(err) {
-                    $rootScope.error = err;
-                    if (error) {error(err);}
-                }
-                Users.updateSessions(query, successCallback, errorCallback);
-            }
-            modelInstance.getUserProfile = function (username) {
+
+            modelInstance.profile = {};
+            modelInstance.getUserProfile = function (username, success, error) {
                 var query = {};
                 if (!username) {
                     query.username = modelInstance.user.username;
                 } else {
                     query.username = username;
                 }
-                function success(user) {
-                    modelInstance.profile = {
-                        addSession: addSession,
-                        removeSession: removeSession
-                    };
-                    _.extend(modelInstance.profile, user);
+
+                var callbackStack;
+
+                function setup(success, error) {
+                    callbackStack = {};
+                    if (success) {
+                        callbackStack.success = success;
+                    }
+                    if (error) {
+                        callbackStack.error = error;
+                    }
                 }
 
-                function error(err) {
-                    $rootScope.error = err;
-                }
-
-                Users.get(query, success, error);
-            };
-            modelInstance.updateUserProfile = function (success, error) {
-                var query = modelInstance.profile;
-                delete query._id;
                 function successCallback(user) {
-                    modelInstance.profile = {
-                        addSession: addSession,
-                        removeSession: removeSession
-                    };
                     _.extend(modelInstance.profile, user);
-                    if (success) {success();}
+                    if (callbackStack.success) {
+                        callbackStack.success(user)
+                    }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    if (error) {error(err);}
+                    if (callbackStack.error) {
+                        callbackStack.error(err);
+                    }
                 }
-                Users.save(query, successCallback, errorCallback);
+
+                function getCallbackConstructor(success) {
+                    return function (user) {
+                        //console.log(user);
+                        modelInstance.profile = _.extend(
+                            {
+                                addSession: addSession,
+                                removeSession: removeSession,
+                                addBook: addBook,
+                                removeBook: removeBook,
+                                save: save
+                            },
+                            user);
+                        if (success) {
+                            success(user);
+                        }
+                    }
+                }
+
+                function addSession(id, success, error) {
+                    var query = {
+                        add: { _id: id },
+                        username: modelInstance.profile.username
+                    };
+
+                    setup(success, error);
+                    Users.updateSessions(query, successCallback, errorCallback);
+                }
+
+                function removeSession(id, success, error) {
+                    var query = {
+                        remove: { _id: id },
+                        username: modelInstance.profile.username
+                    };
+                    setup(success, error);
+                    Users.updateSessions(query, successCallback, errorCallback);
+                }
+
+                function addBook(bookData, success, error) {
+                    var query = {
+                        add: {
+                            _id: bookData._id
+                        },
+                        username: modelInstance.profile.username
+                    };
+                    setup(success, error);
+                    Users.updateBooks(query, successCallback, errorCallback);
+                }
+
+                function removeBook(bookData, success, error) {
+                    var query = {
+                        remove: { _id: bookData._id },
+                        username: modelInstance.profile.username
+                    };
+                    setup(success, error);
+                    Users.updateBooks(query, successCallback, errorCallback);
+                }
+
+                function save(success, error) {
+                    var query = _.omit(
+                        modelInstance.profile,
+                        ['_id', 'save', 'addSession', 'removeSession',
+                            'addBook', 'removeBook']
+                    );
+
+                    setup(getCallbackConstructor(success), error);
+                    Users.save(query, successCallback, errorCallback);
+                }
+
+                setup(getCallbackConstructor(success), error);
+                return Users.get(query, successCallback, errorCallback).$promise;
             };
 
-            modelInstance.getSession = function (id, success, error) {
-                var query = { sessionId: id };
-                function successCallback(session) {
-                    modelInstance.session = session;
-                    if (success) {success(session);}
-                }
-                function errorCallback(err) {
-                    $rootScope.error = err;
-                    if (error) {error(err);}
-                }
-                Sessions.get(query, successCallback, errorCallback);
-            };
-            modelInstance.saveSession = function (id, success, error) {
-                var query = {
-                    id: id,
-                    name: Model.session.name,
-                    teachers: Model.session.teachers,
-                    overview: Model.session.overview,
-                    tags: Model.session.tags
-                };
-                function successCallback(session) {
-                    modelInstance.session = session;
-                    if (success) {success(session);}
-                }
-                function errorCallback(err) {
-                    $rootScope.error = err;
-                    if (error) {error(err);}
-                }
-                Sessions.save(query, successCallback, errorCallback);
-            };
 
-            function bookQueryBuilder(title, authorName) {
-                var query = {
-                    title: title
-                };
-                if (authorName) {
-                    query.author = {name: authorName}
+            modelInstance.books = {};
+            modelInstance.getBooks = function (query, success, error) {
+                var callbackStack;
+
+                function setup(success, error) {
+                    callbackStack = {};
+                    if (success) {
+                        callbackStack.success = success;
+                    }
+                    if (error) {
+                        callbackStack.error = error;
+                    }
                 }
-                return query
+
+                function successCallback(books) {
+                    _.extend(modelInstance.books, books);
+                    if (callbackStack.success) {
+                        callbackStack.success(books)
+                    }
+                }
+
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (callbackStack.error) {
+                        callbackStack.error(err);
+                    }
+                }
+
+                function getCallback(success) {
+                    return function (books) {
+                        modelInstance.books = _.extend(
+                            {},
+                            books);
+                        if (success) {
+                            success(session);
+                        }
+                    };
+                }
+
+                setup(getCallback(success), error);
+                Books.query(query, successCallback, errorCallback);
             }
 
-            modelInstance.getBook = function (authorAndTitle) {
-                var query = bookQueryBuilder(authorAndTitle);
+            modelInstance.book = {};
+            modelInstance.createBook = function (title, authors, success, error) {
+                var query = {
+                    title: title,
+                    authors: authors
+                };
 
-                function success(book) {
-                    modelInstance.book = book;
-                    console.log(book)
-                }
-
-                function error(err) {
-                    $rootScope.error = err;
-                }
-
-                Books.get(query, success, error);
-            };
-            modelInstance.updateBook = function (success, error) {
-                var query = modelInstance.book;
-                query.id = query._id;
-//                delete query._id;
                 function successCallback(book) {
                     modelInstance.book = book;
-                    success();
+                    if (success) {
+                        return success(book);
+                    }
                 }
 
                 function errorCallback(err) {
                     $rootScope.error = err;
-                    error(err);
+                    if (error) {
+                        return error(err);
+                    }
                 }
 
-                Books.save(query, successCallback, errorCallback);
+                Books.create(query, successCallback, errorCallback);
+            };
+            modelInstance.getBookFeeds = function (bookId, success, error) {
+                function callback(feeds) {
+                    modelInstance.bookFeeds = feeds;
+                    feedFormatter(modelInstance.bookFeeds.feeds);
+                    if (success) {
+                        return success(modelInstance.bookFeeds);
+                    }
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {
+                        error();
+                    }
+                }
+
+                if (!bookId) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    return Books.getFeeds({bookId: modelInstance.book._id}, callback, errorCallback).$promise;
+                } else {
+                    return Books.getFeeds({bookId: bookId}, callback, errorCallback).$promise;
+                }
+            };
+            modelInstance.getBook = function (bookId, title, authorName, success, error) {
+                var query = {};
+                if (bookId) {
+                    // console.log('getting the book! ');
+                    query = {bookId: bookId};
+                    setup(getCallback, error);
+                    return Books.get(query, successCallback, errorCallback).$promise;
+                } else if (title) {
+                    // console.log('querrying the books! ');
+                    query.title = title;
+                    if (authorName) {
+                        query.authorName = authorName;
+                    }
+                    setup(queryCallback, error);
+                    return Books.query(query, successCallback, errorCallback).$promise;
+                }
+
+                var callbackStack;
+
+                function setup(success, error) {
+                    callbackStack = {
+                        success: success,
+                        error: error
+                    };
+                }
+
+                function successCallback(book) {
+                    _.extend(modelInstance.book, book);
+                    if (callbackStack.success) {
+                        callbackStack.success(book)
+                    }
+                }
+
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (callbackStack.error) {
+                        callbackStack.error(err);
+                    }
+                }
+
+                var methods = {
+                    save: save,
+                    addQuestion: addQuestion,
+                    removeQuestion: removeQuestion,
+                    getQuestions: getQuestions
+                };
+
+                function getCallback(book) {
+                    modelInstance.book = _.extend(methods, book);
+
+                    if (success) {
+                        return success(book);
+                    }
+                }
+
+                function queryCallback(books) {
+                    modelInstance.book = _.extend({}, methods, books[0]);
+                    if (success) {
+                        return success(books[0]);
+                    }
+                }
+
+                function save(success, error) {
+                    var query = modelInstance.book;
+                    query.id = query._id;
+                    // delete query._id;
+                    setup(success, error);
+                    Books.save(query, successCallback, errorCallback);
+                }
+
+                function addQuestion(questionId, success, error) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    setup(success, error);
+                    Books.updateQuestions({add: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback)
+                }
+
+                function removeQuestion(questionId, success, error) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    setup(success, error);
+                    Books.updateQuestions({pull: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback)
+                }
+
+                function getQuestions(success, error) {
+                    console.assert(modelInstance.book._id, "model.book doesn't have _id field");
+                    setup(success, error);
+                    Books.getQuestions({bookId: modelInstance.book._id}, successCallback, errorCallback);
+                }
             };
 
             modelInstance.getSchools = function () {
@@ -842,27 +991,35 @@ angular.module('modelServices', ['resourceProvider'])
                 function error(err) {
                     $rootScope.error = err;
                 }
+
                 Schools.index({}, success, error);
             };
+
             modelInstance.getSessions = function () {
                 function success(sessions) {
                     modelInstance.sessions = sessions;
                 }
+
                 function error(err) {
                     $rootScope.error = err;
                 }
+
                 Sessions.index({}, success, error);
             };
-            modelInstance.submitSession = function(session, callback) {
+
+            modelInstance.session = {};
+            modelInstance.createSession = function (session, callback) {
                 function success(session) {
                     modelInstance.getSessions();
                     callback(null, session);
                 }
+
                 function error(err) {
                     $rootScope.error = err;
                     callback(err);
                 }
-                function validateAndSave (session) {
+
+                function validateAndSave(session) {
                     if (!session.name) {
                         return error('sessionHaveNoName');
                     }
@@ -874,7 +1031,112 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                     Sessions.save(session, success, error);
                 }
+
                 validateAndSave(session);
+            };
+
+            modelInstance.getSessionFeeds = function (sessionId, success, error) {
+                function callback(feeds) {
+                    modelInstance.sessionFeeds = feeds;
+                    feedFormatter(modelInstance.sessionFeeds.feeds);
+                    if (success) {
+                        success(modelInstance.sessionFeeds);
+                    }
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (error) {
+                        error();
+                    }
+                }
+
+                if (!sessionId) {
+                    console.assert(modelInstance.session._id, "model.session doesn't have _id field");
+                    return Sessions.getFeeds({sessionId: modelInstance.session._id}, callback, errorCallback).$promise;
+                } else {
+                    return Sessions.getFeeds({sessionId: sessionId}, callback, errorCallback).$promise;
+                }
+            };
+            modelInstance.getSession = function (id, success, error) {
+                var query = { sessionId: id };
+
+                var callbackStack;
+
+                function setup(success, error) {
+                    callbackStack = {};
+                    if (success) {
+                        callbackStack.success = success;
+                    }
+                    if (error) {
+                        callbackStack.error = error;
+                    }
+                }
+
+                function successCallback(session) {
+                    _.extend(modelInstance.session, session);
+                    if (callbackStack.success) {
+                        callbackStack.success(session)
+                    }
+                }
+                function errorCallback(err) {
+                    $rootScope.error = err;
+                    if (callbackStack.error) {
+                        callbackStack.error(err);
+                    }
+                }
+
+
+                function getCallback(session) {
+                    modelInstance.session = _.extend(
+                        {
+                            save: save,
+                            addQuestion: addQuestion,
+                            removeQuestion: removeQuestion,
+                            getQuestions: getQuestions
+                        },
+                        session);
+
+                    if (success) {
+                        success(session);
+                    }
+                    return modelInstance.session;
+                }
+
+                function addQuestion(questionId, success, error) {
+                    setup(success, error);
+                    Sessions.updateQuestions({add: {id: questionId}, sessionId: id}, successCallback, errorCallback)
+                }
+
+                function removeQuestion(questionId, success, error) {
+                    setup(success, error);
+                    Sessions.updateQuestions({pull: {id: questionId}, sessionId: id}, successCallback, errorCallback)
+                }
+
+                function getQuestions(success, error) {
+                    setup(success, error);
+                    Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
+                }
+
+
+                function save(success, error) {
+                    setup(success, error);
+                    var query = {
+                        sessionId: modelInstance.session._id,
+                        name: modelInstance.session.name,
+                        teachers: modelInstance.session.teachers,
+                        overview: modelInstance.session.overview,
+                        tags: modelInstance.session.tags
+                    };
+
+                    Sessions.save(query, successCallback, errorCallback);
+                }
+
+                setup(getCallback, error);
+                if (id) {
+                    return Sessions.get(query, successCallback, errorCallback).$promise;
+                } else {
+                    console.log('need sessionId in getSession()');
+                }
             };
 
             /**

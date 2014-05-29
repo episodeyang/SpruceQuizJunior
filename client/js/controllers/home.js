@@ -31,12 +31,63 @@ angular.module('SpruceQuizApp')
 
             $rootScope.errors = {};
 
-            $scope.view.timeline = {
-                predicate: 'time',
-                reverse: true
+            $scope.view.bookFeedBuckets = [];
+            $scope.view.sessionFeedBuckets = [];
+            $scope.view.feedBucket = {feeds: []};
+            function newsFeedAssembler (bucket) {
+                var ext;
+                if (bucket.username && bucket.username===$scope.user.username) {
+                    ext = {
+                        user: $scope.user
+                    };
+                } else if (bucket.sessionId) {
+                    console.assert(bucket.session, 'need session in bucket');
+                    ext = {
+                        session: bucket.session
+                    };
+                } else if (bucket.bookId) {
+                    console.assert(bucket.book, 'need book in bucket');
+                    ext = {
+                        book: bucket.book
+                    };
+                }
+                var feeds = _.map(bucket.feeds, function(feed) {
+                    return _.extend(feed, ext);
+                });
+                $scope.view.feedBucket.feeds.push.apply($scope.view.feedBucket.feeds, feeds);
             };
-            Model.getUserProfile($scope.user.username);
-            Model.getUserFeeds($scope.user.username);
+            // These are to construct the stand-alone getBookFeeds and getSessionFeeds method.
+            Model.getUserProfile($scope.user.username)
+                .then(function (me) {
+                    var promise = Model.getUserFeeds($scope.user.username);
+
+                    function bookPromiseHelper(book) {
+                        promise.then(function () {
+                            Model.getBookFeeds(book._id)
+                                .then(function () {
+                                    Model.bookFeeds.book = book;
+//                                    $scope.view.bookFeedBuckets.push(Model.sessionFeeds);
+                                    newsFeedAssembler(Model.bookFeeds);
+                                });
+                        });
+                    }
+
+                    function sessionPromiseHelper(session) {
+                        promise.then(function () {
+                            Model.getSessionFeeds(session._id)
+                                .then(function () {
+                                    Model.sessionFeeds.session = session;
+//                                    $scope.view.sessionFeedBuckets.push(Model.sessionFeeds);
+                                    newsFeedAssembler(Model.sessionFeeds);
+                                });
+                        });
+                    }
+
+                    _.each(Model.profile.sessions, sessionPromiseHelper);
+                    _.each(Model.profile.books, bookPromiseHelper);
+
+                    return promise;
+                });
 
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';
@@ -78,11 +129,11 @@ angular.module('SpruceQuizApp')
             };
             $scope
                 .$watch(
-                    'Model.profile',
-                    function (newVal, oldVal) {
-                    },
-                    true
-                );
+                'Model.profile',
+                function (newVal, oldVal) {
+                },
+                true
+            );
             $scope.submitProfile = function () {
 
                 function removeNull(obj, key) {
@@ -113,55 +164,11 @@ angular.module('SpruceQuizApp')
                 Model.updateUserProfile(
                     function () {
                         $scope.view.profile.edit = false;
-                    })
+                    }
+                )
             };
 
             Model.getSchools();
-            Model.getSessions();
-            $scope.sessionData = {
-                tags: [],
-                tag: '',
-                teachers: [],
-                teacher: ''
-            };
-            $scope.$watch(
-                'sessionData.tag',
-                function(newVal, oldVal) {
-                    if (!newVal) {return}
-                    if (newVal[newVal.length-1]=="," || newVal[newVal.length-1]=="，" || newVal[newVal.length-1]==" " ) {
-                        $scope.sessionData.tags.push(newVal.slice(0, -1));
-                        $scope.sessionData.tag = '';
-                    }
-                }
-            );
-            $scope.$watch(
-                'sessionData.teacher',
-                function(newVal, oldVal) {
-                    if (!newVal) {return}
-                    if (newVal[newVal.length-1]=="," || newVal[newVal.length-1]=="，" || newVal[newVal.length-1]==" " ) {
-                        $scope.sessionData.teachers.push(
-                            { name: newVal.slice(0, -1) }
-                        );
-                        $scope.sessionData.teacher = '';
-                    }
-                }
-            );
 
-            $scope.submitSession = function(session) {
-                if (!session) { var session = $scope.sessionData; }
-                if (!session.school) { session.school = Model.profile.schoolRecord[Model.profile.schoolRecord.length-1].name; }
-
-                function callback(err, session) {
-                    if (err || !session) {return err || 'noSessionUpdated'; }
-                    if (!session._id) {return $rooteScope.error = 'sessionDoesNotHaveIdField'; }
-                    Model.profile.addSession(session._id, function() {
-                        $scope.view.modalState='searchSessions';
-                    });
-                }
-
-                delete $scope.sessionData.tag;
-                delete $scope.sessionData.teacher;
-                Model.submitSession(session, callback);
-            };
         }
     ]);

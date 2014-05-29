@@ -1,7 +1,11 @@
 include mixins/navbar
 include mixins/footer
 link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/timeline.css', rel="stylesheet")
+link(href='/css/feed.css', rel="stylesheet")
+link(href='/css/editor.css', rel="stylesheet")
 link(href='/css/card.css', rel="stylesheet")
+link(href='/css/panel.css', rel="stylesheet")
 div.background(background-img="/img/bg-brown.jpg")
 #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
 .body(konami='debug.alert()')
@@ -31,17 +35,17 @@ div.background(background-img="/img/bg-brown.jpg")
                 ul.nav.sp-nav.nav-pills.nav-stacked
                     li(ng-class="{active: view.state=='info'}")
                         a.text-center(ng-click="view.state='info'") 新鲜事
-                    li(ng-class="{active: view.state=='search'}")
-                        a.text-center(ng-click="view.state='search'") 搜索
                     li(ng-class="{active: view.state=='questions'}")
                         a.text-center(ng-click="view.state='questions'") 问题
-                    li(ng-class="{active: view.state=='answers'}")
+                    //li(ng-class="{active: view.state=='answers'}")
                         a.text-center(ng-click="view.state='answers'") 回答
+                    li(ng-class="{active: view.state=='ask'}")
+                        a.text-center(ng-click="view.state='ask'") 提问
             .col-sm-7.col-xs-9
-                div
+                div(ng-if="view.state=='info'")
                     .row
                         .col-xs-12
-                            flip(flipped='view.card.flipped').bottom-margin.tall
+                            flip(flipped='view.card.flipped').tall
                                 flip-front
                                     .card.convex.no-top-margin
                                         .card-title.bottom-margin
@@ -63,8 +67,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                                 div(ng-if="Model.session.overview") {{Model.session.overview}}
                                                 div(ng-if="!Model.session.overview").placeholder.short 暂无课程简介
                                                 div.top-margin
-                                                    span(ng-repeat="teacher in Model.session.teachers track by $index").blue {{teacher.name.split(',').join('')}}，
-                                                    span(ng-repeat="member in Model.session.members track by $index") {{member.name.split(',').join('')}}，
+                                                    span(ng-repeat="teacher in Model.session.teachers track by $index").blue {{teacher.name.split(',').join('') || member.username}}，
+                                                    span(ng-repeat="member in Model.session.members track by $index") {{member.name.split(',').join('') || member.username}}，
                                                     span(ng-if="Model.session.teachers || Model.session.members") 在上这门课程。
                                                 .badge.right-margin.short-top-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}
                                         //.row
@@ -76,7 +80,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                     span 提问 14
                                                     span.end 编辑 3
                                 flip-back
-                                    .card.convex.top-margin
+                                    .card.convex.no-top-margin
                                         .card-title
                                             span.name {{Model.session.name}}
                                             span.signature(ng-repeat="teacher in Model.session.teachers track by $index") ，
@@ -98,8 +102,9 @@ div.background(background-img="/img/bg-brown.jpg")
 
                                     //.card.convex.top-margin
                                     .short-bottom-margin.top-margin
-                                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}&nbsp
-                                            span(ng-click="Model.session.tags.splice($index, 1)").fa.fa-times
+                                        .badge.right-margin.short-bottom-margin(ng-repeat="tag in Model.session.tags track by $index")  {{tag}}
+                                            span(ng-if="view.session.edit") &nbsp
+                                            span(ng-if="view.session.edit", ng-click="Model.session.tags.splice($index, 1)").fa.fa-times
                                     .row(ng-show="view.session.edit")
                                         .col-xs-12.no-margin
                                             .form-group.no-margin
@@ -107,7 +112,37 @@ div.background(background-img="/img/bg-brown.jpg")
 
                     .flow-container
                         .row
-                            .col-lg-12
+                            .col-xs-12(ng-include="'/widgets/newsFeed'")
+
+
+                .row(ng-if="view.state!='info'")
+                    .col-xs-12
+                        .card.no-top-margin.bottom-margin.bg-semi-transparent
+                            .card-title
+                                span.name {{Model.session.name}}
+                                span.signature.small(ng-repeat="teacher in Model.session.teachers track by $index")
+                                    span ，{{Model.session.teachers[$index].name.split(',').join('')}}
+                div(ng-if="view.state=='questions'")
+                    a.card.short.bottom-margin(ng-repeat="question in Model.session.questions track by $index", ng-href="/questions/{{question.id}}")
+                        .row
+                            div.col-sm-11.col-sm-push-1.col-xs-10.col-xs-push-2
+                                h4.no-top-margin.bottom-margin
+                                    b {{question.title}}
+                                //hr.low-margin
+                                div(ng-bind-html="Model.stripHtml(question.text, 90) + '......'")
+                            .col-sm-1.col-sm-pull-11.col-xs-2.col-xs-pull-10.stat-box-container
+                                .rounded.bg-blue.stat-box(ng-class="{'bg-red':question.vote < 0 , 'bg-blue': question.vote > 0 }")
+                                    h4.no-bottom-margin.text-center {{question.vote}}
+                                    p.no-top-margin.text-center.small 投票
+                                .rounded.stat-box.appendix(ng-class="{'bg-grey':question.nAnswers <= 0 , 'bg-green': question.nAnswers > 0 }")
+                                    p.no-bottom-margin.text-center.small {{question.nAnswers}}
+                                    p.no-top-margin.text-center.small 回答
+                    div.placeholder.short(ng-if="!Model.session.questions || Model.session.questions.length===0")
+                        | 这个班级中还没有添加任何问题：）
+                div(ng-if="view.state=='ask'")
+                    div(ng-include="'/widgets/questionCreate'")
+
+
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading 相关教材
@@ -121,4 +156,9 @@ div.background(background-img="/img/bg-brown.jpg")
                                 td
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    a(ng-href='/books/{{book._id}}') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
+                                    a(ng-href='/books/{{book.authors[0].name}}/{{book.title}}/') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
+                            tr
+                                td.clickable(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top')
+                                    .pull-right
+                                        span.glyphicon.glyphicon-plus
+                                    span 添加教材

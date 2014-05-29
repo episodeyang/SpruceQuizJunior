@@ -43,6 +43,7 @@ describe('School API test - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/schools').send(schoolData.schools[0]).expect(201).end(function (err, res) {
             school = res.body;
+            console.log(school);
             school.name.should.be.eql(schoolData.schools[0].name);
             done();
         });
@@ -51,6 +52,7 @@ describe('School API test - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).get('/api/schools/' + school.name).expect(200).end(function (err, res) {
             schoolData.schools[0].name.should.be.eql(res.body.name);
+            console.log(res.body);
             done();
         });
     });
@@ -60,6 +62,7 @@ describe('School API test - ', function (done) {
         school.tags.push('化学');
         request(app).post('/api/schools/' + school.name).send(school).expect(201).end(function (err, res) {
             SchoolUpdated = res.body;
+            console.log(res.body);
             SchoolUpdated.address.should.be.eql(school.address);
             SchoolUpdated.tags.should.containEql('化学');
             done();

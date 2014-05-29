@@ -40,48 +40,6 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'HomeCtrl',
                     access: access.loggedin
                 });
-//            $routeProvider.when('/errata/:errataId',
-//                {
-//                    templateUrl: '/partials/errata',
-//                    controller: 'ErrataCtrl',
-//                    access: access.loggedin
-//                });
-//            $routeProvider.when('/public/login',
-//                {
-//                    templateUrl: '/partials/public/login',
-//                    controller: 'LoginCtrl',
-//                    access: access.anon
-//                });
-//            $routeProvider.when('/public/register',
-//                {
-//                    templateUrl: '/partials/public/register',
-//                    controller: 'LoginCtrl',
-//                    access: access.anon
-//                });
-//            $routeProvider.when('/auth/twitter',
-//                {
-//                    templateUrl: '/partials/register',
-//                    controller: 'RegisterCtrl',
-//                    access: access.anon
-//                });
-//            $routeProvider.when('/private',
-//                {
-//                    templateUrl: '/partials/private',
-//                    controller: 'PrivateCtrl',
-//                    access: access.loggedin
-//                });
-//            $routeProvider.when('/admin',
-//                {
-//                    templateUrl: '/partials/admin',
-//                    controller: 'AdminCtrl',
-//                    access: access.superuser
-//                });
-//            $routeProvider.when('/sections',
-//                {
-//                    templateUrl: '/partials/sections',
-//                    controller: 'SectionCtrl',
-//                    access: access.loggedin
-//                });
             $routeProvider.when('/questions/:questionId',
                 {
                     templateUrl: '/partials/questions',
@@ -94,13 +52,23 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'UserCtrl',
                     access: access.all
                 });
-            $routeProvider.when('/books/:title',
+            /**
+             * This ordering of the route is very important. Otherwise the id field
+             * would be recognized as a book authorName.
+             */
+            $routeProvider.when('/books/id/:bookId',
                 {
                     templateUrl: '/partials/books',
                     controller: 'BookCtrl',
                     access: access.all
                 });
-            $routeProvider.when('/books/:authorName/:title',
+            $routeProvider.when('/books/:bookTitle',
+                {
+                    templateUrl: '/partials/books',
+                    controller: 'BookCtrl',
+                    access: access.all
+                });
+            $routeProvider.when('/books/:authorName/:bookTitle',
                 {
                     templateUrl: '/partials/books',
                     controller: 'BookCtrl',
@@ -160,21 +128,19 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
 
         }])
 
-    .run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
-
+    .run(['$rootScope', '$location', '$route', 'Auth', function ($rootScope, $location, $route, Auth) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             $rootScope.error = null;
             if (!Auth.authorize(next.access)) {
-                $location.path(current);
+                // event.preventDefault();
                 $rootScope.error = "access prohibited.";
                 if (Auth.isLoggedIn()) {
-//                    $location.path('/');
-//                    console.log('is logged in');
-                }
-                else {
+                    $location.path('/home');
+                } else {
                     $location.path('/');
-                    console.log('not logged in');
                 }
+            } else {
+                // $location.path(next);
             }
         });
 

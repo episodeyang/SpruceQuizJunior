@@ -1,0 +1,19 @@
+//- used with script.js as the controller.
+div(ng-controller="QuestionEditorCtrl")
+    input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
+    div
+    text-angular.tall(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+
+    .short-bottom-margin.top-margin
+        .badge.short-bottom-margin(ng-repeat='tag in editor.data.tags track by $index').right-margin
+            span.white {{tag}} &nbsp
+            a.white(ng-click='editor.data.tags.splice($index, 1)') &times
+    input(type='text', placeholder="问题标签--请用逗号分隔不同标签", push-to="editor.data.tags", ng-model="editor.tagInput").form-control.bottom-margin
+    .row
+        .col-xs-12
+            button.btn.btn-link(ng-click='example()') 问题模板
+            button.btn.btn-link(ng-click='toggleHtml()', ng-hide='editor.showHtml') 文本代码
+            button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
+            button.btn.btn-success.pull-right(active-ctrl, ng-hide='editor.showHtml', ng-click='editor.submit()') 提交问题
+    .card.tall(ng-show='editor.showHtml')
+        p {{editor.data.text}}

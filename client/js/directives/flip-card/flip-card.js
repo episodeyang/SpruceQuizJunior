@@ -1,53 +1,39 @@
-angular.module('flip-card', [])
-    .directive('flip', function () {
+angular.module('flip-card', ['ngAnimate'])
+    .directive('flip', ['$animate', function ($animate) {
         return {
             restrict: 'E',
             transclude: true,
             replace: true,
             scope: {
-                flipped: '=?'
+                flipped: '=flipped'
             },
-            template:
-                '<div class="flip front"> '+
-                    '<div class="card-container" ng-transclude></div>' +
+            template: '<div class="flip"> ' +
+                '<div class="flip-container"  ng-class="{flipped: flipped}" ng-transclude></div>' +
                 '</div>',
-            controller: ['$scope', '$element', function ($scope, $element) {
-                this.toggle = function () {
-                    var flipped = !$element.hasClass('front');
-                    $scope.$apply(function () {
-                        $scope.flipped = flipped;
-                    })
-                };
+            controller: function ($scope, $element, $attrs) {
 
-                this.flipFront = function () {
-                    $scope.flipped = false;
-                };
-
-                this.flipBack = function () {
-                    $scope.flipped = true;
-                };
-            }],
+            },
             link: function (scope, elm, attrs) {
-                scope.$watch('flipped', function (newValue, oldValue) {
-                    if (newValue) {
-                        elm.removeClass('front');
-                        elm.addClass('back');
-                    } else {
-                        elm.addClass('front');
-                        elm.removeClass('back');
-                    }
-                });
+//                scope.$watch('flipped', function (newValue, oldValue) {
+//                    if (newValue) {
+//                        $animate.removeClass(elm, 'front');
+//                        $animate.addClass(elm, 'back');
+//                    } else {
+//                        $animate.removeClass(elm, 'back');
+//                        $animate.addClass(elm, 'front');
+//                    }
+//                });
             }
-        }
-    })
+        };
+    }])
     .directive('flipFront', function () {
         return {
             require: '^flip',
             restrict: 'E',
             replace: true,
             transclude: true,
-            template: '<div class="front" ng-transclude></div>'
-        }
+            template: '<div class="front-panel" ng-transclude></div>'
+        };
     })
     .directive('flipBack', function () {
         return {
@@ -55,8 +41,8 @@ angular.module('flip-card', [])
             restrict: 'E',
             replace: true,
             transclude: true,
-            template: '<div class="back" ng-transclude></div>'
-        }
+            template: '<div class="back-panel" ng-transclude></div>'
+        };
     })
     .directive('flipToggle', function () {
         return {
@@ -78,5 +64,6 @@ angular.module('flip-card', [])
 
                 });
             }
-        }
+        };
     });
+

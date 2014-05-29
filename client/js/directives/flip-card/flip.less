@@ -4,56 +4,55 @@
   .perspective(800);
   position: relative;
   width: 100%;
-  .card-container {
+  .flip-container {
     .transform-style(preserve-3d);
-    .transition(0.5s);
 
-    .front, .back {
+    .front-panel, .back-panel {
       width: 100%;
-      position: absolute;
       .backface-visibility(hidden);
     }
-    .front {
+    .front-panel {
       z-index: 1;
-//      .transform(translateZ(1px))
     }
-    .back {
+    .back-panel {
       .transform(translateZ(1px) rotatey(-180deg));
     }
   }
 }
 
-.flip.front {
-  .card-container .front {
+.flip {
+  .flip-container .front-panel {
     position: relative;
   }
-  .card-container .back {
-    //we can inject a different one for each page in the element style.
-    .transform(translateZ(1px) rotatey(-180deg) translateY(-155px));
+  .flip-container .back-panel {
+    .transform(translateZ(1px) rotatey(-180deg));
+    position: absolute;
   }
 }
 
-.flip.front.tall {
-  .card-container .back {
-    .transform(translateZ(1px) rotatey(-180deg) translateY(-240px));
+.flip-container.flipped {
+  .transform(rotatey(-180deg));
+  .front-panel {
+    z-index: 1;
+    position: absolute;
   }
-}
-
-.flip.back {
-
-  .card-container {
+  .back-panel {
+    position: relative;
     .transform(rotatey(-180deg));
-
-    .front {
-      //    position: absolute;
-          z-index: 1;
-    }
-    .back {
-      //    display: block;
-      //    z-index: -20;
-      position: relative;
-      .transform(rotatey(-180deg));
-//      .transform(rotatey(-180deg) translateZ(1px));
-    }
   }
 }
+
+
+.flip-container.flipped-add, .flip-container.flipped-remove {
+  .transition(0.5s);
+}
+
+.flip-container.flipped-remove.flipped-remove-active {
+  .front-panel {
+    position: absolute;
+  }
+  .back-panel {
+    position: relative;
+  }
+}
+

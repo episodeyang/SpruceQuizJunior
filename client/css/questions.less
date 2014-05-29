@@ -262,6 +262,9 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
 .bg-blue {
   background-color: #9ce3ea;
 }
+.badge.bg-blue {
+  background-color: #34c6d7;
+}
 
 .bg-green {
   background-color: #9ee8aa;
@@ -277,6 +280,14 @@ h1.low-margin, h2.low-margin, h3.low-margin, h4.low-margin, h5.low-margin, h6.lo
 
 .bg-grey.transparent {
   background-color: fade(#d4d4d4, 0%);
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.bg-semi-transparent {
+  background-color: fadeOut(white, 60%) !important;
 }
 
 div.rounded {
@@ -342,7 +353,7 @@ div.rounded {
 
 .stat-box {
   padding: 6px 0px 4px 0px;
-  z-index: 20;
+  z-index: 1;
   position: relative;
   p, h4 {
     color: white;
