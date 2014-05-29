@@ -161,7 +161,7 @@ angular.module('SpruceQuizApp')
                     }
                 }
 
-                Model.updateUserProfile(
+                Model.profile.save(
                     function () {
                         $scope.view.profile.edit = false;
                     }
