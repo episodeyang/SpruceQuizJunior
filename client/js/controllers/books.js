@@ -40,10 +40,11 @@ angular.module('SpruceQuizApp')
                     Model.getBookFeeds()
                         .then(function () {
                             $scope.view.feedBucket = Model.bookFeeds;
+                            console.log(Model.book);
                         });
                 });
 
-            $scope.submitBook = Model.book.save;
+//            $scope.submitBook = Model.book.save;
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';
             }
@@ -54,13 +55,15 @@ angular.module('SpruceQuizApp')
                 console.log($scope.view.card.edit);
 
                 function removeNullAddEmptyToEnd(obj, key) {
-                    if (isArray(obj) && key !== 'schoolRecord') {
+                    if (isArray(obj) && key !== 'authors') {
                         obj.map(function (value, index) {
                             if (!value) {
                                 obj.splice(index, 1);
                             }
                         });
                         obj.push('');
+                    } else if (key ==='authors') {
+                        obj.push({name: ''});
                     }
                 }
 
@@ -89,18 +92,12 @@ angular.module('SpruceQuizApp')
                         });
                     }
                 }
-
                 _.map(Model.book, removeNull);
-
                 Model.book.save(
                     function () {
                         $scope.view.card.edit = false;
                         if (changed === true) {
-                            if (Model.book.authors[0].name) {
-                                $location.path('/books/' + Model.book.authors[0].name + '/' + Model.book.title);
-                            } else {
-                                $location.path('/books/' + Model.book.title);
-                            }
+                            $location.path('/books/id/' + Model.book._id);
                             $scope.$apply();
                         }
                     },

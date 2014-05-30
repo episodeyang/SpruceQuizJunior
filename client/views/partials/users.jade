@@ -215,6 +215,6 @@ div.background(background-img="/img/bg-brown.jpg")
                                 td
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
-                                    a(ng-href="/books/{{book.authors[0].name}}/{{book.title}}") {{book.title}}
+                                    a(ng-href="/books/id/{{book._id}}") {{book.title}}
                             tr(ng-if="!Model.profile.books || Model.profile.books.length ==0")
                                 td  暂时没有课本

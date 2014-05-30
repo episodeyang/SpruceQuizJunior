@@ -897,20 +897,6 @@ angular.module('modelServices', ['resourceProvider'])
             };
             modelInstance.getBook = function (bookId, title, authorName, success, error) {
                 var query = {};
-                if (bookId) {
-                    // console.log('getting the book! ');
-                    query = {bookId: bookId};
-                    setup(getCallback, error);
-                    return Books.get(query, successCallback, errorCallback).$promise;
-                } else if (title) {
-                    // console.log('querrying the books! ');
-                    query.title = title;
-                    if (authorName) {
-                        query.authorName = authorName;
-                    }
-                    setup(queryCallback, error);
-                    return Books.query(query, successCallback, errorCallback).$promise;
-                }
 
                 var callbackStack;
 
@@ -935,15 +921,10 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 }
 
-                var methods = {
-                    save: save,
-                    addQuestion: addQuestion,
-                    removeQuestion: removeQuestion,
-                    getQuestions: getQuestions
-                };
-
                 function getCallback(book) {
-                    modelInstance.book = _.extend(methods, book);
+                    modelInstance.book = _.extend({}, methods, book);
+                    console.log('this is here!!')
+                    console.log(methods);
 
                     if (success) {
                         return success(book);
@@ -962,25 +943,47 @@ angular.module('modelServices', ['resourceProvider'])
                     query.id = query._id;
                     // delete query._id;
                     setup(success, error);
-                    Books.save(query, successCallback, errorCallback);
+                    return Books.save(query, successCallback, errorCallback).$promise;
                 }
 
                 function addQuestion(questionId, success, error) {
                     console.assert(modelInstance.book._id, "model.book doesn't have _id field");
                     setup(success, error);
-                    Books.updateQuestions({add: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback)
+                    return Books.updateQuestions({add: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback).$promise;
                 }
 
                 function removeQuestion(questionId, success, error) {
                     console.assert(modelInstance.book._id, "model.book doesn't have _id field");
                     setup(success, error);
-                    Books.updateQuestions({pull: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback)
+                    return Books.updateQuestions({pull: {id: questionId}, bookId: modelInstance.book._id}, successCallback, errorCallback).$promise;
                 }
 
                 function getQuestions(success, error) {
                     console.assert(modelInstance.book._id, "model.book doesn't have _id field");
                     setup(success, error);
-                    Books.getQuestions({bookId: modelInstance.book._id}, successCallback, errorCallback);
+                    return Books.getQuestions({bookId: modelInstance.book._id}, successCallback, errorCallback).$promise;
+                }
+
+                var methods = {
+                    save: save,
+                    addQuestion: addQuestion,
+                    removeQuestion: removeQuestion,
+                    getQuestions: getQuestions
+                };
+
+                if (bookId) {
+                    // console.log('getting the book! ');
+                    query = {bookId: bookId};
+                    setup(getCallback, error);
+                    return Books.get(query, successCallback, errorCallback).$promise;
+                } else if (title) {
+                    // console.log('querrying the books! ');
+                    query.title = title;
+                    if (authorName) {
+                        query.authorName = authorName;
+                    }
+                    setup(queryCallback, error);
+                    return Books.query(query, successCallback, errorCallback).$promise;
                 }
             };
 

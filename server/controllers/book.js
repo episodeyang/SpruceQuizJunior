@@ -85,10 +85,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
             },
             updateById: function (req, res) {
                 var data = req.body;
-                delete data._id;
-                BookM.findOneAndUpdate(
-                    {_id: req.params.id},
-                    data,
+                BookM.findByIdAndUpdate(
+                    req.params.bookId,
+                    _.omit(data, ['sessions', 'questions']),
                     keyString,
                     function (err, book) {
                         if (err) {
@@ -107,9 +106,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
              * @example req = { remove: { id: 34523452345254 } }
              */
             updateQuestions: function (req, res) {
-                if (!req.params.id) {return res.send(400, 'noBookId'); }
+                if (!req.params.bookId) {return res.send(400, 'noBookId'); }
                 var data = req.body;
-                var book = { _id: req.params.id };
+                var book = { _id: req.params.bookId };
 
                 function done(err, book) {
                     if (err) {return res.send(500, err); }
