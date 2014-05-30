@@ -172,17 +172,16 @@ div.background(background-img="/img/bg-brown.jpg")
                 div(ng-if="view.state=='questions'")
                     div.card.short.bottom-margin(ng-repeat="question in Model.questions")
                         .row(ng-include="'/widgets/questionView'")
-                    .placeholder(ng-if="Model.questions.length ==0")
+                    .placeholder.short(ng-if="Model.questions.length ==0")
                     | 这里暂时没有问题
                 div(ng-if="view.state=='answers'")
                     div.card.short.bottom-margin(ng-repeat="question in Model.questions")
                         .row(ng-include="'/widgets/questionView'")
-                    .placeholder(ng-if="Model.questions.length ==0")
+                    .placeholder.short(ng-if="Model.questions.length ==0")
                     | 这里暂时没有回答
             .col-sm-3.hidden-xs
                 .panel.panel-info
-                    .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',
-                    bs-modal='modal', data-template='/partials/sessionEdit.html', data-placement='top') 我的课程
+                    .panel-heading 他的课程
                         span.pull-right.fa.fa-bars
                     //.panel-body
                     table.table
@@ -195,8 +194,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
                                     a(ng-href='/sessions/{{session._id}}') {{session.name}}（{{session.teachers[0].name.split(',').join('') || session.subject}}）
+                            tr(ng-if="!Model.profile.sessions|| Model.profile.sessions.length ==0")
+                                td  暂时没有课程
                 .panel.panel-info
-                    .panel-heading(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top') 我的课本
+                    .panel-heading 他的课本
                         span.pull-right.fa.fa-bars
                     //.panel-body
                     table.table
@@ -209,3 +210,5 @@ div.background(background-img="/img/bg-brown.jpg")
                                     .pull-right
                                         span.glyphicon.glyphicon-arrow-right
                                     a(ng-href="/books/{{book.authors[0].name}}/{{book.title}}") {{book.title}}
+                            tr(ng-if="!Model.profile.books || Model.profile.books.length ==0")
+                                td  暂时没有课本
