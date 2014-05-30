@@ -86,10 +86,18 @@ angular.module('SpruceQuizApp')
                 function removeNull(obj, key) {
                     if (isArray(obj)) {
                         obj.map(function (value, index) {
-                            if (!value || Object.keys(value).length == 0) {
+                            if (!value) {
+                                console.log(key + value);
                                 obj.splice(index, 1);
                             }
                         });
+                    }
+                    if (key=='authors') {
+                        obj.map(function (value, index) {
+                            if (value.name == '') {
+                                obj.splice(index, 1);
+                            }
+                        })
                     }
                 }
                 _.map(Model.book, removeNull);
