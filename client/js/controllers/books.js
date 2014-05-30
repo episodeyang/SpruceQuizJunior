@@ -87,7 +87,6 @@ angular.module('SpruceQuizApp')
                     if (isArray(obj)) {
                         obj.map(function (value, index) {
                             if (!value) {
-                                console.log(key + value);
                                 obj.splice(index, 1);
                             }
                         });
