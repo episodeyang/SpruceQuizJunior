@@ -170,12 +170,12 @@ div.background(background-img="/img/bg-brown.jpg")
                         .row
                             .col-lg-12
                 div(ng-if="view.state=='questions'")
-                    div.card.short.bottom-margin(ng-repeat="question in Model.questions")
+                    a.card.short.grey.bottom-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question._id}}")
                         .row(ng-include="'/widgets/questionView'")
                     .placeholder.short(ng-if="Model.questions.length==0")
                         | 这里暂时没有问题
                 div(ng-if="view.state=='answers'")
-                    div.card.short.bottom-margin(ng-repeat="question in Model.questions")
+                    a.card.short.grey.bottom-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question._id}}")
                         .row(ng-include="'/widgets/questionView'")
                     .placeholder.short(ng-if="Model.questions.length==0")
                         | 这里暂时没有回答
