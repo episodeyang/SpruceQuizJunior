@@ -126,7 +126,7 @@ div.background(background-img="/img/bg-brown.jpg")
                                                         span 提问 {{Model.book.stats.answerCount}}
                                                     .unit
                                                         span 编辑 {{Model.book.stats.editCount}}
-                div(ng-if="view.state=='questions'")
+                div(ng-if="view.state=='questions' || view.state=='ask'")
                     .row
                         .col-xs-12
                             .card.no-top-margin.bottom-margin.bg-semi-transparent
