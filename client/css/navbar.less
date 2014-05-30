@@ -1,14 +1,22 @@
 @import "elements.less";
 @import "mixins.less";
 
+@bg-color: #604830;
 nav.navbar.navbar-inverse.navbar-fixed-top {
   width: 100%;
-  background-color: #604830 !important;
+  background-color: @bg-color !important;
   height: 44px;
   .container {
     height: 44px;
     .navbar-header {
       height: 44px;
+    }
+  }
+  .navbar-toggle {
+    border-color: transparent;
+    margin:5px;
+    &:hover {
+      background-color: darken(@bg-color, 5%);
     }
   }
 }
@@ -56,8 +64,8 @@ ul.nav.navbar-nav {
 
 
 .navbar-collapse {
-  background-color: #604830;
-  border-color: #604830;
+  background-color: @bg-color;
+  border-color: @bg-color;
 }
 
 .no-left-padding {
