@@ -40,7 +40,6 @@ angular.module('SpruceQuizApp')
                     Model.getBookFeeds()
                         .then(function () {
                             $scope.view.feedBucket = Model.bookFeeds;
-                            console.log(Model.book);
                         });
                 });
 

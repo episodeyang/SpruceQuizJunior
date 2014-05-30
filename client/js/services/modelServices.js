@@ -923,9 +923,6 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function getCallback(book) {
                     modelInstance.book = _.extend({}, methods, book);
-                    console.log('this is here!!')
-                    console.log(methods);
-
                     if (success) {
                         return success(book);
                     }
