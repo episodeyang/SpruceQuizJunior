@@ -172,9 +172,13 @@ div.background(background-img="/img/bg-brown.jpg")
                 div(ng-if="view.state=='questions'")
                     div.card.short.bottom-margin(ng-repeat="question in Model.questions")
                         .row(ng-include="'/widgets/questionView'")
+                    .placeholder(ng-if="Model.questions.length ==0")
+                    | 这里暂时没有问题
                 div(ng-if="view.state=='answers'")
                     div.card.short.bottom-margin(ng-repeat="question in Model.questions")
                         .row(ng-include="'/widgets/questionView'")
+                    .placeholder(ng-if="Model.questions.length ==0")
+                    | 这里暂时没有回答
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',

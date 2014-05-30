@@ -153,6 +153,7 @@ angular.module('modelServices', ['resourceProvider'])
                     });
             };
             modelInstance.searchQuestions = function (query) {
+                modelInstance.questions = [];
                 return Questions.query(
                     query,
                     function (questions) {
