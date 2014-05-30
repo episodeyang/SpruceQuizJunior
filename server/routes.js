@@ -89,7 +89,7 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
             {
                 path: '/api/questions',
                 httpMethod: 'GET',
-                middleware: [QuestionCtrl.index],
+                middleware: [QuestionCtrl.search],
                 accessLevel: accessLevels.all
             },
             {

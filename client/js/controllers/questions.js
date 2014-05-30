@@ -87,7 +87,7 @@ angular.module('SpruceQuizApp')
                     Model.getQuestion($routeParams.questionId);
                 }
 
-                Model.queryQuestions();
+                Model.searchQuestions({search: true});
 
                 var validator = function(data) {
                     if (data.title.length < 10) {

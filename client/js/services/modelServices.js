@@ -152,15 +152,15 @@ angular.module('modelServices', ['resourceProvider'])
                         $rootScope.error = err;
                     });
             };
-            modelInstance.queryQuestions = function (query) {
-                Questions.query(
+            modelInstance.searchQuestions = function (query) {
+                return Questions.query(
                     query,
                     function (questions) {
                         modelInstance.questions = questions;
                     },
                     function (err) {
                         $rootScope.error = err;
-                    });
+                    }).$promise;
             };
             modelInstance.createQuestion = function (question, success, error) {
                 Questions.create(question, function (result) {

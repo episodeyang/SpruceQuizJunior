@@ -38,7 +38,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
              *        text: 'some example text here',
              *        answers: [],
              *        comments: [],
-             *       tags: [ '三年级', '数学', '二元一次方程' ],
+             *j      tags: [ '三年级', '数学', '二元一次方程' ],
              *       _id: '52f6e5ff8021572716e3ee8f' },
              *     ]
              * @apiError UserNotFound The id of the User was not found.
@@ -48,16 +48,28 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
              *       "error": "UserNotFound"
              *     }
              */
-            index: function (req, res) {
-                QuestionM
-                    .find({}, function (err, docs) {
-                        if (err) {
-                            console.log(err);
-                            return res.send(500, err);
-                        } else {
-                            return res.send(200, docs);
-                        }
-                    });
+            search: function (req, res) {
+                var query = {};
+                if (req.query.authorUsername) {
+                    query['author.username'] = req.query.authorUsername;
+                } else if (req.query.answerAuthorUsername) {
+                    query["answers.author.username"] = req.query.answerAuthorUsername;
+                } else if (req.query.search) {
+                }
+
+                if (Object.keys(query).length != 0 || req.query.search) {
+                    QuestionM
+                        .find(query, function (err, docs) {
+                            if (err) {
+                                console.log(err);
+                                return res.send(500, err);
+                            } else {
+                                return res.send(200, docs);
+                            }
+                        }).sort({dateCreated: -1}).limit(20);
+                } else {
+                    return res.send(400, 'needToSpecifySearchQueriesOrWrongQuery');
+                }
             },
             /**
              * @api {post} /api/questions Create Question

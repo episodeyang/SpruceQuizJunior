@@ -37,5 +37,15 @@ angular.module('SpruceQuizApp')
             Model.getUserFeeds($routeParams.username);
             $scope.feedBucket = Model.userFeed;
 
+            $scope.$watch('view.state', function (newVal, oldVal) {
+                var query = {};
+                if (newVal == 'questions') {
+                    query.authorUsername = Model.profile.username;
+                    Model.searchQuestions(query);
+                } else if (newVal == 'answers') {
+                    query.answerAuthorUsername =  Model.profile.username;
+                    Model.searchQuestions(query);
+                }
+            })
         }
     ]);
