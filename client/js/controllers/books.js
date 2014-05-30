@@ -86,7 +86,7 @@ angular.module('SpruceQuizApp')
                 function removeNull(obj, key) {
                     if (isArray(obj)) {
                         obj.map(function (value, index) {
-                            if (!value) {
+                            if (!value || Object.keys(value).length == 0) {
                                 obj.splice(index, 1);
                             }
                         });
