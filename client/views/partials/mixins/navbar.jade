@@ -6,7 +6,7 @@ mixin navbar
         //Brand and toggle get grouped for better mobile display
         .container
             .navbar-header
-                button.navbar-toggle(type='button', data-toggle="collapse", data-target='#navbar', ng-click='isCollapsed = !isCollapsed')
+                button.navbar-toggle(type='button', bs-dropdown, template="/partials/navbar/user-dropdown-mobile")
                     span.sr-only Toggle navigation
                     span.icon-bar
                     span.icon-bar

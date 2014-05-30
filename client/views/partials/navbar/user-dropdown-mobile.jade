@@ -1,0 +1,10 @@
+ul.dropdown-menu.mobile
+    li(data-access-level='{{ accessLevels.anon }}', active-nav)
+        a(bs-modal='modal', data-animation='am-fade-and-slide-top', data-template='/partials/register.html', data-placement='top') 注册
+    hr.short-top-margin.short-bottom-margin
+    li(data-access-level='{{ accessLevels.anon }}', active-nav)
+        a(bs-modal='modal', data-animation='am-fade-and-slide-top', data-placement='center', data-template='/partials/login.html') 登录 &nbsp &nbsp
+    li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
+        a(href="", data-ng-click="logout()")
+            | 登出
+
