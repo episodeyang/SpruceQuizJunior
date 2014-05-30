@@ -50,9 +50,6 @@ angular.module('SpruceQuizApp')
 
             $scope.editBook = function () {
                 $scope.view.card.edit = true;
-
-                console.log($scope.view.card.edit);
-
                 function removeNullAddEmptyToEnd(obj, key) {
                     if (isArray(obj) && key !== 'authors') {
                         obj.map(function (value, index) {
@@ -61,14 +58,12 @@ angular.module('SpruceQuizApp')
                             }
                         });
                         obj.push('');
-                    } else if (key ==='authors') {
+                    } else if (key === 'authors') {
                         obj.push({name: ''});
                     }
                 }
 
                 _.map(Model.book, removeNullAddEmptyToEnd);
-
-
             };
 
             var changed = false;
@@ -90,21 +85,20 @@ angular.module('SpruceQuizApp')
                             }
                         });
                     }
-                    if (key=='authors') {
-                        obj.map(function (value, index) {
-                            if (value.name == '') {
-                                obj.splice(index, 1);
-                            }
-                        })
-                    }
                 }
+
                 _.map(Model.book, removeNull);
+                Model.book.authors = Model.book.authors.filter(
+                    function (value) {
+                        return value.name.length != 0;
+                    }
+                );
                 Model.book.save(
                     function () {
                         $scope.view.card.edit = false;
                         if (changed === true) {
                             $location.path('/books/id/' + Model.book._id);
-                            $scope.$apply();
+                            return $scope.$apply();
                         }
                     },
                     function (error) {
