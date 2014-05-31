@@ -244,7 +244,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         //form.card.short(name = 'answerEditorForm')
                         //    div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
 
-                        text-angular.short(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+                        text-angular.short.bottom-margin(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         .row
                             .col-xs-12
                                 button.btn.btn-success.pull-right(ng-click='addAnswer()') 提交解答
