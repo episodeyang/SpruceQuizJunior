@@ -44,6 +44,10 @@ div.background(background-img="/img/bg-brown.jpg")
                         a.text-center(ng-click="view.state='timeline'") 我的时间轴
                     li(ng-class="{active: view.state=='ask'}")
                         a.text-center(ng-click="view.state='ask'") 提问
+                    li(ng-class="{active: view.state=='questions'}")
+                        a.text-center(ng-click="view.state='questions'") 我的提问
+                    li(ng-class="{active: view.state=='answers'}")
+                        a.text-center(ng-click="view.state='answers'") 我的回答
                     //li(ng-class="{active: view.state=='answers'}")
                     //    a.text-center(ng-click="view.state='answers'") 回答
                     //li(ng-class="{active: view.state=='follow'}")
@@ -160,6 +164,16 @@ div.background(background-img="/img/bg-brown.jpg")
                             .col-lg-12
                 div(ng-if="view.state=='ask'")
                     div(ng-include="'/widgets/questionCreate'")
+                div(ng-if="view.state=='questions'")
+                    a.card.short.grey.bottom-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question._id}}")
+                        .row(ng-include="'/widgets/questionView'")
+                    .placeholder.short(ng-if="Model.questions.length==0")
+                        | 这里暂时没有问题
+                div(ng-if="view.state=='answers'")
+                    a.card.short.grey.bottom-margin(ng-repeat="question in Model.questions", ng-href="/questions/{{question._id}}")
+                        .row(ng-include="'/widgets/questionView'")
+                    .placeholder.short(ng-if="Model.questions.length==0")
+                        | 这里暂时没有回答
             .col-sm-3.hidden-xs
                 .panel.panel-info
                     .panel-heading(ng-click='view.sessionModal.state=true',data-animation='am-fade-and-slide-top',

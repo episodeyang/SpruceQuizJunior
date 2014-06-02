@@ -28,6 +28,16 @@ angular.module('SpruceQuizApp')
                 profile: {}
             };
             $scope.view.profile.edit = false;
+            $scope.$watch('view.state', function (newVal, oldVal) {
+                var query = {};
+                if (newVal == 'questions') {
+                    query.authorUsername = Model.profile.username;
+                    Model.searchQuestions(query);
+                } else if (newVal == 'answers') {
+                    query.answerAuthorUsername =  Model.profile.username;
+                    Model.searchQuestions(query);
+                }
+            })
 
             $rootScope.errors = {};
 
