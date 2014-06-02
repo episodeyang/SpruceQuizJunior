@@ -144,21 +144,26 @@ div.background(background-img="/img/bg-brown.jpg")
 
 
             .col-sm-3.hidden-xs
-                .panel.panel-info
-                    .panel-heading 相关教材
-                    //-.panel-body
-                    table.table
-                        //-thead
-                            tr
-                                th
-                        tbody
-                            tr(ng-repeat="book in Model.session.books")
-                                td
-                                    .pull-right
-                                        span.glyphicon.glyphicon-arrow-right
-                                    a(ng-href='/books/{{book.authors[0].name}}/{{book.title}}/') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
-                            tr
-                                td.clickable(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top')
-                                    .pull-right
-                                        span.glyphicon.glyphicon-plus
-                                    span 添加教材
+                .row
+                    a.btn.btn-info.col-xs-12.bottom-margin
+                        span.fa.fa-plus &nbsp
+                        span 加入班级
+                .row
+                    .panel.panel-warning
+                        .panel-heading 相关教材
+                        //-.panel-body
+                        table.table
+                            //-thead
+                                tr
+                                    th
+                            tbody
+                                tr(ng-repeat="book in Model.session.books")
+                                    td
+                                        .pull-right
+                                            span.glyphicon.glyphicon-arrow-right
+                                        a(ng-href='/books/{{book.authors[0].name}}/{{book.title}}/') {{book.title}}（{{book.authors[0].name.split(',').join('')}}）
+                                tr
+                                    td.clickable(data-animation='am-fade-and-slide-top', bs-modal='modal', data-template='/widgets/bookEdit.html', data-placement='top')
+                                        .pull-right
+                                            span.glyphicon.glyphicon-plus
+                                        span 添加教材
