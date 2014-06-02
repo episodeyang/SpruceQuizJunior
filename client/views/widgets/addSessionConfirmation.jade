@@ -1,0 +1,24 @@
+//- for the modal template to work, the top most element
+//- has to be the div.modal in the following format.
+div.modal(tabindex='1', role='dialog', ng-controller='addSessionCtrl')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type='button', ng-click="$hide()") ×
+                h4.modal-title.text-center 加入{{Model.session.name}}
+            .modal-body
+                        p.bottom-margin 加入这个班级将允许您：
+                        ul.no-bottom-margin
+                            li.short-bottom-margin 在自己的主页上看到其他同学在这个班级中所提问题的新鲜事
+                            li.short-bottom-margin 在这个班级中提问
+                            li.short-bottom-margin 和其他同学一起编辑课程维基
+            .modal-footer.no-top-margin
+                .row
+                    .col-xs-6
+                        button.btn.btn-justified.btn-default(type='button', ng-click="$hide()") 取消
+                    .col-xs-6
+                        button.btn.btn-justified.btn-success(type='button', ng-click="addUser($hide)") 确定
+
+        .modal-content.short-top-margin.bg-transparent(ng-if="view.error", ng-show="view.error")
+            div.alert.alert-warning.no-bottom-margin
+                p {{view.error}}

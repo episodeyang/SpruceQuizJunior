@@ -1,6 +1,23 @@
 'use strict';
 /* Controllers */
 angular.module('SpruceQuizApp')
+    .controller('addSessionCtrl', ['$rootScope', '$scope', 'Model',
+        function ($rootScope, $scope, Model) {
+            $scope.Model = Model;
+            $scope.addUser =
+                function (success) {
+                    Model.session.addUser().then(function () {
+                        if ($rootScope.error) {
+                            $scope.view.error = $rootScope.error;
+                        } else {
+                            success();
+//                            var sessionId = Model.session._id;
+//                            Model.session = {};
+//                            Model.getSession(sessionId, success);
+                        }
+                    });
+                };
+        }])
     .controller('SessionCtrl',
     ['$routeParams', '$location', '$filter', '$rootScope', '$scope', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
         function ($routeParams, $location, $filter, $rootScope, $scope, Auth, Sections, Units, Materials, Students, Model) {
@@ -33,9 +50,9 @@ angular.module('SpruceQuizApp')
             if ($routeParams.sessionId) {
                 Model.getSession($routeParams.sessionId, function () {
                     Model.getSessionFeeds()
-                        .then(function(){
-                        $scope.view.feedBucket = Model.sessionFeeds;
-                    });
+                        .then(function () {
+                            $scope.view.feedBucket = Model.sessionFeeds;
+                        });
                 });
             }
 

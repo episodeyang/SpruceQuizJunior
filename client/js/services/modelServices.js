@@ -1059,7 +1059,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
             };
             modelInstance.getSession = function (id, success, error) {
-                var query = { sessionId: id };
+                var getQuery = { sessionId: id };
 
                 var callbackStack;
 
@@ -1093,7 +1093,8 @@ angular.module('modelServices', ['resourceProvider'])
                             save: save,
                             addQuestion: addQuestion,
                             removeQuestion: removeQuestion,
-                            getQuestions: getQuestions
+                            getQuestions: getQuestions,
+                            addUser: addUser
                         },
                         session);
 
@@ -1115,9 +1116,21 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function getQuestions(success, error) {
                     setup(success, error);
-                    Sessions.getQuestions({sessionId: query.sessionId}, successCallback, errorCallback);
+                    Sessions.getQuestions(getQuery, successCallback, errorCallback);
                 }
+                function addUser(success, error) {
+                    var query = {
+                        add: { _id: modelInstance.session._id },
+                        username: modelInstance.user.username
+                    };
+                    function successCallback () {
+                        Sessions.get(
+                            getQuery, getCallback, errorCallback).$promise.then(success);
+                    }
 
+                    setup(successCallback, error);
+                    return Users.updateSessions(query, successCallback, errorCallback).$promise;
+                }
 
                 function save(success, error) {
                     setup(success, error);
@@ -1134,7 +1147,7 @@ angular.module('modelServices', ['resourceProvider'])
 
                 setup(getCallback, error);
                 if (id) {
-                    return Sessions.get(query, successCallback, errorCallback).$promise;
+                    return Sessions.get(getQuery, successCallback, errorCallback).$promise;
                 } else {
                     console.log('need sessionId in getSession()');
                 }
