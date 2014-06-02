@@ -11,9 +11,6 @@ angular.module('SpruceQuizApp')
                             $scope.view.error = $rootScope.error;
                         } else {
                             success();
-//                            var sessionId = Model.session._id;
-//                            Model.session = {};
-//                            Model.getSession(sessionId, success);
                         }
                     });
                 };

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modelServices', ['resourceProvider'])
-    .factory('Model', ['$rootScope', 'Users', 'Questions', 'Answers', 'Comments', 'AnswerComments', 'Books', 'Sessions', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
+    .factory('Model', ['_', '$rootScope', 'Users', 'Questions', 'Answers', 'Comments', 'AnswerComments', 'Books', 'Sessions', 'Students', 'Parents', 'Teachers', 'Admins', 'Superadmins',
         'Schools', 'Units', 'Materials',
         /**
          * model factory
@@ -16,7 +16,7 @@ angular.module('modelServices', ['resourceProvider'])
          * @author test
          * @param random
          */
-            function ($rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins, Schools, Units, Materials) {
+            function (_, $rootScope, Users, Questions, Answers, Comments, AnswerComments, Books, Sessions, Students, Parents, Teachers, Admins, Superadmins, Schools, Units, Materials) {
             var modelInstance = {};
 
             // helper mapping
@@ -32,8 +32,9 @@ angular.module('modelServices', ['resourceProvider'])
                 'material': Materials
             };
 
-            modelInstance.Users = Users;
-            modelInstance.Questions = Questions;
+//            modelInstance.Users = Users;
+//            modelInstance.Questions = Questions;
+            modelInstance._ = _;
 
             /**
              * @alias Model.destroy()
