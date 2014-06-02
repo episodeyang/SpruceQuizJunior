@@ -90,7 +90,7 @@ describe('Book API test - ', function (done) {
     });
     var question = {};
     it('get quesitons id\'s', function (done) {
-        request(app).get('/api/questions').expect(200).end(function (err, res) {
+        request(app).get('/api/questions/?search=true').expect(200).end(function (err, res) {
             console.log(res.body);
             question = res.body[0];
             done();

@@ -54,7 +54,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     query['author.username'] = req.query.authorUsername;
                 } else if (req.query.answerAuthorUsername) {
                     query["answers.author.username"] = req.query.answerAuthorUsername;
-                } else if (req.query.search) {
+                } else if (req.query.search == 'true') {
                 }
 
                 if (Object.keys(query).length != 0 || req.query.search) {

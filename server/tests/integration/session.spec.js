@@ -165,7 +165,7 @@ describe('Session API test - ', function (done) {
         });
     });
     it('get quesitons id\'s', function (done) {
-        request(app).get('/api/questions').expect(200).end(function (err, res) {
+        request(app).get('/api/questions/?authorUsername=' + studentUser.username).expect(200).end(function (err, res) {
             console.log(res.body);
             questions = res.body;
             done();

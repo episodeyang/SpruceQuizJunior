@@ -33,8 +33,11 @@ describe('Question API test - ', function (done) {
     afterEach(function () {
         passportStub.logout(); // logout after each test
     });
+    it("can't search without parameters", function (done) {
+        request(app).get('/api/questions/').expect(400, done);
+    });
     it("doesn't need to login to access", function (done) {
-        request(app).get('/api/questions').expect(200, done);
+        request(app).get('/api/questions/?search=true').expect(200, done);
     });
     var question = {};
     var question2 = {};
@@ -42,7 +45,7 @@ describe('Question API test - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate).expect(201).end(function (err, res) {
             question = res.body;
-            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
+            res.headers.location.split('/').slice(1, 3).should.be.eql(['api', 'questions']);
             done();
         });
     });
@@ -50,7 +53,7 @@ describe('Question API test - ', function (done) {
         passportStub.login(superadminUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate2).expect(201).end(function (err, res) {
             question2 = res.body;
-            res.headers.location.split('/').slice(1,3).should.be.eql(['api', 'questions']);
+            res.headers.location.split('/').slice(1, 3).should.be.eql(['api', 'questions']);
             done();
         });
     });
@@ -58,12 +61,9 @@ describe('Question API test - ', function (done) {
         passportStub.login(superadminUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate2).expect(201, done);
     });
-    it("doesn't need to login to access", function (done) {
-        request(app).get('/api/questions').expect(200, done);
-    });
     it('get questions', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).get('/api/questions').expect(200).end(function (err, res) {
+        request(app).get('/api/questions/?authorUsername=' + studentUser.username).expect(200).end(function (err, res) {
             _.size(res.body).should.be.greaterThan(0);
             done();
         });
@@ -75,7 +75,7 @@ describe('Question API test - ', function (done) {
     });
     it('get question by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).get('/api/questions/' + question._id).expect(200).end(function (err, res){
+        request(app).get('/api/questions/' + question._id).expect(200).end(function (err, res) {
             res.body._id.should.eql(question._id);
             done();
         });
@@ -87,21 +87,21 @@ describe('Question API test - ', function (done) {
     });
     it('update question title by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question._id).send({title: 'updatedTitle'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question._id).send({title: 'updatedTitle'}).expect(201).end(function (err, res) {
             res.body.title.should.eql('updatedTitle');
             done();
         });
     });
     it('update question text by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question._id).send({text: 'updatedText'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question._id).send({text: 'updatedText'}).expect(201).end(function (err, res) {
             res.body.text.should.eql('updatedText');
             done();
         });
     });
     it('update question tags by Id', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question._id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question._id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res) {
             res.body.tags.should.eql(['updated tag 1', 'updated tag 2', 'updated tag 3']);
             done();
         });
@@ -115,14 +115,14 @@ describe('Question API test - ', function (done) {
     });
     it('upvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res) {
             res.body.voteup.should.containEql(studentUser.username);
             done();
         });
     });
     it('downvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({votedown: 'true'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question2._id).send({votedown: 'true'}).expect(201).end(function (err, res) {
             res.body.votedown.should.containEql(studentUser.username);
             done();
         });
@@ -133,7 +133,7 @@ describe('Question API test - ', function (done) {
     });
     it('remove upvote from question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res){
+        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res) {
             res.body.voteup.should.not.containEql(studentUser.username);
             done();
         });

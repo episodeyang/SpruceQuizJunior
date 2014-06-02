@@ -552,6 +552,26 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                     virtuals: true
                 }
             }
+        },
+        questionFeed: {
+            questionId: {
+                type: Schema.Types.ObjectId
+            },
+            page: { type: Number, index: true, unique: true },
+            count: { type: Number, index: false },
+            feeds: [subSchema.Feed],
+            __index__: {
+                questionId: 1,
+                page: -1
+            }
+        },
+        tag: {
+            name: String,
+            kins: [String],
+            parent: [String],
+            child: [String],
+            dateCreated: { type: Date, default: Date.now},
+            overview: String
         }
     };
 

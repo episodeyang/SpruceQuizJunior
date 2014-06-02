@@ -8,8 +8,9 @@
 define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
     './controllers/user', './controllers/userFeed',
         './controllers/student',
-        './controllers/question', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/bookFeed', './controllers/school', './controllers/session', './controllers/sessionFeed', './mailer/mailerCtrl', './spider/spiderCtrl'],
-    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, BookFeedCtrl, SchoolCtrl, SessionCtrl, SessionFeedCtrl, MailerCtrl, SpiderCtrl) {
+        './controllers/question',
+        './controllers/questionFeed', './controllers/answer', './controllers/comment', './controllers/answerComment', './controllers/book', './controllers/bookFeed', './controllers/school', './controllers/session', './controllers/sessionFeed', './mailer/mailerCtrl', './spider/spiderCtrl'],
+    function (_, path, passport, rolesHelper, AuthCtrl, UserCtrl, UserFeedCtrl, StudentCtrl, QuestionCtrl, QuestionFeedCtrl, AnswerCtrl, CommentCtrl, AnswerCommentCtrl, BookCtrl, BookFeedCtrl, SchoolCtrl, SessionCtrl, SessionFeedCtrl, MailerCtrl, SpiderCtrl) {
         "use strict";
         var accessLevels = rolesHelper.accessLevels;
         var userRoles = rolesHelper.userRoles;
@@ -463,6 +464,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/spider/questions/:id',
                 httpMethod: 'GET',
                 middleware: [SpiderCtrl.question],
+                accessLevel: accessLevels.all
+            },
+            {
+                path: '/api/questions/:questionId/feeds',
+                httpMethod: 'GET',
+                middleware: [QuestionFeedCtrl.getByPage],
                 accessLevel: accessLevels.all
             },
             // All other get requests should be handled by AngularJS's client-side routing system
