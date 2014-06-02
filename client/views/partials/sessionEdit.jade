@@ -55,7 +55,7 @@ div.modal(tabindex='1', role='dialog', ng-controller="SessionEditCtrl")
                             .form-group
                                 input.form-control(type="text", ng-model="sessionData.name", placeholder="班级名称...", required)
                             .form-group
-                                input.form-control(type="text", ng-model="sessionData.subject", placeholder="所属学科...", required)
+                                input.form-control(type="text", ng-model="sessionData.subject", placeholder="所属学科...")
                             .badge.badge-default.right-margin.short-bottom-margin(ng-repeat='tag in sessionData.tags track by $index') {{tag}} &nbsp
                                 span(ng-click="sessionData.tags.splice($index, 1)").fa.fa-times
                             .form-group.short-top-margin

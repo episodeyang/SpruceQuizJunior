@@ -86,7 +86,10 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 );
             }
         };
-        _.extend(QuestionFeedM, QuestionFeedMethods);
+        var snapshotAPI = {
+            // todo: snapshotAPI
+        };
+        _.extend(QuestionFeedM, QuestionFeedMethods, {snapshot: snapshotAPI});
         return QuestionFeedM;
     });
 

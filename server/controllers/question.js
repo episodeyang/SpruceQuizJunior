@@ -54,9 +54,12 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     query['author.username'] = req.query.authorUsername;
                 } else if (req.query.answerAuthorUsername) {
                     query["answers.author.username"] = req.query.answerAuthorUsername;
-                } else if (req.query.search == 'true') {
+                } else if (req.query.search) {
                 }
 
+                if (req.user) {
+                    // record all search terms.
+                }
                 if (Object.keys(query).length != 0 || req.query.search) {
                     QuestionM
                         .find(query, function (err, docs) {
@@ -80,18 +83,14 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 var question = req.body;
                 if (req.user.role.title != 'superadmin') {
                     question.dateCreated = Date.now();
-                    delete question.voteup;
-                    delete question.votedown;
-                    delete question.comments;
-                    delete question.answers;
+                    question = _.omit(question, ['voteup', 'votedown', 'comments', 'answers']);
                     question.author = {
                         username: req.user.username,
                         name: req.user.name
                     };
                 }
 
-                console.log("req.body");
-                console.log(req.body);
+                // QuestionM.snapshot.add(question);
                 QuestionM
                     .create(question, function (err, question) {
                         if (err) {
