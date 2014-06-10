@@ -20,8 +20,19 @@ define(['underscore', '../rolesHelper', 'async', './User'],
          *
          */
         return {
-            upvote: function (toUser) {
-                Users.updateReputation(toUser, 2);
+            question: {
+                removeUpVote: function (toUser) {
+                    return Users.updateReputation(toUser, -2, errorLog);
+                },
+                upVote: function (toUser) {
+                    return Users.updateReputation(toUser, 2, errorLog);
+                },
+                removeDownVote: function (toUser) {
+                    return Users.updateReputation(toUser, 2, errorLog);
+                },
+                downVote: function (toUser) {
+                    return Users.updateReputation(toUser, -2, errorLog);
+                }
             }
 
         };

@@ -53,6 +53,8 @@ describe('Question API test - ', function (done) {
         passportStub.login(superadminUser); // login as user
         request(app).post('/api/questions').send(data.questionCreate2).expect(201).end(function (err, res) {
             question2 = res.body;
+            // console.log('now showing question2');
+            // console.log(question2);
             res.headers.location.split('/').slice(1, 3).should.be.eql(['api', 'questions']);
             done();
         });

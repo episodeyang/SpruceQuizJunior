@@ -12,8 +12,8 @@
  *
  *
  */
-define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '../models/Session', '../models/Book', '../rolesHelper', "mongoose", "../models/FeedAPI"],
-    function (_, async, SchemaModels, QuestionM, SessionM, BookM, rolesHelper, mongoose, FeedAPI) {
+define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '../models/Session', '../models/Book', '../rolesHelper', "mongoose", "../models/FeedAPI", '../models/ReputationAPI'],
+    function (_, async, SchemaModels, QuestionM, SessionM, BookM, rolesHelper, mongoose, FeedAPI, reputationAPI) {
 
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
@@ -212,6 +212,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 }
                 var actionType;
                 function voteQuestion(err, question) {
+                    if (!question.author) { return res.send('questionHasNoAuthor'); }
                     if (req.body.voteup === 'true') {
                         if (_.contains(question.voteup, req.user.username)) {
                             var update = {
@@ -268,6 +269,8 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             if (err) {
                                 return res.send(500, err);
                             } else {
+                                console.log(question);
+                                reputationAPI.question[actionType](question.author);
                                 FeedAPI.questionVote(req.user, question, question.sessions, question.books)[actionType]();
                                 return res.send(201, q);
                             }
@@ -277,7 +280,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
 
                 QuestionM
                     .findById(req.params.id)
-                    .select('title voteup votedown vote')
+                    .select('title voteup votedown vote author')
                     .exec(voteQuestion);
             },
             /**

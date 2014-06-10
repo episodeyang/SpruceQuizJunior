@@ -305,6 +305,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 UserMethods.addOrRemoveFromSet('books', 'pull', user, book, callback);
             },
             updateReputation: function (user, score, callback) {
+                if (!user) { return callback('updateReputation:noUserSpecified'); }
                 var query = {
                         username: user.username
                     },
@@ -319,7 +320,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         callback
                     );
                 } else {
-                    return Users
+                    return UserM
                         .findOne(query)
                         .exec(function (error, user) {
                             if (error || !user.role) {return callback(error); }
