@@ -321,26 +321,11 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         }
                     };
 
-
-                if (user.role && user.role.title) {
-                    return SchemaModels[capitalize(user.role.title)].findOneAndUpdate(
-                        query,
-                        update,
-                        checkLimit
-                    );
-                } else {
-                    return UserM
-                        .findOne(query)
-                        .exec(function (error, user) {
-                            if (error || !user.role) {return callback(error); }
-                            return SchemaModels[capitalize(user.role.title)]
-                                .findOneAndUpdate(
-                                    query,
-                                    update,
-                                    checkLimit
-                                );
-                        });
-                }
+                return UserM.findOneAndUpdate(
+                    query,
+                    update,
+                    checkLimit
+                );
             }
         };
         return _.extend(UserM, UserMethods);
