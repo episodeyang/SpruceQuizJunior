@@ -24,12 +24,12 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                     if (err) {return res.send(403, err)}
                     else {
                         question = results;
-                        console.log("results")
-                        console.log(results)
+                        // console.log("results");
+                        // console.log(results);
                         res.render('spider/question.jade',
                             {
                                 layout:'spider/layout.jade',
-                                title: 'test this',
+                                title: question.title,
                                 question: question
                             });
                     };
@@ -46,7 +46,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         res.render('spider/questions.jade',
                             {
                                 layout: 'spider/layout.jade',
-                                title: 'test this',
+                                title: '',
                                 questions: questions
                             });
                     }
