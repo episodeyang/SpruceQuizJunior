@@ -304,20 +304,29 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
             removeBook: function (user, book, callback) {
                 UserMethods.addOrRemoveFromSet('books', 'pull', user, book, callback);
             },
-            updateReputation: function (user, score, callback) {
+            updateReputation: function (user, score, callback, limit) {
                 if (!user) { return callback('updateReputation:noUserSpecified'); }
                 var query = {
                         username: user.username
                     },
                     update = {
                         $inc: {reputation: score}
+                    },
+                    checkLimit = function (error, user) {
+                        if (callback) {
+                            return callback (error, user);
+                        }
+                        if (limit && user.reputation > limit) {
+                            UserMethods.updateReputation(user, -score, callback);
+                        }
                     };
+
 
                 if (user.role && user.role.title) {
                     return SchemaModels[capitalize(user.role.title)].findOneAndUpdate(
                         query,
                         update,
-                        callback
+                        checkLimit
                     );
                 } else {
                     return UserM
@@ -328,7 +337,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                                 .findOneAndUpdate(
                                     query,
                                     update,
-                                    callback
+                                    checkLimit
                                 );
                         });
                 }
