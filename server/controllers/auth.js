@@ -49,6 +49,8 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                             if (response.message && response.messageId) {
                                 //todo: add #sent tag to the user email entry.
                                 //user.email = user.email + "#sent:true";
+                            } else {
+                                console.log('mariler.register:noResponseMessage');
                             }
                         }
                     );

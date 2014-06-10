@@ -122,7 +122,7 @@ angular.module('SpruceQuizApp')
                     }
                     validator(update);
                     if (!$rootScope.error) {
-                        Model.saveQuestion(
+                        Model.question.save(
                             update,
                             function () {
                                 $rootScope.error = '';

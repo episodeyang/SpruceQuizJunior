@@ -115,25 +115,25 @@ describe('Question API test - ', function (done) {
     });
     it('upvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res) {
+        request(app).post('/api/questions/' + question2._id + '/votes').send({voteup: 'true'}).expect(201).end(function (err, res) {
             res.body.voteup.should.containEql(studentUser.username);
             done();
         });
     });
     it('downvote the question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({votedown: 'true'}).expect(201).end(function (err, res) {
+        request(app).post('/api/questions/' + question2._id + '/votes').send({votedown: 'true'}).expect(201).end(function (err, res) {
             res.body.votedown.should.containEql(studentUser.username);
             done();
         });
     });
     it('upvote the question2 again', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201, done);
+        request(app).post('/api/questions/' + question2._id + '/votes').send({voteup: 'true'}).expect(201, done);
     });
     it('remove upvote from question2', function (done) {
         passportStub.login(studentUser); // login as user
-        request(app).post('/api/questions/' + question2._id).send({voteup: 'true'}).expect(201).end(function (err, res) {
+        request(app).post('/api/questions/' + question2._id + '/votes').send({voteup: 'true'}).expect(201).end(function (err, res) {
             res.body.voteup.should.not.containEql(studentUser.username);
             done();
         });

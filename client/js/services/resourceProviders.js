@@ -29,6 +29,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});
+        var Votes = $resource('/api/questions/:id/votes', {id: '@id'});
         var onSessions = $resource('/api/questions/:id/sessions', {id: '@id'});
         var onBooks = $resource('/api/questions/:id/books', {id: '@id'});
         return {
@@ -37,6 +38,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: Questions.create,
             save: Question.save,
             remove: Question.remove,
+            updateVotes: Votes.save,
             updateSession: onSessions.save,
             getSessions: onSessions.get,
             updateBook: onBooks.save,

@@ -140,18 +140,73 @@ angular.module('modelServices', ['resourceProvider'])
             }
 
             modelInstance.getQuestion = function (id) {
+                var questionMethods = {
+                    save: save,
+                    remove: remove,
+                    voteUp: voteUp,
+                    voteDown: voteDown
+                };
+                function getCallback (question) {
+                    modelInstance.question = _.extend(questionMethods, question);
+                    modelInstance.getQuestionVoteStatus();
+                    _.map(modelInstance.question.answers, modelInstance.getVoteStatus);
+                    _.map(modelInstance.question.comments, modelInstance.getVoteStatus);
+                    _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus);
+                    modelInstance.attachAnswerComments();
+                }
                 Questions.get(
                     {id: id},
-                    function (question) {
-                        modelInstance.question = question;
-                        modelInstance.getQuestionVoteStatus();
-                        _.map(modelInstance.question.answers, modelInstance.getVoteStatus)
-                        _.map(modelInstance.question.comments, modelInstance.getVoteStatus)
-                        _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus)
-                        modelInstance.attachAnswerComments();
-                    }, function (err) {
+                    getCallback,
+                    function (err) {
                         $rootScope.error = err;
                     });
+
+                function save (question, success, error) {
+                    Questions.save(
+                        question,
+                        function (q) {
+                            _.extend(modelInstance.question, q);
+                            if (typeof success != 'undefined') {
+                                success(q)
+                            }
+                        }, function (err) {
+                            $rootScope.error = err;
+                            if (typeof error != 'undefined') {
+                                error(err)
+                            }
+                        });
+                }
+
+                function remove (question, success, error) {
+                    Questions.remove(question, function (res) {
+                        modelInstance.question = {};
+                        modelInstance.queryQuestions();
+                        if (typeof success != 'undefined') {
+                            success();
+                        }
+                    }, function (err) {
+                        $rootScope.error = err;
+                        if (typeof error != 'undefined') {
+                            error();
+                        }
+                    });
+                }
+
+                function voteUp (question) {
+                    var q = {
+                        id: question._id,
+                        voteup: 'true'
+                    };
+                    Questions.updateVotes(q, getCallback);
+                }
+
+                function voteDown (question) {
+                    var q = {
+                        id: question._id,
+                        votedown: 'true'
+                    };
+                    Questions.updateVotes(q, getCallback);
+                }
             };
             modelInstance.searchQuestions = function (query) {
                 modelInstance.questions = [];
@@ -177,58 +232,6 @@ angular.module('modelServices', ['resourceProvider'])
                     }
                 });
             };
-            modelInstance.saveQuestion = function (question, success, error) {
-//                if (question._id) {$rootScope.error = "udpate does not have object id."}
-                Questions.save(
-                    question,
-                    function (q) {
-                        _.extend(modelInstance.question, q);
-                        if (typeof success != 'undefined') {
-                            success(q)
-                        }
-                    }, function (err) {
-                        $rootScope.error = err;
-                        if (typeof error != 'undefined') {
-                            error(err)
-                        }
-                    });
-            };
-            modelInstance.removeQuestion = function (question, success, error) {
-                Questions.remove(question, function (res) {
-//                    console.log('removal success');
-                    modelInstance.question = {};
-                    modelInstance.queryQuestions();
-                    if (typeof success != 'undefined') {
-                        success();
-                    }
-                }, function (err) {
-                    $rootScope.error = err;
-                    if (typeof error != 'undefined') {
-                        error();
-                    }
-                });
-            };
-
-            modelInstance.voteup = function (question) {
-                var q = {
-                    id: question._id,
-                    voteup: 'true'
-                }
-                modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
-            }
-            modelInstance.votedown = function (question) {
-                var q = {
-                    id: question._id,
-                    votedown: 'true'
-                }
-                modelInstance.saveQuestion(q, modelInstance.getQuestionVoteStatus);
-            }
-
-            modelInstance.queryStickyQuestions = function () {
-                modelInstance.queryQuestions({
-                    //TODO: nothing here yet. will need stickys.
-                });
-            }
 
             modelInstance.addAnswer = function (answer, success, error) {
                 var ans = {

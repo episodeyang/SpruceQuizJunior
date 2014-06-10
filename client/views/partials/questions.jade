@@ -95,11 +95,11 @@ div.background(background-img="/img/bg-brown.jpg")
                             .fixed-left
                                 .rounded.bg-grey.transparent.vote-box
                                     p.text-center
-                                        a(ng-click='Model.voteup(Model.question)')
+                                        a(ng-click='Model.question.voteUp(Model.question)')
                                             span.up.glyphicon.glyphicon-chevron-up(ng-class='{"glow-yellow": Model.question.votedup}')
                                     h3.text-center.no-margin {{Model.question.vote}}
                                     p.text-center
-                                        a(ng-click='Model.votedown(Model.question)')
+                                        a(ng-click='Model.question.voteDown(Model.question)')
                                             span.down.glyphicon.glyphicon-chevron-down(ng-class='{"glow-pink": Model.question.voteddown}')
                             //-div.editor-inner(compile="'<mathjax>' + Model.question.text + '</mathjax>'")
                             div.editor-inner(math-html="Model.question.text")

@@ -9,10 +9,6 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
     function (_, rolesHelper, async, UserFeedM, SessionFeedM, BookFeedM) {
         var userRoles = rolesHelper.userRoles;
 
-        var test = {};
-        _.extend(test, {keyEntry: undefined});
-        console.log(test);
-
         function errorLog(error, doc) {
             if (error) {
                 return console.log(error);

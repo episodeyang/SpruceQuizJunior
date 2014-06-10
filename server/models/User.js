@@ -303,6 +303,34 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
             },
             removeBook: function (user, book, callback) {
                 UserMethods.addOrRemoveFromSet('books', 'pull', user, book, callback);
+            },
+            updateReputation: function (user, score, callback) {
+                var query = {
+                        username: user.username
+                    },
+                    update = {
+                        $inc: {reputation: score}
+                    };
+
+                if (user.role && user.role.title) {
+                    return SchemaModels[capitalize(user.role.title)].findOneAndUpdate(
+                        query,
+                        update,
+                        callback
+                    );
+                } else {
+                    return Users
+                        .findOne(query)
+                        .exec(function (error, user) {
+                            if (error || !user.role) {return callback(error); }
+                            return SchemaModels[capitalize(user.role.title)]
+                                .findOneAndUpdate(
+                                    query,
+                                    update,
+                                    callback
+                                );
+                        });
+                }
             }
         };
         return _.extend(UserM, UserMethods);

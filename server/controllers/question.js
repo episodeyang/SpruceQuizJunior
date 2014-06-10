@@ -166,8 +166,51 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 if (!req.params.id || req.params.id === "undefined") {
                     return res.send(400, 'noQuestionId');
                 }
-                var actionType;
 
+                var update = {};
+                var question = req.body;
+                var fieldString = 'title ';
+                if (req.body.title) {
+                    update.title = req.body.title;
+                    fieldString += 'title ';
+                }
+                if (req.body.text) {
+                    update.text = req.body.text;
+                    fieldString += 'text ';
+                }
+                if (req.body.tags) {
+                    update.tags = req.body.tags;
+                    fieldString += 'tags ';
+                }
+                if (fieldString.length > 0) {
+                    fieldString += 'dateEdited';
+                }
+                QuestionM.findByIdAndUpdate(
+                    req.params.id,
+                    update,
+                    {
+                        select: fieldString,
+                        $currentDate: {dateEdited: true}
+                    },
+                    function (err, result) {
+                        if (err) {
+                            return res.send(500, err);
+                        } else {
+                            FeedAPI.questionEdit(req.user, result.toObject(), result.sessions, result.books);
+                            return res.send(201, result);
+                        }
+                    }
+                );
+            },
+            updateVotes: function (req, res) {
+                if (!req.params.id || req.params.id === "undefined") {
+                    return res.send(400, 'noQuestionId');
+                } else if (!req.body.voteup && !req.body.votedown) {
+                    return res.send('voteRequestBad');
+                } else if (req.body.voteup !== 'true' && req.body.votedown !== 'true') {
+                    return res.send(403, 'cannotVoteUpAndDown');
+                }
+                var actionType;
                 function voteQuestion(err, question) {
                     if (req.body.voteup === 'true') {
                         if (_.contains(question.voteup, req.user.username)) {
@@ -232,52 +275,10 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     );
                 }
 
-                if (req.body.voteup || req.body.votedown) {
-                    if (req.body.voteup !== 'true' && req.body.votedown !== 'true') {
-                        return res.send(403, 'cannotVoteUpAndDown');
-                    } else {
-                        QuestionM.findById(
-                            req.params.id,
-                            'title voteup votedown vote',
-                            voteQuestion
-                        );
-                    }
-                } else {
-                    var update = {};
-                    var question = req.body;
-                    var fieldString = 'title ';
-                    if (req.body.title) {
-                        update.title = req.body.title;
-                        fieldString += 'title ';
-                    }
-                    if (req.body.text) {
-                        update.text = req.body.text;
-                        fieldString += 'text ';
-                    }
-                    if (req.body.tags) {
-                        update.tags = req.body.tags;
-                        fieldString += 'tags ';
-                    }
-                    if (fieldString.length > 0) {
-                        fieldString += 'dateEdited';
-                    }
-                    QuestionM.findByIdAndUpdate(
-                        req.params.id,
-                        update,
-                        {
-                            select: fieldString,
-                            $currentDate: {dateEdited: true}
-                        },
-                        function (err, result) {
-                            if (err) {
-                                return res.send(500, err);
-                            } else {
-                                FeedAPI.questionEdit(req.user, result.toObject(), result.sessions, result.books);
-                                return res.send(201, result);
-                            }
-                        }
-                    );
-                }
+                QuestionM
+                    .findById(req.params.id)
+                    .select('title voteup votedown vote')
+                    .exec(voteQuestion);
             },
             /**
              * @api {delete} /api/questions/:id Delete Question
