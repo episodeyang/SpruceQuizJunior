@@ -154,12 +154,14 @@ angular.module('modelServices', ['resourceProvider'])
                     _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                     modelInstance.attachAnswerComments();
                 }
-                Questions.get(
-                    {id: id},
-                    getCallback,
-                    function (err) {
-                        $rootScope.error = err;
-                    });
+                return Questions
+                    .get(
+                        {id: id},
+                        getCallback,
+                        function (err) {
+                            $rootScope.error = err;
+                        })
+                    .$promise;
 
                 function save (question, success, error) {
                     Questions.save(

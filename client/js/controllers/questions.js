@@ -84,7 +84,9 @@ angular.module('SpruceQuizApp')
 
                 if ($routeParams.questionId) {
                     $scope.view.state = 'question';
-                    Model.getQuestion($routeParams.questionId);
+                    Model.getQuestion($routeParams.questionId).then(function(){
+                        $rootScope.title = Model.question.title;
+                    });
                 }
 
                 Model.searchQuestions({search: true});
