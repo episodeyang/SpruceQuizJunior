@@ -23,15 +23,12 @@ mixin navbar
                             | 登出
             .hidden-xs
                 ul.nav.navbar-nav
-                    li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                        a(href='/homePage')
+                    li(data-access-level='{{ accessLevels.loggedin }}')
+                        a(href='/home')
                             span.glyphicon.glyphicon-inbox
-                    li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                        a(href='/homePage')
+                    li(data-access-level='{{ accessLevels.loggedin }}')
+                        a(href='/home')
                             span.glyphicon.glyphicon-stats
-                    li(data-access-level='{{ accessLevels.loggedin }}', active-nav)
-                        a(href='/homePage')
-                            span.glyphicon.glyphicon-folder-open
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
                         a(href='/superadmin') 后台管理
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
