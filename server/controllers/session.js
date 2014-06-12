@@ -14,8 +14,8 @@
  *          etc.,
  * good luck coding!
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Session.js'],
-    function (_, SchemaModels, rolesHelper, SessionM) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Session.js', '../models/Question.js'],
+    function (_, SchemaModels, rolesHelper, SessionM, QuestionM) {
         "use strict";
         var UserM = SchemaModels.User;
         var userRoles = rolesHelper.userRoles;
@@ -97,7 +97,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Ses
                     if (err) {return res.send(500, err); }
                     return res.send(200, session);
                 }
-                SessionM.getQuestions(req.params.sessionId, done);
+                QuestionM.find({"sessions": req.params.sessionId}).exec(done);
+//                SessionM.getQuestions(req.params.sessionId, done);
             },
             getBooks: function (req, res) {
                 if (!req.params.sessionId) {return res.send(400, 'noSessionId'); }

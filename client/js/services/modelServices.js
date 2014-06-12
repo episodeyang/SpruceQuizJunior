@@ -146,7 +146,8 @@ angular.module('modelServices', ['resourceProvider'])
                     voteUp: voteUp,
                     voteDown: voteDown
                 };
-                function getCallback (question) {
+
+                function getCallback(question) {
                     modelInstance.question = _.extend(questionMethods, question);
                     modelInstance.getQuestionVoteStatus();
                     _.map(modelInstance.question.answers, modelInstance.getVoteStatus);
@@ -154,16 +155,17 @@ angular.module('modelServices', ['resourceProvider'])
                     _.map(modelInstance.question.answerComments, modelInstance.getVoteStatus);
                     modelInstance.attachAnswerComments();
                 }
+
                 return Questions
                     .get(
-                        {id: id},
-                        getCallback,
-                        function (err) {
-                            $rootScope.error = err;
-                        })
+                    {id: id},
+                    getCallback,
+                    function (err) {
+                        $rootScope.error = err;
+                    })
                     .$promise;
 
-                function save (question, success, error) {
+                function save(question, success, error) {
                     Questions.save(
                         question,
                         function (q) {
@@ -179,7 +181,7 @@ angular.module('modelServices', ['resourceProvider'])
                         });
                 }
 
-                function remove (question, success, error) {
+                function remove(question, success, error) {
                     Questions.remove(question, function (res) {
                         modelInstance.question = {};
                         modelInstance.queryQuestions();
@@ -194,7 +196,7 @@ angular.module('modelServices', ['resourceProvider'])
                     });
                 }
 
-                function voteUp (question) {
+                function voteUp(question) {
                     var q = {
                         id: question._id,
                         voteup: 'true'
@@ -202,7 +204,7 @@ angular.module('modelServices', ['resourceProvider'])
                     Questions.updateVotes(q, getCallback);
                 }
 
-                function voteDown (question) {
+                function voteDown(question) {
                     var q = {
                         id: question._id,
                         votedown: 'true'
@@ -887,6 +889,7 @@ angular.module('modelServices', ['resourceProvider'])
                         return success(modelInstance.bookFeeds);
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (error) {
@@ -964,15 +967,16 @@ angular.module('modelServices', ['resourceProvider'])
                 function getQuestions(success, error) {
                     console.assert(modelInstance.book._id, "model.book doesn't have _id field");
                     setup(success, error);
-                    function callback (questions) {
+                    function callback(questions) {
                         successCallback({questions: questions});
                     }
+
                     return Books.getQuestions({bookId: modelInstance.book._id}, callback, errorCallback).$promise;
                 }
 
                 var methods = {
                     save: save,
-                    addQuestion: addQuestion,
+//                    addQuestion: addQuestion,
                     removeQuestion: removeQuestion,
                     getQuestions: getQuestions
                 };
@@ -1053,6 +1057,7 @@ angular.module('modelServices', ['resourceProvider'])
                         success(modelInstance.sessionFeeds);
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (error) {
@@ -1088,6 +1093,7 @@ angular.module('modelServices', ['resourceProvider'])
                         callbackStack.success(session)
                     }
                 }
+
                 function errorCallback(err) {
                     $rootScope.error = err;
                     if (callbackStack.error) {
@@ -1125,14 +1131,19 @@ angular.module('modelServices', ['resourceProvider'])
 
                 function getQuestions(success, error) {
                     setup(success, error);
-                    Sessions.getQuestions(getQuery, successCallback, errorCallback);
+                    function callback(questions) {
+                        successCallback({questions: questions});
+                    }
+                    Sessions.getQuestions(getQuery, callback, errorCallback);
                 }
+
                 function addUser(success, error) {
                     var query = {
                         add: { _id: modelInstance.session._id },
                         username: modelInstance.user.username
                     };
-                    function successCallback () {
+
+                    function successCallback() {
                         Sessions.get(
                             getQuery, getCallback, errorCallback).$promise.then(success);
                     }

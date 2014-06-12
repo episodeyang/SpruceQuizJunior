@@ -97,32 +97,32 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
                     }
                 );
             },
-            /**
-             * upadate questions field of book.
-             * @param req
-             * @param res
-             * @returns {*}
-             * @example req = { add: { id: 34523452345254 } }
-             * @example req = { remove: { id: 34523452345254 } }
-             */
-            updateQuestions: function (req, res) {
-                if (!req.params.bookId) {return res.send(400, 'noBookId'); }
-                var data = req.body;
-                var book = { _id: req.params.bookId };
-
-                function done(err, book) {
-                    if (err) {return res.send(500, err); }
-                    return res.send(201, book);
-                }
-
-                if (data.add) {
-                    BookM.addQuestion(book, data.add.id, done);
-                } else if (data.pull) {
-                    BookM.removeQuestion(book, data.pull.id, done);
-                } else {
-                    return res.send(400, 'badPayloadFormat');
-                }
-            },
+//            /**
+//             * upadate questions field of book.
+//             * @param req
+//             * @param res
+//             * @returns {*}
+//             * @example req = { add: { id: 34523452345254 } }
+//             * @example req = { remove: { id: 34523452345254 } }
+//             */
+//            updateQuestions: function (req, res) {
+//                if (!req.params.bookId) {return res.send(400, 'noBookId'); }
+//                var data = req.body;
+//                var book = { _id: req.params.bookId };
+//
+//                function done(err, book) {
+//                    if (err) {return res.send(500, err); }
+//                    return res.send(201, book);
+//                }
+//
+//                if (data.add) {
+//                    BookM.addQuestion(book, data.add.id, done);
+//                } else if (data.pull) {
+//                    BookM.removeQuestion(book, data.pull.id, done);
+//                } else {
+//                    return res.send(400, 'badPayloadFormat');
+//                }
+//            },
             getQuestions: function (req, res) {
                 function callback(err, books) {
                     if (err) {

@@ -102,6 +102,7 @@ angular.module('SpruceQuizApp')
                                 // Model.session.addQuestion(question._id);
                             }
                             if (question.books.length >= 1) {
+                                // this is now removed. questions tagged with a book is found through search.
                                 // Model.book.addQuestion(question._id);
                             }
                             $location.path('/questions/' + Model.question._id);

@@ -196,7 +196,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             save: Session.save,
             remove: Session.remove,
             updateQuestions: onQuestions.save,
-            getQuestions: onQuestions.get, //return session object with questions populated. not an array.
+            getQuestions: onQuestions.query, //return session object with questions populated. not an array.
             updateBook: onBooks.save,
             getBooks: onBooks.get
         };
@@ -214,7 +214,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             getFeeds: Feeds.get, //get one bucket, so is not array.
             save: Book.save,
             remove: Book.remove,
-            updateQuestions: onQuestions.save,
+//            updateQuestions: onQuestions.save,
             getQuestions: onQuestions.query,
             updateSessions: onSessions.save,
             getSessions: onSessions.get

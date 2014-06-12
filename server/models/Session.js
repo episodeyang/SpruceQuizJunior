@@ -35,9 +35,9 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 }
                 SessionM.findById(sessionId).select(key).populate(key).exec(callback);
             },
-            getQuestions: function (sessionId, callback) {
-                SessionMethods.getSet('questions', sessionId, callback);
-            },
+//            getQuestions: function (sessionId, callback) {
+//                SessionMethods.getSet('questions', sessionId, callback);
+//            },
             getBooks: function (sessionId, callback) {
                 if (!sessionId) {
                     return callback('noSessionId');

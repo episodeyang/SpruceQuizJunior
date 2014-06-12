@@ -105,26 +105,26 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             }
                         }
 
-                        if (question.sessions) {
-                            _.each(
-                                question.sessions,
-                                function (sessionId) {
-                                    stack.push(function (callback) {
-                                        SessionM.addQuestion({_id: sessionId}, question, callback);
-                                    });
-                                }
-                            );
-                        }
-                        if (question.books) {
-                            _.each(
-                                question.books,
-                                function (book) {
-                                    stack.push(function (callback) {
-                                        BookM.addQuestion(book, question, callback);
-                                    });
-                                }
-                            );
-                        }
+//                        if (question.sessions) {
+//                            _.each(
+//                                question.sessions,
+//                                function (sessionId) {
+//                                    stack.push(function (callback) {
+//                                        SessionM.addQuestion({_id: sessionId}, question, callback);
+//                                    });
+//                                }
+//                            );
+//                        }
+//                        if (question.books) {
+//                            _.each(
+//                                question.books,
+//                                function (book) {
+//                                    stack.push(function (callback) {
+//                                        BookM.addQuestion(book, question, callback);
+//                                    });
+//                                }
+//                            );
+//                        }
                         function done(callback) {
                             res.location(req.route.path + '/' + question._id);
                             FeedAPI.questionAdd(req.user, question, question.sessions, question.books);
