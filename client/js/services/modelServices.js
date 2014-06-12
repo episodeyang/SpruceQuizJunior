@@ -964,7 +964,10 @@ angular.module('modelServices', ['resourceProvider'])
                 function getQuestions(success, error) {
                     console.assert(modelInstance.book._id, "model.book doesn't have _id field");
                     setup(success, error);
-                    return Books.getQuestions({bookId: modelInstance.book._id}, successCallback, errorCallback).$promise;
+                    function callback (questions) {
+                        successCallback({questions: questions});
+                    }
+                    return Books.getQuestions({bookId: modelInstance.book._id}, callback, errorCallback).$promise;
                 }
 
                 var methods = {

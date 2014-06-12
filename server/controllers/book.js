@@ -14,8 +14,8 @@
  *          etc.,
  * good luck coding!
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Book'],
-    function (_, SchemaModels, rolesHelper, BookM) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Book', '../models/Question'],
+    function (_, SchemaModels, rolesHelper, BookM, QuestionM) {
         "use strict";
         var UserM = SchemaModels.User;
 //        var BookM = SchemaModels.Book;
@@ -122,6 +122,15 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', '../models/Boo
                 } else {
                     return res.send(400, 'badPayloadFormat');
                 }
+            },
+            getQuestions: function (req, res) {
+                function callback(err, books) {
+                    if (err) {
+                        return res.send(404, 'questionsNotFound ' + err);
+                    }
+                    res.send(200, books);
+                }
+                QuestionM.find({'books._id': req.params.bookId}).exec(callback);
             },
             remove: function (req, res) {
                 BookM.remove(

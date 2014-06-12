@@ -43,6 +43,18 @@ angular.module('SpruceQuizApp')
                         });
                 });
 
+            $scope.$watch('view.state', function (newVal, oldVal) {
+                if (newVal === "questions" && Model.book.getQuestions) {
+                    Model.book.getQuestions();
+                    console.log('detected view state change to questions');
+                }
+//                if (newVal === "info" && Model.session._id) {
+//                    Model.getSessionFeeds();
+//                    $scope.view.feedBucket = Model.sessionFeeds;
+//                    console.log('detected view state change to questions');
+//                }
+            });
+
 //            $scope.submitBook = Model.book.save;
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';

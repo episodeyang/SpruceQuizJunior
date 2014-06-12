@@ -215,7 +215,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             save: Book.save,
             remove: Book.remove,
             updateQuestions: onQuestions.save,
-            getQuestions: onQuestions.get,
+            getQuestions: onQuestions.query,
             updateSessions: onSessions.save,
             getSessions: onSessions.get
         };
