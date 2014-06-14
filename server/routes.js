@@ -160,6 +160,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
+                path: '/api/questions/:id/comments/:commentId/votes',
+                httpMethod: 'POST',
+                middleware: [CommentCtrl.updateVote],
+                accessLevel: accessLevels.loggedin
+            },
+            {
                 path: '/api/questions/:id/comments/:commentId',
                 httpMethod: 'DELETE',
                 middleware: [CommentCtrl.removeById],
@@ -175,6 +181,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/questions/:id/answers/:answerId/comments/:commentId',
                 httpMethod: 'POST',
                 middleware: [AnswerCommentCtrl.update],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId/comments/:commentId/votes',
+                httpMethod: 'POST',
+                middleware: [AnswerCommentCtrl.updateVote],
                 accessLevel: accessLevels.loggedin
             },
             {

@@ -161,12 +161,13 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 stackMaker(typeString, stack, data, user, sessions, books);
                 return async.series(stack, errorLog);
             },
-            commentAdd: function (user, comment, sessions, books) {
+            commentAdd: function (user, question, comment, sessions, books) {
                 if (!user || !comment) {
                     return;
                 }
                 var stack = [];
                 var typeString = "commentAdd";
+                console.log(typeString)
                 var data = {
                     user: _.pick(user, ['username', 'name']),
                     question: {
@@ -178,24 +179,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 stackMaker(typeString, stack, data, user, sessions, books);
                 return async.series(stack, errorLog);
             },
-            commentEdit: function (user, comment, sessions, books) {
-                if (!user || !comment) {
-                    return;
-                }
-                var stack = [];
-                var typeString = "commentEdit";
-                var data = {
-                    user: _.pick(user, ['username', 'name']),
-                    question: {
-                        _id: question._id,
-                        title: question.title
-                    },
-                    comment: _.pick(comment, ['_id', 'text'])
-                };
-                stackMaker(typeString, stack, data, user, sessions, books);
-                return async.series(stack, errorLog);
-            },
-            commentVote: function (user, comment, sessions, books) {
+            commentEdit: function (user, question, comment, sessions, books) {
                 if (!user || !comment) {
                     return;
                 }
@@ -210,36 +194,44 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     comment: _.pick(comment, ['_id', 'text'])
                 };
 
-                function removeUpVote() {
-                    typeString += ".removeUpVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    return async.series(stack, errorLog);
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            commentVote: function (actionType, user, question, comment, sessions, books) {
+                if (!user || !comment) {
+                    return;
                 }
-
-                function upVote() {
-                    typeString += ".upVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    return async.series(stack, errorLog);
-                }
-
-                function removeDownVote() {
-                    typeString += ".removeDownVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    return async.series(stack, errorLog);
-                }
-
-                function downVote() {
-                    typeString += ".downVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    return async.series(stack, errorLog);
-                }
-
-                return {
-                    removeUpVote: removeUpVote,
-                    upVote: upVote,
-                    removeDownVote: removeDownVote,
-                    downVote: downVote
+                var stack = [];
+                var typeString = "commentEdit." + actionType;
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id: question._id,
+                        title: question.title
+                    },
+                    comment: _.pick(comment, ['_id', 'text'])
                 };
+
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            commentRemove: function (user, question, comment, sessions, books) {
+                if (!user || !comment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "commentRemove";
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: {
+                        _id: question._id,
+                        title: question.title
+                    },
+                    comment: _.pick(comment, ['_id', 'text'])
+                };
+
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
             },
             // todo: answer skeleton code
             answerAdd: function (user, question, answer, sessions, books) {
@@ -257,12 +249,12 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 stackMaker(typeString, stack, data, user, sessions, books);
                 return async.series(stack, errorLog);
             },
-            answerUpdate: function (user, question, answer, sessions, books) {
+            answerEdit: function (user, question, answer, sessions, books) {
                 if (!user || !answer) {
                     return;
                 }
                 var stack = [];
-                var typeString = "answerUpdate";
+                var typeString = "answerEdit";
                 console.log(typeString);
                 var data = {
                     user: _.pick(user, ['username', 'name']),
@@ -301,18 +293,71 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 return async.series(stack, errorLog);
             },
             // todo: answerComment skeleton code
-            answerComment: function (user, answerComment, sessions, books) {
+            answerCommentAdd: function (user, question, answerComment, sessions, books) {
                 if (!user || !answerComment) {
                     return;
                 }
                 var stack = [];
-                var typeString = "commentAdd";
+                var typeString = "answerCommentAdd";
                 var data = {
                     user: _.pick(user, ['username', 'name']),
-                    question: {
-                        _id: question._id,
-                        title: question.title
-                    },
+                    question: _.pick(question, ['_id', 'title']),
+                    answerComment: _.pick(answerComment, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerCommentEdit: function (user, question, answerComment, sessions, books) {
+                if (!user || !answerComment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerCommentEdit";
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
+                    answerComment: _.pick(answerComment, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerCommentVote: function (actionType, user, question, answerComment, sessions, books) {
+                if (!user || !answerComment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerCommentVote." + actionType;
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
+                    answerComment: _.pick(answerComment, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerCommentRemove: function (user, question, answerComment, sessions, books) {
+                if (!user || !answerComment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerCommentRemove";
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
+                    answerComment: _.pick(answerComment, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerComment: function (user, question, answerComment, sessions, books) {
+                if (!user || !answerComment) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerCommentAdd";
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
                     answerComment: _.pick(answerComment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);

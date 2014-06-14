@@ -75,7 +75,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                             console.log(err);
                             return res.send(500, err);
                         }
-                        FeedAPI.answerUpdate(req.user, question, {text: req.body.text}, question.sessions, question.books);
+                        FeedAPI.answerEdit(req.user, question, {text: req.body.text}, question.sessions, question.books);
                         return res.send(201, question);
                     });
             },

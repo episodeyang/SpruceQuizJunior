@@ -197,10 +197,9 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     function (err, result) {
                         if (err) {
                             return res.send(500, err);
-                        } else {
-                            FeedAPI.questionEdit(req.user, result.toObject(), result.sessions, result.books);
-                            return res.send(201, result);
                         }
+                        FeedAPI.questionEdit(req.user, result.toObject(), result.sessions, result.books);
+                        return res.send(201, result);
                     }
                 );
             },
