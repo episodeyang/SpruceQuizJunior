@@ -273,7 +273,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             } else {
                                 console.log(question);
                                 reputationAPI.question[actionType](question.author);
-                                FeedAPI.questionVote(req.user, question, question.sessions, question.books)[actionType]();
+                                FeedAPI.questionVote(actionType, req.user, question, question.sessions, question.books);
                                 return res.send(201, q);
                             }
                         }

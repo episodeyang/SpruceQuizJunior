@@ -85,9 +85,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 };
 
                 stackMaker(typeString, stack, data, user, sessions, books);
-                console.log(stack);
-
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             questionEdit: function (user, question, sessions, books) {
                 if (!user || !question) {
@@ -108,7 +106,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 };
 
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             questionGet: function (user, question, sessions, books) {
                 if (!user || !question) {
@@ -125,13 +123,13 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 };
 
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
-            questionVote: function (user, question, sessions, books) {
+            questionVote: function (actionType, user, question, sessions, books) {
                 if (!user || !question) {
                     return;
                 }
-                var typeString = "questionVote";
+                var typeString = "questionVote." + actionType;
                 var stack = [];
                 var data = {
                     user: _.pick(user, ['username', 'name']),
@@ -141,36 +139,8 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     }
                 };
 
-                function removeUpVote() {
-                    typeString += ".removeUpVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
-                }
-
-                function upVote() {
-                    typeString += ".upVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
-                }
-
-                function removeDownVote() {
-                    typeString += ".removeDownVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
-                }
-
-                function downVote() {
-                    typeString += ".downVote";
-                    stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
-                }
-
-                return {
-                    removeUpVote: removeUpVote,
-                    upVote: upVote,
-                    removeDownVote: removeDownVote,
-                    downVote: downVote
-                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
             },
             questionRemove: function (user, question, sessions, books) {
                 if (!user || !question) {
@@ -189,7 +159,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 };
 
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             commentAdd: function (user, comment, sessions, books) {
                 if (!user || !comment) {
@@ -206,7 +176,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     comment: _.pick(comment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             commentEdit: function (user, comment, sessions, books) {
                 if (!user || !comment) {
@@ -223,7 +193,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     comment: _.pick(comment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             commentVote: function (user, comment, sessions, books) {
                 if (!user || !comment) {
@@ -243,25 +213,25 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 function removeUpVote() {
                     typeString += ".removeUpVote";
                     stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
+                    return async.series(stack, errorLog);
                 }
 
                 function upVote() {
                     typeString += ".upVote";
                     stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
+                    return async.series(stack, errorLog);
                 }
 
                 function removeDownVote() {
                     typeString += ".removeDownVote";
                     stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
+                    return async.series(stack, errorLog);
                 }
 
                 function downVote() {
                     typeString += ".downVote";
                     stackMaker(typeString, stack, data, user, sessions, books);
-                    async.series(stack, errorLog);
+                    return async.series(stack, errorLog);
                 }
 
                 return {
@@ -272,7 +242,51 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 };
             },
             // todo: answer skeleton code
-            answer: function (user, answer, sessions, books) {
+            answerAdd: function (user, question, answer, sessions, books) {
+                if (!user || !answer) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerAdd";
+                console.log(typeString);
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerUpdate: function (user, question, answer, sessions, books) {
+                if (!user || !answer) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerUpdate";
+                console.log(typeString);
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerVote: function (actionType, user, question, answer, sessions, books) {
+                if (!user || !answer) {
+                    return;
+                }
+                var stack = [];
+                var typeString = "answerVote." + actionType;
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, ['_id', 'text'])
+                };
+                stackMaker(typeString, stack, data, user, sessions, books);
+                return async.series(stack, errorLog);
+            },
+            answerRemove: function (user, question, answer, sessions, books) {
                 if (!user || !answer) {
                     return;
                 }
@@ -280,14 +294,11 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var typeString = "commentAdd";
                 var data = {
                     user: _.pick(user, ['username', 'name']),
-                    question: {
-                        _id: question._id,
-                        title: question.title
-                    },
+                    question: _.pick(question, ['_id', 'title']),
                     answer: _.pick(answer, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             // todo: answerComment skeleton code
             answerComment: function (user, answerComment, sessions, books) {
@@ -305,7 +316,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     answerComment: _.pick(answerComment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             // todo: session skeleton code
             session: function (user, session, books) {
@@ -319,7 +330,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     session: _.pick(session, ['_id', 'name', 'overview'])
                 };
                 stackMaker(typeString, stack, data, user, null, books);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             // todo: book skeleton code
             book: function (user, book, sessions) {
@@ -333,7 +344,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     book: _.pick(book, ['_id', 'title', 'authors', 'overview'])
                 };
                 stackMaker(typeString, stack, data, user, books, null);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             },
             // todo: school skeleton code
             school: function (user, school, sessions, books) {
@@ -347,7 +358,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                     schools: _.pick(school, ['name', 'overview'])
                 };
                 stackMaker(typeString, stack, data, user, books, null);
-                async.series(stack, errorLog);
+                return async.series(stack, errorLog);
             }
         };
     });

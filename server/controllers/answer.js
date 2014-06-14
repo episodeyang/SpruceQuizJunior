@@ -10,8 +10,8 @@
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
-    function (_, SchemaModels, rolesHelper, mongoose) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '../models/FeedAPI'],
+    function (_, SchemaModels, rolesHelper, mongoose, FeedAPI) {
         var QuestionM = SchemaModels.Question;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
@@ -36,12 +36,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
                     {$push: {answers: answer}},
-                    {select: "answers"},
-                    function (err, result) {
+                    {select: "_id title sessions books answers"},
+                    function (err, question) {
                         if (err) {
-                            return res.send(403, err)
+                            return res.send(403, err);
                         }
-                        return res.send(201, result);
+                        FeedAPI.answerAdd(req.user, question, answer, question.sessions, question.books);
+                        return res.send(201, question);
                     }
                 );
             },
@@ -54,88 +55,104 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                 if (!req.params.id || !req.params.answerId) {
                     return res.send(400);
                 }
-                if (req.body.voteup == 'true' || req.body.votedown == 'true') {
-                    var query = {
-                        "_id": ObjectId(req.params.id),
-                        "answers._id": ObjectId(req.params.answerId)
-                    };
 
-                    function callback(err, result) {
-                        if (req.body.voteup === 'true') {
-                            if (_.contains(result.answers[0].voteup, req.user.username)) {
-                                var update = {
-                                    $pull: {
-                                        "answers.$.votedown": req.user.username,
-                                        "answers.$.voteup": req.user.username
-                                    }
-                                };
-                            } else {
-                                var update = {
-                                    $pull: {
-                                        "answers.$.votedown": req.user.username
-                                    },
-                                    $push: {
-                                        "answers.$.voteup": req.user.username
-                                    }
-                                };
-                            }
+                var query = {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) };
+                // it looks like the $currentDate is not working.
+//                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answers.$.dateEdited": true}},
+                var update = {
+                    $set: {
+                        'answers.$.text': req.body.text,
+                        'answers.$.dateEdited': new Date()
+                    }
+                };
+                var options = {select: '_id title answers answerComments sessions books' };
+                QuestionM.findOneAndUpdate(
+                    query,
+                    update,
+                    options,
+                    function (err, question) {
+                        if (err) {
+                            console.log(err);
+                            return res.send(500, err);
                         }
-                        if (req.body.votedown === 'true') {
-                            if (_.contains(result.answers[0].votedown, req.user.username)) {
-                                var update = {
-                                    $pull: {
-                                        "answers.$.votedown": req.user.username,
-                                        "answers.$.voteup": req.user.username
-                                    }
-                                };
-                            } else {
-                                var update = {
-                                    $pull: {
-                                        "answers.$.voteup": req.user.username
-                                    },
-                                    $push: {
-                                        "answers.$.votedown": req.user.username
-                                    }
-                                };
-                            }
+                        FeedAPI.answerUpdate(req.user, question, {text: req.body.text}, question.sessions, question.books);
+                        return res.send(201, question);
+                    });
+            },
+            updateVote: function (req, res) {
+                if (!req.params.id || !req.params.answerId) {
+                    return res.send(400);
+                }
+                if (!req.body.voteup && !req.body.votedown) {
+                    return res.send(400, 'noVoteUpNorDown');
+                }
+                var query = {
+                    "_id": ObjectId(req.params.id),
+                    "answers._id": ObjectId(req.params.answerId)
+                };
+
+                function callback(err, result) {
+                    var actionType;
+                    if (req.body.voteup === 'true') {
+                        if (_.contains(result.answers[0].voteup, req.user.username)) {
+                            var update = {
+                                $pull: {
+                                    "answers.$.votedown": req.user.username,
+                                    "answers.$.voteup": req.user.username
+                                }
+                            };
+                            actionType = 'removeVoteUp';
+                        } else {
+                            var update = {
+                                $pull: {
+                                    "answers.$.votedown": req.user.username
+                                },
+                                $push: {
+                                    "answers.$.voteup": req.user.username
+                                }
+                            };
+                            actionType = 'voteUp';
                         }
-                        QuestionM.findOneAndUpdate(query, update, {select: 'answers answerComments'}, function (err, result, n) {
+                    }
+                    if (req.body.votedown === 'true') {
+                        if (_.contains(result.answers[0].votedown, req.user.username)) {
+                            var update = {
+                                $pull: {
+                                    "answers.$.votedown": req.user.username,
+                                    "answers.$.voteup": req.user.username
+                                }
+                            };
+                            actionType = 'removeVoteDown';
+                        } else {
+                            var update = {
+                                $pull: {
+                                    "answers.$.voteup": req.user.username
+                                },
+                                $push: {
+                                    "answers.$.votedown": req.user.username
+                                }
+                            };
+                            actionType = 'voteDown';
+                        }
+                    }
+                    QuestionM.findOneAndUpdate(
+                        query,
+                        update,
+                        {select: '_id title answers answerComments'},
+                        function (err, question, n) {
                             var q = {
-                                answers: result.answers,
-                                nAnswers: result.nAnswers
+                                answers: question.answers,
+                                nAnswers: question.nAnswers
                             };
                             if (err) {
                                 return res.send(500, err);
                             }
-                            else {
-                                return res.send(201, q);
-                            }
-                            ;
+                            FeedAPI.answerVote(actionType, req.user, question, {text: req.body.text}, question.sessions, question.books);
+                            return res.send(201, q);
                         });
-                    }
-
-                    QuestionM.findOne(query).select('answers.$').exec(callback);
-                } else {
-
-                    var query = {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) };
-//                    New $currentDate applicable at mongodb v2.6 upcoming release.
-//                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answer.$.dateEdited": true}},
-                    var update = {$set: {'answers.$.text': req.body.text, 'answer.$.dateEdited': new Date() }};
-                    var options = {select: 'answers answerComments' };
-                    QuestionM.findOneAndUpdate(
-                        query,
-                        update,
-                        options,
-                        function (err, result) {
-                            if (err) {
-                                return res.send(500, err);
-                            } else {
-                                return res.send(201, result);
-                            }
-                            ;
-                        });
-
                 }
+
+                QuestionM.findOne(query).select('answers.$').exec(callback);
             },
             /**
              * @api {delete} /api/questions/:id Delete Question
@@ -155,14 +172,13 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose"],
                         answers: {_id: ObjectId(req.params.answerId)},
                         answerComments: {answerId: ObjectId(req.params.answerId)}
                     }},
-                    {select: 'answers answerComments' },
-                    function (err, results) {
+                    {select: '_id title answers answerComments' },
+                    function (err, question) {
                         if (err) {
                             return res.send(500, err);
-                        } else {
-                            return res.send(201, results);
                         }
-                        ;
+                        FeedAPI.answerRemove(req.user, question, {text: req.body.text}, question.sessions, question.books);
+                        return res.send(201, question);
                     });
             }
         };

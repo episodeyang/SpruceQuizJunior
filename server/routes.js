@@ -136,6 +136,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
+                path: '/api/questions/:id/answers/:answerId/votes',
+                httpMethod: 'POST',
+                middleware: [AnswerCtrl.updateVote],
+                accessLevel: accessLevels.loggedin
+            },
+            {
                 path: '/api/questions/:id/answers/:answerId',
                 httpMethod: 'DELETE',
                 middleware: [AnswerCtrl.removeById],
