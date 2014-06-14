@@ -50,9 +50,11 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Answer = $resource('/api/questions/:id/answers/:answerId', {id: '@id', answerId: '@answerId'});
+        var AnswerVotes = $resource('/api/questions/:id/answers/:answerId/votes', {id: '@id', answerId: '@answerId'});
         return {
             add: Answers.create,
             save: Answer.save,
+            updateVotes: AnswerVotes.save,
             remove: Answer.remove
         };
     })
@@ -61,9 +63,11 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Comment = $resource('/api/questions/:id/comments/:commentId', {id: '@id', commentId: '@commentId'});
+        var CommentVotes = $resource('/api/questions/:id/comments/:commentId/Votes', {id: '@id', commentId: '@commentId'});
         return {
             add: Comments.create,
             save: Comment.save,
+            updateVotes: CommentVotes.save,
             remove: Comment.remove
         };
     })
@@ -72,9 +76,11 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var AnswerComment = $resource('/api/questions/:id/answers/:answerId/comments/:commentId', {id: '@id', answerId: '@answerId', commentId: '@commentId'});
+        var AnswerCommentVotes = $resource('/api/questions/:id/answers/:answerId/comments/:commentId/votes', {id: '@id', answerId: '@answerId', commentId: '@commentId'});
         return {
             add: AnswerComments.create,
             save: AnswerComment.save,
+            updateVotes: AnswerCommentVotes.save,
             remove: AnswerComment.remove
         };
     })

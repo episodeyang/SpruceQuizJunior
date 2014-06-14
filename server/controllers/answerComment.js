@@ -36,7 +36,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                 QuestionM.findByIdAndUpdate(
                     req.params.id,
                     {$push: {"answerComments": comment}},
-                    {select: "answerComments"},
+                    {select: "answerComments _id title sessions books"},
                     function(err, question){
                         if (err) {return res.send(403, err)}
                         FeedAPI.answerCommentAdd(req.user, question, answer, comment, question.sessions, question.books);
@@ -65,7 +65,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
 //                    New $currentDate applicable at mongodb v2.6 upcoming release.
 //                    {$set: {'answers.$.comments.$.text': req.body.text}, $currentDate: {"answers.$.comment.$.dateEdited": true}},
                     {$set: {"answerComments.$.text": req.body.text}},
-                    {select: "answerComments"},
+                    {select: "answerComments _id title sessions books"},
                     function (err, question) {
                         if (err) {
                             return res.send(500, err);
@@ -136,14 +136,18 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                             actionType = 'downVote';
                         }
                     }
-                    QuestionM.findOneAndUpdate(query, update, {select: 'answerComments'}, function (err, question) {
-                        var q = {
-                            answerComments: question.answerComments
-                        };
-                        if (err) { return res.send(500, err); }
-                        FeedAPI.answerCommentVote(actionType, req.user, answer, question, comment, question.sessions, question.books);
-                        return res.send(201, q );
-                    });
+                    QuestionM.findOneAndUpdate(
+                        query,
+                        update,
+                        {select: 'answerComments _id title sessions books'},
+                        function (err, question) {
+                            var q = {
+                                answerComments: question.answerComments
+                            };
+                            if (err) { return res.send(500, err); }
+                            FeedAPI.answerCommentVote(actionType, req.user, answer, question, comment, question.sessions, question.books);
+                            return res.send(201, q );
+                        });
                 }
 
                 QuestionM.findOne(query).select('answerComments.$').exec(callback);
@@ -166,7 +170,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                 QuestionM.findOneAndUpdate(
                     query,
                     {$pull: {answerComments: {_id: ObjectId(req.params.commentId)} } },
-                    {select: 'answerComments' },
+                    {select: 'answerComments _id title sessions books' },
                     function (err, question) {
                         if (err) {
                             return res.send(500, err);

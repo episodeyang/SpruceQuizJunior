@@ -314,7 +314,7 @@ angular.module('modelServices', ['resourceProvider'])
                     _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                 }
 
-                Answers.save(ans, callback);
+                Answers.updateVotes(ans, callback);
             }
             modelInstance.votedownAnswer = function (answer) {
                 var ans = {
@@ -328,7 +328,7 @@ angular.module('modelServices', ['resourceProvider'])
                     _.each(modelInstance.question.answers, modelInstance.getVoteStatus);
                 }
 
-                Answers.save(ans, callback);
+                Answers.updateVotes(ans, callback);
             }
 
             modelInstance.addComment = function (comment, success, error) {
@@ -410,7 +410,7 @@ angular.module('modelServices', ['resourceProvider'])
                     commentId: comment.id,
                     "voteup": 'true'
                 }
-                Comments.save(
+                Comments.updateVotes(
                     query,
                     function (results) {
                         modelInstance.question.comments = results.comments;
@@ -433,7 +433,7 @@ angular.module('modelServices', ['resourceProvider'])
                     commentId: comment.id,
                     "votedown": 'true'
                 }
-                Comments.save(
+                Comments.updateVotes(
                     query,
                     function (results) {
                         modelInstance.question.comments = results.comments;
@@ -539,7 +539,7 @@ angular.module('modelServices', ['resourceProvider'])
                     commentId: comment.id,
                     "voteup": 'true'
                 }
-                AnswerComments.save(
+                AnswerComments.updateVotes(
                     query,
                     function (results) {
                         modelInstance.question.answerComments = results.answerComments;
@@ -564,7 +564,7 @@ angular.module('modelServices', ['resourceProvider'])
                     commentId: comment.id,
                     "votedown": 'true'
                 }
-                AnswerComments.save(
+                AnswerComments.updateVotes(
                     query,
                     function (results) {
                         modelInstance.question.answerComments = results.answerComments;

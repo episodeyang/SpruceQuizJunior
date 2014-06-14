@@ -293,7 +293,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 return async.series(stack, errorLog);
             },
             // todo: answerComment skeleton code
-            answerCommentAdd: function (user, question, answerComment, sessions, books) {
+            answerCommentAdd: function (user, question, answer, answerComment, sessions, books) {
                 if (!user || !answerComment) {
                     return;
                 }
@@ -302,12 +302,13 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var data = {
                     user: _.pick(user, ['username', 'name']),
                     question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, '_id'),
                     answerComment: _.pick(answerComment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
                 return async.series(stack, errorLog);
             },
-            answerCommentEdit: function (user, question, answerComment, sessions, books) {
+            answerCommentEdit: function (user, question, answer, answerComment, sessions, books) {
                 if (!user || !answerComment) {
                     return;
                 }
@@ -316,12 +317,13 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var data = {
                     user: _.pick(user, ['username', 'name']),
                     question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, '_id'),
                     answerComment: _.pick(answerComment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
                 return async.series(stack, errorLog);
             },
-            answerCommentVote: function (actionType, user, question, answerComment, sessions, books) {
+            answerCommentVote: function (actionType, user, question, answer, answerComment, sessions, books) {
                 if (!user || !answerComment) {
                     return;
                 }
@@ -330,12 +332,13 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var data = {
                     user: _.pick(user, ['username', 'name']),
                     question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, '_id'),
                     answerComment: _.pick(answerComment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
                 return async.series(stack, errorLog);
             },
-            answerCommentRemove: function (user, question, answerComment, sessions, books) {
+            answerCommentRemove: function (user, question, answer, answerComment, sessions, books) {
                 if (!user || !answerComment) {
                     return;
                 }
@@ -344,20 +347,7 @@ define(['underscore', '../rolesHelper', 'async', './UserFeed', './SessionFeed', 
                 var data = {
                     user: _.pick(user, ['username', 'name']),
                     question: _.pick(question, ['_id', 'title']),
-                    answerComment: _.pick(answerComment, ['_id', 'text'])
-                };
-                stackMaker(typeString, stack, data, user, sessions, books);
-                return async.series(stack, errorLog);
-            },
-            answerComment: function (user, question, answerComment, sessions, books) {
-                if (!user || !answerComment) {
-                    return;
-                }
-                var stack = [];
-                var typeString = "answerCommentAdd";
-                var data = {
-                    user: _.pick(user, ['username', 'name']),
-                    question: _.pick(question, ['_id', 'title']),
+                    answer: _.pick(answer, '_id'),
                     answerComment: _.pick(answerComment, ['_id', 'text'])
                 };
                 stackMaker(typeString, stack, data, user, sessions, books);
