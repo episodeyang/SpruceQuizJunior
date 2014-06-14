@@ -157,13 +157,21 @@ describe('Session API test - ', function (done) {
             done();
         });
     });
-    it('now get session to check if the question is there.', function (done) {
-        request(app).get('/api/sessions/' + session0._id).expect(200).end(function (err, res) {
-            console.log(res.body);
-            res.body.questions.should.containEql(question._id);
+    it('now get questions from the session', function (done) {
+        request(app).get('/api/sessions/' + session0._id + '/questions').expect(200).end(function (err, res) {
+            res.body.should.containDeep([
+                {_id: question._id}
+            ]);
             done();
         });
     });
+//    it('now get session to check if the question is there.', function (done) {
+//        request(app).get('/api/sessions/' + session0._id).expect(200).end(function (err, res) {
+//            console.log(res.body);
+//            res.body.questions.should.containEql(question._id);
+//            done();
+//        });
+//    });
     it('get quesitons id\'s', function (done) {
         request(app).get('/api/questions/?authorUsername=' + studentUser.username).expect(200).end(function (err, res) {
             console.log(res.body);
@@ -171,41 +179,33 @@ describe('Session API test - ', function (done) {
             done();
         });
     });
-    it('add question to session and get the question populated on it\'s way back', function (done) {
-        var query = {
-            add: {
-                _id: questions[0]._id
-            }
-        };
-        request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.containDeep([
-                {_id: questions[0]._id}
-            ]);
-            done();
-        });
-    });
+//    it('add question to session and get the question populated on it\'s way back', function (done) {
+//        var query = {
+//            add: {
+//                _id: questions[0]._id
+//            }
+//        };
+//        request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
+//            res.body.questions.should.containDeep([
+//                {_id: questions[0]._id}
+//            ]);
+//            done();
+//        });
+//    });
     // the get session api does not contain populated sessions field.
-    it('now get questions', function (done) {
-        request(app).get('/api/sessions/' + session2._id + '/questions').expect(201).end(function (err, res) {
-            res.body.questions.should.containDeep([
-                {_id: questions[0]._id}
-            ]);
-            done();
-        });
-    });
-    it('pull question from session', function (done) {
-        var query = {
-            pull: {
-                _id: questions[0]._id
-            }
-        };
-        request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.not.containDeep([
-                {_id: questions[0]._id}
-            ]);
-            done();
-        });
-    });
+//    it('pull question from session', function (done) {
+//        var query = {
+//            pull: {
+//                _id: questions[0]._id
+//            }
+//        };
+//        request(app).post('/api/sessions/' + session2._id + '/questions').send(query).expect(201).end(function (err, res) {
+//            res.body.questions.should.not.containDeep([
+//                {_id: questions[0]._id}
+//            ]);
+//            done();
+//        });
+//    });
     var book = {
         title: "你身体里的那条鱼",
         authors: [

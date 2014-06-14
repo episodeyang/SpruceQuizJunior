@@ -96,30 +96,30 @@ describe('Book API test - ', function (done) {
             done();
         });
     });
-    it('add question to book and get the question populated on it\'s way back', function (done) {
-        var query = {
-            add: {
-                id: question._id
-            }
-        };
-        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.containDeep([{_id: question._id}]);
-            done();
-        });
-    });
-    it('pull question from book', function (done) {
-        var query = {
-            pull: {
-                id: question._id
-            }
-        };
-        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
-            res.body.questions.should.not.containDeep([{id: question._id}]);
-            done();
-        });
-    });
+//    it('add question to book and get the question populated on it\'s way back', function (done) {
+//        var query = {
+//            add: {
+//                id: question._id
+//            }
+//        };
+//        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
+//            res.body.questions.should.containDeep([{_id: question._id}]);
+//            done();
+//        });
+//    });
+//    it('pull question from book', function (done) {
+//        var query = {
+//            pull: {
+//                id: question._id
+//            }
+//        };
+//        request(app).post('/api/books/' + book._id + '/questions').send(query).expect(201).end(function (err, res) {
+//            res.body.questions.should.not.containDeep([{id: question._id}]);
+//            done();
+//        });
+//    });
     var question;
-    it('create new question with sessionId', function (done) {
+    it('create new question with book', function (done) {
         "use strict";
         question = data.questionCreate;
         question.books = [BookUpdated];
@@ -131,12 +131,12 @@ describe('Book API test - ', function (done) {
             done();
         });
     });
-    it('now get the book to check if the question is there.', function (done) {
-        request(app).get('/api/books/' + BookUpdated._id).expect(200).end(function (err, res) {
-            console.log(res.body);
-            res.body.questions.should.containDeep([{_id:question._id}]);
-            done();
-        });
-    });
+//    it('now get the book to check if the question is there.', function (done) {
+//        request(app).get('/api/books/' + BookUpdated._id).expect(200).end(function (err, res) {
+//            console.log(res.body);
+//            res.body.questions.should.containDeep([{_id:question._id}]);
+//            done();
+//        });
+//    });
 });
 
