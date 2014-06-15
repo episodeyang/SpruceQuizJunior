@@ -176,6 +176,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         feed: {
             actionType: String,
             time: {type: Date, default: Date.now},
+            reason: String,
             user: Schema.Types.Mixed,
             question: Schema.Types.Mixed,
             answer: Schema.Types.Mixed,

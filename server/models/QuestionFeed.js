@@ -123,13 +123,14 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 };
                 return QuestionFeedMethods.addFeed(question._id, null, typeString, data, callback);
             },
-            questionEdit: function (user, question, callback) {
+            questionEdit: function (user, reason, question, callback) {
                 if (!question._id) {
                     console.log('error: noQuestionId');
                 }
                 var typeString = 'questionEdit';
                 var data = {
                     user: _.pick(user, ['username', 'name']),
+                    reason: reason,
                     question: _.pick(question, ['title', 'text', 'tags'])
                 };
                 return QuestionFeedMethods.addFeed(question._id, null, typeString, data, callback);
@@ -149,7 +150,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 };
                 return QuestionFeedMethods.addFeed(question._id, answer._id, typeString, data, callback);
             },
-            answerEdit: function (user, question, answer, callback) {
+            answerEdit: function (user, reason, question, answer, callback) {
                 if (!question._id) {
                     console.log('error: noQuestionId');
                 }
@@ -159,6 +160,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 var typeString = 'answerEdit';
                 var data = {
                     user: _.pick(user, ['username', 'name']),
+                    reason: reason,
                     question: _.pick(question, ['title']),
                     answer: _.pick(answer, 'text')
                 };

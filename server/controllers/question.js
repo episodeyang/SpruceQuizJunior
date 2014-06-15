@@ -170,6 +170,9 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 if (!req.params.id || req.params.id === "undefined") {
                     return res.send(400, 'noQuestionId');
                 }
+                if (!req.body.reason) {
+                    return res.send(400, 'needReasonStringForEdit');
+                }
 
                 var update = {};
                 var fieldString = '';
@@ -214,7 +217,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             return;
                         }
                         question = question.toObject();
-                        QuestionFeedM.snapshot.questionEdit(req.user, question, callback);
+                        QuestionFeedM.snapshot.questionEdit(req.user, req.body.reason, question, callback);
                         FeedAPI.questionEdit(req.user, question, question.sessions, question.books);
                         return res.send(201, question);
                     }

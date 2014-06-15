@@ -68,6 +68,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                 if (!req.body.text) {
                     return res.send(400, 'updateAnswerTextCanNotBeEmpty');
                 }
+                if (!req.body.reason) {
+                    return res.send(400, 'needReasonStringForEdit');
+                }
 
                 var query = {
                     _id: ObjectId(req.params.id),
@@ -103,7 +106,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                             return res.send(500, err);
                         }
 
-                        QuestionFeedM.snapshot.answerEdit(req.user, question, answer, function (error, result) {
+                        QuestionFeedM.snapshot.answerEdit(req.user, req.body.reason, question, answer, function (error, result) {
                             console.log(error);
                         });
                         FeedAPI.answerEdit(req.user, question, answer, question.sessions, question.books);
