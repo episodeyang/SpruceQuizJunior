@@ -17,7 +17,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
 
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
-        var fieldString = '_id title text author tags sessions books vote voteup votedown comments answers answerComments dateEdited dateCreated';
+        var fieldString = '_id title text author tags sessions books vote voteup votedown comments answers answerComments edits dateCreated';
         return {
             /**
              *

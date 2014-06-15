@@ -91,7 +91,8 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                     _id: req.params.answerId,
                     text: req.body.text
                 };
-                var options = {select: '_id title answers answerComments sessions books edits' };
+                // don't need edits field here, b/c answer is subDoc.
+                var options = {select: '_id title answers answerComments sessions books' };
                 QuestionM.findOneAndUpdate(
                     query,
                     update,
