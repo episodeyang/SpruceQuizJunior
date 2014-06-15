@@ -10,8 +10,8 @@
  *
  *
  */
-define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '../models/FeedAPI'],
-    function (_, SchemaModels, rolesHelper, mongoose, FeedAPI) {
+define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '../models/FeedAPI', '../models/QuestionFeed'],
+    function (_, SchemaModels, rolesHelper, mongoose, FeedAPI, QuestionFeedM) {
         var QuestionM = SchemaModels.Question;
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
@@ -26,25 +26,35 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                 if (!req.params.id) {
                     return res.send(400);
                 }
-                var answer = {
+                var answerData = {
                     text: req.body.text,
                     author: {
                         username: req.user.username,
                         name: req.user.name
                     }
                 };
-                QuestionM.findByIdAndUpdate(
-                    req.params.id,
-                    {$push: {answers: answer}},
-                    {select: "_id title sessions books answers"},
-                    function (err, question) {
-                        if (err) {
-                            return res.send(403, err);
+
+                QuestionM.findById(req.params.id).select('_id title sessions books answers')
+                    .exec(function (err, question) {
+                            if (err) {
+                                return res.send(404, err);
+                            }
+                            var answer = question.answers.create(answerData);
+                            question.answers.push(answer);
+                            question.save(function(err, question){
+                                if (err) {
+                                    console.log(err);
+                                    return res.send(404, err);
+                                }
+                                QuestionFeedM.snapshot.answerAdd(req.user, question, answer.toObject(), function (error, result) {
+                                    console.log(error);
+                                });
+                                FeedAPI.answerAdd(req.user, question, answer.toObject(), question.sessions, question.books);
+                                return res.send(201, question);
+                            });
+
                         }
-                        FeedAPI.answerAdd(req.user, question, answer, question.sessions, question.books);
-                        return res.send(201, question);
-                    }
-                );
+                    );
             },
             /**
              * @api {post} /api/questions/:id/answers/:answerId Update Answer
@@ -53,19 +63,35 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
              */
             update: function (req, res) {
                 if (!req.params.id || !req.params.answerId) {
-                    return res.send(400);
+                    return res.send(400, 'noQuestionIdOrAnswerIdSpecified');
+                }
+                if (!req.body.text) {
+                    return res.send(400, 'updateAnswerTextCanNotBeEmpty');
                 }
 
-                var query = {_id: ObjectId(req.params.id), "answers._id": ObjectId(req.params.answerId) };
+                var query = {
+                    _id: ObjectId(req.params.id),
+                    "answers._id": ObjectId(req.params.answerId)
+                };
                 // it looks like the $currentDate is not working.
-//                    {$set: {'answers.$.text': req.body.text}, $currentDate: {"answers.$.dateEdited": true}},
+                // {$set: {'answers.$.text': req.body.text}, $currentDate: {"answers.$.dateEdited": true}},
                 var update = {
                     $set: {
                         'answers.$.text': req.body.text,
                         'answers.$.dateEdited': new Date()
+                    },
+                    $push: {
+                        'answers.$.edits': {
+                            dateEdited: new Date(),
+                            user: req.user
+                        }
                     }
                 };
-                var options = {select: '_id title answers answerComments sessions books' };
+                var answer = {
+                    _id: req.params.answerId,
+                    text: req.body.text
+                };
+                var options = {select: '_id title answers answerComments sessions books edits' };
                 QuestionM.findOneAndUpdate(
                     query,
                     update,
@@ -75,7 +101,11 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                             console.log(err);
                             return res.send(500, err);
                         }
-                        FeedAPI.answerEdit(req.user, question, {text: req.body.text}, question.sessions, question.books);
+
+                        QuestionFeedM.snapshot.answerEdit(req.user, question, answer, function (error, result) {
+                            console.log(error);
+                        });
+                        FeedAPI.answerEdit(req.user, question, answer, question.sessions, question.books);
                         return res.send(201, question);
                     });
             },

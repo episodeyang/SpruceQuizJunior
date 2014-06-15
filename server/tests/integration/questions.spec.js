@@ -91,6 +91,8 @@ describe('Question API test - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question._id).send({title: 'updatedTitle'}).expect(201).end(function (err, res) {
             res.body.title.should.eql('updatedTitle');
+            res.body.edits.length.should.be.greaterThan(0);
+            res.body.edits.length.should.be.eql(1);
             done();
         });
     });
@@ -98,6 +100,7 @@ describe('Question API test - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question._id).send({text: 'updatedText'}).expect(201).end(function (err, res) {
             res.body.text.should.eql('updatedText');
+            res.body.edits.length.should.be.eql(2);
             done();
         });
     });
@@ -105,6 +108,7 @@ describe('Question API test - ', function (done) {
         passportStub.login(studentUser); // login as user
         request(app).post('/api/questions/' + question._id).send({tags: ['updated tag 1', 'updated tag 2', 'updated tag 3']}).expect(201).end(function (err, res) {
             res.body.tags.should.eql(['updated tag 1', 'updated tag 2', 'updated tag 3']);
+            res.body.edits.length.should.be.eql(3);
             done();
         });
     });

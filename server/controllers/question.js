@@ -12,8 +12,8 @@
  *
  *
  */
-define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '../models/Session', '../models/Book', '../rolesHelper', "mongoose", "../models/FeedAPI", '../models/ReputationAPI'],
-    function (_, async, SchemaModels, QuestionM, SessionM, BookM, rolesHelper, mongoose, FeedAPI, reputationAPI) {
+define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '../models/Session', '../models/Book', '../rolesHelper', "mongoose", "../models/FeedAPI", '../models/ReputationAPI', '../models/QuestionFeed'],
+    function (_, async, SchemaModels, QuestionM, SessionM, BookM, rolesHelper, mongoose, FeedAPI, reputationAPI, QuestionFeedM) {
 
         var userRoles = rolesHelper.userRoles;
         var ObjectId = mongoose.Types.ObjectId;
@@ -99,10 +99,12 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                         }
                         var stack = [];
                         question = question.toObject();
+                        QuestionFeedM.snapshot.questionAdd(req.user, question, callback);
                         function callback(error, result) {
                             if (error) {
-                                console.log(error);
+                                return console.log(error);
                             }
+                            return;
                         }
 
 //                        if (question.sessions) {
@@ -126,7 +128,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
 //                            );
 //                        }
                         function done(callback) {
-                            res.location(req.route.path + '/' + question._id);
+                            res.location(req.route.path + '/questions/' + question._id);
                             FeedAPI.questionAdd(req.user, question, question.sessions, question.books);
                             return res.send(201, question);
                         }
@@ -170,8 +172,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 }
 
                 var update = {};
-                var question = req.body;
-                var fieldString = 'title ';
+                var fieldString = '';
                 if (req.body.title) {
                     update.title = req.body.title;
                     fieldString += 'title ';
@@ -185,21 +186,37 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     fieldString += 'tags ';
                 }
                 if (fieldString.length > 0) {
-                    fieldString += 'dateEdited';
+                    fieldString += 'edits ';
+                    update.$push = {
+                        edits: {
+                            dateEdited: new Date(),
+                            user: req.user
+                        }
+                    };
                 }
-                QuestionM.findByIdAndUpdate(
+                console.log(update);
+                return QuestionM.findByIdAndUpdate(
                     req.params.id,
                     update,
                     {
-                        select: fieldString,
-                        $currentDate: {dateEdited: true}
+                        select: fieldString
+                        // doesn't work, mongoose bug.
+                        // $currentDate: {dateEdited: true}
                     },
-                    function (err, result) {
+                    function (err, question) {
                         if (err) {
                             return res.send(500, err);
                         }
-                        FeedAPI.questionEdit(req.user, result.toObject(), result.sessions, result.books);
-                        return res.send(201, result);
+                        function callback(error, result) {
+                            if (error) {
+                                return console.log(error);
+                            }
+                            return;
+                        }
+                        question = question.toObject();
+                        QuestionFeedM.snapshot.questionEdit(req.user, question, callback);
+                        FeedAPI.questionEdit(req.user, question, question.sessions, question.books);
+                        return res.send(201, question);
                     }
                 );
             },
@@ -270,7 +287,6 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                             if (err) {
                                 return res.send(500, err);
                             } else {
-                                console.log(question);
                                 reputationAPI.question[actionType](question.author);
                                 FeedAPI.questionVote(actionType, req.user, question, question.sessions, question.books);
                                 return res.send(201, q);

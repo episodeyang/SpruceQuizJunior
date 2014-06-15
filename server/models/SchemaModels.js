@@ -80,6 +80,10 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
     _.each(config_nest, subSchemaBuilder);
 
     var config_nest_2 = {
+        editStub: {
+            dateEdited: Date,
+            user: config_nest.userFragment
+        },
         commentPrototype: {
             text: String,
             author: config_nest.userFragment, //{type: Schema.Types.ObjectId, ref: 'User'},
@@ -143,7 +147,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             text: String,
             author: config_nest.userFragment, //{type: Schema.Types.ObjectId, ref: 'User'},
             dateCreated: {type: Date, default: Date.now},
-            dateEdited: {type: Date},
+            edits: [subSchema.EditStub],
             voteup: { type: [String], 'default': []},
             votedown: { type: [String], 'default': []},
 //            comments: {type: [subSchema.CommentPrototype], 'default': []},
@@ -246,7 +250,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             DOB: Date,
             gender: String,
             domainName: String,
-            created: {type:Date, default: Date.now},
+            created: {type: Date, default: Date.now},
             email: String,
             addresses: [String],
             strongSubjects: [String],
@@ -273,7 +277,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             DOB: Date,
             gender: String,
             domainName: String,
-            created: {type:Date, default: Date.now},
+            created: {type: Date, default: Date.now},
             email: String,
             addresses: [String],
             strongSubjects: [String],
@@ -303,7 +307,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             DOB: Date,
             gender: String,
             domainName: String,
-            created: {type:Date, default: Date.now},
+            created: {type: Date, default: Date.now},
             email: String,
             addresses: [String],
             strongSubjects: [String],
@@ -330,7 +334,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             DOB: Date,
             gender: String,
             domainName: String,
-            created: {type:Date, default: Date.now},
+            created: {type: Date, default: Date.now},
             email: String,
             addresses: [String],
             strongSubjects: [String],
@@ -357,7 +361,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             gender: String,
             domainName: String,
             DOB: Date,
-            created: {type:Date, default: Date.now},
+            created: {type: Date, default: Date.now},
             email: String,
             addresses: [String],
             strongSubjects: [String],
@@ -514,9 +518,9 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 type: [subSchema.CommentPrototype], default: []
             },
             answerComments: {
-                type: [subSchema.AnswerCommentPrototype], 'default': []
+                type: [subSchema.AnswerCommentPrototype], default: []
             },
-            answers: [subSchema.Answer],
+            answers: { type: [subSchema.Answer], default: [] },
             voteup: {
                 type: [String], 'default': []
             },
@@ -527,9 +531,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 type: Date,
                 default: Date.now
             },
-            dateEdited: {
-                type: Date
-            },
+            edits: [subSchema.EditStub],
             __virtuals__: {
                 voteGet: function () {
                     return _.size(this.voteup) - _.size(this.votedown) || 0;
@@ -550,15 +552,19 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             }
         },
         questionFeed: {
-            questionId: {
-                type: Schema.Types.ObjectId
-            },
-            page: { type: Number, index: true, unique: true },
+            questionId: { type: Schema.Types.ObjectId, index: true },
+            answerId: { type: Schema.Types.ObjectId, index: true }, //can not be unique, because may be null.
+            page: { type: Number, index: true},
             count: { type: Number, index: false },
             feeds: [subSchema.Feed],
             __index__: {
                 questionId: 1,
+                answerId: 1,
                 page: -1
+            },
+            __options__: {
+                _id: false,
+                autoIndexId: false
             }
         },
         tag: {
@@ -589,15 +595,25 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             var indexConfig = schema.__index__;
             delete schema.__index__;
         }
-        Config[title + 'Schema'] = new mongoose.Schema(schema, {collection: title});
+
+        if (options) {
+            var setting = { collection: title };
+            if (options._id === false) {
+                setting._id = false;
+            }
+            if (options.autoIndexId === false) {
+                setting.autoIndexId = false;
+            }
+            Config[title + 'Schema'] = new mongoose.Schema(schema, setting);
+        } else {
+            Config[title + 'Schema'] = new mongoose.Schema(schema, {collection: title});
+        }
         if (methods) {
             _.each(methods, function (method, methodKey) {
                 Config[title + 'Schema'].methods[methodKey] = method;
             });
         }
         if (virtuals) {
-//            console.log('showing the virtuals of this schema: ' + title);
-//            console.log(virtuals);
             _.each(virtuals, function (virtual, virtualKey) {
                 if (virtualKey.slice(-3) == 'Set') {
                     Config[title + 'Schema'].virtual(virtualKey.slice(0, -3)).set(virtual);
@@ -619,6 +635,7 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
         }
         Config[capitalize(title)] = mongoose.model(capitalize(title), Config[title + 'Schema']);
     });
+    Config.subSchema = subSchema;
     Config.__config = config;
     Config.__config_nest = config_nest;
     return Config;

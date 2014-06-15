@@ -72,6 +72,7 @@ describe('Answer API test - ', function (done) {
             .send({text: ansText})
             .expect(201).end(function (err, res){
                 res.body.answers[0].text.should.eql(ansText);
+                res.body.answers[0].edits.length.should.be.eql(1);
                 done();
             });
     });

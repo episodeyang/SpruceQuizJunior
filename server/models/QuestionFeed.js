@@ -12,7 +12,7 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
         var maxCount = 1000;
         var QuestionFeedMethods = {
-            newFeedBucket: function (questionId, currentPageNumber, callback) {
+            newFeedBucket: function (questionId, answerId, currentPageNumber, callback) {
                 var query = {
                     questionId: questionId,
                     page: currentPageNumber + 1
@@ -22,23 +22,39 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     page: currentPageNumber + 1,
                     count: 0
                 };
-                QuestionFeedM.findOneAndUpdate(
+                if (answerId) {
+                    query.answerId = answerId;
+                    update.answerId = answerId;
+                }
+                return QuestionFeedM.findOneAndUpdate(
                     query,
                     update,
                     {
                         upsert: true,
-                        sort: {page: -1} //To make sure to find the largest one.
+                        sort: {
+                            page: -1, //To make sure to find the largest one.
+                            answerId: -1 //To make sure find answerId:null if no answerId is specified.
+                        }
                     },
                     callback
                 );
             },
-            addFeed: function (questionId, type, data, callback) {
-                if (!questionId) {return callback('addFeedFailedNoQuestionId'); }
-                if (!type) {return callback('noFeedType'); }
-                if (!data) {return callback('noFeedData'); }
+            addFeed: function (questionId, answerId, type, data, callback) {
+                if (!questionId) {
+                    return callback('addFeedFailedNoQuestionId');
+                }
+                if (!type) {
+                    return callback('noFeedType');
+                }
+                if (!data) {
+                    return callback('noFeedData');
+                }
                 var query = {
                     questionId: questionId
                 };
+                if (answerId) {
+                    query.answerId = answerId;
+                }
                 var feed = {
                     actionType: type,
                     time: new Date()
@@ -49,12 +65,17 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     $push: {feeds: feed}
                 };
 
-                function repeatAdd (error, doc) {
-                    if (error) { return console.log(error); }
-                    QuestionFeedM.findOneAndUpdate(
+                function repeatAdd(error, doc) {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    return QuestionFeedM.findOneAndUpdate(
                         query,
                         update,
-                        {  sort: {page: -1} },//To make sure to find the largest one.
+                        {  sort: {
+                            page: -1, //To make sure to find the largest one.
+                            answerId: -1 //To make sure find answerId:null if no answerId is specified.
+                        } },
                         callback
                     );
                 }
@@ -67,20 +88,23 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     if (!doc) {
                         console.log('creating first feed bucket for Question');
                         var currentPageNumber = -1;
-                        return QuestionFeedMethods.newFeedBucket(questionId, currentPageNumber, repeatAdd);
+                        return QuestionFeedMethods.newFeedBucket(questionId, answerId, currentPageNumber, repeatAdd);
                     } else if (doc.count >= maxCount) {
                         var currentPageNumber = doc.page;
-                        return QuestionFeedMethods.newFeedBucket(questionId, currentPageNumber, callback);
+                        return QuestionFeedMethods.newFeedBucket(questionId, answerId, currentPageNumber, callback);
                     } else {
                         return callback(null, doc);
                     }
                 }
 
-                QuestionFeedM.findOneAndUpdate(
+                return QuestionFeedM.findOneAndUpdate(
                     query,
                     update,
                     {
-                        sort: {page: -1} //To make sure to find the largest one.
+                        sort: {
+                            page: -1, //To make sure to find the largest one.
+                            answerId: -1 //To make sure find answerId:null if no answerId is specified.
+                        }
                     },
                     checkCount
                 );
@@ -88,9 +112,62 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
         };
         var snapshotAPI = {
             // todo: snapshotAPI
+            questionAdd: function (user, question, callback) {
+                if (!question._id) {
+                    console.log('error: noQuestionId');
+                }
+                var typeString = 'questionAdd';
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['title', 'text', 'tags'])
+                };
+                return QuestionFeedMethods.addFeed(question._id, null, typeString, data, callback);
+            },
+            questionEdit: function (user, question, callback) {
+                if (!question._id) {
+                    console.log('error: noQuestionId');
+                }
+                var typeString = 'questionEdit';
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['title', 'text', 'tags'])
+                };
+                return QuestionFeedMethods.addFeed(question._id, null, typeString, data, callback);
+            },
+            answerAdd: function (user, question, answer, callback) {
+                if (!question._id) {
+                    console.log('error: noQuestionId');
+                }
+                if (!answer._id) {
+                    console.log('error: noAnswerId');
+                }
+                var typeString = 'answerAdd';
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['title']),
+                    answer: _.pick(answer, 'text')
+                };
+                return QuestionFeedMethods.addFeed(question._id, answer._id, typeString, data, callback);
+            },
+            answerEdit: function (user, question, answer, callback) {
+                if (!question._id) {
+                    console.log('error: noQuestionId');
+                }
+                if (!answer._id) {
+                    console.log('error: noAnswerId');
+                }
+                var typeString = 'answerEdit';
+                var data = {
+                    user: _.pick(user, ['username', 'name']),
+                    question: _.pick(question, ['title']),
+                    answer: _.pick(answer, 'text')
+                };
+                return QuestionFeedMethods.addFeed(question._id, answer._id, typeString, data, callback);
+            }
         };
         _.extend(QuestionFeedM, QuestionFeedMethods, {snapshot: snapshotAPI});
         return QuestionFeedM;
-    });
+    })
+;
 
 
