@@ -54,19 +54,27 @@ define(['underscore', '../models/SchemaModels', '../models/QuestionFeed', '../ro
                         return res.send(200, doc);
                     }
                 }
-                if (!req.params.questionId) {
+                if (!req.params.id) {
                     return res.send(400, 'noQuestionIdInRequest');
                 }
                 var query = {
-                    questionId: req.params.questionId
+                    questionId: req.params.id
                 };
+                if (req.params.answerId) {
+                    query.answerId = req.params.answerId;
+                }
                 if (req.params.page) {
                     query.page = req.params.page;
                 }
+                console.log(query);
                 QuestionFeedM.findOne(
                     query,
-                    null, // the field selection placeholder
-                    { sort: {page: -1}},
+                    'questionId answerId page count feeds',
+                    { sort: {
+                        questionId: -1,
+                        answerId: -1,
+                        page: -1
+                    } },
                     callback
                 );
             }

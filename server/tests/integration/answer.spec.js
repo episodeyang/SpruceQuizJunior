@@ -76,6 +76,16 @@ describe('Answer API test - ', function (done) {
                 done();
             });
     });
+    it('check questionFeed record after answer update', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).get('/api/questions/' + question._id + '/answers/' + question.answers[0].id + '/feeds').expect(200).end(function (err, res) {
+            console.log(res.body);
+            res.body.questionId.should.eql(question._id);
+            res.body.answerId.should.eql(question.answers[0].id);
+            res.body.feeds.length.should.be.eql(1 + 1);// plus 1 for initial answer add.
+            done();
+        });
+    });
     it('upvote answer', function (done) {
         var query = {
             voteup: 'true'

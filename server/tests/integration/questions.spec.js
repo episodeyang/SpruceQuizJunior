@@ -112,6 +112,15 @@ describe('Question API test - ', function (done) {
             done();
         });
     });
+    it('check questionFeed record!', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).get('/api/questions/' + question._id + '/feeds').expect(200).end(function (err, res) {
+            console.log(res.body);
+            res.body.questionId.should.eql(question._id);
+            res.body.feeds.length.should.be.eql(3 + 1);//plus initial question add.
+            done();
+        });
+    });
     it('needs to login to delete', function (done) {
         request(app).del('/api/questions/' + question._id).expect(401, done);
     });

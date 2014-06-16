@@ -118,6 +118,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
+                path: '/api/questions/:id/feeds',
+                httpMethod: 'get',
+                middleware: [QuestionFeedCtrl.getByPage],
+                accessLevel: accessLevels.loggedin
+            },
+            {
                 path: '/api/questions/:id/votes',
                 httpMethod: 'POST',
                 middleware: [QuestionCtrl.updateVotes],
@@ -133,6 +139,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/api/questions/:id/answers/:answerId',
                 httpMethod: 'POST',
                 middleware: [AnswerCtrl.update],
+                accessLevel: accessLevels.loggedin
+            },
+            {
+                path: '/api/questions/:id/answers/:answerId/feeds',
+                httpMethod: 'get',
+                middleware: [QuestionFeedCtrl.getByPage],
                 accessLevel: accessLevels.loggedin
             },
             {
@@ -494,12 +506,6 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 path: '/spider/questions/:id',
                 httpMethod: 'GET',
                 middleware: [SpiderCtrl.question],
-                accessLevel: accessLevels.all
-            },
-            {
-                path: '/api/questions/:questionId/feeds',
-                httpMethod: 'GET',
-                middleware: [QuestionFeedCtrl.getByPage],
                 accessLevel: accessLevels.all
             },
             // All other get requests should be handled by AngularJS's client-side routing system

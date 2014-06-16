@@ -71,6 +71,9 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                 if (!req.body.reason) {
                     return res.send(400, 'needReasonStringForEdit');
                 }
+                if (req.user.toObject) {
+                    req.user = req.user.toObject();
+                }
 
                 var query = {
                     _id: ObjectId(req.params.id),
@@ -86,7 +89,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                     $push: {
                         'answers.$.edits': {
                             dateEdited: new Date(),
-                            user: req.user.toObject()
+                            user: req.user
                         }
                     }
                 };

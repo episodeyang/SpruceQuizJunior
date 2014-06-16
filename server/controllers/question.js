@@ -173,6 +173,9 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                 if (!req.body.reason) {
                     return res.send(400, 'needReasonStringForEdit');
                 }
+                if (req.user.toObject) {
+                    req.user = req.user.toObject();
+                }
 
                 var update = {};
                 var fieldString = '';
@@ -193,7 +196,7 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     update.$push = {
                         edits: {
                             dateEdited: new Date(),
-                            user: req.user.toObject()
+                            user: req.user
                         }
                     };
                 }
