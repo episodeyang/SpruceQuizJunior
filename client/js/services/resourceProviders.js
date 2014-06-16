@@ -29,6 +29,7 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Question = $resource('/api/questions/:id', {id: '@id'});
+        var Feeds = $resource('/api/questions/:id/feeds', {id: '@id'});
         var Votes = $resource('/api/questions/:id/votes', {id: '@id'});
         var onSessions = $resource('/api/questions/:id/sessions', {id: '@id'});
         var onBooks = $resource('/api/questions/:id/books', {id: '@id'});
@@ -42,7 +43,8 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             updateSession: onSessions.save,
             getSessions: onSessions.get,
             updateBook: onBooks.save,
-            getBooks: onBooks.get
+            getBooks: onBooks.get,
+            getFeeds: Feeds.get
         };
     })
     .factory('Answers', function ($resource) {
@@ -50,12 +52,14 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
             create: {method: 'POST'}
         });
         var Answer = $resource('/api/questions/:id/answers/:answerId', {id: '@id', answerId: '@answerId'});
+        var Feeds = $resource('/api/questions/:id/answers/:answerId/feeds', {id: '@id', answerId: '@answerId'});
         var AnswerVotes = $resource('/api/questions/:id/answers/:answerId/votes', {id: '@id', answerId: '@answerId'});
         return {
             add: Answers.create,
             save: Answer.save,
             updateVotes: AnswerVotes.save,
-            remove: Answer.remove
+            remove: Answer.remove,
+            getFeeds: Feeds.get
         };
     })
     .factory('Comments', function ($resource) {
