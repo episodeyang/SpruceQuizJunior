@@ -193,11 +193,10 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/Question', '
                     update.$push = {
                         edits: {
                             dateEdited: new Date(),
-                            user: req.user
+                            user: req.user.toObject()
                         }
                     };
                 }
-                console.log(update);
                 return QuestionM.findByIdAndUpdate(
                     req.params.id,
                     update,

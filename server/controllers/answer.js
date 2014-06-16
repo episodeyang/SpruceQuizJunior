@@ -47,7 +47,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                                     return res.send(404, err);
                                 }
                                 QuestionFeedM.snapshot.answerAdd(req.user, question, answer.toObject(), function (error, result) {
-                                    console.log(error);
+                                    if (error) console.log(error);
                                 });
                                 FeedAPI.answerAdd(req.user, question, answer.toObject(), question.sessions, question.books);
                                 return res.send(201, question);
@@ -86,7 +86,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                     $push: {
                         'answers.$.edits': {
                             dateEdited: new Date(),
-                            user: req.user
+                            user: req.user.toObject()
                         }
                     }
                 };
@@ -107,7 +107,7 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper', "mongoose", '.
                         }
 
                         QuestionFeedM.snapshot.answerEdit(req.user, req.body.reason, question, answer, function (error, result) {
-                            console.log(error);
+                            if (error) console.log(error);
                         });
                         FeedAPI.answerEdit(req.user, question, answer, question.sessions, question.books);
                         return res.send(201, question);

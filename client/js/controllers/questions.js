@@ -100,6 +100,13 @@ angular.module('SpruceQuizApp')
                         return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
                         mixpanel.track("question too short");
                     }
+                    if (!data.reason) {
+                        return $rootScope.error = "需要提供编辑原因";
+                        mixpanel.track("did not provide reason for editing");
+                    } else if (data.reason.length == 0) {
+                        return $rootScope.error = "需要提供编辑原因";
+                        mixpanel.track("did not provide reason for editing");
+                    }
                 };
 
                 $scope.editor.submit = function() {
@@ -120,8 +127,9 @@ angular.module('SpruceQuizApp')
                         id: $scope.editor.data.id,
                         title: $scope.editor.data.title,
                         text: $scope.editor.data.text,
-                        tags: $scope.editor.data.tags
-                    }
+                        tags: $scope.editor.data.tags,
+                        reason: $scope.editor.data.reason
+                    };
                     validator(update);
                     if (!$rootScope.error) {
                         Model.question.save(
@@ -144,7 +152,7 @@ angular.module('SpruceQuizApp')
                 };
                 $scope.editor.showEditView = function () {
                     $scope.view.state = 'question.edit';
-                    $scope.editor.data = Model.question
+                    $scope.editor.data = Model.question;
                 };
                 $scope.removeQuestion = function (question) {
                     Model.removeQuestion(
@@ -168,13 +176,17 @@ angular.module('SpruceQuizApp')
                         $scope.answerEditor.data,
                         function(result) { $scope.answerEditor.data = {}; }
                     )
-                }
+                };
                 $scope.editAnswer = function(answer) {
                     $scope.answerEditor.data = answer;
                     $scope.view.answerEdit = true;
                     answer.viewEdit = true;
-                }
+                };
                 $scope.updateAnswer = function (answer) {
+                    if (!$scope.answerEditor.data.reason) {
+                        return $rootScope.error = "需要提供编辑该回答的原因";
+                        mixpanel.track("did not provide reason for editing answer");
+                    }
                     Model.updateAnswer(
                         $scope.answerEditor.data,
                         function(result) {

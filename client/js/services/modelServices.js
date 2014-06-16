@@ -166,6 +166,9 @@ angular.module('modelServices', ['resourceProvider'])
                     .$promise;
 
                 function save(question, success, error) {
+                    if (!question.reason) {
+                        error('NeedQuestionReason');
+                    }
                     Questions.save(
                         question,
                         function (q) {
@@ -260,10 +263,14 @@ angular.module('modelServices', ['resourceProvider'])
                 );
             }
             modelInstance.updateAnswer = function (answer, success, error) {
+                if (!answer.reason) {
+                    error('NeedAnswerReason');
+                }
                 var ans = {
                     id: modelInstance.question._id,
                     answerId: answer.id,
-                    text: answer.text
+                    text: answer.text,
+                    reason: answer.reason
                 };
                 Answers.save(
                     ans,
@@ -315,7 +322,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 Answers.updateVotes(ans, callback);
-            }
+            };
             modelInstance.votedownAnswer = function (answer) {
                 var ans = {
                     id: modelInstance.question._id,
@@ -329,7 +336,7 @@ angular.module('modelServices', ['resourceProvider'])
                 }
 
                 Answers.updateVotes(ans, callback);
-            }
+            };
 
             modelInstance.addComment = function (comment, success, error) {
                 var query = {
