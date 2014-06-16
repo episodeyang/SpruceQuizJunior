@@ -64,6 +64,9 @@ angular.module('SpruceQuizApp')
                 };
 
                 $scope.view.submitSession = function (sessionData) {
+                    if (!sessionData) {
+                        sessionData = $scope.sessionData;
+                    }
                     var sessionCreated;
 
                     function createSuccess(session) {
@@ -77,7 +80,11 @@ angular.module('SpruceQuizApp')
                     }
 
                     if (!sessionData.school) {
-                        sessionData.school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1].name;
+                        try {
+                            sessionData.school = Model.profile.schoolRecord[Model.profile.schoolRecord.length - 1].name;
+                        } catch (e) {
+                            $rootScope.error = '需要填写学校名称';
+                        }
                     }
                     // console.log(sessionData);
                     Model.createSession(sessionData, createSuccess);

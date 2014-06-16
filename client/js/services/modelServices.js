@@ -1029,28 +1029,32 @@ angular.module('modelServices', ['resourceProvider'])
             };
 
             modelInstance.session = {};
-            modelInstance.createSession = function (session, callback) {
-                function success(session) {
+            modelInstance.createSession = function (session, success, error) {
+                function successCallback(session) {
                     modelInstance.getSessions();
-                    callback(null, session);
+                    if (success) {
+                        success(session);
+                    }
                 }
 
                 function error(err) {
                     $rootScope.error = err;
-                    callback(err);
+                    if (error) {
+                        error(err);
+                    }
                 }
 
                 function validateAndSave(session) {
                     if (!session.name) {
-                        return error('sessionHaveNoName');
+                        return error('请填写课程名称');
                     }
                     if (!session.subject) {
-                        return error('sessionHaveNoSubject');
+                        return error('请填写学科名称');
                     }
                     if (!session.school) {
-                        return error('sessionHaveNoSchool');
+                        return error('请填写学校名称');
                     }
-                    Sessions.save(session, success, error);
+                    Sessions.save(session, successCallback, error);
                 }
 
                 validateAndSave(session);
