@@ -119,6 +119,12 @@ div.background(background-img="/img/bg-brown.jpg")
                                     span {{Model.question.dateCreated | date:yy-MM-dd }} 由
                                     a.blue.spaced(ng-href="/users/{{Model.question.author.username}}") {{ Model.question.author.name || Model.question.author.username }}
                                     span 创建
+                        .row
+                            .col-xs-12
+                                p.pull-right(ng-if='Model.question.edits', ng-repeat="edit in Model.question.edits")
+                                    span {{ edit.dateEdited | date:yy-MM-dd }} 由
+                                    a.blue.spaced(ng-href="/users/{{edit.user.username}}") {{ edit.user.name || edit.user.username}}
+                                    span 修改
                         .row(ng-hide="Model.question.comments != []")
                             .col-xs-12
                                 hr.short-top-margin.light-dotted.short-bottom-margin
@@ -204,9 +210,10 @@ div.background(background-img="/img/bg-brown.jpg")
                                     span {{ answer.dateCreated | date:yy-MM-dd }} 由
                                     a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
                                     span 创建
-                                p.pull-right(ng-show='answer.dateEdited')
-                                    span {{ answer.dateEdited | date:yy-MM-dd }} 由
-                                    a.blue.spaced(ng-href="/users/{{answer.author.username}}") {{ answer.author.name || answer.author.username || answer.author }}
+                            .col-xs-12
+                                p.pull-right(ng-if='answer.edits', ng-repeat="edit in answer.edits")
+                                    span {{ edit.dateEdited | date:yy-MM-dd }} 由
+                                    a.blue.spaced(ng-href="/users/{{edit.user.username}}") {{ edit.user.name || edit.user.username}}
                                     span 修改
 
                         //- answer Comments
