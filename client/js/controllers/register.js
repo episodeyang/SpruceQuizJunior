@@ -75,9 +75,9 @@ angular.module('SpruceQuizApp')
                         console.log($scope.view.error);
                     } else {
                         $scope.registerData.role = Auth.userRoles[$scope.registerData.role];
-                    };
+                    }
                     if (!$rootScope.err){
-                        console.log('sending registration data to /regist')
+                        console.log('sending registration data to /regist');
                         var query = {
                                 username: $scope.registerData.username,
                                 password: $scope.registerData.password,
@@ -85,7 +85,7 @@ angular.module('SpruceQuizApp')
                                 params: {
                                     email: $scope.registerData.email,
                                     schoolName: $scope.registerData.schoolName,
-                                    name: $scope.registerData.lastName+','+$scope.registerData.firstName,
+                                    name: $scope.registerData.lastName+''+$scope.registerData.firstName,
                                     DOB: $scope.registerData.dateOfBirth,
                                     gender: $scope.registerData.gender
                                 }
