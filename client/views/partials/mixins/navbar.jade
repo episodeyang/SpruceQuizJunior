@@ -29,6 +29,8 @@ mixin navbar
                     li(data-access-level='{{ accessLevels.loggedin }}')
                         a(href='/home')
                             span.glyphicon.glyphicon-stats
+                    li(data-access-level='{{ accessLevels.superuser }}', active-nav)
+                        a(href='/teacher') 教师看板
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)
                         a(href='/superadmin') 后台管理
                     li(data-access-level='{{ accessLevels.superadmin }}', active-nav)

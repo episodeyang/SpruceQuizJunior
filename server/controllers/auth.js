@@ -38,7 +38,8 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                         email: user[user.role.title].email.split('#')[0],
                         name: user[user.role.title].name.split(',').join(''),
                         code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1],
-                        domain: req.headers.host
+                        domain: req.headers.host,
+                        info: req.body.info
                     };
 
 //                    console.log(locals);

@@ -262,6 +262,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
+                path: '/api/students',
+                httpMethod: 'GET',
+                middleware: [StudentCtrl.search],
+                accessLevel: accessLevels.all
+            },
+            {
                 path: '/api/students/:username',
                 httpMethod: 'GET',
                 middleware: [StudentCtrl.findOne],

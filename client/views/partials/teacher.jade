@@ -1,0 +1,68 @@
+include mixins/navbar
+include mixins/footer
+link(href='/css/tabs.css', rel="stylesheet")
+link(href='/css/questions.css', rel="stylesheet")
+link(href='/css/timeline.css', rel="stylesheet")
+link(href='/css/feed.css', rel="stylesheet")
+link(href='/css/card.css', rel="stylesheet")
+link(href='/css/panel.css', rel="stylesheet")
+link(href='/css/modal.css', rel="stylesheet")
+link(href='/css/editor.css', rel="stylesheet")
+div.background
+#cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+.body
+    +navbar
+    .container(style="width:900px;")
+        .row
+            tabset
+                tab(heading="用户")
+                    div.tab-box.bg-white
+                        .container
+                            .row.top-margin
+                                .col-xs-8
+                                    .input-group
+                                        input.form-control(ng-model='schoolName', placeholder="请输入学校名搜索或添加学生")
+                                        span.input-group-btn
+                                            button.btn(ng-click="searchStudents(schoolName)", ng-disabled="!(schoolName.length>=3)", ng-class="{'btn-success': schoolName.length>=3}") 获得学生数据
+                                .col-xs-4
+                                    button.btn.btn-info.pull-right.left-margin(ng-show="view.edit", ng-click="view.edit=false") 退出编辑模式
+                                    button.btn.btn-warning.pull-right(ng-show="!view.edit", ng-click="view.edit=true") 编辑学生数据
+                                .col-xs-12
+                                    table.table
+                                        thead
+                                            tr
+                                                th 学号
+                                                th 用户名
+                                                th 姓名
+                                                th 性别
+                                                th 入学年份
+                                                th 学校
+                                                th 家长信息
+                                                th 邮箱地址
+                                        tbody
+                                            tr(ng-repeat="student in students track by $index")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].info.idNumber", placeholder="没有学号...")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].username", placeholder="没有用户名...")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].name", placeholder="没有名字??")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].gender", placeholder="是她还是他？")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].classYear", placeholder="需要填写入学年份...")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].school", placeholder="需要学校名称")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].info.parents", placeholder="家长信息")
+                                                //td(inline-editable, contenteditable="{{view.edit}}", ng-model="students[$index].email", placeholder="邮箱地址")
+                                                td {{student.email.split('#')[0]}}
+
+
+                tab(heading="学校")
+                    div.tab-box.bg-white
+                        .container
+
+                tab(heading="班级")
+                    p TODO
+                    //button.btn.btn-success(ng-click="listSections()") 班级数据
+                    //p {{model.sectionList}}
+        +footer
+link(href='/css/superadmin.css', rel="stylesheet")
+
+
+
+

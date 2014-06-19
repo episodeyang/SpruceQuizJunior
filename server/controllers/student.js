@@ -48,9 +48,14 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
              *     }
              */
                 //This is mostly experimental, since no testing spec is in place yet.
-            index: function (req, res) {
+            search: function (req, res) {
+                var query = {};
+                if (req.query.school) {
+                    query.schools = req.query.school;
+                }
+                console.log(query);
                 StudentM.find(
-                    {},
+                    query,
                     keyString,
                     function (err, students) {
                         if (err) {

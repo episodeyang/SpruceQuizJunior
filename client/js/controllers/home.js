@@ -37,7 +37,7 @@ angular.module('SpruceQuizApp')
                     query.answerAuthorUsername =  Model.profile.username;
                     Model.searchQuestions(query);
                 }
-            })
+            });
 
             $rootScope.errors = {};
 

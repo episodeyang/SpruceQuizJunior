@@ -89,36 +89,12 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
         };
     })
     .factory('Students', function ($resource) {
+        var Students = $resource('/api/students');
         var Student = $resource('/api/students/:username', {username: '@username'});
         return {
+            search: Students.query,
             get: Student.get,
-            save: Student.save,
-            onErrata: $resource('/api/students/errata/:id', {id: '@_id'}, {
-                list: {method: 'GET', params: {id: 'all'}, isArray: true},
-                create: {method: 'POST', params: {id: 'create'}}
-            }),
-            onProblemNotes: $resource('/api/students/errata/:eid/problemNotes/:id', {eid: '@eid', id: '@id'}, {
-                list: {method: 'GET', params: {id: 'all'}, isArray: true},
-                create: {method: 'POST', params: {eid: '@eid', id: 'create'}},
-                update: {method: 'PUT', params: {eid: '@eid', id: '@id'}},
-                remove: {method: 'DELETE', params: {eid: '@eid', id: '@id'}}
-            }),
-            onStudents: $resource('/api/students/:uuid', {uuid: '@userUUID'}, {
-                list: {method: 'GET', params: {uuid: 'all'}, isArray: true},
-                update: {method: 'PUT', params: {uuid: '@userUUID'}},
-                save: {method: 'POST'},
-                remove: {method: 'DELETE', params: {uuid: '@userUUID'}}
-            }),
-            onTeachers: $resource('/api/students/:uuid/teachers', {uuid: '@userUUID'}, {
-            }),
-            onSchools: $resource('/api/students/:uuid/schools', {uuid: '@userUUID'}, {
-            }),
-            onSections: $resource('/api/students/:uuid/sections', {uuid: '@userUUID'}, {
-                get: {method: 'GET', params: {uuid: '@uuid'}, isArray: true}
-            }),
-            onFeeds: $resource('/api/students/:uuid/feeds/:flim', {uuid: '@userUUID'}, {
-                get: {method: 'GET', params: {uuid: '@uuid'}, isArray: true}
-            })
+            save: Student.save
         };
     })
     .factory('Parents', function ($resource) {

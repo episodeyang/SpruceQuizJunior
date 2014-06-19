@@ -39,7 +39,7 @@ angular.module('SpruceQuizApp')
                 $scope.view.clearErrors =
                     function () {
                         $scope.view.error = undefined;
-                    }
+                    };
 
                 var dateFormater = function(rawString){
                     "use strict";
@@ -56,13 +56,13 @@ angular.module('SpruceQuizApp')
                         } else {return rawString.substring(0, len-1);}
                     }
                     else if (len>=11){ return rawString.substring(0,10);}
-                    else {return rawString;}
+                    else { return rawString; }
                 };
 
                 $scope.$watch('registerData.birthdayString', function(newValue, oldValue){
                     $scope.registerData.birthdayString = dateFormater(newValue);
                     $scope.registerData.dateOfBirth = new Date($scope.registerData.birthdayString.split('_'))
-                })
+                });
 
                 $scope.submit = function() {
                     var that = this;

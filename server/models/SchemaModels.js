@@ -269,7 +269,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 { type: Schema.Types.ObjectId, ref: 'Book'}
             ],
             preferences: {
-            }
+            },
+            info: Schema.Types.Mixed
         },
         parent: {
             name: String,
