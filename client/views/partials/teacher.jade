@@ -14,10 +14,44 @@ div.background
     +navbar
     .container(style="width:900px;")
         .row
-            tabset
-                tab(heading="用户")
-                    div.tab-box.bg-white
-                        .container
+            .col-xs-12
+                tabset
+                    tab(heading="学校")
+                        div.tab-box.bg-white
+                            .row.top-margin
+                                .col-xs-8
+                                    .input-group
+                                        input.form-control(ng-model='schoolName', placeholder="请输入学校名搜索或添加学生")
+                                        span.input-group-btn
+                                            button.btn(ng-click="Model.getSchools()", ng-disabled="!(schoolName.length>=3)", ng-class="{'btn-success': schoolName.length>=3}") 获得学校列表
+                                .col-xs-4
+                                    button.btn.btn-info.pull-right.left-margin(ng-show="view.edit", ng-click="view.edit=false") 退出编辑模式
+                                    button.btn.btn-warning.pull-right(ng-show="!view.edit", ng-click="view.edit=true") 编辑学生数据
+                                .col-xs-12
+                                    table.table
+                                        thead
+                                            tr
+                                                th
+                                                th 种类
+                                                th 全称
+                                                th 地址
+                                                th 邮编
+                                                th 省市
+                                                th 简介
+                                                th 创建年份
+                                        tbody
+                                            tr(ng-repeat="school in Model.schools track by $index")
+                                                td
+                                                    button(ng-click="") 保存修改
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].type", placeholder="没有学号...")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index]._id", placeholder="没有用户名...")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].address", placeholder="没有名字??")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].zipCode", placeholder="是她还是他？")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].state", placeholder="需要填写入学年份...")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].overview", placeholder="需要学校名称")
+                                                td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].foundingYear", placeholder="需要学校名称")
+                    tab(heading="用户")
+                        div.tab-box.bg-white
                             .row.top-margin
                                 .col-xs-8
                                     .input-group
@@ -52,14 +86,11 @@ div.background
                                                 td {{student.email.split('#')[0]}}
 
 
-                tab(heading="学校")
-                    div.tab-box.bg-white
-                        .container
 
-                tab(heading="班级")
-                    p TODO
-                    //button.btn.btn-success(ng-click="listSections()") 班级数据
-                    //p {{model.sectionList}}
+                    tab(heading="班级")
+                        p TODO
+                        //button.btn.btn-success(ng-click="listSections()") 班级数据
+                        //p {{model.sectionList}}
         +footer
 link(href='/css/superadmin.css', rel="stylesheet")
 

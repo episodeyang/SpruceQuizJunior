@@ -1006,6 +1006,7 @@ angular.module('modelServices', ['resourceProvider'])
 
             modelInstance.getSchools = function () {
                 function success(schools) {
+                    console.log(schools[0]);
                     modelInstance.schools = schools;
                 }
 
@@ -1013,7 +1014,7 @@ angular.module('modelServices', ['resourceProvider'])
                     $rootScope.error = err;
                 }
 
-                Schools.index({}, success, error);
+                return Schools.index({}, success, error).$promise;
             };
 
             modelInstance.getSessions = function () {
