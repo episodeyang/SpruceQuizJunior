@@ -53,7 +53,10 @@ define(['underscore', '../models/SchemaModels', '../rolesHelper'],
                 if (req.query.school) {
                     query.schools = req.query.school;
                 }
-                console.log(query);
+                if (req.query.createdBy) {
+                    query['info.createdBy.username'] = createdBy;
+                }
+                //console.log(query);
                 StudentM.find(
                     query,
                     keyString,

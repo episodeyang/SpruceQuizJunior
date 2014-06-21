@@ -66,6 +66,7 @@ div.background
                                     table.table
                                         thead
                                             tr
+                                                th 删除
                                                 th 用户名
                                                 th 姓名
                                                 th 密码明文
@@ -77,6 +78,8 @@ div.background
                                                 th 邮箱地址
                                         tbody
                                             tr(ng-repeat="student in model.students track by $index", ng-hide="student.$hide", ng-class="{success: student._id!=undefined, danger: student.$error == true, warning: student.$uploading == true}")
+                                                td
+                                                    button(ng-click='removeUser(student)').btn.btn-danger x
                                                 td
                                                     a(ng-href="/users/{{student._id}}")
                                                         span(inline-editable, contenteditable="{{view.edit}}", ng-model="model.students[$index].username", placeholder="没有用户名...")

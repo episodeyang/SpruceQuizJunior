@@ -164,5 +164,16 @@ spApp.controller('TeacherCtrl',
                 console.log('开始批量注册');
                 _.each($scope.model.students, validateAndRegister);
             };
+
+            $scope.removeUser = function (student) {
+                student.$uploading = true;
+                $http.delete('/api/users/' + student.username).success(function(){
+                    student.$hide = true;
+                    delete student.$uploading;
+                }).error(function(error){
+                    student.$error = true;
+                    delete student.$uploading;
+                })
+            }
         }
     ]);

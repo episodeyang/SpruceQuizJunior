@@ -65,8 +65,6 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
             /**
              * @api {delete} /user/:id Request User information
              * @apiName DeleteUser
-             * @apiGroup User
-             *
              * @apiParam {Number} id Users unique ID.
              *
              * @apiSuccess {String} @todo need to complete
@@ -87,10 +85,29 @@ define(['underscore', 'async', '../models/SchemaModels', '../models/User', '../m
              *     }
              */
             remove: function (req, res) {
-                UserM.remove({ id: req.params.uuid }, function (err) {
-                    if (err) {
-                        res.send(404, "Remove user failed.");
+                if (!req.params.username) { return res.send(400, 'needUserName'); }
+                var query = {username: req.params.username};
+                function error (err) {
+                    return res.send(404, "Remove user failed.");
+                }
+                function removeFromUser () {
+                    UserM.remove(query, function (err) {
+                        if (err) {
+                            error(err);
+                        }
+                        res.send(204, 'userRemoved');
+                    });
+                }
+                UserM.findOne(query).exec(function(err, user){
+                    if (err || !user || !user.role) {
+                        return error(err || 'userNotFound');
                     }
+                    SchemaModels[capitalize(user.role.title)].remove(query).exec(function(err){
+                        if (err) {
+                            return error(err);
+                        }
+                        removeFromUser();
+                    });
                 });
             },
             findOne: function (req, res) {

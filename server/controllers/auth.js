@@ -67,8 +67,13 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                         }
                     });
                 }
+                var params = _.extend({
+                        domanName: req.headers.host,
+                        info: {}
+                    },
+                    req.body.params);
+                if (req.user && req.user.toObject) { params.info.createdBy = req.user.toObject() }
 
-                var params = _.extend({doman: req.headers.host}, req.body.params);
                 User.addUser(
                     req.body.username,
                     req.body.password,
@@ -99,6 +104,7 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                             domain: req.headers.host,
                             info: req.body.info
                         };
+
 
                         mailer.register(
                             locals.email,

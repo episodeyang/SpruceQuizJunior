@@ -232,6 +232,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.loggedin
             },
             {
+                path: '/api/users/:username',
+                httpMethod: 'DELETE',
+                middleware: [UserCtrl.remove],
+                accessLevel: accessLevels.superuser
+            },
+            {
                 path: '/api/users/:username/schools',
                 httpMethod: 'POST',
                 middleware: [UserCtrl.updateSchools],

@@ -85,7 +85,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         username: username,
                         DOB: params.DOB,
                         gender: params.gender,
-                        domainName: params.domain
+                        domainName: params.domainName,
+                        info: params.info
                     };
                     if (params.email && params.email!='undefined') {
                         subUser.email = params.email + '#code:' + crypto.createHash('sha1').digest('hex');
