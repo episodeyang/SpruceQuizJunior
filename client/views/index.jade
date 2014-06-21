@@ -6,7 +6,11 @@ html(lang='zh-CN', data-ng-app='SpruceQuizApp')
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
         meta(name="fragment", content="!")
         title {{title || "难题夹子 - 分享，合作，一起挑战学术问题"}}
+        //- exact order matters
+        script(src="/lib/ng-file-upload/angular-file-upload-shim.min.js")
         script(src="/lib/angular/angular.min.js")
+        script(src="/lib/ng-file-upload/angular-file-upload.min.js")
+
         script(src="/lib/angular-bootstrap/dist/ui-bootstrap-custom-tpls-0.11.0.min.js")
         //-script(src="/lib/angular-ui-router/release/angular-ui-router.min.js")
         link(href='/lib/bootstrap/dist/css/bootstrap.min.css', rel="stylesheet", media='screen')
@@ -115,5 +119,5 @@ html(lang='zh-CN', data-ng-app='SpruceQuizApp')
         script(src='/lib/textAngular/dist/textAngular.min.js')
         script(src='/lib/textAngular/dist/textAngular-sanitize.min.js', type='text/javascript')
         script(src="/lib/jssha/src/sha256.js")
-
+        script(src="/lib/excel.js/src/csv.js")
 

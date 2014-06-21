@@ -28,33 +28,34 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                 }
 
                 function loginCallback (err, user) {
-                    if (err === 'UserAlreadyExists') return res.send(403, "User already exists");
+                    if (err === 'UserAlreadyExists') return res.send(403, "UserAlreadyExists");
                     else if (err)                    return res.send(500);
 
-                    //console.log('user passed into loginCallback');
-                    //console.log(user);
-                    var locals = {
-                        username: user.username,
-                        email: user[user.role.title].email.split('#')[0],
-                        name: user[user.role.title].name.split(',').join(''),
-                        code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1],
-                        domain: req.headers.host,
-                        info: req.body.info
-                    };
 
-//                    console.log(locals);
-                    mailer.register(
-                        locals.email,
-                        locals,
-                        function (error, response) {
-                            if (response.message && response.messageId) {
-                                //todo: add #sent tag to the user email entry.
-                                //user.email = user.email + "#sent:true";
-                            } else {
-                                console.log('mariler.register:noResponseMessage');
+                    if (user[user.role.title].email) {
+                        var locals = {
+                            username: user.username,
+                            email: user[user.role.title].email.split('#')[0],
+                            code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1],
+                            name: user[user.role.title].name.split(',').join(''),
+                            domain: req.headers.host,
+                            info: req.body.info
+                        };
+
+                        mailer.register(
+                            locals.email,
+                            locals,
+                            function (error, response) {
+                                if (response.message && response.messageId) {
+                                    //todo: add #sent tag to the user email entry.
+                                    //user.email = user.email + "#sent:true";
+                                } else {
+                                    console.log('mariler.register:noResponseMessage');
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
+
 
                     // the passport custom callback
                     req.logIn(user, function (err) {
@@ -65,6 +66,55 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
 
                         }
                     });
+                }
+
+                var params = _.extend({doman: req.headers.host}, req.body.params);
+                User.addUser(
+                    req.body.username,
+                    req.body.password,
+                    req.body.role,
+                    params,
+                    loginCallback
+                );
+            },
+            registerBatch: function (req, res, next) {
+                try {
+                    User.validate(req.body);
+                } catch (err) {
+                    return res.send(400, err.message);
+                }
+
+                function loginCallback (err, user) {
+                    if (err === 'UserAlreadyExists') return res.send(403, "UserAlreadyExists");
+                    else if (err)                    return res.send(500);
+
+
+                    if (user[user.role.title].email) {
+                        console.log(user[user.role.title].email);
+                        var locals = {
+                            username: user.username,
+                            email: user[user.role.title].email.split('#')[0],
+                            code: user[user.role.title].email.match(new RegExp(/@.+#code:(\w+)/))[1],
+                            name: user[user.role.title].name.split(',').join(''),
+                            domain: req.headers.host,
+                            info: req.body.info
+                        };
+
+                        mailer.register(
+                            locals.email,
+                            locals,
+                            function (error, response) {
+                                if (response.message && response.messageId) {
+                                    //todo: add #sent tag to the user email entry.
+                                    //user.email = user.email + "#sent:true";
+                                } else {
+                                    console.log('mariler.register:noResponseMessage');
+                                }
+                            }
+                        );
+                    }
+
+                    res.send(201, { "role": user.role, "username": user.username, "id": user._id});
                 }
 
                 var params = _.extend({doman: req.headers.host}, req.body.params);

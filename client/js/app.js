@@ -6,6 +6,7 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
     'mgcrea.ngStrap.button',
     'mgcrea.ngStrap.dropdown',
     'mgcrea.ngStrap.typeahead',
+    "angularFileUpload",
     'nvd3ChartDirectives', 'placeholders', 'textAngular', 'angular-medium-editor', 'flip-card'])
     .config(['$routeProvider', '$locationProvider', '$httpProvider', '$modalProvider',
         function ($routeProvider, $locationProvider, $httpProvider, $modalProvider) {

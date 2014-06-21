@@ -76,6 +76,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
+                path: '/register/batch',
+                httpMethod: 'POST',
+                middleware: [AuthCtrl.registerBatch],
+                accessLevel: accessLevels.superuser
+            },
+            {
                 path: '/login',
                 httpMethod: 'POST',
                 middleware: [AuthCtrl.login],

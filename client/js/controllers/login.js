@@ -9,16 +9,16 @@ angular.module('SpruceQuizApp')
                 $scope.userRoles = Auth.userRoles;
                 $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
 
-                $scope.view = {}
+                $scope.view = {};
                 $scope.loginData = {
                     username: '',
                     password: ''
-                }
+                };
 
                 $scope.view.clearErrors =
                     function () {
                         $scope.view.error = undefined;
-                    }
+                    };
                 $scope.submit = function () {
                     var that = this;
                     Auth.login(

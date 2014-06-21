@@ -63,6 +63,10 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
 
             addUser: function (username, password, role, params, callback) {
 
+                function validate(user) {
+                    return true; // 'youzi' students do not have to have emails.
+                }
+
                 function createNewUser() {
                     var user = new UserM({
                         username: username,
@@ -76,24 +80,18 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         superadmin: null
                     });
 
-                    var email = params.email + '#code:' + crypto.createHash('sha1').digest('hex');
                     var subUser = {
                         name: params.name,
                         username: username,
-                        email: email,
                         DOB: params.DOB,
                         gender: params.gender,
                         domainName: params.domain
                     };
+                    if (params.email && params.email!='undefined') {
+                        subUser.email = params.email + '#code:' + crypto.createHash('sha1').digest('hex');
+                    }
                     if (params.schoolName) {
                         subUser.schools = [params.schoolName];
-                    }
-
-                    console.log("subUser");
-                    console.log(subUser);
-
-                    function validate(user) {
-                        return true;
                     }
 
                     if (!validate(subUser)) {
@@ -192,6 +190,10 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                 check(user.username, 'Username must be 1-20 characters long').len(1, 20);
                 check(user.password, 'Password hash is length 64').len(64);
                 check(user.username, 'Invalid username').not(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
+                check(user.username, '请不要使用中文做用户名').not(/.*[\u4e00-\u9fa5]+.*$/);
+                if (user.params.email && user.params.email.length > 0) {
+                    check(user.params.email, 'email need to have the right form').isEmail();
+                }
 
                 // TODO: Seems node-validator's isIn function doesn't handle Number arrays very well...
                 // Till this is rectified Number arrays must be converted to string arrays

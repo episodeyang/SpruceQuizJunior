@@ -300,7 +300,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 { type: Schema.Types.ObjectId, ref: 'Student' }
             ],
             preferences: {
-            }
+            },
+            info: Schema.Types.Mixed
         },
         teacher: {
             name: String,
@@ -327,7 +328,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 { type: Schema.Types.ObjectId, ref: 'Book'}
             ],
             preferences: {
-            }
+            },
+            info: Schema.Types.Mixed
         },
         admin: {
             name: String,
@@ -354,7 +356,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 { type: Schema.Types.ObjectId, ref: 'Book'}
             ],
             preferences: {
-            }
+            },
+            info: Schema.Types.Mixed
         },
         superadmin: {
             name: String,
@@ -381,7 +384,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
                 { type: Schema.Types.ObjectId, ref: 'Book'}
             ],
             preferences: {
-            }
+            },
+            info: Schema.Types.Mixed
         },
         book: {
             title: String,

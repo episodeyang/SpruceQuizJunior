@@ -1,14 +1,15 @@
 'use strict';
 var sqApp = angular.module('SpruceQuizApp');
-sqApp.factory('_', function() {
+sqApp.factory('_', function () {
     return window._; // assumes underscore has already been loaded on the page
 });
 
-sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function($http, $rootScope, $cookieStore, Model){
+sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function ($http, $rootScope, $cookieStore, Model) {
 
     var accessLevels = rolesHelper.accessLevels;
     var userRoles = rolesHelper.userRoles;
     var currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public, id: ''};
+
     var getHash = passwordHash.getHash;
 
 
@@ -16,10 +17,12 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
 //        console.log('Model Initialization started');
         Model.init(user);
     }
+
     function modelDestroyCallBack() {
 //        console.log('Model Destroy started');
         Model.destroy();
     }
+
     $cookieStore.remove('user');
 
     if (currentUser.id != '') {
@@ -28,13 +31,13 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
 
     return {
 
-        authorize: function(accessLevel, role) {
-            if(role === undefined)
+        authorize: function (accessLevel, role) {
+            if (role === undefined)
                 role = currentUser.role;
             return accessLevel.bitMask & role.bitMask;
         },
-        isLoggedIn: function(user) {
-            if(user === undefined){
+        isLoggedIn: function (user) {
+            if (user === undefined) {
                 user = currentUser;
             }
             return user.role.bitMask === userRoles.student.bitMask || user.role.bitMask === userRoles.parent.bitMask || user.role.bitMask === userRoles.teacher.bitMask || user.role.bitMask === userRoles.admin.bitMask || user.role.bitMask === userRoles.superadmin.bitMask;
@@ -61,7 +64,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
         },
         logout: function (success, error) {
             $http.post('/logout').success(function () {
-                _.extend(currentUser,{
+                _.extend(currentUser, {
                     username: '',
                     role: userRoles.public,
                     id: ''
@@ -70,6 +73,7 @@ sqApp.factory('Auth', ['$http', '$rootScope', '$cookieStore', 'Model', function(
                 success();
             }).error(error);
         },
+        getHash: getHash,
         accessLevels: accessLevels,
         userRoles: userRoles,
         user: currentUser

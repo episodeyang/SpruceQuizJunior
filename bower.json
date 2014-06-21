@@ -31,7 +31,9 @@
     "angular-motion": "~0.3.2",
     "angular-strap": "https://github.com/mgcrea/angular-strap.git#master",
     "pretty-diff": "https://github.com/austincheney/Pretty-Diff.git#master",
-    "jssha": "~1.5.0"
+    "jssha": "~1.5.0",
+    "ng-file-upload": "~1.4.0",
+    "excel.js": "https://github.com/thetalecrafter/excel.js.git#master"
   },
   "devDependencies": {
     "MathJax": "*"
