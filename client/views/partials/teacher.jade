@@ -40,7 +40,7 @@ div.background
                                         tbody
                                             tr(ng-repeat="school in Model.schools track by $index")
                                                 td
-                                                    button(ng-click="") 保存修改
+                                                    button.btn.btn-disabled(ng-click="") 保存
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].type", placeholder="没有学号...")
                                                 td.clickable(ng-click="view.schoolName=school._id; view.studentTab=true;")
                                                     span {{Model.schools[$index]._id}}
@@ -62,7 +62,7 @@ div.background
                                         .panel-heading(ng-click="view.pasteView = false").text-center 批量创建学生账户
                                             span.btn-close &#10006;
                                         .panel-body.no-padding
-                                            textarea(ng-model='formData.student', placeholder="请在这里粘贴学生信息 \t\t\t\t-\t\t\t\t\t\t\t\t请按下列顺序排列表格：学校	用户名	密码	毕业年份	姓名	性别	出生日期	通信地址	联系电话	邮箱地址 \t\t\t\t-\t\t\t\t\t\t\t\t用户名请勿使用中文。").fill.tall
+                                            textarea(ng-model='formData.student', placeholder="请在这里粘贴学生信息 \t\t\t\t\t\t\t\t-\t\t\t\t\t\t\t\t请按下列顺序排列表格：学校	用户名	密码	毕业年份	姓名	性别	出生日期	通信地址	联系电话	邮箱地址 \t\t\t\t\t\t\t\t-\t\t\t\t\t\t\t\t用户名请勿使用中文。").fill.tall
                                             //div(ng-file-drop="onFileSelect($files)", ng-file-drag-over-class='bg-blue',style="height: 200px;").placeholder.bottom-margin 拖动csv文件到这里...
                                             //input(type='file', ng-file-select="onFileSelect($files)")
                                             //button.btn.btn-success(ng-click="makeStudents(studentDataText)") 检测数据
