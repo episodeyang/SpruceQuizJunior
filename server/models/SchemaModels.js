@@ -189,8 +189,8 @@ define(['underscore', 'mongoose'], function (_, mongoose) {
             name: String,
             classYear: Number,
             type: String,
-            entrance: Number,
-            left: Number,
+            enter: Number,
+            leave: Number,
             alumni: Boolean,
             majors: [String]
         },

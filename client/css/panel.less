@@ -9,19 +9,19 @@
   .panel-heading {
     border: 0 none transparent;
     cursor: hand;
-    .pull-right.fa {
+    .pull-right.fa, .btn-close {
       margin-right:-7px;
       margin-top: 2px;
       font-size: 1.0em;
       line-height: 1.1em;
       opacity: 0;
+      float: right !important;
       .transition(all 0.3s ease);
     }
     &:hover {
-      .pull-right.fa {
+      .pull-right.fa, .btn-close {
         opacity: 1;
       }
-
     }
   }
   .table {
@@ -50,6 +50,7 @@
 }
 
 textarea.fill.tall {
+  padding: 15px;
   width: 100%;
   height: 200px;
   box-sizing: border-box;
@@ -57,4 +58,8 @@ textarea.fill.tall {
 
 textarea {
   border-color: transparent;
+}
+
+.panel-body.no-padding {
+  padding: 0;
 }

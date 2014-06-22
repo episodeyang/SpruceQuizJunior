@@ -88,11 +88,15 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                         domainName: params.domainName,
                         info: params.info
                     };
-                    if (params.email && params.email!='undefined') {
+                    if (params.email && params.email != 'undefined') {
                         subUser.email = params.email + '#code:' + crypto.createHash('sha1').digest('hex');
                     }
                     if (params.schoolName) {
                         subUser.schools = [params.schoolName];
+                        subUser.schoolRecord = [{
+                            name: params.schoolName,
+                            classYear: params.classYear
+                        }];
                     }
 
                     if (!validate(subUser)) {

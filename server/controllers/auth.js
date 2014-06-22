@@ -123,7 +123,12 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                     res.send(201, { "role": user.role, "username": user.username, "id": user._id});
                 }
 
-                var params = _.extend({doman: req.headers.host}, req.body.params);
+                var params = _.extend({
+                    doman: req.headers.host,
+                    info: {
+                        createdBy: req.user.toObject()
+                    }
+                }, req.body.params);
                 User.addUser(
                     req.body.username,
                     req.body.password,
