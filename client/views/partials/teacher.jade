@@ -14,7 +14,7 @@ div.background
     +navbar
     .container
         .row
-            .col-xs-12.col-sm-9
+            .col-xs-12.col-sm-10
                 tabset
                     tab(heading="学校", active='view.schoolTab')
                         div.tab-box.bg-white
@@ -136,7 +136,7 @@ div.background
                         //button.btn.btn-success(ng-click="listSections()") 班级数据
                         //p {{model.sectionList}}
 
-            .col-xs-12.col-sm-3
+            .col-xs-12.col-sm-2
                 .alert.clickable(ng-repeat="alert in view.alertQue track by $index", ng-click="view.alertQue.splice($index, 1)", ng-class="{'alert-danger': alert.class=='error', 'alert-success': alert.class=='success'}")
                     span {{alert.message}}
 
