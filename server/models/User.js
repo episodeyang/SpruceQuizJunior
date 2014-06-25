@@ -200,6 +200,8 @@ define(['crypto', 'underscore', 'passport', 'passport-local', 'validator', '../r
                     check(user.params.email, 'email need to have the right form').isEmail();
                 }
 
+                if (user.params.schoolName.length<=2) {throw {message: "请输入所属学校"} ;}
+                //check(user.params.schoolName, '请务必注册学校名称').isLength(2);
                 // TODO: Seems node-validator's isIn function doesn't handle Number arrays very well...
                 // Till this is rectified Number arrays must be converted to string arrays
                 // https://github.com/chriso/node-validator/issues/185

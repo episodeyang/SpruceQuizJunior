@@ -94,7 +94,7 @@ define(['underscore', 'passport', '../models/User', '../mailer/mailer', '../mode
                     else if (err)                    return res.send(500);
 
 
-                    if (user[user.role.title].email) {
+                    if (user[user.role.title] && user[user.role.title].email) {
                         console.log(user[user.role.title].email);
                         var locals = {
                             username: user.username,
