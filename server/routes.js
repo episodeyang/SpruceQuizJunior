@@ -359,6 +359,12 @@ define(['underscore', 'path', 'passport', './rolesHelper', './controllers/auth',
                 accessLevel: accessLevels.all
             },
             {
+                path: '/api/schools/:name/stats',
+                httpMethod: 'GET',
+                middleware: [SchoolCtrl.getStats],
+                accessLevel: accessLevels.loggedin
+            },
+            {
                 path: '/api/schools',
                 httpMethod: 'POST',
                 middleware: [SchoolCtrl.create],

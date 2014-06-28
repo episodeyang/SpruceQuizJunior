@@ -101,7 +101,7 @@ angular.module('modelServices', ['resourceProvider'])
                     model.votedup = false;
                     model.voteddown = false;
                 }
-            }
+            };
             modelInstance.getQuestionVoteStatus = function () {
                 modelInstance.getVoteStatus(modelInstance.question);
             };

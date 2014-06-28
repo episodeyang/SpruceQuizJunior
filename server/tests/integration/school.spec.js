@@ -56,6 +56,13 @@ describe('School API test - ', function (done) {
             done();
         });
     });
+    it('get a school\'s stats', function (done) {
+        passportStub.login(studentUser); // login as user
+        request(app).get('/api/schools/' + school.name+ '/stats').expect(200).end(function (err, res) {
+            console.log(res.body);
+            done();
+        });
+    });
     it('update school', function (done) {
         passportStub.login(studentUser); // login as user
         school.address = '不知道到底在哪儿。。。';

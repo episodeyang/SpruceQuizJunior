@@ -4,11 +4,12 @@
  * @type {exports}
  * implements create, get, and index for schools in the database.
  */
-define(['underscore', '../models/School', '../rolesHelper'],
-    function (_, SchoolM, rolesHelper) {
+define(['underscore', '../models/School', '../models/User', '../models/SchemaModels', '../rolesHelper'],
+    function (_, SchoolM, UserM, SchemaModels, rolesHelper) {
         "use strict";
         var userRoles = rolesHelper.userRoles;
         var keyString = 'name type address zipCode state country overview url area foundingYear degrees tags 部委 teachers schools created edited';
+        var StudentM = SchemaModels.Student;
 
         return {
             index: function (req, res) {
@@ -39,6 +40,23 @@ define(['underscore', '../models/School', '../rolesHelper'],
                         return res.json(200, schools);
                     }
                 );
+            },
+            getStats: function (req, res) {
+                if (!req.params.name) { return res.send(401, 'noSchoolName'); }
+                var query = {
+                    name: req.params.name
+                };
+                StudentM.count({'schools': req.params.name}).count(function(err, count){
+                    if (err) {
+                        console.log(err);
+                        return res.send(404, 'schoolNameNotFoundInStudents' + err);
+                    }
+                    res.send(
+                        200,
+                        {
+                            studentCount: count
+                        });
+                });
             },
             get: function (req, res) {
                 if (!req.params.name) { return res.send(401, 'noSchoolName'); }
