@@ -158,9 +158,11 @@ angular.module('resourceProvider', ['ngResource', 'ngRoute'])
     .factory('Schools', function ($resource) {
         var Schools = $resource('/api/schools');
         var School = $resource('/api/schools/:name', {name: '@name'});
+        var SchoolStats = $resource('/api/schools/:name/stats', {name: '@name'});
         return {
             index: Schools.query,
             search: $resource('/api/schools/:name/search', {id: '@_id'}).get,
+            stats: SchoolStats.get,
             add: Schools.create,
             get: School.get,
             save: School.save,

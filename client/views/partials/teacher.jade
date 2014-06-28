@@ -24,7 +24,7 @@ div.background
                                         input.form-control(ng-model='view.schoolName', placeholder="请输入学校名搜索或添加学生")
                                         span.input-group-btn
                                 .col-xs-12
-                                    button.btn.btn-success.right-margin(ng-click="Model.getSchools()", ng-class="{'btn-success': schoolName.length>=3}") 获得学校列表
+                                    button.btn.btn-success.right-margin(ng-click="getSchools()", ng-class="{'btn-success': schoolName.length>=3}") 获得学校列表
                                 .col-xs-12(ng-show='Model.schools')
                                     table.table
                                         thead
@@ -32,6 +32,7 @@ div.background
                                                 th
                                                 th 种类
                                                 th 全称
+                                                th 学生数量
                                                 th 地址
                                                 th 邮编
                                                 th 省市
@@ -44,6 +45,7 @@ div.background
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].type", placeholder="没有学号...")
                                                 td.clickable(ng-click="view.schoolName=school._id; view.studentTab=true;")
                                                     span {{Model.schools[$index]._id}}
+                                                td {{school.stats.studentCount}}
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].address", placeholder="没有名字??")
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].zipCode", placeholder="是她还是他？")
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="Model.schools[$index].state", placeholder="需要填写入学年份...")

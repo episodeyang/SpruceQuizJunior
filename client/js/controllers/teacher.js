@@ -3,8 +3,8 @@
 var spApp = angular.module('SpruceQuizApp');
 
 spApp.controller('TeacherCtrl',
-    ['_', '$rootScope', '$scope', '$timeout', '$filter', 'Auth', 'Model', 'Students', '$http',
-        function (_, $rootScope, $scope, $timeout, $filter, Auth, Model, Students, $http) {
+    ['_', '$rootScope', '$scope', '$timeout', '$filter', 'Auth', 'Model', 'Students', 'Schools', '$http',
+        function (_, $rootScope, $scope, $timeout, $filter, Auth, Model, Students, Schools, $http) {
             //Boiler Plate for authentication info
             $scope.user = Auth.user;
             $scope.userRoles = Auth.userRoles;
@@ -26,6 +26,18 @@ spApp.controller('TeacherCtrl',
             $scope.view = {};
             $scope.view.alertQue = [];
             $scope.formData = {students: ''};
+
+            $scope.getSchools = function (){
+                Model.getSchools().then(function(schools) {
+                    _.each(schools, function(school){
+                        school.stats =  Schools.stats({name: school._id});
+                    });
+                },
+                function(error){
+                    $rootScope.error = error;
+                });
+            };
+
             $scope.searchStudents = function (schoolName) {
                 var query = {};
                 if (schoolName) {
