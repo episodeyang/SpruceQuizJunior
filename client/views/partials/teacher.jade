@@ -56,7 +56,7 @@ div.background
                                     .input-group
                                         input.form-control(ng-model='view.schoolName', placeholder="请输入学校名搜索或添加学生")
                                         span.input-group-btn
-                                            button.btn(ng-click="searchStudents(view.schoolName)", ng-disabled="!(view.schoolName.length>=2)", ng-class="{'btn-success': view.schoolName.length>=2}") 获得学生数据
+                                            button.btn(ng-click="searchStudents(view.schoolName)", ng-disabled="!(view.schoolName.length>=2 || user.role.title=='superadmin')", ng-class="{'btn-success': view.schoolName.length>=2 || user.role.title=='superadmin'}") 获得学生数据
                                 .col-xs-3
                                     .panel.panel-info.bottom-margin(ng-show="view.pasteView")
                                         .panel-heading(ng-click="view.pasteView = false").text-center 批量创建学生账户
