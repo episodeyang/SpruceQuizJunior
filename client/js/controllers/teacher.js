@@ -48,6 +48,10 @@ spApp.controller('TeacherCtrl',
                     query,
                     function (students) {
                         $scope.model.students = students;
+                        _.each($scope.model.students, function(student, ind) {
+                            student.DOB = new Date(student.DOB);
+                            });
+                        console.log($scope.model.students[0]);
                     },
                     function (error) {
                         console.log("error:", error);

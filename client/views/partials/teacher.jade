@@ -93,7 +93,7 @@ div.background
                                                         span(inline-editable, contenteditable="{{view.edit}}", ng-model="model.students[$index].username", placeholder="没有用户名...")
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="model.students[$index].name", placeholder="没有名字??")
                                                 td(inline-editable, contenteditable="{{view.edit}}", ng-model="model.students[$index].gender", placeholder="是她还是他？")
-                                                td {{student.DOB.slice(0,10)}}
+                                                td {{student.DOB}}
                                                 td
                                                     span(ng-repeat="school in student.schoolRecord") {{school.name}}
                                                 td
