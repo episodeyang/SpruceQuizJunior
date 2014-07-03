@@ -102,7 +102,7 @@ angular.module('SpruceQuizApp')
     .directive("mathHtml", function () {
         return {
             restrict: "A",
-            controller: ["$scope", "$element", "$attrs","$compile", function ($scope, $element, $attrs, $compile) {
+            controller: ["$scope", "$element", "$attrs", "$compile", function ($scope, $element, $attrs, $compile) {
                 $scope.$watch($attrs.mathHtml, function (value) {
                     $element.html(value);
                     $compile($element.contents())($scope);
@@ -111,14 +111,55 @@ angular.module('SpruceQuizApp')
                 });
             }]
         };
-    })
-//    .directive('mathCompile', ['$compile', '$parse', function ($compile, $parse) {
-//        return {
-//            scope: { mathCompile : "=mathCompile" },
-//            template: "<mathjax-link compile='mathCompile'> </mathjax-link>",
-//            compile: function(scope, element, attrs) {
-//                "use strict";
-//                $observe('mathCompile', function (val) {});
-//            }
-//        }
-//    }]);
+    });
+
+angular.module('SpruceQuizApp')
+    .config(['$provide', function ($provide) {
+        // see https://github.com/fraywing/textAngular/wiki/Setting-Defaults
+        $provide.decorator('taOptions', ['$delegate', function (taOptions) {
+            // see https://github.com/fraywing/textAngular/issues/235
+            taOptions.setup.textEditorSetup = function ($element) {
+                $element.attr("ta-mathjax", "taMathJax");
+            };
+            return taOptions;
+        }]);
+    }])
+    .directive('taMathjax', ['$compile', function ($compile) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            priority: 1000, // to ensure that the ngModel has been edited by the ta-bind first
+            link: function (scope, element, attrs, ngModel) {
+                //var ngModel, _render;
+                //ngModel = controllers[0];
+                var _render;
+                _render = ngModel.$render; // save the render function
+                ngModel.$render = function () {
+                    //$compile(element.contents())(scope);
+                    /* Apply MathJax conversion here */
+                    MathJax.Hub.Queue(["Typeset", MathJax.Hub, element[0]]);
+
+                    // make sure 'this' is ngModel for original render call;
+                    return _render.apply(ngModel);
+                };
+                // unshift means it will be the first parser to run;
+                return ngModel.$parsers.unshift(function (textvalue) {
+
+                    /* unconvert mathjax nodes here */
+                    console.log(textvalue.slice(0, 150));
+                    textvalue = textvalue
+                        .replace(/<span class=\"MathJax_Preview\"><\/span>/g, '')
+                        .replace(/<div class=\"MathJax_Display"((?!<\/div).)*<\/div>/g, '')
+                        .replace(/<script type=\"math\/tex; mode=display\" id="MathJax-Element-[0-9]+">(((?!<\/script>).)*)<\/script>/g, '$$$$$1$$$$');
+
+                    textvalue = textvalue
+                        .replace(/<nobr>((?!<\/nobr>).)*<\/nobr>/g, '')
+                        .replace(/<span class=\"MathJax\" [^>]*><\/span>/g, '')
+                        .replace(/<script type=\"math\/tex\" id=\"MathJax-Element-[0-9]+\">(((?!<\/script>).)*)<\/script>/g, '$$$1$$')
+                        .replace(/ class=\"ng-scope\"/g, '');
+                    console.log(textvalue);
+                    return textvalue; // this must be the converted value
+                });
+            }
+        };
+    }]);
