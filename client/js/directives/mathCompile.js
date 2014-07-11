@@ -374,7 +374,8 @@ angular.module('SpruceQuizApp')
                         .replace(/<nobr>((?!<\/nobr>).)*<\/nobr>/g, '')
                         .replace(/<span class=\"MathJax[^>]*><\/span>/g, '')
                         .replace(/<script type=\"math\/tex\" id=\"MathJax-Element-[0-9]+\">(((?!<\/script>).)*)<\/script>/g, '$$$1$$')
-                        .replace(/ class=\"ng-scope\"/g, '')
+                        .replace(/\sng-scope/g, '')
+                        .replace(/\sclass=\"\"/g, '')
                         .replace(/<span><\/span>/g, '') // removes all dangling spans.
                         .replace(/<p><\/p>/g, ''); // removes all dangling paragraphs.
                     console.log(textvalue);
