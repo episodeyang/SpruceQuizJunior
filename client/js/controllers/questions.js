@@ -59,7 +59,7 @@ angular.module('SpruceQuizApp')
                     ['h3', 'h4'], ['p', 'pre', 'quote'],
                     ['bold', 'italics', 'underline'], ['ul', 'ol'],
                     ['justifyLeft', 'justifyCenter', 'justifyRight'],
-                    ['insertImage', 'insertLink', 'unlink'],
+                    ['insertImage', 'insertLink', 'unlink', 'mathJax'],
                     ['html']
                 ];
 

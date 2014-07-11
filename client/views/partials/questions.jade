@@ -53,7 +53,7 @@ div.background(background-img="/img/bg-brown.jpg")
                     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                     //form.card.tall.top-margin(name = 'questionAskEditorForm')
                     //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
-                    text-angular.tall(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+                    text-angular.tall(ng-model='editor.data.text', ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
 
                     .short-bottom-margin.top-margin
                         .badge.short-bottom-margin(ng-repeat='tag in editor.data.tags track by $index').right-margin
@@ -74,7 +74,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
                         //form.card.tall.top-margin(name = 'questionEditorForm')
                         //    div.editor-inner(ng-model='editor.data.text', medium-editor, options="{{editor.options}}")
-                        text-angular.tall.top-margin(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+                        text-angular.tall.top-margin(ng-model='editor.data.text', ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         .short-bottom-margin.top-margin
                             .badge.short-bottom-margin(ng-repeat='tag in editor.data.tags track by $index').right-margin
                                 span.white {{tag}} &nbsp
@@ -193,7 +193,7 @@ div.background(background-img="/img/bg-brown.jpg")
 
                             .row.top-margin.bottom-margin
                                 .col-xs-12
-                                    text-angular.short(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+                                    text-angular.short(ng-model='answerEditor.data.text', ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                             .row.top-margin.bottom-margin
                                 .col-xs-12
                                     input(type='text', placeholder="修改原因...", ng-model="answerEditor.data.reason").form-control
@@ -258,7 +258,7 @@ div.background(background-img="/img/bg-brown.jpg")
                         //form.card.short(name = 'answerEditorForm')
                         //    div.editor-inner(ng-model='answerEditor.data.text', medium-editor, options="{{answerEditor.options}}")
 
-                        text-angular.short(ng-model='answerEditor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor bottom-margin', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+                        text-angular.short(ng-model='answerEditor.data.text', ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor bottom-margin', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
                         .row
                             .col-xs-12
                                 button.btn.btn-success.pull-right(ng-click='addAnswer()') 提交解答

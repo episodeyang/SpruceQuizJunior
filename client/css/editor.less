@@ -74,8 +74,11 @@ text-angular {
   .ta-editor {
     background-color: white;
     border-radius: 3px;
-    padding: 15px;
+    padding: 0;
     width: 100%;
+  }
+  textarea.ta-editor {
+    padding: 15px;
   }
   .ta-editor:focus {
     outline-color: @gray-lighte;
@@ -86,7 +89,11 @@ text-angular {
 .ta-editor, .editor-inner {
   p {
     margin-top: 0em;
-    margin-bottom: 1.4em;
+    margin-bottom: .75em;
+//    min-height: 1em;
+  }
+  br {
+    min-height: 1em; // only br has lineheight
   }
   h1, h2, h3, h4 {
     margin-top: 2em;
@@ -106,7 +113,28 @@ text-angular {
     margin-bottom: 0em;
     font-size: 1.em;
   }
-
+  span[ng-scope] {
+//    min-height: 1em;
+  }
+//  [math-jax] {
+//  }
+}
+div[ta-mathjax][contenteditable=true] {
+  span[math-jax], span.math-jax {
+    z-index: +1;
+  }
+  .math-jax:hover, [math-jax]:hover  {
+    cursor: pointer;
+    background-color: fadeout(#66afe9, 90%);
+    border-radius: 6px;
+    //  border-color: #66afe9;
+    //  border-style: solid;
+    //  border-width: 1px;
+    //  box-sizing: border-box;
+    //  outline: 0;
+    //  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    //  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  }
 }
 
 text-angular.tall {
