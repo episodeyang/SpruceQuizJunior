@@ -67,7 +67,8 @@ div.background(background-img="/img/bg-brown.jpg")
                             button.btn.btn-link.pull-right(ng-click='toggleHtml()', ng-show='editor.showHtml') 关闭代码窗口
                             button.btn.btn-success.pull-right(active-ctrl, ng-hide='editor.showHtml', ng-click='editor.submit()') 提交问题
                     .card.tall(ng-show='editor.showHtml')
-                        p {{editor.data.text}}
+                        textarea(ng-model="editor.data.text")
+                        //-p {{editor.data.text}}
                 div(ng-if="view.state.split('.')[0]=='question'")
                     //- question main text
                     div(ng-if="view.state ==='question.edit'")
@@ -92,7 +93,8 @@ div.background(background-img="/img/bg-brown.jpg")
                                 button.btn.btn-info.pull-right(active-ctrl, ng-hide='editor.showHtml', ng-click='editor.updateQuestion()') 确定修改
                                 button.btn.btn-danger.pull-right.right-margin(ng-hide='editor.showHtml', ng-click='editor.cancel()') 取消
                         form.card.tall(ng-if='editor.showHtml')
-                            p {{editor.data.text}}
+                            textarea.form-control(ng-model="editor.data.text")
+                            //-p {{editor.data.text}}
                     div(ng-if="view.state==='question'")
                         h3.title.bottom-margin {{Model.question.title}}
                         .card.top-margin
@@ -269,7 +271,10 @@ div.background(background-img="/img/bg-brown.jpg")
                 .panel.panel-info
                     .panel-heading 相关标签
                     .panel-body
-                        p(ph-txt='3s')
+                        div(mathjax-bind="taMathUtil.script")
+                        input(type="text", ng-model="taMathUtil.script", placeholder="$$ $$ 输入显示模式，$ $输入嵌入公式")
+                        //-taMathjaxEdit.activeScope.data.mathScript")
+                        //p(ph-txt='3s')
                 .panel.panel-info
                     .panel-heading 相关问题
                     .panel-body
