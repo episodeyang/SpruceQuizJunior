@@ -90,7 +90,6 @@ angular.module('SpruceQuizApp')
             script: '',
             mathJaxParser: function (textvalue) {
                 /* unconvert mathjax nodes here */
-                if (textvalue.match(/something/g)) console.log('success!! ---=-=-=-=-=-=-=-=-======');
                 if (textvalue) {
                     textvalue = textvalue
                         .replace(/<span class=\"MathJax_Preview\"><\/span>/g, '')
@@ -105,8 +104,6 @@ angular.module('SpruceQuizApp')
                         .replace(/\sclass=\"\"/g, '')
                         .replace(/<span><\/span>/g, '') // removes all dangling spans.
                         .replace(/<p><\/p>/g, ''); // removes all dangling paragraphs.
-                    console.log('mathjax Parsed! - ---------------');
-                    console.log(textvalue);
                 }
                 return textvalue; // this must be the converted value
             },
@@ -198,7 +195,6 @@ angular.module('SpruceQuizApp')
                 var promptString;
                 promptString = $window.prompt('please input math equations', '$$');
                 if (promptString && promptString !== '') {
-                    console.log(promptString);
                     var displayStr = promptString.match(/\$\$([^$]+)\$\$/);
                     var inlineStr = promptString.match(/\$([^$]+)\$/);
                     if (!displayStr && !inlineStr) inlineStr = promptString.match(/\\\(([^$]+)\)\\/);
@@ -253,22 +249,38 @@ angular.module('SpruceQuizApp')
             priority: 1000, // to ensure that the ngModel has been edited by the ta-bind first
             scope: true, // $new() ProtoInherent. {} creates an empty new scope.
             controller: function($scope, $element, $attrs) {
-                console.log('controller');
                 if (!taMathUtil.taPopover) taMathUtil.taPopover = {};
                 $scope.data = taMathUtil.taPopover;
                 $scope.destroy = function () {
-                    console.log('removing element!');
                     $element.remove();
                     $scope.updateTaBindtaTextElement();
                 };
+                $scope.reflowPopover = function(_el){
+                    var height = $scope.displayElements.popover[0].clientHeight;
+                    var width = $scope.displayElements.popover[0].clientWidth;
+                    if($scope.displayElements.text[0].offsetHeight - height > _el[0].offsetTop){
+                        $scope.displayElements.popover.css('top', _el[0].offsetTop + _el[0].offsetHeight + 'px');
+                        $scope.displayElements.popover.removeClass('top').addClass('bottom');
+                    } else {
+                        $scope.displayElements.popover.css('top', _el[0].offsetTop - height + 'px');
+                        $scope.displayElements.popover.removeClass('bottom').addClass('top');
+                    }
+                    var leftOffset = _el[0].offsetLeft + ((_el[0].offsetWidth - width )/ 2.0 );
+                    var finalLeftOffset = Math.max(0, Math.min(
+                                $scope.displayElements.text[0].offsetWidth - width,
+                                _el[0].offsetLeft + ((_el[0].offsetWidth - width )/ 2.0 )
+                        ) );
+                    $scope.displayElements.popover.css('left',  + 'px');
+                    var arrow = angular.element($scope.displayElements.popover.children()[0]);
+                    var arrowLeft = (width / 2.0) - arrow[0].clientWidth + leftOffset - finalLeftOffset;
+                    arrow.css('left', arrowLeft + 'px');
+                };
             },
             compile: function(tElement, tAttrs, transclude) {
-                console.log("compile");
                 /**
                  * directive rewrite. Use templates to allow editing on the fly.
                  */
                 return function postLink(scope, iElement, iAttrs, ctrls) {
-                    console.log('postLink');
                     tElement.on('click', function (event) {
                         event.preventDefault();
                         // this is to prevent the editor from loosing focus;
@@ -317,13 +329,13 @@ angular.module('SpruceQuizApp')
 
                         var mathFrameId = tElement.find('script').attr('id') + '-Frame';
                         scope.showPopover(tElement);
+                        scope.reflowPopover(tElement);
                         // deregistering all other $wathers
                         taMathUtil.clearWatchers();
                         //scope.showResizeOverlay([tElement.contents()[1], ]);
 
                         var deregister = scope.$watch('data.mathScript', function (newVal, oldVal) {
                             if (newVal == oldVal){ return ; }
-                            console.log('data.mathScript just ran!         ' + newVal);
                             iElement.find('script').html(newVal);
                             $compile(iElement.contents())(scope);
                             MathJax.Hub.Queue(['Reprocess', MathJax.Hub, iElement[0]]);

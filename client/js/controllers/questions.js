@@ -2,13 +2,12 @@
 /* Controllers */
 angular.module('SpruceQuizApp')
     .controller('QuestionCtrl',
-        ['$routeParams', '$location', '$filter', '$rootScope', '$scope', '$modal', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model', 'taMathUtil',
-            function ($routeParams, $location, $filter, $rootScope, $scope, $modal, Auth, Sections, Units, Materials, Students, Model, taMathUtil) {
+        ['$routeParams', '$location', '$filter', '$rootScope', '$scope', '$modal', 'Auth', 'Sections', 'Units', 'Materials', 'Students', 'Model',
+            function ($routeParams, $location, $filter, $rootScope, $scope, $modal, Auth, Sections, Units, Materials, Students, Model) {
                 //Boiler Plate for authentication info
                 $scope.user = Auth.user;
                 $scope.userRoles = Auth.userRoles;
                 $scope.accessLevels = Auth.accessLevels; //to allow authentication based elements.
-                $scope.taMathUtil = taMathUtil;
 
                 if ( window.location.host.indexOf('youzi') == 0) {
                     $scope.orgTitle = "游子 - ";
