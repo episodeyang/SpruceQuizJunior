@@ -52,7 +52,7 @@ MathJax.Hub.Config({
 MathJax.Hub.Configured();
 
 angular.module('SpruceQuizApp')
-    .directive("mathjaxBind", function() {
+    .directive("mathjaxBind", function () {
         /**
          * <span mathjax-bind="expression"></span>
          * expression can be of the form: \( \)
@@ -60,11 +60,11 @@ angular.module('SpruceQuizApp')
         return {
             restrict: "A",
             controller: ["$scope", "$element", "$attrs",
-                function($scope, $element, $attrs) {
-                    $scope.$watch($attrs.mathjaxBind, function(value) {
+                function ($scope, $element, $attrs) {
+                    $scope.$watch($attrs.mathjaxBind, function (value) {
                         var $script = angular
-                                        .element("<script type='math/tex'>")
-                                        .html(value == undefined ? "" : value);
+                            .element("<script type='math/tex'>")
+                            .html(value == undefined ? "" : value);
                         $element.html("");
                         $element.append($script);
                         MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
@@ -85,7 +85,7 @@ angular.module('SpruceQuizApp')
         };
     });
 angular.module('SpruceQuizApp')
-    .factory('taMathUtil', ['$timeout', function($timeout){
+    .factory('taMathUtil', ['$timeout', function ($timeout) {
         return {
             script: '',
             mathJaxParser: function (textvalue) {
@@ -107,20 +107,24 @@ angular.module('SpruceQuizApp')
                 }
                 return textvalue; // this must be the converted value
             },
-            onOnce : function(_element, event, action){
+            onOnce: function (_element, event, action) {
                 var _action = _element.off(event);
-                _element.on(event, function (e){
+                function _temp (e) {
+                    _element.off(event);
                     action(e);
-                    _action(e);
+                    try { _action(e); } catch (error) { }
                     _element.on(event, _action);
-                })
+                };
+                _element.on(event, _temp);
             },
-            onOnceOffOriginal : function(_element, event, action){
+            onOnceOffOriginal: function (_element, event, action) {
                 var _action = _element.off(event);
-                _element.on(event, function (e){
+                function _temp (e) {
+                    _element.off(event);
                     action(e);
                     _element.on(event, _action);
-                })
+                };
+                _element.on(event, _temp);
             },
             clearWatchers: function () {
                 if (this.deregisterHandles) {
@@ -158,7 +162,7 @@ angular.module('SpruceQuizApp')
                         var el = document.createElement("div");
                         el.innerHTML = html;
                         var frag = document.createDocumentFragment(), node, lastNode;
-                        while ( (node = el.firstChild) ) {
+                        while ((node = el.firstChild)) {
                             lastNode = frag.appendChild(node);
                         }
                         var firstNode = frag.firstChild;
@@ -177,7 +181,7 @@ angular.module('SpruceQuizApp')
                             sel.addRange(range);
                         }
                     }
-                } else if ( (sel = document.selection) && sel.type != "Control") {
+                } else if ((sel = document.selection) && sel.type != "Control") {
                     // IE < 9
                     var originalRange = sel.createRange();
                     originalRange.collapse(true);
@@ -189,9 +193,11 @@ angular.module('SpruceQuizApp')
                     }
                 }
             }
-            var mathOnSelectAction = function(event, $element, editorScope) {};
 
-            var mathjaxToolAction = function(){
+            var mathOnSelectAction = function (event, $element, editorScope) {
+            };
+
+            var mathjaxToolAction = function () {
                 var promptString;
                 promptString = $window.prompt('please input math equations', '$$');
                 if (promptString && promptString !== '') {
@@ -224,10 +230,13 @@ angular.module('SpruceQuizApp')
             });
             taOptions.toolbar = [
                 ['redo', 'undo', 'clear'],
-                ['h3', 'h4'], ['p', 'pre', 'quote'],
-                ['bold', 'italics', 'underline'], ['ul', 'ol'],
+                ['h3', 'h4'],
+                ['p', 'pre', 'quote'],
+                ['bold', 'italics', 'underline'],
+                ['ul', 'ol'],
                 ['justifyLeft', 'justifyCenter', 'justifyRight'],
-                ['mathJax'], ['insertImage', 'insertLink', 'unlink'],
+                ['mathJax'],
+                ['insertImage', 'insertLink', 'unlink'],
                 ['html']
             ];
             // see https://github.com/fraywing/textAngular/issues/235
@@ -238,9 +247,9 @@ angular.module('SpruceQuizApp')
         }]);
     }])
     .controller('taMathPopoverCtrl',
-        ['$scope', 'taMathUtil', function($scope, taMathUtil) {
-            if (!taMathUtil.taPopover) taMathUtil.taPopover = {};
-            $scope.data = taMathUtil.taPopover;
+    ['$scope', 'taMathUtil', function ($scope, taMathUtil) {
+        if (!taMathUtil.taPopover) taMathUtil.taPopover = {};
+        $scope.data = taMathUtil.taPopover;
     }])
     .directive('mathJax', ['$rootScope', '$compile', '$timeout', '$animate', 'taMathUtil', 'textAngularManager', function ($rootScope, $compile, $timeout, $animate, taMathUtil, textAngularManager) {
         return {
@@ -248,51 +257,43 @@ angular.module('SpruceQuizApp')
             requre: '^ngModel',
             priority: 1000, // to ensure that the ngModel has been edited by the ta-bind first
             scope: true, // $new() ProtoInherent. {} creates an empty new scope.
-            controller: function($scope, $element, $attrs) {
+            controller: function ($scope, $element, $attrs) {
                 if (!taMathUtil.taPopover) taMathUtil.taPopover = {};
                 $scope.data = taMathUtil.taPopover;
                 $scope.destroy = function () {
                     $element.remove();
                     $scope.updateTaBindtaTextElement();
                 };
-                $scope.reflowPopover = function(_el){
+                $scope.reflowPopover = function (_el) {
                     var height = $scope.displayElements.popover[0].clientHeight;
                     var width = $scope.displayElements.popover[0].clientWidth;
-                    if($scope.displayElements.text[0].offsetHeight - height > _el[0].offsetTop){
+                    if ($scope.displayElements.text[0].offsetHeight - height > _el[0].offsetTop) {
                         $scope.displayElements.popover.css('top', _el[0].offsetTop + _el[0].offsetHeight + 'px');
                         $scope.displayElements.popover.removeClass('top').addClass('bottom');
                     } else {
                         $scope.displayElements.popover.css('top', _el[0].offsetTop - height + 'px');
                         $scope.displayElements.popover.removeClass('bottom').addClass('top');
                     }
-                    var leftOffset = _el[0].offsetLeft + ((_el[0].offsetWidth - width )/ 2.0 );
+                    var leftOffset = _el[0].offsetLeft + ((_el[0].offsetWidth - width ) / 2.0 );
                     var finalLeftOffset = Math.max(0, Math.min(
-                                $scope.displayElements.text[0].offsetWidth - width,
-                                _el[0].offsetLeft + ((_el[0].offsetWidth - width )/ 2.0 )
-                        ) );
-                    $scope.displayElements.popover.css('left',  + 'px');
+                            $scope.displayElements.text[0].offsetWidth - width + 28,
+                            _el[0].offsetLeft + ((_el[0].offsetWidth - width ) / 2.0 )
+                    ));
+                    $scope.displayElements.popover.css('left', finalLeftOffset +'px');
                     var arrow = angular.element($scope.displayElements.popover.children()[0]);
                     var arrowLeft = (width / 2.0) - arrow[0].clientWidth + leftOffset - finalLeftOffset;
                     arrow.css('left', arrowLeft + 'px');
                 };
             },
-            compile: function(tElement, tAttrs, transclude) {
+            compile: function (tElement, tAttrs, transclude) {
                 /**
                  * directive rewrite. Use templates to allow editing on the fly.
                  */
                 return function postLink(scope, iElement, iAttrs, ctrls) {
-                    tElement.on('click', function (event) {
+                    var mathSelect = function (event) {
                         event.preventDefault();
-                        // this is to prevent the editor from loosing focus;
-                        // the returned function is the original callback. Need that to recover.
-                        //scope._editorElement.off('blur');
-                        taMathUtil.onOnceOffOriginal(scope._editorElement, 'blur', function(e){e.preventDefault();});
-//                        scope.displayElements.popoverContainer.on('focus', function(){
-//                            taMathUtil.oneEvent(scope._editorElement, 'blur', function(e){e.preventDefault();});
-//                        });
-
+                        event.stopPropagation();
                         scope.displayElements.popover.css('width', '375px');
-                        //scope.displayElements.popover.css('height', '9em');
                         scope.displayElements.popover.css('min-height', '2em');
                         scope.displayElements.popover.css('border-radius', '14px');
 
@@ -304,19 +305,18 @@ angular.module('SpruceQuizApp')
                         var rightCol = angular.element('<div class="col-xs-2">');
 //                        var remove = angular.element('<button type="button" class="btn btn-transparent btn-sm btn-small close" unselectable="on" tabindex="-1"><i class="fa fa-times"></i></button>');
                         var remove = angular.element('<button type="button" class="btn btn-transparent btn-sm btn-small close" unselectable="on" tabindex="-1"><i class="fa fa-trash-o"></i></button>');
-                        remove.on('click', function(event){
+                        remove.on('click', function (event) {
                             event.preventDefault();
                             tElement.remove();
                             finishEdit();
                         });
                         var textarea = angular.element('<textarea type="text" class="form-control" style="z-index: 10;" rows="5" placeholder="请在这里输入LaTeX代码" ng-model="data.mathScript">');
-                        textarea.on('click', function (event){
-                            event.preventDefault();
+                        textarea.on('click', function (event) {
                             event.stopPropagation();
                             this.focus();
-                        }).on('keydown', function(event){
+                        }).on('keydown', function (event) {
                             event.stopPropagation();
-                        }).on('keyup', function(event){
+                        }).on('keyup', function (event) {
                             event.stopPropagation();
                         });
                         leftCol.append(textarea);
@@ -325,30 +325,49 @@ angular.module('SpruceQuizApp')
                         formGroup.append(rightCol);
                         form.append(formGroup);
                         container.append(form);
+
+                        /** this is to prevent the editor from updating the element on blur.*/
+                        taMathUtil.onOnceOffOriginal(scope._editorElement, 'blur', function (e) {
+                            e.preventDefault();
+                        });
+                        /** Need to do this asap, to trigger the blur event on the editor, and reattach the original handle.*/
+                        textarea[0].focus();
+                        /** Reason to run the showPopover with delay:
+                         * in the case where a popover is already open, an animation that hides
+                         * the open popover is going to take some time. Need to show the new
+                         * popover AFTER that. smallest delay is 145ms.
+                         */
+                        $timeout(function(){
+                            scope.showPopover(tElement);
+                            //scope.showResizeOverlay(tElement);
+                            scope.reflowPopover(tElement);
+                        }, 200);
                         $compile(container)(scope);
 
                         var mathFrameId = tElement.find('script').attr('id') + '-Frame';
-                        scope.showPopover(tElement);
-                        scope.reflowPopover(tElement);
-                        // deregistering all other $wathers
+                        /** first deregister all other $wathers to prevent triggering watches of other math-jax instance */
                         taMathUtil.clearWatchers();
-                        //scope.showResizeOverlay([tElement.contents()[1], ]);
-
                         var deregister = scope.$watch('data.mathScript', function (newVal, oldVal) {
-                            if (newVal == oldVal){ return ; }
+                            if (newVal == oldVal) { return; }
                             iElement.find('script').html(newVal);
                             $compile(iElement.contents())(scope);
                             MathJax.Hub.Queue(['Reprocess', MathJax.Hub, iElement[0]]);
-                            MathJax.Hub.Queue(function(){textAngularManager.retrieveEditor(scope._editorName).scope.updateTaBindtaTextElement();});
-
-//                            taMathUtil.onOnce(scope._editorElement, 'click keyup blur focus', function(){
-//                                console.log('watch is unregistered!!');
-//                                console.log(deregister());
-//                                scope.$destroy();
-//                            });
+                            MathJax.Hub.Queue(function () {
+                                textAngularManager.retrieveEditor(scope._editorName).scope.updateTaBindtaTextElement();
+                            });
                         });
                         taMathUtil.addDeregisterHandle(deregister);
+                    };
+                    /** editor activation is triggered by `mousedown`.
+                     * popup happens after editor refresh.
+                     * In this case, the mouseup event is bind to the updated element. */
+                    tElement.off('mouseup');
+                    tElement.on('mouseup', function(event){
+                        $timeout(function(){
+                            mathSelect(event);
+                        }, 0);
                     });
+
                 };
             }
         };
@@ -363,10 +382,10 @@ angular.module('SpruceQuizApp')
                 taMathUtil[$scope._editorName] = {};
                 $scope._editorElement = $element;
             }],
-            compile: function(tElement, tAttrs) {
+            compile: function (tElement, tAttrs) {
                 "use strict";
                 return {
-                    pre: function  (scope, iElement, iAttrs, ngModel, transcludeFn) {
+                    pre: function (scope, iElement, iAttrs, ngModel, transcludeFn) {
                     },
                     post: function (scope, iElement, iAttrs, ngModel, transcludeFn) {
                         taMathUtil[scope._editorName].ngModel = ngModel;
@@ -379,7 +398,7 @@ angular.module('SpruceQuizApp')
                             /* Apply MathJax conversion here */
                             MathJax.Hub.Queue(["Typeset", MathJax.Hub, iElement[0]]);
                         };
-                        scope.$setEditorViewValue = function(editorHtml){
+                        scope.$setEditorViewValue = function (editorHtml) {
                             ngModel.$setViewValue(editorHtml);
                         };
                         // unshift means it will be the first parser to run;
