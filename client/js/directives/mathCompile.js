@@ -265,22 +265,25 @@ angular.module('SpruceQuizApp')
                     $scope.updateTaBindtaTextElement();
                 };
                 $scope.reflowPopover = function (_el) {
-                    var height = $scope.displayElements.popover[0].clientHeight;
-                    var width = $scope.displayElements.popover[0].clientWidth;
-                    if ($scope.displayElements.text[0].offsetHeight - height > _el[0].offsetTop) {
-                        $scope.displayElements.popover.css('top', _el[0].offsetTop + _el[0].offsetHeight + 'px');
-                        $scope.displayElements.popover.removeClass('top').addClass('bottom');
+                    var popover = $scope.displayElements.popover;
+                    var height = popover[0].clientHeight;
+                    var width = popover[0].clientWidth;
+                    var text = $scope.displayElements.text;
+                    if (text[0].offsetHeight - height > _el[0].offsetTop) {
+                        popover.css('top', _el[0].offsetTop + _el[0].offsetHeight + 'px');
+                        popover.removeClass('top').addClass('bottom');
                     } else {
-                        $scope.displayElements.popover.css('top', _el[0].offsetTop - height + 'px');
-                        $scope.displayElements.popover.removeClass('bottom').addClass('top');
+                        popover.css('top', _el[0].offsetTop - height + 'px');
+                        popover.removeClass('bottom').addClass('top');
                     }
                     var leftOffset = _el[0].offsetLeft + ((_el[0].offsetWidth - width ) / 2.0 );
+                    var padding = 28 || (text[0].clientWidth - text.find('form')[0].clientWidth);
                     var finalLeftOffset = Math.max(0, Math.min(
-                            $scope.displayElements.text[0].offsetWidth - width + 28,
+                            text[0].offsetWidth - width + padding,
                             _el[0].offsetLeft + ((_el[0].offsetWidth - width ) / 2.0 )
                     ));
-                    $scope.displayElements.popover.css('left', finalLeftOffset +'px');
-                    var arrow = angular.element($scope.displayElements.popover.children()[0]);
+                    popover.css('left', finalLeftOffset +'px');
+                    var arrow = angular.element(popover.children()[0]);
                     var arrowLeft = (width / 2.0) - arrow[0].clientWidth + leftOffset - finalLeftOffset;
                     arrow.css('left', arrowLeft + 'px');
                 };
