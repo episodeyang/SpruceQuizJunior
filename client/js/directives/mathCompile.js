@@ -147,7 +147,7 @@ angular.module('SpruceQuizApp')
     }])
     .config(['$provide', function ($provide) {
         // see https://github.com/fraywing/textAngular/wiki/Setting-Defaults
-        $provide.decorator('taOptions', ['taRegisterTool', 'textAngularManager', '$window', '$delegate', function (taRegisterTool, textAngularManager, $window, taOptions) {
+        $provide.decorator('taOptions', ['taRegisterTool', 'textAngularManager', '$window', '$timeout', '$delegate', function (taRegisterTool, textAngularManager, $window, $timeout, taOptions) {
             function pasteHtmlAtCaret(html, selectPastedContent) {
                 var sel, range;
                 if (window.getSelection) {
@@ -198,9 +198,10 @@ angular.module('SpruceQuizApp')
             var mathOnSelectAction = function (event, $element, editorScope) {
             };
 
-            var mathjaxToolAction = function () {
+            /** old ToolAction via browser prompt.
+             * var mathjaxToolAction = function () {
                 var promptString;
-                promptString = $window.prompt('please input math equations', '$$');
+                promptString = $window.prompt('please input math equations', '$ $');
                 if (promptString && promptString !== '') {
                     var displayStr = promptString.match(/\$\$([^$]+)\$\$/);
                     var inlineStr = promptString.match(/\$([^$]+)\$/);
@@ -208,26 +209,53 @@ angular.module('SpruceQuizApp')
                     // create the HTML
                     if (displayStr) {
                         var embed = '<div class="math-jax">' + promptString.toString() + '</div><p><br></p>';
-//                            var embed = '<div math-jax="">' + promptString.toString() + '</div><p><br></p>';
+                        // var embed = '<div math-jax="">' + promptString.toString() + '</div><p><br></p>';
                     } else if (inlineStr) {
                         var embed = '<span class="math-jax">' + promptString + '</span><span>&nbsp;</span>';
-//                            var embed = '<span math-jax="">' + promptString + '</span><span>&nbsp;</span>';
+                        // var embed = '<span math-jax="">' + promptString + '</span><span>&nbsp;</span>';
                     }
                     // insert
                     pasteHtmlAtCaret(embed, false);
                     return this.$editor().updateTaBindtaTextElement();
                 }
+            }; */
+
+            var inlineAction = function ($deferred) {
+                var editor = this.$editor();
+                var focus = function () {
+                    editor._editorElement[0].blur();
+                    editor._editorElement[0].focus();
+                    editor.updateTaBindtaTextElement();
+                };
+                var placeholder = '\\LaTeX{}\\text{ inline math}';
+                // create the HTML
+                var embed = '<span class="math-jax">' + '$' + placeholder + '$' + '</span><span>&nbsp;</span>';
+                // insert
+                pasteHtmlAtCaret(embed, true);
+                $timeout(focus, 20);
             };
 
-            taRegisterTool('mathJax', {
-                //iconclass: "fa",
+            var displayAction = function ($deferred) {
+                var editor = this.$editor();
+                var focus = function (){
+                    editor._editorElement[0].blur();
+                    editor._editorElement[0].focus();
+                    editor.updateTaBindtaTextElement();
+                };
+                var placeholder = '\\LaTeX{}\\text{ display math}';
+                // create the HTML
+                var embed = '<div class="math-jax">' + '$$' + placeholder + '$$' + '</div><p><br></p>';
+                // insert
+                pasteHtmlAtCaret(embed, true);
+                $timeout(focus, 20);
+            };
+            taRegisterTool('mathJaxInline', {
                 buttontext: '<span class="texhtml" style="font-family: \'CMU Serif\', cmr10, LMRoman10-Regular, \'Nimbus Roman No9 L\', \'Times New Roman\', Times, serif;">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>',
-                action: mathjaxToolAction
-                //onElementSelect: {
-                //    element: 'span', 'div',
-                //    withClass: 'math-jax',
-                //    action: mathOnSelectAction
-                //}
+                action: inlineAction
+            });
+            taRegisterTool('mathJaxDisplay', {
+                buttontext: '<span class="texhtml" style="font-family: \'CMU Serif\', cmr10, LMRoman10-Regular, \'Nimbus Roman No9 L\', \'Times New Roman\', Times, serif;">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>',
+                action: displayAction
             });
             taOptions.toolbar = [
                 ['redo', 'undo', 'clear'],
@@ -236,7 +264,7 @@ angular.module('SpruceQuizApp')
                 ['bold', 'italics', 'underline'],
                 ['ul', 'ol'],
                 ['justifyLeft', 'justifyCenter', 'justifyRight'],
-                ['mathJax'],
+                ['mathJaxDisplay', 'mathJaxInline'],
                 ['insertImage', 'insertLink', 'unlink'],
                 ['html']
             ];
@@ -327,6 +355,7 @@ angular.module('SpruceQuizApp')
                         taMathUtil.clearWatchers();
                         var deregister = scope.$watch('data.mathScript', function (newVal, oldVal) {
                             if (newVal == oldVal) { return; }
+                            if (newVal === '') { newVal = '  ';}
                             iElement.find('script').html(newVal);
                             $compile(iElement.contents())(scope);
                             MathJax.Hub.Queue(['Reprocess', MathJax.Hub, iElement.find('script')[0]]);
