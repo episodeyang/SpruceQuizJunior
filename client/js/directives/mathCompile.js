@@ -302,6 +302,10 @@ angular.module('SpruceQuizApp')
                         popover.css('min-height', '2em');
                         popover.css('border-radius', '14px');
 
+                        var overlay = scope.displayElements.resize.overlay;
+                        overlay.empty();
+                        overlay.addClass('ta-math-select-overlay');
+
                         var container = scope.displayElements.popoverContainer;
                         container.empty();
                         var form = angular.element('<form class="form-horizontal no-bottom-margin" role="form" style="padding-right: 6px;" ng-controller="taMathPopoverCtrl">');
@@ -334,7 +338,7 @@ angular.module('SpruceQuizApp')
 
                         $timeout(function(){
                             scope.showPopover(tElement);
-                            //scope.showResizeOverlay(tElement);
+                            scope.showResizeOverlay(tElement);
                             scope.reflowPopover(tElement);
                             /** this is to prevent the editor from updating the element on blur.*/
                             taMathUtil.onOnceOffOriginal(scope._editorElement, 'blur', function (e) {
