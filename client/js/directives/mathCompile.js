@@ -47,6 +47,7 @@ MathJax.Hub.Config({
         ],
         processEscapes: true
     },
+    TeX: { equationNumbers: { autoNumber: "AMS" } },
     "HTML-CSS": { availableFonts: ["TeX"] }
 });
 MathJax.Hub.Configured();
@@ -94,10 +95,10 @@ angular.module('SpruceQuizApp')
                     textvalue = textvalue
                         .replace(/<span class=\"MathJax_Preview\"><\/span>/g, '')
                         .replace(/<div class=\"MathJax_Display((?!<\/div).)*<\/div>/g, '')
-                        .replace(/<script type=\"math\/tex; mode=display\" id="MathJax-Element-[0-9]+">(((?!<\/script>).)*)<\/script>/g, '$$$$$1$$$$')
                         .replace(/ class=\"ng-scope\"/g, '')
                         .replace(/<nobr>((?!<\/nobr>).)*<\/nobr>/g, '')
                         .replace(/<span class=\"MathJax[^>]*><\/span>/g, '')
+                        .replace(/<script type=\"math\/tex; mode=display\" id="MathJax-Element-[0-9]+">(((?!<\/script>).)*)<\/script>/g, '$$$$$1$$$$')
                         .replace(/<script type=\"math\/tex\" id=\"MathJax-Element-[0-9]+\">(((?!<\/script>).)*)<\/script>/g, '$$$1$$')
                         .replace(/\sng-scope/g, '')
                         .replace(/\sng-binding/g, '')
@@ -296,9 +297,10 @@ angular.module('SpruceQuizApp')
                     var mathSelect = function (event) {
                         event.preventDefault();
                         event.stopPropagation();
-                        scope.displayElements.popover.css('width', '375px');
-                        scope.displayElements.popover.css('min-height', '2em');
-                        scope.displayElements.popover.css('border-radius', '14px');
+                        var popover = scope.displayElements.popover;
+                        popover.css('width', '375px');
+                        popover.css('min-height', '2em');
+                        popover.css('border-radius', '14px');
 
                         var container = scope.displayElements.popoverContainer;
                         container.empty();
@@ -306,22 +308,8 @@ angular.module('SpruceQuizApp')
                         var formGroup = angular.element('<div class="form-group no-bottom-margin">');
                         var leftCol = angular.element('<div class="col-xs-10">');
                         var rightCol = angular.element('<div class="col-xs-2">');
-//                        var remove = angular.element('<button type="button" class="btn btn-transparent btn-sm btn-small close" unselectable="on" tabindex="-1"><i class="fa fa-times"></i></button>');
                         var remove = angular.element('<button type="button" class="btn btn-transparent btn-sm btn-small close" unselectable="on" tabindex="-1"><i class="fa fa-trash-o"></i></button>');
-                        remove.on('click', function (event) {
-                            event.preventDefault();
-                            tElement.remove();
-                            finishEdit();
-                        });
-                        var textarea = angular.element('<textarea type="text" class="form-control" style="z-index: 10;" rows="5" placeholder="请在这里输入LaTeX代码" ng-model="data.mathScript">');
-                        textarea.on('click', function (event) {
-                            event.stopPropagation();
-                            this.focus();
-                        }).on('keydown', function (event) {
-                            event.stopPropagation();
-                        }).on('keyup', function (event) {
-                            event.stopPropagation();
-                        });
+                        var textarea = angular.element('<textarea class="form-control" rows="5" placeholder="请在这里输入LaTeX代码" ng-model="data.mathScript">');
                         leftCol.append(textarea);
                         rightCol.append(remove);
                         formGroup.append(leftCol);
@@ -329,24 +317,7 @@ angular.module('SpruceQuizApp')
                         form.append(formGroup);
                         container.append(form);
 
-                        /** this is to prevent the editor from updating the element on blur.*/
-                        taMathUtil.onOnceOffOriginal(scope._editorElement, 'blur', function (e) {
-                            e.preventDefault();
-                        });
-                        /** Need to do this asap, to trigger the blur event on the editor, and reattach the original handle.*/
-                        textarea[0].focus();
-                        /** Reason to run the showPopover with delay:
-                         * in the case where a popover is already open, an animation that hides
-                         * the open popover is going to take some time. Need to show the new
-                         * popover AFTER that. smallest delay is 145ms.
-                         */
-                        $timeout(function(){
-                            scope.showPopover(tElement);
-                            //scope.showResizeOverlay(tElement);
-                            scope.reflowPopover(tElement);
-                        }, 200);
-                        $compile(container)(scope);
-
+                        scope.data.mathScript = tElement.find('script')[0].text;
                         var mathFrameId = tElement.find('script').attr('id') + '-Frame';
                         /** first deregister all other $wathers to prevent triggering watches of other math-jax instance */
                         taMathUtil.clearWatchers();
@@ -354,12 +325,45 @@ angular.module('SpruceQuizApp')
                             if (newVal == oldVal) { return; }
                             iElement.find('script').html(newVal);
                             $compile(iElement.contents())(scope);
-                            MathJax.Hub.Queue(['Reprocess', MathJax.Hub, iElement[0]]);
+                            MathJax.Hub.Queue(['Reprocess', MathJax.Hub, iElement.find('script')[0]]);
                             MathJax.Hub.Queue(function () {
                                 textAngularManager.retrieveEditor(scope._editorName).scope.updateTaBindtaTextElement();
                             });
                         });
                         taMathUtil.addDeregisterHandle(deregister);
+
+                        $timeout(function(){
+                            scope.showPopover(tElement);
+                            //scope.showResizeOverlay(tElement);
+                            scope.reflowPopover(tElement);
+                            /** this is to prevent the editor from updating the element on blur.*/
+                            taMathUtil.onOnceOffOriginal(scope._editorElement, 'blur', function (e) {
+                                e.preventDefault();
+                            });
+                            /** Need to do this asap, to trigger the blur event on the editor, and reattach the original handle.*/
+                            textarea[0].focus();
+                            /** Reason to run the showPopover with delay:
+                             * in the case where a popover is already open, an animation that hides
+                             * the open popover is going to take some time. Need to show the new
+                             * popover AFTER that. smallest delay is 145ms.
+                             */
+                            $compile(container)(scope);
+                            //var _action = textarea.off('select');
+                            textarea.on('click select', function (event) {
+                                event.stopPropagation();
+                                //_action(event);
+                                this.focus();
+                            }).on('keydown', function (event) {
+                                event.stopPropagation();
+                            }).on('keyup', function (event) {
+                                event.stopPropagation();
+                            });
+                            remove.on('click', function (event) {
+                                event.preventDefault();
+                                tElement.remove();
+                                finishEdit();
+                            });
+                        }, 200);
                     };
                     /** editor activation is triggered by `mousedown`.
                      * popup happens after editor refresh.
