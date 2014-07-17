@@ -92,20 +92,22 @@ angular.module('SpruceQuizApp')
                 Model.searchQuestions({search: true});
 
                 var validator = function(data) {
-                    if (data.title.length < 10) {
-                        return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
+                    if (data.title.length < 7) {
                         mixpanel.track("question title too short");
+                        return $rootScope.error = "标题写的不清楚，这样会降低别人回答你的问题的几率。请再重新考虑一下吧！";
                     }
                     if (data.text.length < 50) {
-                        return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？"
                         mixpanel.track("question too short");
+                        return $rootScope.error = "正文字数太少了，可以将问题讲得更清楚一些吗？";
                     }
                     if (!data.reason) {
-                        return $rootScope.error = "需要提供编辑原因";
-                        mixpanel.track("did not provide reason for editing");
+                        if ($scope.view.state != 'ask') {
+                            mixpanel.track("did not provide reason for editing");
+                            return $rootScope.error = "需要提供编辑原因";
+                        }
                     } else if (data.reason.length == 0) {
-                        return $rootScope.error = "需要提供编辑原因";
                         mixpanel.track("did not provide reason for editing");
+                        return $rootScope.error = "需要提供编辑原因";
                     }
                 };
 
