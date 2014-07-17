@@ -30,6 +30,8 @@ angular.module('SpruceQuizApp')
 /**
  * Configure MathJax to process with the following syntax.
  */
+var inlineMath = ["\\(", "\\)"];
+var displayMath = ["\\[", "\\]"];
 MathJax.Hub.Config({
     skipStartupTypeset: true,
     processUpdateTime: 1000,
@@ -38,12 +40,10 @@ MathJax.Hub.Config({
     jax: ["input/TeX", "output/HTML-CSS"],
     tex2jax: {
         inlineMath: [
-            ['$', '$'],
-            ["\\(", "\\)"]
+            inlineMath
         ],
         displayMath: [
-            ['$$', '$$'],
-            ["\\[", "\\]"]
+            displayMath
         ],
         processEscapes: true
     },
@@ -57,6 +57,7 @@ angular.module('SpruceQuizApp')
         /**
          * <span mathjax-bind="expression"></span>
          * expression can be of the form: \( \)
+         * set in the inlineMath and displayMath variable in this article.
          */
         return {
             restrict: "A",
@@ -98,8 +99,8 @@ angular.module('SpruceQuizApp')
                         .replace(/ class=\"ng-scope\"/g, '')
                         .replace(/<nobr>((?!<\/nobr>).)*<\/nobr>/g, '')
                         .replace(/<span class=\"MathJax[^>]*><\/span>/g, '')
-                        .replace(/<script type=\"math\/tex; mode=display\" id="MathJax-Element-[0-9]+">(((?!<\/script>).)*)<\/script>/g, '$$$$$1$$$$')
-                        .replace(/<script type=\"math\/tex\" id=\"MathJax-Element-[0-9]+\">(((?!<\/script>).)*)<\/script>/g, '$$$1$$')
+                        .replace(/<script type=\"math\/tex; mode=display\" id="MathJax-Element-[0-9]+">(((?!<\/script>).)*)<\/script>/g, displayMath[0] + '$1' + displayMath[1])
+                        .replace(/<script type=\"math\/tex\" id=\"MathJax-Element-[0-9]+\">(((?!<\/script>).)*)<\/script>/g, inlineMath[0] + '$1' + inlineMath[1])
                         .replace(/\sng-scope/g, '')
                         .replace(/\sng-binding/g, '')
                         .replace(/\sclass=\"\"/g, '')
@@ -229,7 +230,7 @@ angular.module('SpruceQuizApp')
                 };
                 var placeholder = '\\LaTeX{}\\text{ inline math}';
                 // create the HTML
-                var embed = '<span class="math-jax">' + '$' + placeholder + '$' + '</span><span>&nbsp;</span>';
+                var embed = '<span class="math-jax">' + inlineMath[0] + placeholder + inlineMath[1] + '</span><span>&nbsp;</span>';
                 // insert
                 pasteHtmlAtCaret(embed, true);
                 $timeout(focus, 20);
@@ -244,20 +245,20 @@ angular.module('SpruceQuizApp')
                 };
                 var placeholder = '\\LaTeX{}\\text{ display math}';
                 // create the HTML
-                var embed = '<div class="math-jax">' + '$$' + placeholder + '$$' + '</div><p><br></p>';
+                var embed = '<div class="math-jax">' + displayMath[0] + placeholder + displayMath[1] + '</div><p><br></p>';
                 // insert
                 pasteHtmlAtCaret(embed, true);
                 $timeout(focus, 20);
             };
             taRegisterTool('mathJaxInline', {
                 iconclass: 'fa right-margin',
-                buttontext: '$ ... $',
+                buttontext: '\\( ... \\)',
 //                buttontext: '<span class="texhtml" style="font-family: \'CMU Serif\', cmr10, LMRoman10-Regular, \'Nimbus Roman No9 L\', \'Times New Roman\', Times, serif;">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>',
                 action: inlineAction
             });
             taRegisterTool('mathJaxDisplay', {
                 iconclass: 'fa right-margin',
-                buttontext: '$$ ... $$',
+                buttontext: '\\[ ... \\]',
 //                buttontext: '<span class="texhtml" style="font-family: \'CMU Serif\', cmr10, LMRoman10-Regular, \'Nimbus Roman No9 L\', \'Times New Roman\', Times, serif;">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span>',
                 action: displayAction
             });
