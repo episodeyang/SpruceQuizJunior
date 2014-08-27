@@ -2,7 +2,7 @@
 div(ng-controller="QuestionEditorCtrl")
     input(type='text', placeholder="标题", ng-model="editor.data.title").form-control
     div
-    text-angular.tall(ng-model='editor.data.text', ta-toolbar="editor.toolbar", ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
+    text-angular.tall(ng-model='editor.data.text', ta-toolbar-class="ta-toolbar", ta-text-editor-class='ta-editor', ta-html-editor-class='ta-editor', ta-toolbar-group-class='btn-group ta-btn-group')
 
     .short-bottom-margin.top-margin
         .badge.short-bottom-margin(ng-repeat='tag in editor.data.tags track by $index').right-margin
