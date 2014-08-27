@@ -23,12 +23,12 @@ angular.module('SpruceQuizApp', ['ngCookies', 'ngSanitize', 'modelServices', 'ng
                     controller: 'QuestionCtrl',
                     access: access.all
                 });
-            $routeProvider.when('/login',
-                {
-                    templateUrl: '/partials/frontPage',
-                    controller: 'FrontPageCtrl',
-                    access: access.all
-                });
+//            $routeProvider.when('/login',
+//                {
+//                    templateUrl: '/partials/frontPage',
+//                    controller: 'FrontPageCtrl',
+//                    access: access.all
+//                });
             $routeProvider.when('/questions',
                 {
                     templateUrl: '/partials/questions',
